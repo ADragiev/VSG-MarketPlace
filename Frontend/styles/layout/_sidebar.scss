@@ -1,0 +1,48 @@
+.sidebar {
+    background-color: $white-color;
+    width: 18vw;
+    height: 85vh;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 2em;
+  
+    .menu-item {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      margin: 2em 2em 0 2em;
+      padding: 0.8em;
+      border-radius: 10px;
+  
+      svg {
+        margin-right: 1vw;
+      }
+  
+      a {
+        font-family: "Roboto";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 16px;
+        text-decoration: none;
+        color: $black-color;
+      }
+    }
+    .menu-item:last-child {
+      position: absolute;
+      top: 85%;
+    }
+  }
+  .menu-item:hover,
+  #active {
+    background-color: $main-color;
+    a {
+      color: $white-color;
+    }
+    svg {
+      path {
+        fill: $white-color;
+      }
+    }
+  }

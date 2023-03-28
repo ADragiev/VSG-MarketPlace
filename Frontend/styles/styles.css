@@ -1,0 +1,486 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background-color: #fff;
+  width: 100vw;
+  height: 6vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header span {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-size: 30px;
+  line-height: 37px;
+  color: #000;
+}
+.header img {
+  padding: 10px;
+}
+
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user span {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.sidebar {
+  background-color: #fff;
+  width: 18vw;
+  height: 85vh;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 2em;
+}
+.sidebar .menu-item {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 2em 2em 0 2em;
+  padding: 0.8em;
+  border-radius: 10px;
+}
+.sidebar .menu-item svg {
+  margin-right: 1vw;
+}
+.sidebar .menu-item a {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  text-decoration: none;
+  color: #000;
+}
+.sidebar .menu-item:last-child {
+  position: absolute;
+  top: 85%;
+}
+
+.menu-item:hover,
+#active {
+  background-color: #ed1c25;
+}
+.menu-item:hover a,
+#active a {
+  color: #fff;
+}
+.menu-item:hover svg path,
+#active svg path {
+  fill: #fff;
+}
+
+.popup {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.popup .popuptext {
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+  position: absolute;
+  width: 12vw;
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  font-family: "Roboto";
+  text-align: center;
+  border-radius: 4px;
+  padding: 8px 0;
+  z-index: 1;
+  bottom: -6em;
+  left: -4vw;
+  margin-left: -40px;
+}
+.popup .popuptext span {
+  text-align: left;
+  font-family: "Roboto";
+  padding: 0.5em;
+}
+.popup .popuptext .buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.popup .popuptext .buttons-container button:first-child {
+  margin: 0.5em;
+  background: #ed1c25;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  border: 0;
+  color: #fff;
+  font-family: "Roboto";
+  padding: 0.2em 1em;
+  cursor: pointer;
+}
+.popup .popuptext .buttons-container button:last-child {
+  margin: 0.5em;
+  background: #fff;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border: 1px solid #ed1c25;
+  border-radius: 4px;
+  color: #ed1c25;
+  font-family: "Roboto";
+  padding: 0.2em 1em;
+  cursor: pointer;
+}
+
+.popup .show {
+  visibility: visible;
+  animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+#body {
+  background-image: url("../images/vsg_bg 2.jpg");
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.mainContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.divs {
+  text-align: center;
+}
+
+#mainLogo {
+  width: 80%;
+}
+
+a {
+  text-decoration: none;
+}
+
+#login {
+  padding: 6px 16px 6px 16px;
+  color: #fff;
+  border: 0;
+  background: #ed1c25;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 35px;
+}
+
+body {
+  background-color: #f0f2f3;
+}
+
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+.main {
+  background-color: #fff;
+  border-radius: 20px;
+  margin-top: 2em;
+}
+
+.list-wrapper {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  width: 76vw;
+  height: auto;
+  border-radius: 20px;
+  margin-top: 2em;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  margin: 2em;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1));
+}
+.card-item .product-image {
+  border-radius: 20px 20px 0 0;
+  transition: transform 0.2s ease-in-out; /* add smooth transition */
+}
+.card-item .product-image:hover {
+  transform: scale(1.1); /* zoom in 10% */
+}
+
+.details {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  background-color: #fff;
+  border-radius: 0 0 20px 20px;
+}
+
+.name-price {
+  margin: 1.2em 1.2em 0.5em 0.5em;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+}
+.name-price p {
+  margin: 0;
+  padding: 0;
+}
+.name-price p:first-child {
+  font-weight: 500;
+}
+.name-price p:last-child {
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+.icon,
+.qty {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.icon p,
+.qty p {
+  font-size: 10px;
+  color: #9a9a9a;
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 25px;
+  background: #ed1c25;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 35vw;
+  height: auto;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 40px;
+}
+.modal-content p {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+}
+.modal-content img {
+  border-radius: 40px 40px 0px 0px;
+}
+.modal-content section {
+  padding: 20px;
+  border-radius: 40px;
+}
+.modal-content section p {
+  padding: 20px 0px 40px 0px;
+}
+.modal-content section svg {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  z-index: -1;
+  border-bottom-right-radius: 40px;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 5px 10px;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.details-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.name-details span {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+}
+.name-details small {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 14px;
+  color: #9a9a9a;
+}
+
+.other-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 48px;
+}
+.other-details span {
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 22px;
+}
+.other-details small {
+  font-family: "Roboto";
+  font-weight: 400;
+  color: #9a9a9a;
+}
+
+body {
+  background-color: #f0f2f3;
+}
+
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+.main {
+  background-color: #fff;
+  border-radius: 20px;
+  margin-top: 2em;
+}
+
+.table-wrapper {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  width: 76vw;
+  height: auto;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+#search-container {
+  margin: 20px 0px 40px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#search-container #searchIcon {
+  margin-right: 5px;
+}
+#search-container input {
+  height: 80%;
+  margin-right: 10px;
+  outline: none;
+  border: 0;
+}
+#search-container .input-div {
+  border-bottom: 1px solid #000;
+  margin-right: 20px;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2e7d32;
+  border-color: #2e7d32;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  font-family: "Roboto";
+  color: #fff;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 6px 10px;
+}
+button svg {
+  margin-right: 10px;
+}
+
+.main-table {
+  border-radius: 4px;
+  width: 100%;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #b3b3b3;
+  border-spacing: 0;
+}
+.main-table tbody td,
+.main-table th {
+  border-color: #b3b3b3;
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #b3b3b3;
+  border-collapse: collapse;
+  font-family: "Roboto";
+}
+.main-table tbody td svg,
+.main-table th svg {
+  margin-right: 8px;
+}
+.main-table tfoot tr td {
+  border-top: 1px solid #b3b3b3;
+  display: table;
+  width: 100%;
+  margin-top: 200px;
+}
+.main-table .actionButtons {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  cursor: pointer;
+}/*# sourceMappingURL=styles.css.map */
