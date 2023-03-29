@@ -1,12 +1,7 @@
 ﻿using Dapper;
 using Infrastructure.Contracts;
 using Infrastructure.Repositories.GenericRepository.Context;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -35,9 +30,9 @@ namespace Infrastructure.Repositories
             return Connection.GetList<T>().ToList();
         }
 
-        public T GetByID(int id)
+        public T GetByID(int CategoryId)
         {
-            return Connection.Get<T>(id);
+            return Connection.Get<T>(CategoryId);
         }
 
         public void Update(T entity)
