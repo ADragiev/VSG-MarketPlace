@@ -1,15 +1,10 @@
 ﻿using Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
     public class Order
     {
-        public int Code { get; set; }
+        public int OrderCode { get; set; }
 
         public int Qty { get; set; }
 
@@ -19,10 +14,8 @@ namespace Domain.Entities
 
         public DateOnly OrderDate { get; set; }
 
-        public OrderStatus Status { get; set; }
+        public OrderStatus OrderStatus { get; set; }
 
-        public Product Product { get; set; }
-
-        public User User { get; set; }
+        public int ProductCode { get; set; }
     }
 }
