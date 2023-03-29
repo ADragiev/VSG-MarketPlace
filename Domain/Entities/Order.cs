@@ -1,10 +1,11 @@
 ﻿using Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
-    public class Order
+    [Table("Orders")]
+    public class Order : BaseEntity
     {
-        public int OrderCode { get; set; }
 
         public int Qty { get; set; }
 

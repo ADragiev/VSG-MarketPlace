@@ -1,8 +1,10 @@
-﻿namespace Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Entities
 {
-    public class Image
+    [Table("Images")]
+    public class Image : BaseEntity
     {
-        public int ImageId { get; set; }
 
         public string ImageUrl { get; set; }
 

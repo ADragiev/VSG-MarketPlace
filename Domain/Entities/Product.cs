@@ -1,8 +1,10 @@
-﻿namespace Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Entities
 {
-    public class Product
+    [Table("Products")]
+    public class Product : BaseEntity
     {
-        public int ProductCode { get; set; }
 
         public string FullName { get; set; }
 
