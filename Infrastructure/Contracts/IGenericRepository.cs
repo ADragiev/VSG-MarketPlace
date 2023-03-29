@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Repositories.GenericRepository.Interfaces
+namespace Infrastructure.Contracts
 {
     public interface IGenericRepository<T>
     {
         List<T> GetAll();
-        T GetById(int id);
+
+        T GetByID(int id);
+
         int Create(T entity);
+
         void Update(T entity);
+
         void Delete(int id);
     }
 }
