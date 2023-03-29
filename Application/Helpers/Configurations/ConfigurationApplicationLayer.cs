@@ -1,4 +1,6 @@
 ﻿using Application.Helpers.Profiles;
+using Application.Models.CategoryModels.Contacts;
+using Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Helpers.Configurations
@@ -7,7 +9,8 @@ namespace Application.Helpers.Configurations
     {
         public static IServiceCollection AddConfigurationApplicationLayer(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(ProductProfile).Assembly);
+            services.AddAutoMapper(typeof(CategoryProfile).Assembly);
+            services.AddScoped<ICategoryService, CategoryService>();
 
             return services;
         }

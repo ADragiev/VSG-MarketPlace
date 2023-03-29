@@ -1,4 +1,6 @@
-﻿using Infrastructure.Repositories.GenericRepository.Context;
+﻿using Infrastructure.Contracts;
+using Infrastructure.Repositories;
+using Infrastructure.Repositories.GenericRepository.Context;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Configurations
@@ -8,6 +10,7 @@ namespace Infrastructure.Configurations
         public static IServiceCollection AddConfigurationInfrastructureLayer(this IServiceCollection services)
         {
             services.AddSingleton<MarketPlaceContext>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             return services;
         }
