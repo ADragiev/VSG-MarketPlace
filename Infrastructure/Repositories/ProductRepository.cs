@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Dapper;
+using Domain.Entities;
 using Infrastructure.Repositories.GenericRepository.Context;
 using System;
 using System.Collections.Generic;

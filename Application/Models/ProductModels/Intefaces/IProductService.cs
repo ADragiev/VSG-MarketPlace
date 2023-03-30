@@ -9,6 +9,6 @@ namespace Application.Models.ProductModels.Intefaces
 {
     public interface IProductService
     {
-        List<ProductGetDto> GetAll();
+        ProductGetDto Create(ProductCreateDto dto);
     }
 }

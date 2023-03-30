@@ -1,4 +1,4 @@
-﻿using Domain.Enums;
+﻿using Application.Models.ImageModels.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Models.ProductModels.Dtos
 {
-    public class ProductGetDto
+    public class ProductCreateDto
     {
-        public int Code { get; set; }
-
         public string FullName { get; set; }
 
         public decimal Price { get; set; }
@@ -22,5 +20,7 @@ namespace Application.Models.ProductModels.Dtos
         public string Description { get; set; }
 
         public int CategoryId { get; set; }
+
+        public List<ImageCreateDto> Images { get; set; } = new List<ImageCreateDto>();
     }
 }
