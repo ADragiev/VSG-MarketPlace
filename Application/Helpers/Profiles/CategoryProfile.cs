@@ -16,6 +16,8 @@ namespace Application.Helpers.Profiles
             CreateMap<CategoryCreateDto, Category>();
             CreateMap<Category, CategoryGetDto>()
                 .ForMember(dest => dest.CategoryId, src => src.MapFrom(src => src.Id));
+            CreateMap<CategoryUpdateDto, Category>()
+                .ForMember(dest => dest.Id, src => src.MapFrom(src => src.CategoryId));
         }
     }
 }

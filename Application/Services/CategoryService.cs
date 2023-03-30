@@ -22,6 +22,11 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
+        public List<CategoryGetDto> All()
+        {
+            return mapper.Map<List<CategoryGetDto>>(categoryRepo.GetAll());
+        }
+
         public CategoryGetDto Create(CategoryCreateDto dto)
         {
             var category = mapper.Map<Category>(dto);
@@ -30,6 +35,43 @@ namespace Application.Services
             
             var createdCategory = categoryRepo.GetByID(id);
             return mapper.Map<CategoryGetDto>(createdCategory);
+        }
+
+        public void Delete(int id)
+        {
+            var category = categoryRepo.GetByID(id);
+
+            if (category == null)
+            {
+                throw new ArgumentNullException($"{nameof(category)} not found!");
+            }
+
+            categoryRepo.Delete(id);
+        }
+
+        public CategoryGetDto GetById(int id)
+        {
+            var category = categoryRepo.GetByID(id);
+
+            if(category == null)
+            {
+                throw new ArgumentNullException($"{nameof(category)} not found!");
+            }
+
+            return mapper.Map<CategoryGetDto>(category);
+        }
+
+        public void Update(CategoryUpdateDto dto)
+        {
+            var category = categoryRepo.GetByID(dto.CategoryId);
+
+            if (category == null)
+            {
+                throw new ArgumentNullException($"{nameof(category)} not found!");
+            }
+
+            var categoryToUpdate = mapper.Map<Category>(dto);
+            categoryRepo.Update(categoryToUpdate);
         }
     }
 }

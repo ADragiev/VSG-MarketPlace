@@ -9,6 +9,14 @@ namespace Application.Models.CategoryModels.Contacts
 {
     public interface ICategoryService
     {
+        List<CategoryGetDto> All();
+
+        CategoryGetDto GetById(int id);
+
         CategoryGetDto Create(CategoryCreateDto dto);
+
+        void Delete(int id);
+
+        void Update(CategoryUpdateDto dto);
     }
 }
