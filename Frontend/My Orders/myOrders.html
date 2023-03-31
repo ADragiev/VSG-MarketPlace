@@ -13,7 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:ital,wght@0,100;1,400&display=swap"
       rel="stylesheet"
     />
-    <script src="popup.js"></script>
+    <script src="../Inventory/deleteTooltip.js" defer></script>
     <title>My Orders</title>
   </head>
   <body>
@@ -23,11 +23,12 @@
       </a>
       <span>My Orders</span>
       <div class="user">
-        <span>
-          Hi, user!
-        </span> 
+        <span> Hi, user! </span>
         <img src="../images/Profile Img.jpg" alt="Profile-pic" />
       </div>
+      <svg id="hamburger-icon" width="26" height="18" viewBox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24.25 10.25H1.75C1.06 10.25 0.5 9.69 0.5 9C0.5 8.31 1.06 7.75 1.75 7.75H24.25C24.94 7.75 25.5 8.31 25.5 9C25.5 9.69 24.94 10.25 24.25 10.25ZM24.25 2.75H1.75C1.06 2.75 0.5 2.19 0.5 1.5C0.5 0.81 1.06 0.25 1.75 0.25H24.25C24.94 0.25 25.5 0.81 25.5 1.5C25.5 2.19 24.94 2.75 24.25 2.75ZM24.25 17.75H1.75C1.06 17.75 0.5 17.19 0.5 16.5C0.5 15.81 1.06 15.25 1.75 15.25H24.25C24.94 15.25 25.5 15.81 25.5 16.5C25.5 17.19 24.94 17.75 24.25 17.75Z" fill="#ED1C25"/>
+        </svg>
     </header>
     <div class="container">
       <aside class="sidebar">
@@ -85,7 +86,7 @@
                 <span> Pending Orders </span>
               </a>
             </li>
-            <li class="menu-item"  id="active">
+            <li class="menu-item" id="active">
               <a href="/Frontend/My Orders/myOrders.html">
                 <svg
                   width="12"
@@ -125,9 +126,66 @@
       </aside>
 
       <main class="main">
-      <section class="list-wrapper">
+        <section class="list-wrapper infoDetails">
+          <div class="header-row">
+            <span class="ProductNameColumn">Name</span>
+            <span class="ProductQtyColumn">QTY</span>
+            <span class="ProductPriceColumn">Price</span>
+            <span class="ProductDateColumn">Order Date</span>
+            <span class="ProductStatus">Status </span>
+          </div>
+          <div class="item-row">
+            <span class="ProductNameColumn">MacBook Pro 16” M1 Max 32GB 1TB</span>
+            <span class="ProductQtyColumn">1</span>
+            <span class="ProductPriceColumn">5000 BGN</span>
+            <span class="ProductDateColumn">2023-03-13 16:30</span>
+            <span class="ProductStatus popup">Pending
+              <div class="popuptext">
+                <span> Are you sure you want to reject this order? </span>
+                <div class="buttons-container">
+                  <button class="btnYesNo">YES</button>
+                  <button class="btnYesNo">NO</button>
+                </div>
+              </div>
 
-      </section>
+              <svg class="deleteIcon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.8203 1.35156L7.17188 6L11.8203 10.6484L10.6484 11.8203L6 7.17188L1.35156 11.8203L0.179688 10.6484L4.82812 6L0.179688 1.35156L1.35156 0.179688L6 4.82812L10.6484 0.179688L11.8203 1.35156Z" fill="#ED1C25"/>
+                </svg>
+                
+            </span>
+
+          </div>
+          <div class="item-row">
+            <span class="ProductNameColumn">Gaming Chair RedDragon</span>
+            <span class="ProductQtyColumn">10</span>
+            <span class="ProductPriceColumn">900 BGN</span>
+            <span class="ProductDateColumn">2023-03-13 12:30</span>
+            <span class="ProductStatus">Finished
+            
+                
+            </span>
+
+          </div>
+          <div class="item-row">
+            <span class="ProductNameColumn">Monitor Dell 27” IPS + Stand</span>
+            <span class="ProductQtyColumn">3</span>
+            <span class="ProductPriceColumn">750 BGN</span>
+            <span class="ProductDateColumn">2023-03-13 20:30</span>
+            <span class="ProductStatus popup">Pending
+              <div class="popuptext">
+                <span> Are you sure you want to reject this order? </span>
+                <div class="buttons-container">
+                  <button class="btnYesNo">YES</button>
+                  <button class="btnYesNo">NO</button>
+                </div>
+              </div>
+
+              <svg class="deleteIcon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.8203 1.35156L7.17188 6L11.8203 10.6484L10.6484 11.8203L6 7.17188L1.35156 11.8203L0.179688 10.6484L4.82812 6L0.179688 1.35156L1.35156 0.179688L6 4.82812L10.6484 0.179688L11.8203 1.35156Z" fill="#ED1C25"/>
+                </svg>
+               </span>
+          </div>
+        </section>
       </main>
     </div>
   </body>

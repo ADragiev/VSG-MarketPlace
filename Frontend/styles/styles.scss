@@ -1,6 +1,7 @@
 @import '../styles/abstracts/variables';
 @import '../styles/base/reset';
 
+@import '../styles/layout//body';
 @import '../styles/layout/header';
 @import '../styles/layout/sidebar';
 @import '../styles/components/popup';
@@ -9,3 +10,5 @@
 @import '../styles/pages/home';
 @import '../styles/pages/marketplace';
 @import '../styles/pages/inventory';
+@import '../styles/pages/pendingOrders';
+@import '../styles/pages/myOrders';

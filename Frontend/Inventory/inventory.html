@@ -13,7 +13,9 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:ital,wght@0,100;1,400&display=swap"
       rel="stylesheet"
     />
-    <script src="deleteTooltip.js" defer></script>
+    
+    <script src="addNewItemModal.js" defer></script>
+    <script src="deleteTooltip.js" defer ></script>
     <title>Inventory</title>
   </head>
   <body>
@@ -26,6 +28,9 @@
         <span> Hi, user! </span>
         <img src="../images/Profile Img.jpg" alt="Profile-pic" />
       </div>
+      <svg id="hamburger-icon" width="26" height="18" viewBox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24.25 10.25H1.75C1.06 10.25 0.5 9.69 0.5 9C0.5 8.31 1.06 7.75 1.75 7.75H24.25C24.94 7.75 25.5 8.31 25.5 9C25.5 9.69 24.94 10.25 24.25 10.25ZM24.25 2.75H1.75C1.06 2.75 0.5 2.19 0.5 1.5C0.5 0.81 1.06 0.25 1.75 0.25H24.25C24.94 0.25 25.5 0.81 25.5 1.5C25.5 2.19 24.94 2.75 24.25 2.75ZM24.25 17.75H1.75C1.06 17.75 0.5 17.19 0.5 16.5C0.5 15.81 1.06 15.25 1.75 15.25H24.25C24.94 15.25 25.5 15.81 25.5 16.5C25.5 17.19 24.94 17.75 24.25 17.75Z" fill="#ED1C25"/>
+        </svg>
     </header>
     <div class="container">
       <aside class="sidebar">
@@ -142,7 +147,7 @@
 
               <input type="search" placeholder="Search..." />
             </div>
-            <button type="button">
+            <button id="addNewItemBtn" type="button">
               <svg
                 width="15"
                 height="15"
@@ -156,7 +161,6 @@
               Add new
             </button>
           </div>
-          
 
           <table class="main-table">
             <thead>
@@ -183,6 +187,7 @@
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    class="editIcon"
                   >
                     <path
                       d="M13.8125 4.6875L12.5938 5.90625L10.0938 3.40625L11.3125 2.1875C11.4375 2.0625 11.5938 2 11.7812 2C11.9688 2 12.125 2.0625 12.25 2.1875L13.8125 3.75C13.9375 3.875 14 4.03125 14 4.21875C14 4.40625 13.9375 4.5625 13.8125 4.6875ZM2 11.5L9.375 4.125L11.875 6.625L4.5 14H2V11.5Z"
@@ -227,6 +232,7 @@
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    class="editIcon"
                   >
                     <path
                       d="M13.8125 4.6875L12.5938 5.90625L10.0938 3.40625L11.3125 2.1875C11.4375 2.0625 11.5938 2 11.7812 2C11.9688 2 12.125 2.0625 12.25 2.1875L13.8125 3.75C13.9375 3.875 14 4.03125 14 4.21875C14 4.40625 13.9375 4.5625 13.8125 4.6875ZM2 11.5L9.375 4.125L11.875 6.625L4.5 14H2V11.5Z"
@@ -271,6 +277,7 @@
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    class="editIcon"
                   >
                     <path
                       d="M13.8125 4.6875L12.5938 5.90625L10.0938 3.40625L11.3125 2.1875C11.4375 2.0625 11.5938 2 11.7812 2C11.9688 2 12.125 2.0625 12.25 2.1875L13.8125 3.75C13.9375 3.875 14 4.03125 14 4.21875C14 4.40625 13.9375 4.5625 13.8125 4.6875ZM2 11.5L9.375 4.125L11.875 6.625L4.5 14H2V11.5Z"
@@ -309,7 +316,172 @@
               </tr>
             </tfoot>
           </table>
+          <div class="add-item-modal">              
+              <form class="add-item-form" action="POST">
+               
+                <div class="row">
+                  <a class="close-modal-button">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M17.7305 2.02734L10.7578 9L17.7305 15.9727L15.9727 17.7305L9 10.7578L2.02734 17.7305L0.269531 15.9727L7.24219 9L0.269531 2.02734L2.02734 0.269531L9 7.24219L15.9727 0.269531L17.7305 2.02734Z"
+                        fill="black"
+                      />
+                    </svg>
+                  </a>
+                  <div class="left-side">
+                    <span>Add new item</span>
+                    <input class="inputField" type="text" id="item-code" name="itemCode" placeholder="Code *" required />
+  
+                    <input class="inputField" type="text" id="item-name" name="itemName" placeholder="Name *" required />
+  
+                    <textarea
+                    class="inputField"
+                      id="item-description"
+                      name="itemDescription"
+                      rows="4"
+                      required
+                      placeholder="Description"
+                    ></textarea>
+  
+                    <select class="inputField" id="item-category" name="itemCategory" required>
+                      <option value="" disabled selected>Category *</option>
+                      <option value="electronics">Electronics</option>
+                      <option value="fashion">Fashion</option>
+                      <option value="home">Home</option>
+                      <option value="sports">Sports</option>
+                    </select>
+  
+                    <input
+                    class="inputField"
+                      type="number"
+                      id="quantity-for-sale"
+                      name="quantityForSale"
+                      min="1"
+                      required
+                      placeholder="Qty For Sale"
+                    />
+  
+                    <input
+                    class="inputField"
+                      type="number"
+                      id="quantity-available"
+                      name="quantityAvailable"
+                      min="0"
+                      required
+                      placeholder="Qty"
+                    />
+                  </div>
+  
+                    <div class="imgSection">
+                      <img id="addCurrentImg" src="../images/no_image-placeholder.png" alt="noImgPlaceholder">
+                      <div class="img-buttons">
+                        <button class="upload-button" type="button" >
+                          Upload 
+                        </button>
+                        <button id="remove-button" type="button" >
+                          Remove 
+                        </button>
+                      </div>
+                    
+  
+                    </div>
+                </div>
+                
+                  <button id="submitFormBtn" type="submit">Add</button>
+              </form>
+          </div>
+          <div class="edit-item-modal">              
+            <form class="add-item-form" action="POST">
+              <a class="close-modal-button">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.7305 2.02734L10.7578 9L17.7305 15.9727L15.9727 17.7305L9 10.7578L2.02734 17.7305L0.269531 15.9727L7.24219 9L0.269531 2.02734L2.02734 0.269531L9 7.24219L15.9727 0.269531L17.7305 2.02734Z"
+                    fill="black"
+                  />
+                </svg>
+              </a>
+              <div class="row">
+                <div class="left-side">
+                  <span>Modify Item</span>
+                  <input class="inputField" type="text" id="item-code" name="itemCode" placeholder="Code *" required value="1"/>
 
+                  <input class="inputField" type="text" id="item-name" name="itemName" placeholder="Name *" required value="Apple MacBook Pro 16” M1 Max 32GB" />
+
+                  <textarea
+                  class="inputField"
+                    id="item-description"
+                    name="itemDescription"
+                    rows="4"
+                    required
+                    placeholder="Description"
+                    
+                  >
+                        This is the description of the product.
+                        This is the description of the product.
+                  This is the description of the product.
+                  This is the description of the product.</textarea>
+
+                  <select class="inputField" id="item-category" name="itemCategory" required>
+                    <option value="" disabled selected>Category *</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="home">Home</option>
+                    <option value="sports">Sports</option>
+                  </select>
+
+                  <input
+                  class="inputField"
+                    type="number"
+                    id="quantity-for-sale"
+                    name="quantityForSale"
+                    min="1"
+                    required
+                    placeholder="Qty For Sale"
+                    value="0"
+                  />
+
+                  <input
+                  class="inputField"
+                    type="number"
+                    id="quantity-available"
+                    name="quantityAvailable"
+                    min="0"
+                    required
+                    placeholder="Qty"
+                    value="2"
+                  />
+                </div>
+
+                  <div class="imgSection">
+                    <img class="editCurrentImg" src="../images/product-image.jpg" alt="noImgPlaceholder">
+                    <div class="img-buttons">
+                      <button class="upload-button" type="button" >
+                        Upload 
+                      </button>
+                      <button id="remove-button" type="button" >
+                        Remove 
+                      </button>
+                    </div>
+                  
+
+                  </div>
+              </div>
+              
+                <button id="submitFormBtn" type="submit">Add</button>
+            </form>
+        </div>
         </section>
       </main>
     </div>

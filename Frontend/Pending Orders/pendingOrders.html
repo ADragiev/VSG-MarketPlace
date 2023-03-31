@@ -23,17 +23,18 @@
       </a>
       <span>Pending Orders</span>
       <div class="user">
-        <span>
-          Hi, user!
-        </span> 
+        <span> Hi, user! </span>
         <img src="../images/Profile Img.jpg" alt="Profile-pic" />
       </div>
+      <svg id="hamburger-icon" width="26" height="18" viewBox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24.25 10.25H1.75C1.06 10.25 0.5 9.69 0.5 9C0.5 8.31 1.06 7.75 1.75 7.75H24.25C24.94 7.75 25.5 8.31 25.5 9C25.5 9.69 24.94 10.25 24.25 10.25ZM24.25 2.75H1.75C1.06 2.75 0.5 2.19 0.5 1.5C0.5 0.81 1.06 0.25 1.75 0.25H24.25C24.94 0.25 25.5 0.81 25.5 1.5C25.5 2.19 24.94 2.75 24.25 2.75ZM24.25 17.75H1.75C1.06 17.75 0.5 17.19 0.5 16.5C0.5 15.81 1.06 15.25 1.75 15.25H24.25C24.94 15.25 25.5 15.81 25.5 16.5C25.5 17.19 24.94 17.75 24.25 17.75Z" fill="#ED1C25"/>
+        </svg>
     </header>
     <div class="container">
       <aside class="sidebar">
         <nav>
           <ul>
-            <li class="menu-item" >
+            <li class="menu-item">
               <a href="/Frontend/Marketplace/marketplace.html">
                 <svg
                   width="14"
@@ -85,7 +86,7 @@
                 <span> Pending Orders </span>
               </a>
             </li>
-            <li class="menu-item" >
+            <li class="menu-item">
               <a href="/Frontend/My Orders/myOrders.html">
                 <svg
                   width="12"
@@ -125,9 +126,40 @@
       </aside>
 
       <main class="main">
-      <section class="list-wrapper">
-        
-      </section>
+        <section class="list-wrapper infoDetails">
+          <div class="header-row">
+            <span class="codeColumn">Code</span>
+            <span class="qtyColumn">QTY</span>
+            <span class="priceColumn">Price</span>
+            <span class="emailColumn">Ordered By</span>
+            <span class="dateColumn">Order Date</span>
+            <span class="btnColumn">Action</span>
+          </div>
+          <div class="item-row">
+            <span class="codeColumn">1</span>
+            <span class="qtyColumn">1</span>
+            <span class="priceColumn">5000 BGN</span>
+            <span class="emailColumn">smechkov@vsgbg.com</span>
+            <span class="dateColumn">2023-03-13 16:30</span>
+            <button class="btnColumn completeBtn" >Complete</button>
+          </div>
+          <div class="item-row">
+            <span class="codeColumn">2</span>
+            <span class="qtyColumn">10</span>
+            <span class="priceColumn">900 BGN</span>
+            <span class="emailColumn">smechkov@vsgbg.com</span>
+            <span class="dateColumn">2023-03-13 12:30</span>
+            <button class="btnColumn completeBtn">Complete</button>
+          </div>
+          <div class="item-row">
+            <span class="codeColumn">3</span>
+            <span class="qtyColumn">3</span>
+            <span class="priceColumn">750 BGN</span>
+            <span class="emailColumn">smechkov@vsgbg.com</span>
+            <span class="dateColumn">2023-03-13 20:30</span>
+            <button class="btnColumn completeBtn">Complete</button>
+          </div>
+        </section>
       </main>
     </div>
   </body>

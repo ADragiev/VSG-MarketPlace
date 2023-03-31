@@ -17,6 +17,9 @@
     img {
       padding: 10px;
     }
+    #hamburger-icon{
+      display: none;
+    }
   }
   .user {
     @include flex-center;
@@ -29,3 +32,5 @@
       line-height: 16px;
     }
   }
+
+  
