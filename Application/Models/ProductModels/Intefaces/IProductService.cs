@@ -14,5 +14,7 @@ namespace Application.Models.ProductModels.Intefaces
         ProductGetDto Create(ProductCreateDto dto);
 
         List<ProductGetBaseDto> GetAllForIndex();
+
+
     }
 }

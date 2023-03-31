@@ -1,4 +1,5 @@
-﻿using Application.Models.ProductModels.Dtos;
+﻿using Application.Models.ImageModels.Dtos;
+using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using Dapper;
 using Domain.Entities;
@@ -28,6 +29,21 @@ namespace Infrastructure.Repositories
                         WHERE i.IsDefault = 1";
 
             return Connection.Query<ProductGetBaseDto>(sql).ToList();
+        }
+
+        public ProductDetailDto GetProductDetail(int id)
+        {
+            var sql = @"SELECT p.FullName ,c.CategoryName AS Category, p.Price, p.SaleQty, p.Description, i.ImageUrl AS DefaultImage FROM
+                        Products AS p
+                        JOIN Categories AS c ON p.CategoryId = c.Id
+                        JOIN Images AS i ON i.ProductCode = p.Id
+                        WHERE p.Id = @Id";
+
+            var product = Connection.Query<ProductDetailDto, ImageProductDetailsDto, ProductDetailDto>(sql, (product, image) =>
+            {
+                
+            });
+            return null;
         }
     }
 }

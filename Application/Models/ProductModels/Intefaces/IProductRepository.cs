@@ -12,5 +12,7 @@ namespace Application.Models.ProductModels.Intefaces
     public interface IProductRepository : IGenericRepository<Product>
     {
         List<ProductGetBaseDto> GetAllProductBase();
+
+        ProductDetailDto GetProductDetail(int id);
     }
 }
