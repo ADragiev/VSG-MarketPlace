@@ -1,6 +1,8 @@
 ﻿using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
+using Application.Models.ExceptionModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace MarketPlaceDapper.Controllers
 {
@@ -23,16 +25,9 @@ namespace MarketPlaceDapper.Controllers
 
 
         [HttpGet("{id}")]
-        public ActionResult<CategoryGetDto> GetCategoryById(int id)
+        public CategoryGetDto GetCategoryById(int id)
         {
-            try
-            {
-                return categoryService.GetById(id);
-            }
-            catch (ArgumentNullException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            return categoryService.GetById(id);
         }
 
         [HttpPost]
@@ -42,37 +37,16 @@ namespace MarketPlaceDapper.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCategory(int id, CategoryUpdateDto dto)
+        public void UpdateCategory(int id, CategoryUpdateDto dto)
         {
-            if (id != dto.CategoryId)
-            {
-                return BadRequest("Ids do not match!");
-            }
-
-
-            try
-            {
-                categoryService.Update(dto);
-                return Ok();
-            }
-            catch (ArgumentNullException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            //TODO: Check if Ids are the same!
+            categoryService.Update(dto);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCategory(int id)
+        public void DeleteCategory(int id)
         {
-            try
-            {
-                categoryService.Delete(id);
-                return Ok();
-            }
-            catch (ArgumentNullException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            categoryService.Delete(id);
         }
     }
 }

@@ -1,8 +1,11 @@
-﻿using Application.Models.ImageModels.Dtos;
+﻿using Application.Models.ExceptionModels;
+using Application.Models.ImageModels.Dtos;
+using Domain.Entities;
 using Infrastructure.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,9 +16,10 @@ namespace Application.Services
         public static void ThrowExceptionWhenIdNotFound<T>(int id, IGenericRepository<T> repo)
         {
             var entity = repo.GetByID(id);
-            if (entity != null)
+
+            if (entity == null)
             {
-                throw new ArgumentNullException($"{nameof(entity)} id not found!");
+                throw new HttpException($"{typeof(T).Name} Id not found!", HttpStatusCode.NotFound);
             }
         }
 
@@ -23,7 +27,7 @@ namespace Application.Services
         {
             if (saleQty > combinedQty)
             {
-                throw new ArgumentException("Sale qty cannot be bigger than combined qty");
+                throw new HttpException("Sale qty cannot be bigger than combined qty", HttpStatusCode.BadRequest);
             }
         }
 
@@ -33,7 +37,7 @@ namespace Application.Services
 
             if (defaultImagesCount > 1)
             {
-                throw new ArgumentException("There can be only one default image");
+                throw new HttpException("There can be only one default image", HttpStatusCode.BadRequest);
             }
         }
     }

@@ -1,4 +1,5 @@
 using Application.Helpers.Configurations;
+using Application.Helpers.Middlewares;
 using Infrastructure.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 

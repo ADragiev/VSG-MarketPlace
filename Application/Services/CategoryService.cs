@@ -39,36 +39,22 @@ namespace Application.Services
 
         public void Delete(int id)
         {
-            var category = categoryRepo.GetByID(id);
-
-            if (category == null)
-            {
-                throw new ArgumentNullException($"{nameof(category)} not found!");
-            }
+            ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
 
             categoryRepo.Delete(id);
         }
 
         public CategoryGetDto GetById(int id)
         {
+            ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
             var category = categoryRepo.GetByID(id);
-
-            if(category == null)
-            {
-                throw new ArgumentNullException($"{nameof(category)} not found!");
-            }
 
             return mapper.Map<CategoryGetDto>(category);
         }
 
         public void Update(CategoryUpdateDto dto)
         {
-            var category = categoryRepo.GetByID(dto.CategoryId);
-
-            if (category == null)
-            {
-                throw new ArgumentNullException($"{nameof(category)} not found!");
-            }
+            ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
 
             var categoryToUpdate = mapper.Map<Category>(dto);
             categoryRepo.Update(categoryToUpdate);

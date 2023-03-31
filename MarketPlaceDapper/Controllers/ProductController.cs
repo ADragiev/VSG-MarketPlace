@@ -22,20 +22,9 @@ namespace MarketPlaceDapper.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ProductGetDto> CreateProduct(ProductCreateDto dto)
+        public ProductGetDto CreateProduct(ProductCreateDto dto)
         {
-            try
-            {
-                return Ok(productService.Create(dto));
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            return productService.Create(dto);
         }
     }
 }
