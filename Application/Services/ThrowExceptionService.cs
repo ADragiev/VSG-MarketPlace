@@ -1,13 +1,7 @@
 ﻿using Application.Models.ExceptionModels;
+using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Dtos;
-using Domain.Entities;
-using Infrastructure.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {

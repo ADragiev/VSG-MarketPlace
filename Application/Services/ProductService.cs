@@ -1,14 +1,8 @@
-﻿using Application.Models.ProductModels.Dtos;
+﻿using Application.Models.GenericRepo;
+using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using AutoMapper;
 using Domain.Entities;
-using Infrastructure.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 
 namespace Application.Services
 {
@@ -51,6 +45,17 @@ namespace Application.Services
             var createdProduct = productRepo.GetByID(productId);
             return mapper.Map<ProductGetDto>(createdProduct);
 
+        }
+
+        public List<ProductGetBaseDto> GetAllForIndex()
+        {
+            var sql = @"SELECT p.Id AS Code, c.CategoryName AS Category, p.Price, p.SaleQty, i.ImageUrl
+                        FROM 
+                        Products AS p 
+                        JOIN Categories AS c ON p.CategoryId = c.Id 
+                        JOIN Images AS i ON i.ProductCode = p.Id 
+                        WHERE i.IsDefault = 1";
+            return null;
         }
     }
 }

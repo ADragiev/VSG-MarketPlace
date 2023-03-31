@@ -1,4 +1,4 @@
-﻿using Infrastructure.Contracts;
+﻿using Application.Models.GenericRepo;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.GenericRepository.Context;
 using Microsoft.Extensions.DependencyInjection;

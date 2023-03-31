@@ -1,8 +1,8 @@
 ﻿using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
+using Application.Models.GenericRepo;
 using AutoMapper;
 using Domain.Entities;
-using Infrastructure.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

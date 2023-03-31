@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Contracts
+namespace Application.Models.GenericRepo
 {
     public interface IGenericRepository<T>
     {

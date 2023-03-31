@@ -1,5 +1,5 @@
-﻿using Dapper;
-using Infrastructure.Contracts;
+﻿using Application.Models.GenericRepo;
+using Dapper;
 using Infrastructure.Repositories.GenericRepository.Context;
 using System.Data;
 
