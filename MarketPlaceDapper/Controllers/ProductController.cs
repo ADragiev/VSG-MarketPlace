@@ -16,9 +16,10 @@ namespace MarketPlaceDapper.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllProducts()
+        [Route("/Index")]
+        public List<ProductGetBaseDto> GetAllProductsForIndexPage()
         {
-            return NoContent();
+            return productService.GetAllForIndex();
         }
 
         [HttpPost]

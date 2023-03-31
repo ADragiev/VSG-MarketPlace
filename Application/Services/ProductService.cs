@@ -8,12 +8,12 @@ namespace Application.Services
 {
     public class ProductService : IProductService
     {
-        private readonly IGenericRepository<Product> productRepo;
+        private readonly IProductRepository productRepo;
         private readonly IGenericRepository<Image> imageRepo;
         private readonly IGenericRepository<Category> categoryRepo;
         private readonly IMapper mapper;
 
-        public ProductService(IGenericRepository<Product> productRepo,
+        public ProductService(IProductRepository productRepo,
             IGenericRepository<Image> imageRepo,
             IGenericRepository<Category> categoryRepo,
             IMapper mapper)
@@ -49,13 +49,7 @@ namespace Application.Services
 
         public List<ProductGetBaseDto> GetAllForIndex()
         {
-            var sql = @"SELECT p.Id AS Code, c.CategoryName AS Category, p.Price, p.SaleQty, i.ImageUrl
-                        FROM 
-                        Products AS p 
-                        JOIN Categories AS c ON p.CategoryId = c.Id 
-                        JOIN Images AS i ON i.ProductCode = p.Id 
-                        WHERE i.IsDefault = 1";
-            return null;
+            return productRepo.GetAllProductBase();
         }
     }
 }

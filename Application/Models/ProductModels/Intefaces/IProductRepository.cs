@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace Application.Models.ProductModels.Intefaces
 {
-    public interface IProductService
+    public interface IProductRepository : IGenericRepository<Product>
     {
-        ProductGetDto Create(ProductCreateDto dto);
-
-        List<ProductGetBaseDto> GetAllForIndex();
+        List<ProductGetBaseDto> GetAllProductBase();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Models.GenericRepo;
+using Application.Models.ProductModels.Intefaces;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.GenericRepository.Context;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ namespace Infrastructure.Configurations
         {
             services.AddSingleton<MarketPlaceContext>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             return services;
         }
