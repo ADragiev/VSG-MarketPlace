@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories
             var sql = @"SELECT o.Id AS OrderCode, p.Id AS ProductCode, o.Qty, (o.Qty * p.Price) AS Price, o.OrderedBy, o.OrderDate
                         FROM Orders AS o
                         JOIN Products AS p ON o.ProductCode = p.Id
-                        WHERE OrderStatus = 1";
+                        WHERE OrderStatus = 0";
 
             return Connection.Query<OrderPendingDto>(sql).ToList();
         }
