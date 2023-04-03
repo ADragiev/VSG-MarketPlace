@@ -1,4 +1,6 @@
-﻿using Application.Models.OrderModels.Interfaces;
+﻿using Application.Models.OrderModels.Dtos;
+using Application.Models.OrderModels.Interfaces;
+using Dapper;
 using Domain.Entities;
 using Infrastructure.Repositories.GenericRepository.Context;
 using System;
@@ -14,6 +16,16 @@ namespace Infrastructure.Repositories
         public OrderRepository(MarketPlaceContext marketPlaceContext)
             : base(marketPlaceContext)
         {
+        }
+
+        public List<OrderPendingDto> GetAllPendingOrders()
+        {
+            var sql = @"SELECT o.Id AS OrderCode, p.Id AS ProductCode, o.Qty, (o.Qty * p.Price) AS Price, o.OrderedBy, o.OrderDate
+                        FROM Orders AS o
+                        JOIN Products AS p ON o.ProductCode = p.Id
+                        WHERE OrderStatus = 1";
+
+            return Connection.Query<OrderPendingDto>(sql).ToList();
         }
     }
 }

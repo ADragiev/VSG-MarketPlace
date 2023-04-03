@@ -1,4 +1,5 @@
 ﻿using Application.Models.GenericRepo;
+using Application.Models.OrderModels.Dtos;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,6 @@ namespace Application.Models.OrderModels.Interfaces
 {
     public interface IOrderRepository : IGenericRepository<Order>
     {
+        List<OrderPendingDto> GetAllPendingOrders();
     }
 }

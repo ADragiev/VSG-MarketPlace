@@ -10,5 +10,7 @@ namespace Application.Models.OrderModels.Interfaces
     public interface IOrderService
     {
         OrderGetDto Create(OrderCreateDto dto);
+
+        List<OrderPendingDto> GetAllPendingOrders();
     }
 }

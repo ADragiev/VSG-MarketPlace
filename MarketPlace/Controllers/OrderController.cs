@@ -15,6 +15,13 @@ namespace MarketPlace.Controllers
             this.orderService = orderService;
         }
 
+        [HttpGet("/Pending")]
+        public List<OrderPendingDto> GetPendingOrders()
+        {
+            return orderService.GetAllPendingOrders();
+        }
+
+
         [HttpPost]
         public OrderGetDto CreateOrder(OrderCreateDto dto)
         {

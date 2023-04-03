@@ -14,11 +14,11 @@ namespace Application.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IGenericRepository<Order> orderRepo;
+        private readonly IOrderRepository orderRepo;
         private readonly IGenericRepository<Product> productRepo;
         private readonly IMapper mapper;
 
-        public OrderService(IGenericRepository<Order> orderRepo,
+        public OrderService(IOrderRepository orderRepo,
             IGenericRepository<Product> productRepo,
             IMapper mapper)
         {
@@ -46,6 +46,11 @@ namespace Application.Services
 
             var createdOrder = orderRepo.GetByID(orderId);
             return mapper.Map<OrderGetDto>(createdOrder);
+        }
+
+        public List<OrderPendingDto> GetAllPendingOrders()
+        {
+            return orderRepo.GetAllPendingOrders();
         }
     }
 }
