@@ -11,10 +11,10 @@ namespace Application.Models.ProductModels.Intefaces
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-        List<ProductGetBaseDto> GetAllProductBase();
+        List<ProductGetBaseDto> GetAllIndexProducts();
 
         ProductDetailDto GetProductDetail(int id);
 
-        List<ProductInventoryGetDto> GetAllProductInventory();
+        List<ProductInventoryGetDto> GetAllInventoryProducts();
     }
 }

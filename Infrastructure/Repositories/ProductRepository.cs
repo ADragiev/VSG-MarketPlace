@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public List<ProductGetBaseDto> GetAllProductBase()
+        public List<ProductGetBaseDto> GetAllIndexProducts()
         {
             var sql = @"SELECT p.Id AS Code, c.CategoryName AS Category, p.Price, p.SaleQty, i.ImageUrl AS DefaultImage
                         FROM 
@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories
             return Connection.Query<ProductGetBaseDto>(sql).ToList();
         }
 
-        public List<ProductInventoryGetDto> GetAllProductInventory()
+        public List<ProductInventoryGetDto> GetAllInventoryProducts()
         {
             var sql = @"SELECT p.Id AS Code, p.FullName, c.CategoryName, p.SaleQty, p.CombinedQty
                         FROM

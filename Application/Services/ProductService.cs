@@ -49,7 +49,7 @@ namespace Application.Services
 
         public List<ProductGetBaseDto> GetAllForIndex()
         {
-            return productRepo.GetAllProductBase();
+            return productRepo.GetAllIndexProducts();
         }
 
         public ProductDetailDto GetDetails(int id)
@@ -60,7 +60,7 @@ namespace Application.Services
 
         public List<ProductInventoryGetDto> GetAllForInventory()
         {
-            return productRepo.GetAllProductInventory();
+            return productRepo.GetAllInventoryProducts();
         }
 
     }
