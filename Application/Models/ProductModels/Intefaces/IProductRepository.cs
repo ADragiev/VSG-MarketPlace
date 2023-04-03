@@ -14,5 +14,7 @@ namespace Application.Models.ProductModels.Intefaces
         List<ProductGetBaseDto> GetAllProductBase();
 
         ProductDetailDto GetProductDetail(int id);
+
+        List<ProductInventoryGetDto> GetAllProductInventory();
     }
 }

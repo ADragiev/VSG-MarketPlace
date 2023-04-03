@@ -23,6 +23,13 @@ namespace MarketPlaceDapper.Controllers
         }
 
         [HttpGet]
+        [Route("/Inventory")]
+        public List<ProductInventoryGetDto> GetAllProductsForInventoryPage()
+        {
+            return productService.GetAllForInventory();
+        }
+
+        [HttpGet]
         [Route("/Details/{id}")]
         public ProductDetailDto GetProductDetails(int id)
         {

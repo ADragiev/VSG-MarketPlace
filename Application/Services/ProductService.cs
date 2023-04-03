@@ -57,5 +57,11 @@ namespace Application.Services
             ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
             return productRepo.GetProductDetail(id);
         }
+
+        public List<ProductInventoryGetDto> GetAllForInventory()
+        {
+            return productRepo.GetAllProductInventory();
+        }
+
     }
 }

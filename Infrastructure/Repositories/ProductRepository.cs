@@ -31,6 +31,18 @@ namespace Infrastructure.Repositories
             return Connection.Query<ProductGetBaseDto>(sql).ToList();
         }
 
+        public List<ProductInventoryGetDto> GetAllProductInventory()
+        {
+            var sql = @"SELECT p.Id AS Code, p.FullName, c.CategoryName, p.SaleQty, p.CombinedQty
+                        FROM
+                        Products AS p
+                        JOIN Categories AS c ON p.CategoryId = c.Id";
+
+            var products = Connection.Query<ProductInventoryGetDto>(sql).ToList();
+
+            return products;
+        }
+
         public ProductDetailDto GetProductDetail(int id)
         {
             var sql = @$"SELECT p.Id, p.FullName, p.Price, c.CategoryName, p.SaleQty, p.Description, i.ImageUrl
