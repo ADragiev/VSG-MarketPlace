@@ -39,6 +39,7 @@ namespace Infrastructure.Repositories
                         JOIN Categories AS c ON p.CategoryId  = c.Id
                         JOIN Images AS i ON i.ProductCode = p.Id
                         WHERE p.Id = ${id}";
+            //Sql Injection 
 
             var products = Connection.Query<ProductDetailDto, ImageProductDetailsDto, ProductDetailDto>(sql, (product, image) =>
             {
