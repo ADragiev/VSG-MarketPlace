@@ -51,5 +51,11 @@ namespace Application.Services
         {
             return productRepo.GetAllProductBase();
         }
+
+        public ProductDetailDto GetDetails(int id)
+        {
+            ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
+            return productRepo.GetProductDetail(id);
+        }
     }
 }

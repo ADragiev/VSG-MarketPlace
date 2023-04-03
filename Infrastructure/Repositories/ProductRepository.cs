@@ -33,17 +33,27 @@ namespace Infrastructure.Repositories
 
         public ProductDetailDto GetProductDetail(int id)
         {
-            var sql = @"SELECT p.FullName ,c.CategoryName AS Category, p.Price, p.SaleQty, p.Description, i.ImageUrl AS DefaultImage FROM
+            var sql = @$"SELECT p.Id, p.FullName, p.Price, c.CategoryName, p.SaleQty, p.Description, i.ImageUrl
+                        FROM
                         Products AS p
-                        JOIN Categories AS c ON p.CategoryId = c.Id
+                        JOIN Categories AS c ON p.CategoryId  = c.Id
                         JOIN Images AS i ON i.ProductCode = p.Id
-                        WHERE p.Id = @Id";
+                        WHERE p.Id = ${id}";
 
-            var product = Connection.Query<ProductDetailDto, ImageProductDetailsDto, ProductDetailDto>(sql, (product, image) =>
+            var products = Connection.Query<ProductDetailDto, ImageProductDetailsDto, ProductDetailDto>(sql, (product, image) =>
             {
-                
+                product.Images.Add(image);
+                return product;
+            }, splitOn: "ImageUrl");
+
+            var result = products.GroupBy(p => p.FullName).Select(p =>
+            {
+                var groupedProduct = p.First();
+                groupedProduct.Images = p.Select(p => p.Images.Single()).ToList();
+                return groupedProduct;
             });
-            return null;
+
+            return result.FirstOrDefault();
         }
     }
 }

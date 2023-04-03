@@ -22,6 +22,13 @@ namespace MarketPlaceDapper.Controllers
             return productService.GetAllForIndex();
         }
 
+        [HttpGet]
+        [Route("/Details/{id}")]
+        public ProductDetailDto GetProductDetails(int id)
+        {
+            return productService.GetDetails(id);
+        }
+
         [HttpPost]
         public ProductGetDto CreateProduct(ProductCreateDto dto)
         {
