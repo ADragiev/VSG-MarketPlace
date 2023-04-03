@@ -45,19 +45,19 @@ namespace Infrastructure.Repositories
 
         public ProductDetailDto GetProductDetail(int id)
         {
-            var sql = @$"SELECT p.Id, p.FullName, p.Price, c.CategoryName, p.SaleQty, p.Description, i.ImageUrl
+            var sql = @"SELECT p.Id, p.FullName, p.Price, c.CategoryName, p.SaleQty, p.Description, i.ImageUrl
                         FROM
                         Products AS p
                         JOIN Categories AS c ON p.CategoryId  = c.Id
                         JOIN Images AS i ON i.ProductCode = p.Id
-                        WHERE p.Id = ${id}";
+                        WHERE p.Id = @id";
             //Sql Injection 
 
             var products = Connection.Query<ProductDetailDto, ImageProductDetailsDto, ProductDetailDto>(sql, (product, image) =>
             {
                 product.Images.Add(image);
                 return product;
-            }, splitOn: "ImageUrl");
+            }, new { id }, splitOn: "ImageUrl");
 
             var result = products.GroupBy(p => p.FullName).Select(p =>
             {
