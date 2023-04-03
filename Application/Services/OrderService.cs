@@ -27,6 +27,13 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
+        public void CompleteOrder(int id)
+        {
+            ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
+
+            orderRepo.SetField(id, "OrderStatus", OrderStatus.Finished);
+        }
+
         public OrderGetDto Create(OrderCreateDto dto)
         {
             ThrowExceptionService.ThrowExceptionWhenIdNotFound<Product>(dto.ProductCode, productRepo);

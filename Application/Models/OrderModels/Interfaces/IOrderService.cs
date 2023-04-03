@@ -13,5 +13,7 @@ namespace Application.Models.OrderModels.Interfaces
 
         List<OrderPendingDto> GetAllPendingOrders();
         List<OrderGetMineDto> GetMyOrders(string email);
+
+        void CompleteOrder(int id);
     }
 }

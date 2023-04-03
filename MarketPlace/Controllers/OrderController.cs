@@ -28,6 +28,13 @@ namespace MarketPlace.Controllers
         }
 
 
+        [HttpPost("/CompleteOrder/{id}")]
+        public void CompleteOrder(int id)
+        {
+            orderService.CompleteOrder(id);
+        }
+
+
         [HttpPost]
         public OrderGetDto CreateOrder(OrderCreateDto dto)
         {
