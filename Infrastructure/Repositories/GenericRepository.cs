@@ -35,6 +35,22 @@ namespace Infrastructure.Repositories
             return Connection.Get<T>(CategoryId);
         }
 
+        public void SetField(int id, string fieldName, object value)
+        {
+            var tableAttribute =
+                (System.ComponentModel.DataAnnotations.Schema.TableAttribute)typeof(T)
+                    .GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.Schema.TableAttribute), false)
+                    .FirstOrDefault();
+
+            var tableName = tableAttribute.Name;
+
+            var sql = @"UPDATE @tableName
+                      SET @fieldName = @value
+                        WHERE Id = @id";
+
+            Connection.Execute(sql, new { tableName, fieldName, value, id });
+        }
+
         public void Update(T entity)
         {
              Connection.Update<T>(entity);

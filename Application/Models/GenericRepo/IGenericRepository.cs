@@ -17,5 +17,7 @@ namespace Application.Models.GenericRepo
         void Update(T entity);
 
         void Delete(int id);
+
+        void SetField(int id, string fieldName, object value);
     }
 }
