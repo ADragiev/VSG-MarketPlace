@@ -71,11 +71,11 @@
   
   .popup .show {
     visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
+    -webkit-animation: fadeInAnimation 1s;
+    animation: fadeInAnimation 1s;
   }
   
-  @-webkit-keyframes fadeIn {
+  @-webkit-keyframes fadeInAnimation {
     from {
       opacity: 0;
     }
@@ -84,7 +84,7 @@
     }
   }
   
-  @keyframes fadeIn {
+  @keyframes fadeInAnimation {
     from {
       opacity: 0;
     }
