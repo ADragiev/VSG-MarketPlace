@@ -12,7 +12,7 @@ namespace Domain.Entities
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
-        public OrderStatus OrderStatus { get; set; } = OrderStatus.Finished;
+        public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
 
         public int ProductCode { get; set; }
     }
