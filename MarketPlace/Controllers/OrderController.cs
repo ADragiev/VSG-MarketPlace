@@ -28,7 +28,7 @@ namespace MarketPlace.Controllers
         }
 
 
-        [HttpPost("CompleteOrder/{id}")]
+        [HttpPut("CompleteOrder/{id}")]
         public void CompleteOrder(int id)
         {
             orderService.CompleteOrder(id);
