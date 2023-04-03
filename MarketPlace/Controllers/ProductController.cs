@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MarketPlaceDapper.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService productService;
@@ -16,21 +16,21 @@ namespace MarketPlaceDapper.Controllers
         }
 
         [HttpGet]
-        [Route("/Index")]
+        [Route("Index")]
         public List<ProductGetBaseDto> GetAllProductsForIndexPage()
         {
             return productService.GetAllForIndex();
         }
 
         [HttpGet]
-        [Route("/Inventory")]
+        [Route("Inventory")]
         public List<ProductInventoryGetDto> GetAllProductsForInventoryPage()
         {
             return productService.GetAllForInventory();
         }
 
         [HttpGet]
-        [Route("/Details/{id}")]
+        [Route("Details/{id}")]
         public ProductDetailDto GetProductDetails(int id)
         {
             return productService.GetDetails(id);

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace MarketPlace.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class OrderController : Controller
     {
         private readonly IOrderService orderService;
@@ -15,20 +15,20 @@ namespace MarketPlace.Controllers
             this.orderService = orderService;
         }
 
-        [HttpGet("/Pending")]
+        [HttpGet("Pending")]
         public List<OrderPendingDto> GetPendingOrders()
         {
             return orderService.GetAllPendingOrders();
         }
 
-        [HttpGet("/MyOrders")]
+        [HttpGet("MyOrders")]
         public List<OrderGetMineDto> GetMyOrders(string email)
         {
             return orderService.GetMyOrders(email);
         }
 
 
-        [HttpPost("/CompleteOrder/{id}")]
+        [HttpPost("CompleteOrder/{id}")]
         public void CompleteOrder(int id)
         {
             orderService.CompleteOrder(id);

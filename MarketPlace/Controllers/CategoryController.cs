@@ -7,7 +7,7 @@ using System.Net;
 namespace MarketPlaceDapper.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService categoryService;
