@@ -15,5 +15,7 @@ namespace Application.Models.OrderModels.Interfaces
         List<OrderGetMineDto> GetMyOrders(string email);
 
         void CompleteOrder(int id);
+
+        void RejectOrder(int id);
     }
 }

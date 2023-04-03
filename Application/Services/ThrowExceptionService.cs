@@ -1,6 +1,8 @@
 ﻿using Application.Models.ExceptionModels;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Dtos;
+using Domain.Entities;
+using Domain.Enums;
 using System.Net;
 
 namespace Application.Services
@@ -40,6 +42,14 @@ namespace Application.Services
             if (defaultImagesCount > 1)
             {
                 throw new HttpException("There can be only one default image!", HttpStatusCode.BadRequest);
+            }
+        }
+
+        public static void ThrowExceptionWhenOrderIsNotPending(Order order)
+        {
+            if (order.OrderStatus != OrderStatus.Pending)
+            {
+                throw new HttpException("Order cannot be rejected, because it is not pending!", HttpStatusCode.BadRequest);
             }
         }
     }

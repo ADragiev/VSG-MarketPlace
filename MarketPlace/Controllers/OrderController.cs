@@ -34,6 +34,12 @@ namespace MarketPlace.Controllers
             orderService.CompleteOrder(id);
         }
 
+        [HttpDelete("Reject/{id}")]
+        public void RejectOrder(int id)
+        {
+            orderService.RejectOrder(id);
+        }
+
 
         [HttpPost]
         public OrderGetDto CreateOrder(OrderCreateDto dto)

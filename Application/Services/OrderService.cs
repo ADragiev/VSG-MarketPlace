@@ -64,5 +64,23 @@ namespace Application.Services
         {
             return orderRepo.GetMyOrders(email);
         }
+
+        public void RejectOrder(int id)
+        {
+            ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
+
+            var order = orderRepo.GetByID(id);
+            ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
+
+            var product = productRepo.GetByID(order.ProductCode);
+
+            var newSaleQty = product.SaleQty + order.Qty;
+            productRepo.SetField(product.Id, "SaleQty", newSaleQty);
+
+            var newCombinedQty = product.CombinedQty + order.Qty;
+            productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
+
+            orderRepo.Delete(id);
+        }
     }
 }
