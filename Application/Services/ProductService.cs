@@ -26,7 +26,6 @@ namespace Application.Services
 
         public ProductGetDto Create(ProductCreateDto dto)
         {
-            ThrowExceptionService.ThrowExceptionWhenSaleQtyBiggerThanCombinedQty(dto.SaleQty, dto.CombinedQty);
             ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
             ThrowExceptionService.ThrowExceptionWhenMoreThanOneImageIsDefault(dto.Images);
             //TODO: Да покрия и случая в който няма дефолтна или няма снимки

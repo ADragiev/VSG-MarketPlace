@@ -19,14 +19,6 @@ namespace Application.Services
             }
         }
 
-        public static void ThrowExceptionWhenSaleQtyBiggerThanCombinedQty(int saleQty, int combinedQty)
-        {
-            if (saleQty > combinedQty)
-            {
-                throw new HttpException("Sale qty cannot be bigger than combined qty!", HttpStatusCode.BadRequest);
-            }
-        }
-
         public static void ThrowExceptionWhenNotEnoughQuantity(int saleQty, int orderQty)
         {
             if (orderQty > saleQty)
