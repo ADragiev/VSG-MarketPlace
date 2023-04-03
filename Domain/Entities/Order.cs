@@ -10,9 +10,9 @@ namespace Domain.Entities
 
         public string OrderedBy { get; set; }
 
-        public DateOnly OrderDate { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.Now;
 
-        public OrderStatus OrderStatus { get; set; }
+        public OrderStatus OrderStatus { get; set; } = OrderStatus.Finished;
 
         public int ProductCode { get; set; }
     }

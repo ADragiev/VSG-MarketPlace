@@ -1,4 +1,5 @@
-﻿using Application.Models.OrderModels.Interfaces;
+﻿using Application.Models.OrderModels.Dtos;
+using Application.Models.OrderModels.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
@@ -14,10 +15,10 @@ namespace MarketPlace.Controllers
             this.orderService = orderService;
         }
 
-        [HttpGet]
-        public void Test()
+        [HttpPost]
+        public OrderGetDto CreateOrder(OrderCreateDto dto)
         {
-            orderService.Test();
+            return orderService.Create(dto);
         }
     }
 }

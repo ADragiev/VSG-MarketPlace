@@ -1,4 +1,5 @@
 ﻿using Application.Models.GenericRepo;
+using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.GenericRepository.Context;
@@ -13,6 +14,7 @@ namespace Infrastructure.Configurations
             services.AddSingleton<MarketPlaceContext>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;
         }

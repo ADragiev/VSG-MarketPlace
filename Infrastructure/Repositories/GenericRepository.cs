@@ -44,11 +44,11 @@ namespace Infrastructure.Repositories
 
             var tableName = tableAttribute.Name;
 
-            var sql = @"UPDATE @tableName
-                      SET @fieldName = @value
+            var sql = @$"UPDATE {tableName}
+                      SET {fieldName} = @value
                         WHERE Id = @id";
 
-            Connection.Execute(sql, new { tableName, fieldName, value, id });
+            Connection.Execute(sql, new {value, id });
         }
 
         public void Update(T entity)

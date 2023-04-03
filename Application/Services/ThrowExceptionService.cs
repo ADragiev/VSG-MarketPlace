@@ -21,7 +21,15 @@ namespace Application.Services
         {
             if (saleQty > combinedQty)
             {
-                throw new HttpException("Sale qty cannot be bigger than combined qty", HttpStatusCode.BadRequest);
+                throw new HttpException("Sale qty cannot be bigger than combined qty!", HttpStatusCode.BadRequest);
+            }
+        }
+
+        public static void ThrowExceptionWhenNotEnoughQuantity(int saleQty, int orderQty)
+        {
+            if (orderQty > saleQty)
+            {
+                throw new HttpException("Not enough quantity for sale!", HttpStatusCode.BadRequest);
             }
         }
 
@@ -31,7 +39,7 @@ namespace Application.Services
 
             if (defaultImagesCount > 1)
             {
-                throw new HttpException("There can be only one default image", HttpStatusCode.BadRequest);
+                throw new HttpException("There can be only one default image!", HttpStatusCode.BadRequest);
             }
         }
     }
