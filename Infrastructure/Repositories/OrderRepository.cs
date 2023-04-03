@@ -27,5 +27,15 @@ namespace Infrastructure.Repositories
 
             return Connection.Query<OrderPendingDto>(sql).ToList();
         }
+
+        public List<OrderGetMineDto> GetMyOrders(string email)
+        {
+            var sql = @"SELECT o.Id AS OrderCode, p.FullName AS ProductName, o.Qty, (o.Qty * p.Price) AS Price, o.OrderDate, o.OrderStatus
+                        FROM Orders AS o
+                        JOIN Products AS p ON o.ProductCode = p.Id
+                        WHERE OrderedBy = @email";
+
+            return Connection.Query<OrderGetMineDto>(sql, new { email }).ToList();
+        }
     }
 }

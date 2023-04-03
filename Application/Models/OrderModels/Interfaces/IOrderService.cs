@@ -12,5 +12,6 @@ namespace Application.Models.OrderModels.Interfaces
         OrderGetDto Create(OrderCreateDto dto);
 
         List<OrderPendingDto> GetAllPendingOrders();
+        List<OrderGetMineDto> GetMyOrders(string email);
     }
 }

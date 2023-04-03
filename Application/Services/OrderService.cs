@@ -52,5 +52,10 @@ namespace Application.Services
         {
             return orderRepo.GetAllPendingOrders();
         }
+
+        public List<OrderGetMineDto> GetMyOrders(string email)
+        {
+            return orderRepo.GetMyOrders(email);
+        }
     }
 }

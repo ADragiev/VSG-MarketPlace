@@ -12,5 +12,6 @@ namespace Application.Models.OrderModels.Interfaces
     public interface IOrderRepository : IGenericRepository<Order>
     {
         List<OrderPendingDto> GetAllPendingOrders();
+        List<OrderGetMineDto> GetMyOrders(string email);
     }
 }

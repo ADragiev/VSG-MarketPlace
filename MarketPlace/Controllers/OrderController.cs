@@ -21,6 +21,12 @@ namespace MarketPlace.Controllers
             return orderService.GetAllPendingOrders();
         }
 
+        [HttpGet("/MyOrders")]
+        public List<OrderGetMineDto> GetMyOrders(string email)
+        {
+            return orderService.GetMyOrders(email);
+        }
+
 
         [HttpPost]
         public OrderGetDto CreateOrder(OrderCreateDto dto)
