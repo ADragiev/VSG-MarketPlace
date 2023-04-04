@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
                         FROM
                         Products AS p
                         JOIN Categories AS c ON p.CategoryId  = c.Id
-                        JOIN Images AS i ON i.ProductCode = p.Id
+                        LEFT JOIN Images AS i ON i.ProductCode = p.Id
                         WHERE p.Id = @id";
             //Sql Injection 
 
