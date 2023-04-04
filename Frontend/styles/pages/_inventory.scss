@@ -83,6 +83,7 @@
     margin-top: 200px;
   }
   .actionButtons {
+    width: 100px;
     cursor: pointer;
     svg,div{
       display: inline ;
@@ -109,12 +110,14 @@
   top: 50%;
   left: 50%;
   height: 60vh;
+  width: 46vw;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: $white-color;
   border-radius: 20px;
   overflow: hidden;
   padding: 40px 0px 40px 0px;
   .row {
+    max-height: 100%;
     display: flex;
     justify-content: center;
     margin: 20px;
@@ -136,7 +139,7 @@
     font-size: 24px;
     line-height: 29px;
 
-    color: #000000;
+    color: $black-color;
   }
   .imgSection {
     @include flex-center;
@@ -150,7 +153,7 @@
   .inputField {
     margin: 50px 20px 0px 0px;
     border: 0;
-    border-bottom: 1px solid #9a9a9a;
+    border-bottom: 1px solid $small-details-color;
   }
   #submitFormBtn {
     font-family: "Inter";
@@ -178,7 +181,8 @@
 
     .upload-button,
     #remove-button {
-      background: #ed6c02;
+      width: 120px;
+      background: $upload-button-color;
       font-family: "Inter";
       font-style: normal;
       font-size: 1em;
@@ -211,26 +215,41 @@
 ////////////RESPONSIVE////////
 
 @media screen and (max-width: 768px) {
-  
+  .main{
+    height: 88vh;
+    width: 90vw;
+    justify-content: center;
+    display: flex;
+  }
+  #inventoryMain{
+    display: block;
+  }
   .table-wrapper{
     justify-content: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
   }
 .add-item-form{
   height: 85vh;
-  width: 70vw;
+  width: 80vw;
+  .row {
+    max-height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20px;
+    align-items: center;
+  }
+  .left-side {
+    position: relative;
+    width: 95%;
+  }
+  .imgSection {
+    margin-top: 10px;
+    width: 100%;
+    .img-buttons{
+      flex-direction: row;
+    }
+  }
 }
-.add-item-form .row {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 20px;
-  align-items: center;
-}
-.add-item-form .left-side {
-  width: 95%;
-}
-.add-item-form .imgSection {
-  margin-top: 10px;
-}
-
 }

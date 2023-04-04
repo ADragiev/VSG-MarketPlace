@@ -1,3 +1,8 @@
+.ProductStatus{
+  .status{
+    margin: 0 10px;
+  }
+}
 .ProductNameColumn {
   width: 26%;
 }
@@ -9,5 +14,59 @@
 }
 .ProductDateColumn {
   width: 26%;
+}
+
+
+///////RESPONSIVE///////
+@media screen and (max-width: 768px) {
+  .ProductNameColumn,
+  .ProductQtyColumn,
+  .ProductPriceColumn,
+  .ProductDateColumn,
+  .ProductStatus {
+    padding: 6px;
+    text-align: center;
+    width: 100%;
+  }
+  .ProductNameColumn,
+  .ProductQtyColumn,
+  .ProductPriceColumn,
+  .ProductDateColumn{
+    border-bottom: 1px solid $table-border-color;
+  }
+  .infoDetails{
+    justify-content: flex-start;
+  }
+  .item-row{
+    width: 60vw;
+  }
+
+  .ProductNameColumn::before {
+    content: "Name: ";
+    font-weight: 600;
+  }
+  .ProductQtyColumn::before {
+    content: "Qty: ";
+    font-weight: 600;
+  }
+  .ProductPriceColumn::before {
+    content: "Price: ";
+    font-weight: 600;
+  }
+  .ProductDateColumn::before {
+    content: "Order date: ";
+    font-weight: 600;
+  }
+  .ProductStatus::before {
+    content: "Status: ";
+    font-weight: 600;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .popup{
+    display: flex;
+    align-items: center;
+    }
 }
 
