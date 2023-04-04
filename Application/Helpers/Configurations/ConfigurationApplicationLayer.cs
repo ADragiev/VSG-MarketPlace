@@ -1,5 +1,6 @@
 ﻿using Application.Helpers.Profiles;
 using Application.Models.CategoryModels.Contacts;
+using Application.Models.ImageModels.Interfaces;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
 using Application.Services;
@@ -17,6 +18,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IImageService, ImageService>();
 
             services.AddControllers()
                 .AddFluentValidation(c => c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));

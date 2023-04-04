@@ -11,7 +11,7 @@ namespace Application.Models.ProductModels.Intefaces
 {
     public interface IProductService
     {
-        ProductGetDto Create(ProductCreateDto dto);
+        Task<ProductGetDto> Create(ProductCreateDto dto);
 
         List<ProductGetBaseDto> GetAllForIndex();
 

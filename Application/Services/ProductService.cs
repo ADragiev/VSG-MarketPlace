@@ -1,4 +1,5 @@
 ﻿using Application.Models.GenericRepo;
+using Application.Models.ImageModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using AutoMapper;
@@ -12,37 +13,32 @@ namespace Application.Services
         private readonly IGenericRepository<Image> imageRepo;
         private readonly IGenericRepository<Category> categoryRepo;
         private readonly IMapper mapper;
+        private readonly IImageService imageService;
 
         public ProductService(IProductRepository productRepo,
             IGenericRepository<Image> imageRepo,
             IGenericRepository<Category> categoryRepo,
-            IMapper mapper)
+            IMapper mapper,
+            IImageService imageService)
         {
             this.productRepo = productRepo;
             this.imageRepo = imageRepo;
             this.categoryRepo = categoryRepo;
             this.mapper = mapper;
+            this.imageService = imageService;
         }
 
-        public ProductGetDto Create(ProductCreateDto dto)
+        public async Task<ProductGetDto> Create(ProductCreateDto dto)
         {
             ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
-            ThrowExceptionService.ThrowExceptionWhenMoreThanOneImageIsDefault(dto.Images);
+            //ThrowExceptionService.ThrowExceptionWhenMoreThanOneImageIsDefault(dto.Images);
             //TODO: Да покрия и случая в който няма дефолтна или няма снимки
 
             var product = mapper.Map<Product>(dto);
             var productId = productRepo.Create(product);
+            product.Id = productId;
 
-            var images = mapper.Map<List<Image>>(dto.Images);
-
-            foreach (var image in images)
-            {
-                image.ProductCode = productId;
-                imageRepo.Create(image);
-            }
-
-            var createdProduct = productRepo.GetByID(productId);
-            return mapper.Map<ProductGetDto>(createdProduct);
+            return mapper.Map<ProductGetDto>(product);
 
         }
 

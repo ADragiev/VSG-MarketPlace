@@ -37,9 +37,9 @@ namespace MarketPlaceDapper.Controllers
         }
 
         [HttpPost]
-        public ProductGetDto CreateProduct(ProductCreateDto dto)
+        public async Task<ProductGetDto> CreateProduct(ProductCreateDto dto)
         {
-            return productService.Create(dto);
+            return await productService.Create(dto);
         }
     }
 }

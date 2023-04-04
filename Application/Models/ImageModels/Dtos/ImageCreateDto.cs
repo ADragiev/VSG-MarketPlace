@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Application.Models.ImageModels.Dtos
 {
     public class ImageCreateDto
     {
-        public string ImageUrl { get; set; }
+        public IFormFile Image { get; set; }
         public bool IsDefault { get; set; }
     }
 }

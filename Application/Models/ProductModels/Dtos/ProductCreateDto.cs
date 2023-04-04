@@ -1,4 +1,5 @@
 ﻿using Application.Models.ImageModels.Dtos;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,5 @@ namespace Application.Models.ProductModels.Dtos
         public string Description { get; set; }
 
         public int CategoryId { get; set; }
-
-        public List<ImageCreateDto> Images { get; set; } = new List<ImageCreateDto>();
     }
 }
