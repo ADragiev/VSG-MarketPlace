@@ -5,6 +5,8 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,25 +18,44 @@ namespace Application.Services
 {
     public class ImageService : IImageService
     {
-        private readonly Account account;
+        private readonly IConfiguration config;
+        private readonly Cloudinary cloudinary;
         private readonly IGenericRepository<Image> imageRepo;
         private readonly IGenericRepository<Product> productRepo;
 
-        public ImageService(IGenericRepository<Image> imageRepo,
+        public ImageService(IConfiguration config,
+            IGenericRepository<Image> imageRepo,
             IGenericRepository<Product> productRepo)
         {
-            account = new Account(
-                "dr6bomgw0",
-                "186242376277331",
-                "rJL4jwlbUw9RhRu8TSOQ_Gpgazs");
+            this.config = config;
+            var cloudName = this.config.GetValue<string>("Cloudinary:CloudName");
+            var APIKey = this.config.GetValue<string>("Cloudinary:APIKey");
+            var APISecret = this.config.GetValue<string>("Cloudinary:APISecret");
+
+            cloudinary = new Cloudinary(new Account(
+                cloudName,
+                APIKey,
+                APISecret));
+
             this.imageRepo = imageRepo;
             this.productRepo = productRepo;
+        }
+
+        public async Task DeleteImage(int id)
+        {
+            ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, imageRepo);
+
+            var image = imageRepo.GetByID(id);
+            await cloudinary.DeleteResourcesAsync(new DelResParams()
+            {
+                PublicIds = new List<string>() { image.ImagePublicId }
+            });
+            imageRepo.Delete(id);
         }
 
         public async Task UploadImages(int productId, ImageCreateDto image)
         {
             ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
-            Cloudinary cloudinary = new Cloudinary(account);
             cloudinary.Api.Secure = true;
 
             byte[] bytes;
@@ -57,12 +78,12 @@ namespace Application.Services
             };
 
             var uploadResult = await cloudinary.UploadAsync(@uploadParams);
-
             Image newImage = new Image()
             {
                 ImageUrl = uploadResult.Url.AbsoluteUri,
                 IsDefault = image.IsDefault,
-                ProductCode = productId
+                ProductCode = productId,
+                ImagePublicId = uploadResult.PublicId
             };
 
             imageRepo.Create(newImage);
