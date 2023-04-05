@@ -1,20 +1,28 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.CompilerServices;
 
 namespace Infrastructure.Repositories.GenericRepository.Context
 {
-    public class MarketPlaceContext
+    public class MarketPlaceContext : IDisposable
     {
         private readonly IConfiguration config;
-        private readonly string connection;
+        private readonly string connectionString;
+        private readonly IDbConnection connection;
 
         public MarketPlaceContext(IConfiguration config)
         {
             this.config = config;
-            connection = this.config.GetConnectionString("DefaultConnection");
+            connectionString = this.config.GetConnectionString("DefaultConnection");
+            connection = new SqlConnection(connectionString);
         }
 
-        public IDbConnection Connection => new SqlConnection(connection);
+        public IDbConnection Connection => connection;
+
+        public void Dispose()
+        {
+            connection.Close();
+        }
     }
 }

@@ -58,6 +58,7 @@ namespace Application.Services
             ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
             cloudinary.Api.Secure = true;
 
+            //Turn file into byte array
             byte[] bytes;
             using (var memoryStream = new MemoryStream())
             {
@@ -66,15 +67,15 @@ namespace Application.Services
             }
             string base64 = Convert.ToBase64String(bytes);
 
-
+            //construct image path
             var prefix = @"data:image/png;base64,";
             var imagePath = prefix + base64;
 
+            //upload to cloudinary
             var uploadParams = new ImageUploadParams()
-
             {
                 File = new FileDescription(imagePath),
-                Folder = "EndSars/img"
+                Folder = "MarketPlace/Images"
             };
 
             var uploadResult = await cloudinary.UploadAsync(@uploadParams);
