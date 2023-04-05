@@ -8,16 +8,16 @@ namespace Application.Models.GenericRepo
 {
     public interface IGenericRepository<T>
     {
-        List<T> GetAll();
+        Task<List<T>> GetAll();
 
-        T GetByID(int id);
+        Task<T> GetByID(int id);
 
-        int Create(T entity);
+        Task<int> Create(T entity);
 
-        void Update(T entity);
+        Task Update(T entity);
 
-        void Delete(int id);
+        Task Delete(int id);
 
-        void SetField(int id, string fieldName, object value);
+        Task SetField(int id, string fieldName, object value);
     }
 }

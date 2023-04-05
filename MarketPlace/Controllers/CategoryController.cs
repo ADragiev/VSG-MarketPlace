@@ -18,35 +18,35 @@ namespace MarketPlaceDapper.Controllers
         }
 
         [HttpGet]
-        public List<CategoryGetDto> GetAll()
+        public async Task<List<CategoryGetDto>> GetAll()
         {
-            return categoryService.All();
+            return await categoryService.All();
         }
 
 
         [HttpGet("{id}")]
-        public CategoryGetDto GetCategoryById(int id)
+        public async Task<CategoryGetDto> GetCategoryById(int id)
         {
-            return categoryService.GetById(id);
+            return await categoryService.GetById(id);
         }
 
         [HttpPost]
-        public CategoryGetDto CreateCategory(CategoryCreateDto dto)
+        public async Task<CategoryGetDto> CreateCategory(CategoryCreateDto dto)
         {
-            return categoryService.Create(dto);
+            return await categoryService.Create(dto);
         }
 
         [HttpPut("{id}")]
-        public void UpdateCategory(int id, CategoryUpdateDto dto)
+        public async Task UpdateCategory(int id, CategoryUpdateDto dto)
         {
             //TODO: Check if Ids are the same!
-            categoryService.Update(dto);
+            await categoryService.Update(dto);
         }
 
         [HttpDelete("{id}")]
-        public void DeleteCategory(int id)
+        public async Task DeleteCategory(int id)
         {
-            categoryService.Delete(id);
+            await categoryService.Delete(id);
         }
     }
 }

@@ -9,13 +9,13 @@ namespace Application.Models.OrderModels.Interfaces
 {
     public interface IOrderService
     {
-        OrderGetDto Create(OrderCreateDto dto);
+        Task<OrderGetDto> Create(OrderCreateDto dto);
 
-        List<OrderPendingDto> GetAllPendingOrders();
-        List<OrderGetMineDto> GetMyOrders(string email);
+        Task<List<OrderPendingDto>> GetAllPendingOrders();
+        Task<List<OrderGetMineDto>> GetMyOrders(string email);
 
-        void CompleteOrder(int id);
+        Task CompleteOrder(int id);
 
-        void RejectOrder(int id);
+        Task RejectOrder(int id);
     }
 }

@@ -30,32 +30,31 @@ namespace Application.Services
 
         public async Task<ProductGetDto> Create(ProductCreateDto dto)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
             //ThrowExceptionService.ThrowExceptionWhenMoreThanOneImageIsDefault(dto.Images);
             //TODO: Да покрия и случая в който няма дефолтна или няма снимки
 
             var product = mapper.Map<Product>(dto);
-            var productId = productRepo.Create(product);
+            var productId = await productRepo.Create(product);
             product.Id = productId;
 
             return mapper.Map<ProductGetDto>(product);
-
         }
 
-        public List<ProductGetBaseDto> GetAllForIndex()
+        public async Task<List<ProductGetBaseDto>> GetAllForIndex()
         {
-            return productRepo.GetAllIndexProducts();
+            return await productRepo.GetAllIndexProducts();
         }
 
-        public ProductDetailDto GetDetails(int id)
+        public async Task<ProductDetailDto> GetDetails(int id)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
-            return productRepo.GetProductDetail(id);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
+            return await productRepo.GetProductDetail(id);
         }
 
-        public List<ProductInventoryGetDto> GetAllForInventory()
+        public async Task<List<ProductInventoryGetDto>> GetAllForInventory()
         {
-            return productRepo.GetAllInventoryProducts();
+            return await productRepo.GetAllInventoryProducts();
         }
 
     }

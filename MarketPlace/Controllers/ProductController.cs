@@ -17,23 +17,23 @@ namespace MarketPlaceDapper.Controllers
 
         [HttpGet]
         [Route("Index")]
-        public List<ProductGetBaseDto> GetAllProductsForIndexPage()
+        public async Task<List<ProductGetBaseDto>> GetAllProductsForIndexPage()
         {
-            return productService.GetAllForIndex();
+            return await productService.GetAllForIndex();
         }
 
         [HttpGet]
         [Route("Inventory")]
-        public List<ProductInventoryGetDto> GetAllProductsForInventoryPage()
+        public async Task<List<ProductInventoryGetDto>> GetAllProductsForInventoryPage()
         {
-            return productService.GetAllForInventory();
+            return await productService.GetAllForInventory();
         }
 
         [HttpGet]
         [Route("Details/{id}")]
-        public ProductDetailDto GetProductDetails(int id)
+        public async Task<ProductDetailDto> GetProductDetails(int id)
         {
-            return productService.GetDetails(id);
+            return await productService.GetDetails(id);
         }
 
         [HttpPost]

@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public List<ProductGetBaseDto> GetAllIndexProducts()
+        public async Task<List<ProductGetBaseDto>> GetAllIndexProducts()
         {
             var sql = @"SELECT p.Id AS Code, c.CategoryName AS Category, p.Price, p.SaleQty, i.ImageUrl AS DefaultImage
                         FROM 
@@ -29,22 +29,23 @@ namespace Infrastructure.Repositories
                         JOIN Images AS i ON i.ProductCode = p.Id 
                         WHERE i.IsDefault = 1";
 
-            return Connection.Query<ProductGetBaseDto>(sql, null, Transaction).ToList();
+            var products = await Connection.QueryAsync<ProductGetBaseDto>(sql, null, Transaction);
+            return products.ToList();
         }
 
-        public List<ProductInventoryGetDto> GetAllInventoryProducts()
+        public async Task<List<ProductInventoryGetDto>> GetAllInventoryProducts()
         {
             var sql = @"SELECT p.Id AS Code, p.FullName, c.CategoryName, p.SaleQty, p.CombinedQty
                         FROM
                         Products AS p
                         JOIN Categories AS c ON p.CategoryId = c.Id";
 
-            var products = Connection.Query<ProductInventoryGetDto>(sql, null, Transaction).ToList();
+            var products = await Connection.QueryAsync<ProductInventoryGetDto>(sql, null, Transaction);
 
-            return products;
+            return products.ToList();
         }
 
-        public ProductDetailDto GetProductDetail(int id)
+        public async Task<ProductDetailDto> GetProductDetail(int id)
         {
             var sql = @"SELECT p.Id, p.FullName, p.Price, c.CategoryName, p.SaleQty, p.Description, i.ImageUrl
                         FROM
@@ -52,9 +53,8 @@ namespace Infrastructure.Repositories
                         JOIN Categories AS c ON p.CategoryId  = c.Id
                         LEFT JOIN Images AS i ON i.ProductCode = p.Id
                         WHERE p.Id = @id";
-            //Sql Injection 
 
-            var products = Connection.Query<ProductDetailDto, ImageProductDetailsDto, ProductDetailDto>(sql, (product, image) =>
+            var products = await Connection.QueryAsync<ProductDetailDto, ImageProductDetailsDto, ProductDetailDto>(sql, (product, image) =>
             {
                 product.Images.Add(image);
                 return product;

@@ -27,18 +27,18 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
-        public void CompleteOrder(int id)
+        public async Task CompleteOrder(int id)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
 
-            orderRepo.SetField(id, "OrderStatus", OrderStatus.Finished);
+            await orderRepo.SetField(id, "OrderStatus", OrderStatus.Finished);
         }
 
-        public OrderGetDto Create(OrderCreateDto dto)
+        public async Task<OrderGetDto> Create(OrderCreateDto dto)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound<Product>(dto.ProductCode, productRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Product>(dto.ProductCode, productRepo);
 
-            var product = productRepo.GetByID(dto.ProductCode);
+            var product = await productRepo.GetByID(dto.ProductCode);
 
             ThrowExceptionService.ThrowExceptionWhenNotEnoughQuantity(product.SaleQty, dto.Qty);
 
@@ -49,30 +49,30 @@ namespace Application.Services
             productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
 
             var order = mapper.Map<Order>(dto);
-            var orderId = orderRepo.Create(order);
+            var orderId = await orderRepo.Create(order);
 
-            var createdOrder = orderRepo.GetByID(orderId);
+            var createdOrder = await orderRepo.GetByID(orderId);
             return mapper.Map<OrderGetDto>(createdOrder);
         }
 
-        public List<OrderPendingDto> GetAllPendingOrders()
+        public async Task<List<OrderPendingDto>> GetAllPendingOrders()
         {
-            return orderRepo.GetAllPendingOrders();
+            return await orderRepo.GetAllPendingOrders();
         }
 
-        public List<OrderGetMineDto> GetMyOrders(string email)
+        public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
         {
-            return orderRepo.GetMyOrders(email);
+            return await orderRepo.GetMyOrders(email);
         }
 
-        public void RejectOrder(int id)
+        public async Task RejectOrder(int id)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
 
-            var order = orderRepo.GetByID(id);
+            var order = await orderRepo.GetByID(id);
             ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
 
-            var product = productRepo.GetByID(order.ProductCode);
+            var product = await productRepo.GetByID(order.ProductCode);
 
             var newSaleQty = product.SaleQty + order.Qty;
             productRepo.SetField(product.Id, "SaleQty", newSaleQty);
@@ -80,7 +80,7 @@ namespace Application.Services
             var newCombinedQty = product.CombinedQty + order.Qty;
             productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
 
-            orderRepo.Delete(id);
+            await orderRepo.Delete(id);
         }
     }
 }

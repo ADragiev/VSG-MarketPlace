@@ -43,19 +43,19 @@ namespace Application.Services
 
         public async Task DeleteImage(int id)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, imageRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, imageRepo);
 
-            var image = imageRepo.GetByID(id);
+            var image = await imageRepo.GetByID(id);
             await cloudinary.DeleteResourcesAsync(new DelResParams()
             {
                 PublicIds = new List<string>() { image.ImagePublicId }
             });
-            imageRepo.Delete(id);
+            await imageRepo.Delete(id);
         }
 
         public async Task UploadImages(int productId, ImageCreateDto image)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
             cloudinary.Api.Secure = true;
 
             //Turn file into byte array
@@ -87,7 +87,7 @@ namespace Application.Services
                 ImagePublicId = uploadResult.PublicId
             };
 
-            imageRepo.Create(newImage);
+            await imageRepo.Create(newImage);
         }
     }
 }

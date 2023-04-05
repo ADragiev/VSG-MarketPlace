@@ -17,27 +17,28 @@ namespace Infrastructure.Repositories
         public IDbConnection Connection => marketPlaceContext.Connection;
         public IDbTransaction Transaction => marketPlaceContext.Transaction;
 
-        public int Create(T entity)
+        public async Task<int> Create(T entity)
         {
-            return (int)Connection.Insert<T>(entity, Transaction);
+            return (int)await Connection.InsertAsync<T>(entity, Transaction);
+            //Is it good to cast like this
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            Connection.Delete<T>(id, Transaction);
+            await Connection.DeleteAsync<T>(id, Transaction);
         }
 
-        public List<T> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            return Connection.GetList<T>(null,null, Transaction).ToList();
+            return (await Connection.GetListAsync<T>(null, null, Transaction)).ToList();
         }
 
-        public T GetByID(int CategoryId)
+        public async Task<T> GetByID(int CategoryId)
         {
-            return Connection.Get<T>(CategoryId, Transaction);
+            return await Connection.GetAsync<T>(CategoryId, Transaction);
         }
 
-        public void SetField(int id, string fieldName, object value)
+        public async Task SetField(int id, string fieldName, object value)
         {
             var tableAttribute =
                 (System.ComponentModel.DataAnnotations.Schema.TableAttribute)typeof(T)
@@ -50,12 +51,12 @@ namespace Infrastructure.Repositories
                       SET {fieldName} = @value
                         WHERE Id = @id";
 
-            Connection.Execute(sql, new {value, id }, Transaction);
+            await Connection.ExecuteAsync(sql, new { value, id }, Transaction);
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity)
         {
-             Connection.Update<T>(entity, Transaction);
+            await Connection.UpdateAsync<T>(entity, Transaction);
         }
     }
 }

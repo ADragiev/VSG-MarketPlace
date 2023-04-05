@@ -9,9 +9,9 @@ namespace Application.Services
 {
     public static class ThrowExceptionService
     {
-        public static void ThrowExceptionWhenIdNotFound<T>(int id, IGenericRepository<T> repo)
+        public static async Task ThrowExceptionWhenIdNotFound<T>(int id, IGenericRepository<T> repo)
         {
-            var entity = repo.GetByID(id);
+            var entity = await repo.GetByID(id);
 
             if (entity == null)
             {

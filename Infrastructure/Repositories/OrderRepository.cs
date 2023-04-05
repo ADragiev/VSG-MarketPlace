@@ -19,24 +19,26 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public List<OrderPendingDto> GetAllPendingOrders()
+        public async Task<List<OrderPendingDto>> GetAllPendingOrders()
         {
             var sql = @"SELECT o.Id AS OrderCode, p.Id AS ProductCode, o.Qty, (o.Qty * p.Price) AS Price, o.OrderedBy, o.OrderDate
                         FROM Orders AS o
                         JOIN Products AS p ON o.ProductCode = p.Id
                         WHERE OrderStatus = 0";
 
-            return Connection.Query<OrderPendingDto>(sql, null, Transaction).ToList();
+            var pendingOrders = await Connection.QueryAsync<OrderPendingDto>(sql, null, Transaction);
+            return pendingOrders.ToList();
         }
 
-        public List<OrderGetMineDto> GetMyOrders(string email)
+        public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
         {
             var sql = @"SELECT o.Id AS OrderCode, p.FullName AS ProductName, o.Qty, (o.Qty * p.Price) AS Price, o.OrderDate, o.OrderStatus
                         FROM Orders AS o
                         JOIN Products AS p ON o.ProductCode = p.Id
                         WHERE OrderedBy = @email";
 
-            return Connection.Query<OrderGetMineDto>(sql, new { email }, Transaction).ToList();
+            var orders = await Connection.QueryAsync<OrderGetMineDto>(sql, new { email }, Transaction);
+            return orders.ToList();
         }
     }
 }

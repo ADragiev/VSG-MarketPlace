@@ -16,35 +16,35 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet("Pending")]
-        public List<OrderPendingDto> GetPendingOrders()
+        public async Task<List<OrderPendingDto>> GetPendingOrders()
         {
-            return orderService.GetAllPendingOrders();
+            return await orderService.GetAllPendingOrders();
         }
 
         [HttpGet("MyOrders")]
-        public List<OrderGetMineDto> GetMyOrders(string email)
+        public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
         {
-            return orderService.GetMyOrders(email);
+            return await orderService.GetMyOrders(email);
         }
 
 
         [HttpPut("CompleteOrder/{id}")]
-        public void CompleteOrder(int id)
+        public async Task CompleteOrder(int id)
         {
-            orderService.CompleteOrder(id);
+            await orderService.CompleteOrder(id);
         }
 
         [HttpDelete("Reject/{id}")]
-        public void RejectOrder(int id)
+        public async Task RejectOrder(int id)
         {
-            orderService.RejectOrder(id);
+            await orderService.RejectOrder(id);
         }
 
 
         [HttpPost]
-        public OrderGetDto CreateOrder(OrderCreateDto dto)
+        public async Task<OrderGetDto> CreateOrder(OrderCreateDto dto)
         {
-            return orderService.Create(dto);
+            return await orderService.Create(dto);
         }
     }
 }

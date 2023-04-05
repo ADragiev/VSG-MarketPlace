@@ -22,42 +22,43 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
-        public List<CategoryGetDto> All()
+        public async Task<List<CategoryGetDto>> All()
         {
-            return mapper.Map<List<CategoryGetDto>>(categoryRepo.GetAll());
+            var categories = await categoryRepo.GetAll();
+            return mapper.Map<List<CategoryGetDto>>(categories);
         }
 
-        public CategoryGetDto Create(CategoryCreateDto dto)
+        public async Task<CategoryGetDto> Create(CategoryCreateDto dto)
         {
             var category = mapper.Map<Category>(dto);
 
-            int id = categoryRepo.Create(category);
+            int id = await categoryRepo.Create(category);
             
-            var createdCategory = categoryRepo.GetByID(id);
+            var createdCategory = await categoryRepo.GetByID(id);
             return mapper.Map<CategoryGetDto>(createdCategory);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
 
-            categoryRepo.Delete(id);
+            await categoryRepo.Delete(id);
         }
 
-        public CategoryGetDto GetById(int id)
+        public async Task<CategoryGetDto> GetById(int id)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
-            var category = categoryRepo.GetByID(id);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
+            var category = await categoryRepo.GetByID(id);
 
             return mapper.Map<CategoryGetDto>(category);
         }
 
-        public void Update(CategoryUpdateDto dto)
+        public async Task Update(CategoryUpdateDto dto)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
 
             var categoryToUpdate = mapper.Map<Category>(dto);
-            categoryRepo.Update(categoryToUpdate);
+            await categoryRepo.Update(categoryToUpdate);
         }
     }
 }
