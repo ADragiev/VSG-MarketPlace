@@ -10,8 +10,8 @@ namespace Infrastructure.Configurations
     public static class ConfigurationInfrastructureLayer
     {
         public static IServiceCollection AddConfigurationInfrastructureLayer(this IServiceCollection services)
-        {
-            services.AddSingleton<MarketPlaceContext>();
+        { 
+            services.AddScoped<IMarketPlaceContext, MarketPlaceContext>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();

@@ -1,4 +1,5 @@
-﻿using Application.Models.ImageModels.Dtos;
+﻿using Application.Models.GenericRepo;
+using Application.Models.ImageModels.Dtos;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using Dapper;
@@ -14,7 +15,7 @@ namespace Infrastructure.Repositories
 {
     public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
-        public ProductRepository(MarketPlaceContext marketPlaceContext)
+        public ProductRepository(IMarketPlaceContext marketPlaceContext)
             : base(marketPlaceContext)
         {
         }
@@ -28,7 +29,7 @@ namespace Infrastructure.Repositories
                         JOIN Images AS i ON i.ProductCode = p.Id 
                         WHERE i.IsDefault = 1";
 
-            return Connection.Query<ProductGetBaseDto>(sql).ToList();
+            return Connection.Query<ProductGetBaseDto>(sql, null, Transaction).ToList();
         }
 
         public List<ProductInventoryGetDto> GetAllInventoryProducts()
@@ -38,7 +39,7 @@ namespace Infrastructure.Repositories
                         Products AS p
                         JOIN Categories AS c ON p.CategoryId = c.Id";
 
-            var products = Connection.Query<ProductInventoryGetDto>(sql).ToList();
+            var products = Connection.Query<ProductInventoryGetDto>(sql, null, Transaction).ToList();
 
             return products;
         }
@@ -57,7 +58,7 @@ namespace Infrastructure.Repositories
             {
                 product.Images.Add(image);
                 return product;
-            }, new { id }, splitOn: "ImageUrl");
+            }, new { id }, Transaction, splitOn: "ImageUrl");
 
             var result = products.GroupBy(p => p.FullName).Select(p =>
             {

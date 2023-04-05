@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Models.GenericRepo;
+using Domain.Entities;
 using Infrastructure.Repositories.GenericRepository.Context;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Infrastructure.Repositories
 {
     public class ImageRepository : GenericRepository<Image>
     {
-        public ImageRepository(MarketPlaceContext marketPlaceContext)
+        public ImageRepository(IMarketPlaceContext marketPlaceContext)
             : base(marketPlaceContext)
         {
         }

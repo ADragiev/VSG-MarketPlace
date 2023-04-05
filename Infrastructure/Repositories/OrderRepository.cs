@@ -1,4 +1,5 @@
-﻿using Application.Models.OrderModels.Dtos;
+﻿using Application.Models.GenericRepo;
+using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using Dapper;
 using Domain.Entities;
@@ -13,7 +14,7 @@ namespace Infrastructure.Repositories
 {
     public class OrderRepository : GenericRepository<Order>, IOrderRepository
     {
-        public OrderRepository(MarketPlaceContext marketPlaceContext)
+        public OrderRepository(IMarketPlaceContext marketPlaceContext)
             : base(marketPlaceContext)
         {
         }
@@ -25,7 +26,7 @@ namespace Infrastructure.Repositories
                         JOIN Products AS p ON o.ProductCode = p.Id
                         WHERE OrderStatus = 0";
 
-            return Connection.Query<OrderPendingDto>(sql).ToList();
+            return Connection.Query<OrderPendingDto>(sql, null, Transaction).ToList();
         }
 
         public List<OrderGetMineDto> GetMyOrders(string email)
@@ -35,7 +36,7 @@ namespace Infrastructure.Repositories
                         JOIN Products AS p ON o.ProductCode = p.Id
                         WHERE OrderedBy = @email";
 
-            return Connection.Query<OrderGetMineDto>(sql, new { email }).ToList();
+            return Connection.Query<OrderGetMineDto>(sql, new { email }, Transaction).ToList();
         }
     }
 }

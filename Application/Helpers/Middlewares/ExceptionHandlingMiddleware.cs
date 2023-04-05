@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Application.Models.ExceptionModels;
+using Application.Models.GenericRepo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,16 +20,16 @@ namespace Application.Helpers.Middlewares
             this.next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IMarketPlaceContext marketPlaceContext)
         {
             try
             {
                 await next(context);
+                marketPlaceContext.Transaction.Commit();   
             }
             catch (HttpException ex)
             {
-                //TODO: Може да го направя с custom error, за да не depend-вам на using Microsoft.AspNetCore.Mvc;
-
+                marketPlaceContext.Transaction.Rollback();
 
                 ProblemDetails problem = new ProblemDetails()
                 {
