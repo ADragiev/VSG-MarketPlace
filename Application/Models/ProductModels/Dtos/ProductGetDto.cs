@@ -9,7 +9,7 @@ namespace Application.Models.ProductModels.Dtos
 {
     public class ProductGetDto
     {
-        public int Code { get; set; }
+        public string Code { get; set; }
 
         public string FullName { get; set; }
 

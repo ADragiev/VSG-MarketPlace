@@ -10,6 +10,8 @@ namespace Application.Models.ProductModels.Dtos
 {
     public class ProductCreateDto
     {
+        public string Code { get; set; }
+
         public string FullName { get; set; }
 
         public decimal Price { get; set; }

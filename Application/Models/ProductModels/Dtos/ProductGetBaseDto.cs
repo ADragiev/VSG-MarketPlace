@@ -8,7 +8,7 @@ namespace Application.Models.ProductModels.Dtos
 {
     public class ProductGetBaseDto
     {
-        public int Code { get; set; }
+        public int Id { get; set; }
 
         public string Category { get; set; }
 

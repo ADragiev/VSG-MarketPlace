@@ -8,7 +8,8 @@ namespace Application.Models.ProductModels.Dtos
 {
     public class ProductInventoryGetDto
     {
-        public int Code { get; set; }
+        public int Id { get; set; }
+        public string Code { get; set; }
 
         public string FullName { get; set; }
 

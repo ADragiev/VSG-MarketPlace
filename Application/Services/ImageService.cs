@@ -83,7 +83,7 @@ namespace Application.Services
             {
                 ImageUrl = uploadResult.Url.AbsoluteUri,
                 IsDefault = image.IsDefault,
-                ProductCode = productId,
+                ProductId = productId,
                 ImagePublicId = uploadResult.PublicId
             };
 

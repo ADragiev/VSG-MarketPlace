@@ -13,8 +13,7 @@ namespace Application.Helpers.Profiles
     {
         public ProductProfile()
         {
-            CreateMap<Product, ProductGetDto>()
-                .ForMember(dest => dest.Code, src => src.MapFrom(src => src.Id));
+            CreateMap<Product, ProductGetDto>();
 
             CreateMap<ProductCreateDto, Product>();
         }

@@ -12,6 +12,6 @@ namespace Application.Models.OrderModels.Dtos
 
         public string OrderedBy { get; set; }
 
-        public int ProductCode { get; set; }
+        public int ProductId { get; set; }
     }
 }

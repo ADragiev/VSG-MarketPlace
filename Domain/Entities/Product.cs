@@ -3,9 +3,9 @@
 namespace Domain.Entities
 {
     [Table("Products")]
-    public class Product
+    public class Product : BaseEntity
     {
-        public int Id { get; set; }
+        public string Code { get; set; }
         public string FullName { get; set; }
 
         public decimal Price { get; set; }

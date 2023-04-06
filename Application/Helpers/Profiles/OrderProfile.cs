@@ -14,8 +14,7 @@ namespace Application.Helpers.Profiles
         public OrderProfile()
         {
             CreateMap<OrderCreateDto, Order>();
-            CreateMap<Order, OrderGetDto>()
-                .ForMember(dest => dest.Code, src => src.MapFrom(src => src.Id));
+            CreateMap<Order, OrderGetDto>();
         }
     }
 }

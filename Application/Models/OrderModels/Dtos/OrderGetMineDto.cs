@@ -9,7 +9,7 @@ namespace Application.Models.OrderModels.Dtos
 {
     public class OrderGetMineDto
     {
-        public int OrderCode { get; set; }
+        public int Id { get; set; }
         public string ProductName { get; set; }
 
         public int Qty { get; set; }

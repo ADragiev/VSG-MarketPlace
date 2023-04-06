@@ -36,17 +36,17 @@ namespace Application.Services
 
         public async Task<OrderGetDto> Create(OrderCreateDto dto)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Product>(dto.ProductCode, productRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Product>(dto.ProductId, productRepo);
 
-            var product = await productRepo.GetByID(dto.ProductCode);
+            var product = await productRepo.GetByID(dto.ProductId);
 
             ThrowExceptionService.ThrowExceptionWhenNotEnoughQuantity(product.SaleQty, dto.Qty);
 
             var newSaleQty = product.SaleQty - dto.Qty;
-            productRepo.SetField(product.Id, "SaleQty", newSaleQty);
+            await productRepo.SetField(product.Id, "SaleQty", newSaleQty);
 
             var newCombinedQty = product.CombinedQty - dto.Qty;
-            productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
+            await productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
 
             var order = mapper.Map<Order>(dto);
             var orderId = await orderRepo.Create(order);
@@ -72,7 +72,7 @@ namespace Application.Services
             var order = await orderRepo.GetByID(id);
             ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
 
-            var product = await productRepo.GetByID(order.ProductCode);
+            var product = await productRepo.GetByID(order.ProductId);
 
             var newSaleQty = product.SaleQty + order.Qty;
             productRepo.SetField(product.Id, "SaleQty", newSaleQty);

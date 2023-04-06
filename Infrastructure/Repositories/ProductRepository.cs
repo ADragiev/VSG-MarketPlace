@@ -22,11 +22,11 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductGetBaseDto>> GetAllIndexProducts()
         {
-            var sql = @"SELECT p.Id AS Code, c.CategoryName AS Category, p.Price, p.SaleQty, i.ImageUrl AS DefaultImage
+            var sql = @"SELECT p.Id, c.CategoryName AS Category, p.Price, p.SaleQty, i.ImageUrl AS DefaultImage
                         FROM 
                         Products AS p 
                         JOIN Categories AS c ON p.CategoryId = c.Id 
-                        JOIN Images AS i ON i.ProductCode = p.Id 
+                        JOIN Images AS i ON i.ProductId = p.Id 
                         WHERE i.IsDefault = 1";
 
             var products = await Connection.QueryAsync<ProductGetBaseDto>(sql, null, Transaction);
@@ -35,7 +35,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductInventoryGetDto>> GetAllInventoryProducts()
         {
-            var sql = @"SELECT p.Id AS Code, p.FullName, c.CategoryName, p.SaleQty, p.CombinedQty
+            var sql = @"SELECT p.Id, p.Code, p.FullName, c.CategoryName, p.SaleQty, p.CombinedQty
                         FROM
                         Products AS p
                         JOIN Categories AS c ON p.CategoryId = c.Id";
@@ -51,7 +51,7 @@ namespace Infrastructure.Repositories
                         FROM
                         Products AS p
                         JOIN Categories AS c ON p.CategoryId  = c.Id
-                        LEFT JOIN Images AS i ON i.ProductCode = p.Id
+                        LEFT JOIN Images AS i ON i.ProductId = p.Id
                         WHERE p.Id = @id";
 
             var products = await Connection.QueryAsync<ProductDetailDto, ImageProductDetailsDto, ProductDetailDto>(sql, (product, image) =>

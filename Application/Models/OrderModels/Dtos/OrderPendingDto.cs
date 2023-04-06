@@ -8,7 +8,9 @@ namespace Application.Models.OrderModels.Dtos
 {
     public class OrderPendingDto
     {
-        public int OrderCode { get; set; }
+        public int Id { get; set; }
+
+        public string Code { get; set; }
 
         public int Qty { get; set; }
 
@@ -18,6 +20,5 @@ namespace Application.Models.OrderModels.Dtos
 
         public DateTime OrderDate { get; set; }
 
-        public int ProductCode { get; set; }
     }
 }

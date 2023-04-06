@@ -14,6 +14,6 @@ namespace Domain.Entities
 
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
 
-        public int ProductCode { get; set; }
+        public int ProductId { get; set; }
     }
 }

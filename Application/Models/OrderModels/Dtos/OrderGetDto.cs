@@ -9,7 +9,7 @@ namespace Application.Models.OrderModels.Dtos
 {
     public class OrderGetDto
     {
-        public int Code { get; set; }
+        public int Id { get; set; }
         public int Qty { get; set; }
 
         public string OrderedBy { get; set; }
@@ -18,6 +18,6 @@ namespace Application.Models.OrderModels.Dtos
 
         public OrderStatus OrderStatus { get; set; }
 
-        public int ProductCode { get; set; }
+        public int ProductId { get; set; }
     }
 }

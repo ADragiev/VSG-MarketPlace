@@ -10,7 +10,7 @@ namespace Domain.Entities
 
         public string ImagePublicId { get; set; }
 
-        public int ProductCode { get; set; }
+        public int ProductId { get; set; }
 
         public bool IsDefault { get; set; }
     }
