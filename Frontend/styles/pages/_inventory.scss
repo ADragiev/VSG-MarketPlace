@@ -41,13 +41,12 @@
 }
 #addNewItemBtn {
   @include flex-center;
+  @include roboto-font;
   background: $green-button-color;
   border-color: $green-button-color;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  font-family: "Roboto";
   color: $white-color;
-  font-weight: 400;
   font-size: 14px;
   line-height: 24px;
   padding: 6px 10px;
@@ -118,8 +117,7 @@
   padding: 40px 0px 40px 0px;
   .row {
     max-height: 100%;
-    display: flex;
-    justify-content: center;
+    @include flex-center;
     margin: 20px;
   }
   .left-side {
@@ -133,8 +131,7 @@
   }
   span {
     justify-content: flex-start;
-    font-family: "Inter";
-    font-style: normal;
+   @include inter-font;
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;
@@ -151,13 +148,12 @@
     }
   }
   .inputField {
-    margin: 50px 20px 0px 0px;
+    margin: 2.6em 20px 0px 0px;
     border: 0;
     border-bottom: 1px solid $small-details-color;
   }
   #submitFormBtn {
-    font-family: "Inter";
-    font-style: normal;
+    @include flex-center;
     font-size: 18px;
     line-height: 22px;
     font-weight: 500;
@@ -170,7 +166,7 @@
     border: 0;
     border-radius: 4px;
     padding: 8px 30px 8px 30px;
-    margin: 20px;
+    margin: 10px 0 20px 0;
   }
 
   .img-buttons {
@@ -183,8 +179,7 @@
     #remove-button {
       width: 120px;
       background: $upload-button-color;
-      font-family: "Inter";
-      font-style: normal;
+    @include flex-center;
       font-size: 1em;
       line-height: 24px;
       font-weight: 500;
@@ -234,11 +229,9 @@
   width: 80vw;
   .row {
     max-height: 100%;
-    display: flex;
-    justify-content: center;
+    @include flex-center;
     flex-direction: column;
     margin: 20px;
-    align-items: center;
   }
   .left-side {
     position: relative;

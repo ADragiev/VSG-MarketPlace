@@ -2,6 +2,7 @@ function myFunction() {
     const deleteBtn = Array.from(document.getElementsByClassName("deleteIcon"));
     deleteBtn.forEach((x) =>
       x.addEventListener("click", (e) => {
+        console.log(e.target);
         e.target.parentElement.parentElement.parentElement
           .querySelector(".popuptext")
            .classList.add("show");

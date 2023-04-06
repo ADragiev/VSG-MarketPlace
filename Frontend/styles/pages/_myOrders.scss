@@ -1,5 +1,5 @@
-.ProductStatus{
-  .status{
+.ProductStatus {
+  .status {
     margin: 0 10px;
   }
 }
@@ -16,6 +16,12 @@
   width: 26%;
 }
 
+// .div-wrapper-two{
+//   width: 40%;
+//   .ProductQtyColumn, .ProductPriceColumn{
+//     width: 50%;
+//   }
+// }
 
 ///////RESPONSIVE///////
 @media screen and (max-width: 768px) {
@@ -31,42 +37,49 @@
   .ProductNameColumn,
   .ProductQtyColumn,
   .ProductPriceColumn,
-  .ProductDateColumn{
+  .ProductDateColumn {
     border-bottom: 1px solid $table-border-color;
   }
-  .infoDetails{
+  .infoDetails {
     justify-content: flex-start;
   }
-  .item-row{
+  .item-row {
     width: 60vw;
+  }
+
+  .ProductNameColumn,
+  .ProductQtyColumn,
+  .ProductPriceColumn,
+  .ProductDateColumn,
+  .ProductStatus {
+    &::before {
+      font-weight: 600;
+    }
   }
 
   .ProductNameColumn::before {
     content: "Name: ";
-    font-weight: 600;
   }
   .ProductQtyColumn::before {
     content: "Qty: ";
-    font-weight: 600;
   }
   .ProductPriceColumn::before {
     content: "Price: ";
-    font-weight: 600;
   }
   .ProductDateColumn::before {
     content: "Order date: ";
-    font-weight: 600;
   }
   .ProductStatus::before {
     content: "Status: ";
-    font-weight: 600;
   }
 }
 
 @media screen and (min-width: 769px) {
-  .popup{
+
+  .popup {
     display: flex;
     align-items: center;
-    }
+  }
+ 
+  
 }
-

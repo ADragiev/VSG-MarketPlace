@@ -1,4 +1,4 @@
-function myFunction() {
+ export function showPopup() {
   const buyBtn = Array.from(document.getElementsByClassName("circle"));
   buyBtn.forEach((x) =>
     x.addEventListener("click", (e) => {
@@ -9,7 +9,7 @@ function myFunction() {
   );
 }
 
-function addBtn() {
+export function addBtn() {
   Array.from(document.getElementsByClassName("btnYesNo")).forEach((x) => {
     x.addEventListener("click", (e) => {
         e.preventDefault()
@@ -19,5 +19,3 @@ function addBtn() {
   });
 }
 
-addBtn();
-myFunction();

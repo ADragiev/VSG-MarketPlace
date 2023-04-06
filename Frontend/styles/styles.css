@@ -2,6 +2,12 @@
 * {
   margin: 0;
   padding: 0;
+  border: 0;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
 }
 
 body {
@@ -38,6 +44,7 @@ body {
 .user span {
   font-family: "Roboto";
   font-style: normal;
+  font-weight: 400;
   font-weight: 500;
   font-size: 16px;
   line-height: 16px;
@@ -56,7 +63,7 @@ body {
   display: flex;
   justify-content: left;
   align-items: center;
-  margin: 2em 1em 0 1em;
+  margin: 1em 1em 0 1em;
   padding: 0.8em;
   border-radius: 10px;
 }
@@ -66,6 +73,7 @@ body {
 .sidebar .menu-item a {
   font-family: "Roboto";
   font-style: normal;
+  font-weight: 400;
   font-weight: 500;
   font-size: 16px;
   line-height: 16px;
@@ -125,23 +133,19 @@ body {
   align-items: center;
 }
 .popup .popuptext .buttons-container button:first-child {
-  margin: 0.5em;
   background: #ed1c25;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
-  border: 0;
   color: #fff;
-  font-family: "Roboto";
-  padding: 0.2em 1em;
-  cursor: pointer;
+  border: 0;
 }
 .popup .popuptext .buttons-container button:last-child {
-  margin: 0.5em;
   background: #fff;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-  border: 1px solid #ed1c25;
-  border-radius: 4px;
   color: #ed1c25;
+  border: 1px solid #ed1c25;
+}
+.popup .popuptext .buttons-container button:first-child, .popup .popuptext .buttons-container button:last-child {
+  margin: 0.5em;
+  border-radius: 4px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   font-family: "Roboto";
   padding: 0.2em 1em;
   cursor: pointer;
@@ -188,15 +192,15 @@ a {
 }
 
 #login {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
   padding: 6px 16px 6px 16px;
   color: #fff;
   border: 0;
   background: #ed1c25;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
   font-size: 30px;
   line-height: 35px;
 }
@@ -216,6 +220,17 @@ a {
   overflow-y: auto;
 }
 
+.display-main-container {
+  display: flex;
+  justify-content: center;
+}
+
+#main-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .list-wrapper {
   flex-wrap: wrap;
   display: flex;
@@ -228,19 +243,25 @@ a {
 }
 
 .card-item {
+  width: 280px;
+  height: 217px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   margin: 1em;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
 .card-item .product-image {
   border-radius: 5px 5px 0 0;
   transition: transform 0.2s ease-in-out;
+  align-self: center;
 }
 .card-item .product-image:hover {
   transform: scale(1.1);
+}
+.card-item .product-image img {
+  max-height: 150px;
 }
 
 .details {
@@ -252,7 +273,7 @@ a {
 }
 
 .name-price {
-  margin: 1.2em 1.2em 0.5em 0.5em;
+  margin: 0.8em 1.2em 0.5em 0.5em;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
@@ -288,8 +309,8 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 2.5em;
-  height: 2.5em;
+  width: 35px;
+  height: 35px;
   border-radius: 25px;
   background: #ed1c25;
 }
@@ -319,11 +340,16 @@ a {
 }
 .modal-content p {
   font-family: "Roboto";
+  font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
 }
+.modal-content .productImage {
+  align-self: center;
+}
 .modal-content img {
+  max-height: 320px;
   border-radius: 40px 40px 0px 0px;
 }
 .modal-content section {
@@ -370,6 +396,7 @@ a {
 }
 .name-details small {
   font-family: "Roboto";
+  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   color: #9A9A9A;
@@ -388,6 +415,7 @@ a {
 }
 .other-details small {
   font-family: "Roboto";
+  font-style: normal;
   font-weight: 400;
   color: #9A9A9A;
 }
@@ -416,6 +444,7 @@ a {
   .menu-item span {
     font-family: "Roboto";
     font-style: normal;
+    font-weight: 400;
     font-weight: 500;
     font-size: 16px;
     line-height: 16px;
@@ -427,10 +456,10 @@ a {
     flex-direction: row-reverse;
   }
   .header .hamburger-icon-container {
-    display: inline-block;
     display: flex;
     justify-content: center;
     align-items: center;
+    display: inline-block;
     margin: 10px;
   }
   .checkbox {
@@ -547,13 +576,14 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
   background: #2e7d32;
   border-color: #2e7d32;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  font-family: "Roboto";
   color: #fff;
-  font-weight: 400;
   font-size: 14px;
   line-height: 24px;
   padding: 6px 10px;
@@ -627,6 +657,7 @@ a {
   max-height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 20px;
 }
 .add-item-form .left-side {
@@ -659,13 +690,14 @@ a {
   max-width: 100%;
 }
 .add-item-form .inputField {
-  margin: 50px 20px 0px 0px;
+  margin: 2.6em 20px 0px 0px;
   border: 0;
   border-bottom: 1px solid #9A9A9A;
 }
 .add-item-form #submitFormBtn {
-  font-family: "Inter";
-  font-style: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 18px;
   line-height: 22px;
   font-weight: 500;
@@ -678,7 +710,7 @@ a {
   border: 0;
   border-radius: 4px;
   padding: 8px 30px 8px 30px;
-  margin: 20px;
+  margin: 10px 0 20px 0;
 }
 .add-item-form .img-buttons {
   display: flex;
@@ -690,8 +722,9 @@ a {
 .add-item-form .img-buttons #remove-button {
   width: 120px;
   background: #ED6C02;
-  font-family: "Inter";
-  font-style: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1em;
   line-height: 24px;
   font-weight: 500;
@@ -739,9 +772,9 @@ a {
     max-height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     margin: 20px;
-    align-items: center;
   }
   .add-item-form .left-side {
     position: relative;
@@ -768,6 +801,7 @@ a {
   width: 95%;
   font-family: "Roboto";
   font-style: normal;
+  font-weight: 400;
   font-weight: 700;
   font-size: 18px;
   justify-content: flex-start;
@@ -926,25 +960,27 @@ a {
   .item-row {
     width: 60vw;
   }
+  .ProductNameColumn::before,
+  .ProductQtyColumn::before,
+  .ProductPriceColumn::before,
+  .ProductDateColumn::before,
+  .ProductStatus::before {
+    font-weight: 600;
+  }
   .ProductNameColumn::before {
     content: "Name: ";
-    font-weight: 600;
   }
   .ProductQtyColumn::before {
     content: "Qty: ";
-    font-weight: 600;
   }
   .ProductPriceColumn::before {
     content: "Price: ";
-    font-weight: 600;
   }
   .ProductDateColumn::before {
     content: "Order date: ";
-    font-weight: 600;
   }
   .ProductStatus::before {
     content: "Status: ";
-    font-weight: 600;
   }
 }
 @media screen and (min-width: 769px) {

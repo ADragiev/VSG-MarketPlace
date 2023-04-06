@@ -1,3 +1,5 @@
+@import "../abstracts/mixins";
+
 .infoDetails {
   display: flex;
   flex-direction: column;
@@ -8,8 +10,7 @@
   background: $table-header-color;
   border-radius: 10px;
   width: 95%;
-  font-family: "Roboto";
-  font-style: normal;
+ @include roboto-font;
   font-weight: 700;
   font-size: 18px;
   justify-content: flex-start;
@@ -22,9 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
+  @include roboto-font;
   font-size: 14px;
   border: 1px solid #bcbec0;
   border-radius: 10px;

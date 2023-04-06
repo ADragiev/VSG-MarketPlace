@@ -1,3 +1,5 @@
+@import "../abstracts/mixins";
+   
    #body {
     background-image: url("../images/vsg_bg 2.jpg");
     background-position: center center;
@@ -24,15 +26,13 @@
   
   }
   #login{
+    @include roboto-font;
     padding: 6px 16px 6px 16px;
     color: $white-color;
     border: 0;
     background: $main-color;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
     border-radius: 4px;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
     font-size: 30px;
     line-height: 35px;
   }

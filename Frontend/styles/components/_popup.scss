@@ -32,29 +32,28 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-  
-      button:first-child {
-        margin: 0.5em;
+
+      button:first-child{
         background: $main-color;
-        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-        border-radius: 4px;
-        border: 0;
         color: $white-color;
-        font-family: "Roboto";
-        padding: 0.2em 1em;
-        cursor: pointer;
+        border: 0;
+
       }
-      button:last-child {
-        margin: 0.5em;
+      button:last-child{
         background: $white-color;
-        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-        border: 1px solid $main-color;
-        border-radius: 4px;
         color: $main-color;
+        border: 1px solid $main-color;
+      }
+
+      button:first-child, button:last-child {
+        margin: 0.5em;
+        border-radius: 4px;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
         font-family: "Roboto";
         padding: 0.2em 1em;
         cursor: pointer;
       }
+     
     }
   }
   

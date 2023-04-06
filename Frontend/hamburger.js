@@ -18,7 +18,7 @@ inputField.addEventListener('change', () => {
         const sidebar = document.getElementsByClassName('sidebar')[0]
         const userDiv = document.getElementsByClassName('menu-item')[0]
         const main =  document.getElementsByClassName('main')[0]
-        main.style.display = 'block'
+        main.style.display = 'flex'
         userDiv.className = 'user'
         sidebar.style.display = 'none'
 
