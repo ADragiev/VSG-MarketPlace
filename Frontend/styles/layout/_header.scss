@@ -1,0 +1,35 @@
+@import '../abstracts/mixins';
+
+.header {
+    background-color: $white-color;
+    width: 100vw;
+    height: 6vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+      font-family: "Montserrat";
+      font-style: normal;
+      font-size: 30px;
+      line-height: 37px;
+      color: $black-color;
+    }
+    img {
+      padding: 10px;
+    }
+    .hamburger-icon-container{
+      display: none;
+    }
+  }
+  .user {
+    @include flex-center;
+  
+    span {
+     @include roboto-font;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+
+  

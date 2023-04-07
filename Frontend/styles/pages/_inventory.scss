@@ -1,0 +1,249 @@
+@import "../abstracts/mixins";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
+
+//////////////MAIN/////////////
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+.main {
+  background-color: $white-color;
+  border-radius: 20px;
+  margin-top: 2em;
+}
+.table-wrapper {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  height: auto;
+  border-radius: 20px;
+  padding: 20px;
+}
+///////SEARCH////////////
+#search-container {
+  margin: 20px 0px 40px 0px;
+  @include flex-center;
+  #searchIcon {
+    margin-right: 5px;
+  }
+  input {
+    height: 80%;
+    margin-right: 10px;
+    outline: none;
+    border: 0;
+  }
+  .input-div {
+    border-bottom: 1px solid $black-color;
+    margin-right: 20px;
+  }
+}
+#addNewItemBtn {
+  @include flex-center;
+  @include roboto-font;
+  background: $green-button-color;
+  border-color: $green-button-color;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  color: $white-color;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 6px 10px;
+  svg {
+    margin-right: 10px;
+  }
+}
+/////////////TABLE///////////
+.main-table {
+  border-radius: 4px;
+  width: 100%;
+  background-color: $white-color;
+  color: $black-color;
+  border: 1px solid $table-border-color;
+  border-spacing: 0;
+  tbody td,
+  th {
+    border-color: $table-border-color;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid $table-border-color;
+    border-collapse: collapse;
+    font-family: "Roboto";
+    svg {
+      margin-right: 8px;
+    }
+  }
+
+  tfoot tr td {
+    border-top: 1px solid $table-border-color;
+    display: table;
+    width: 100%;
+    margin-top: 200px;
+  }
+  .actionButtons {
+    width: 100px;
+    cursor: pointer;
+    svg,div{
+      display: inline ;
+    }
+  }
+}
+//////ADD NEW ITEM MODAL/////////
+.add-item-modal, .edit-item-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.add-item-form, .edit-item-form  {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  height: 60vh;
+  width: 46vw;
+  transform: translate(-50%, -50%);
+  background-color: $white-color;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 40px 0px 40px 0px;
+  .row {
+    max-height: 100%;
+    @include flex-center;
+    margin: 20px;
+  }
+  .left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 40%;
+    #item-description{
+      resize: none;
+    }
+  }
+  span {
+    justify-content: flex-start;
+   @include inter-font;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: $black-color;
+  }
+  .imgSection {
+    @include flex-center;
+    flex-direction: column;
+    margin-top: 120px;
+    width: 55%;
+    img{
+      max-width: 260px;
+     max-height: 200px;
+    }
+  }
+  .inputField {
+    margin: 2.6em 20px 0px 0px;
+    border: 0;
+    border-bottom: 1px solid $small-details-color;
+  }
+  #submitFormBtn {
+    @include flex-center;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    width: 150px;
+    height: 36px;
+    color: $white-color;
+    align-self: center;
+    background: $green-button-color;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    border: 0;
+    border-radius: 4px;
+    padding: 8px 30px 8px 30px;
+    margin: 10px 0 20px 0;
+  }
+
+  .img-buttons {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    border-radius: 4px;
+
+    .upload-button,
+    #remove-button {
+      width: 120px;
+      background: $upload-button-color;
+    @include flex-center;
+      font-size: 1em;
+      line-height: 24px;
+      font-weight: 500;
+      color: $white-color;
+      padding: 8px;
+      border: 0;
+      margin: 10px;
+      border-radius: 4px;
+    }
+    #remove-button {
+      background: $main-color;
+    }
+  }
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 5px 10px;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+////////////RESPONSIVE////////
+
+@media screen and (max-width: 768px) {
+  .main{
+    height: 88vh;
+    width: 90vw;
+    justify-content: center;
+    display: flex;
+  }
+  #inventoryMain{
+    display: block;
+  }
+  .table-wrapper{
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  }
+.add-item-form, .edit-item-form{
+  height: 85vh;
+  width: 80vw;
+  .row {
+    max-height: 100%;
+    @include flex-center;
+    flex-direction: column;
+    margin: 20px;
+  }
+  .left-side {
+    position: relative;
+    width: 95%;
+  }
+  .imgSection {
+    margin-top: 10px;
+    width: 100%;
+    .img-buttons{
+      flex-direction: row;
+    }
+  }
+}
+}
