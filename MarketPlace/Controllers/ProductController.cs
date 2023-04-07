@@ -3,7 +3,7 @@ using Application.Models.ProductModels.Intefaces;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarketPlaceDapper.Controllers
+namespace MarketPlace.Controllers
 {
     [ApiController]
     [Route("[controller]")]

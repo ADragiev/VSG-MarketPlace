@@ -4,7 +4,7 @@ using Application.Models.ExceptionModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace MarketPlaceDapper.Controllers
+namespace MarketPlace.Controllers
 {
     [ApiController]
     [Route("[controller]")]
