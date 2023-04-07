@@ -75,10 +75,10 @@ namespace Application.Services
             var product = await productRepo.GetByID(order.ProductId);
 
             var newSaleQty = product.SaleQty + order.Qty;
-            productRepo.SetField(product.Id, "SaleQty", newSaleQty);
+            await productRepo.SetField(product.Id, "SaleQty", newSaleQty);
 
             var newCombinedQty = product.CombinedQty + order.Qty;
-            productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
+            await productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
 
             await orderRepo.Delete(id);
         }
