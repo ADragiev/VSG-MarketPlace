@@ -39,7 +39,7 @@ export const createModal = async (id) =>{
           <small>${product.category}</small>
         </div>
         <div class="other-details">
-          <span>${product.price}</span>
+          <span>${product.price} BGN</span>
           <small>Qty:1</small>
         </div>
       </div>

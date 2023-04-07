@@ -1,24 +1,30 @@
-function myFunction() {
-    const deleteBtn = Array.from(document.getElementsByClassName("deleteIcon"));
-    deleteBtn.forEach((x) =>
-      x.addEventListener("click", (e) => {
-        console.log(e.target);
-        e.target.parentElement.parentElement.parentElement
-          .querySelector(".popuptext")
-           .classList.add("show");
-      })
-    );
-  }
+import { makeRequest } from "../src/makeRequest.js";
 
-  function addBtn() {
-    Array.from(document.getElementsByClassName("btnYesNo")).forEach((x) => {
-      x.addEventListener("click", (e) => {
-          e.preventDefault()
-          e.target.parentElement.parentElement.className = 'popuptext'
-         
-      });
+export function showDeletePopup() {
+  const deleteBtn = Array.from(document.getElementsByClassName("deleteIcon"));
+  deleteBtn.forEach((x) =>
+    x.addEventListener("click", (e) => {
+      e.target.parentElement.parentElement.parentElement
+        .querySelector(".popuptext")
+        .classList.add("show");
+    })
+  );
+}
+
+export function addBtn() {
+  Array.from(document.getElementsByClassName("btnYesNo")).forEach((x) => {
+    x.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const id = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
+      e.target.parentElement.parentElement.className = "popuptext";
+
+      if (e.target.textContent == "YES") {
+        let response = await makeRequest({
+          path: "/products/" + id,
+          method: "DELETE"
+        });
+        console.log(response);
+      }
     });
-  }
-  
-  addBtn();
-  myFunction()
+  });
+}

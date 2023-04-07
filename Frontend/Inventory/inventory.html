@@ -14,9 +14,12 @@
       rel="stylesheet"
     />
 
-    <script src="addNewItemModal.js" defer></script>
-    <script src="deleteTooltip.js" defer></script>
+    <script src="addNewItemModal.js" defer type="module"></script>
+    <script src="deleteTooltip.js" defer type="module"></script>
     <script src="../hamburger.js" defer></script>
+    <script src="createTable.js" defer type="module"> </script>
+    <script src="showEditModal.js" defer type="module"> </script>
+    <script src="createEditModal.js" defer type="module"> </script>
 
     <title>Inventory</title>
   </head>
@@ -183,142 +186,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Laptop Macbook Pro 16” M1 Max</td>
-                <td>Laptops</td>
-                <td>0</td>
-                <td>2</td>
-                <td class="actionButtons">
-                  <a
-                    ><svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="editIcon"
-                    >
-                      <path
-                        d="M13.8125 4.6875L12.5938 5.90625L10.0938 3.40625L11.3125 2.1875C11.4375 2.0625 11.5938 2 11.7812 2C11.9688 2 12.125 2.0625 12.25 2.1875L13.8125 3.75C13.9375 3.875 14 4.03125 14 4.21875C14 4.40625 13.9375 4.5625 13.8125 4.6875ZM2 11.5L9.375 4.125L11.875 6.625L4.5 14H2V11.5Z"
-                        fill="#ED6C02"
-                      /></svg>
-                </a>
-                  <div class="popup">
-                    <div class="popuptext">
-                      <span> Are you sure you want to delete this item? </span>
-                      <div class="buttons-container">
-                        <button class="btnYesNo">YES</button>
-                        <button class="btnYesNo">NO</button>
-                      </div>
-                    </div>
-                    <a class="deleteIcon">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M10.3438 2.65625H12.6562V4H3.34375V2.65625H5.65625L6.34375 2H9.65625L10.3438 2.65625ZM5.34375 6V12.6562H10.6562V6H5.34375ZM4 12.6562V4.65625H12V12.6562C12 13.0104 11.8646 13.3229 11.5938 13.5938C11.3229 13.8646 11.0104 14 10.6562 14H5.34375C4.98958 14 4.67708 13.8646 4.40625 13.5938C4.13542 13.3229 4 13.0104 4 12.6562Z"
-                          fill="#ED1C25"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Monitor Dell 27’</td>
-                <td>Monitors</td>
-                <td>2</td>
-                <td>22</td>
-                <td class="actionButtons">
-                  <a
-                    ><svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="editIcon"
-                    >
-                      <path
-                        d="M13.8125 4.6875L12.5938 5.90625L10.0938 3.40625L11.3125 2.1875C11.4375 2.0625 11.5938 2 11.7812 2C11.9688 2 12.125 2.0625 12.25 2.1875L13.8125 3.75C13.9375 3.875 14 4.03125 14 4.21875C14 4.40625 13.9375 4.5625 13.8125 4.6875ZM2 11.5L9.375 4.125L11.875 6.625L4.5 14H2V11.5Z"
-                        fill="#ED6C02"
-                      /></svg></a>
-                  <div class="popup">
-                    <div class="popuptext">
-                      <span> Are you sure you want to delete this item? </span>
-                      <div class="buttons-container">
-                        <button class="btnYesNo">YES</button>
-                        <button class="btnYesNo">NO</button>
-                      </div>
-                    </div>
-                    <a class="deleteIcon">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M10.3438 2.65625H12.6562V4H3.34375V2.65625H5.65625L6.34375 2H9.65625L10.3438 2.65625ZM5.34375 6V12.6562H10.6562V6H5.34375ZM4 12.6562V4.65625H12V12.6562C12 13.0104 11.8646 13.3229 11.5938 13.5938C11.3229 13.8646 11.0104 14 10.6562 14H5.34375C4.98958 14 4.67708 13.8646 4.40625 13.5938C4.13542 13.3229 4 13.0104 4 12.6562Z"
-                          fill="#ED1C25"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Gaming Chair RedDragon</td>
-                <td>Chairs</td>
-                <td>5</td>
-                <td>30</td>
-                <td class="actionButtons">
-                  <a
-                    ><svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="editIcon"
-                    >
-                      <path
-                        d="M13.8125 4.6875L12.5938 5.90625L10.0938 3.40625L11.3125 2.1875C11.4375 2.0625 11.5938 2 11.7812 2C11.9688 2 12.125 2.0625 12.25 2.1875L13.8125 3.75C13.9375 3.875 14 4.03125 14 4.21875C14 4.40625 13.9375 4.5625 13.8125 4.6875ZM2 11.5L9.375 4.125L11.875 6.625L4.5 14H2V11.5Z"
-                        fill="#ED6C02"
-                      /></svg></a>
-                  <div class="popup">
-                    <div class="popuptext">
-                      <span> Are you sure you want to delete this item? </span>
-                      <div class="buttons-container">
-                        <button class="btnYesNo">YES</button>
-                        <button class="btnYesNo">NO</button>
-                      </div>
-                    </div>
-                    <a class="deleteIcon">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M10.3438 2.65625H12.6562V4H3.34375V2.65625H5.65625L6.34375 2H9.65625L10.3438 2.65625ZM5.34375 6V12.6562H10.6562V6H5.34375ZM4 12.6562V4.65625H12V12.6562C12 13.0104 11.8646 13.3229 11.5938 13.5938C11.3229 13.8646 11.0104 14 10.6562 14H5.34375C4.98958 14 4.67708 13.8646 4.40625 13.5938C4.13542 13.3229 4 13.0104 4 12.6562Z"
-                          fill="#ED1C25"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </td>
-              </tr>
             </tbody>
             <tfoot>
               <tr>
@@ -422,6 +289,7 @@
                     src="../images/no_image-placeholder.png"
                     alt="noImgPlaceholder"
                   />
+                  <input name="uploadedImage" id="fileUpload" type="file" style="display: none;">
                   <div class="img-buttons">
                     <button class="upload-button" type="button">Upload</button>
                     <button id="remove-button" type="button">Remove</button>
@@ -433,119 +301,7 @@
             </form>
           </div>
           <div class="edit-item-modal">
-            <form class="add-item-form" action="POST">
-              <a class="close-modal-button">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M17.7305 2.02734L10.7578 9L17.7305 15.9727L15.9727 17.7305L9 10.7578L2.02734 17.7305L0.269531 15.9727L7.24219 9L0.269531 2.02734L2.02734 0.269531L9 7.24219L15.9727 0.269531L17.7305 2.02734Z"
-                    fill="black"
-                  />
-                </svg>
-              </a>
-              <div class="row">
-                <div class="left-side">
-                  <span>Modify Item</span>
-                  <input
-                    class="inputField"
-                    type="text"
-                    id="item-code"
-                    name="itemCode"
-                    placeholder="Code *"
-                    required
-                    value="1"
-                  />
-
-                  <input
-                    class="inputField"
-                    type="text"
-                    id="item-name"
-                    name="itemName"
-                    placeholder="Name *"
-                    required
-                    value="Apple MacBook Pro 16” M1 Max 32GB"
-                  />
-
-                  <textarea
-                    class="inputField"
-                    id="item-description"
-                    name="itemDescription"
-                    rows="4"
-                    required
-                    placeholder="Description"
-                  >
-                        This is the description of the product.
-                        This is the description of the product.
-                  This is the description of the product.
-                  This is the description of the product.</textarea
-                  >
-
-                  <select
-                    class="inputField"
-                    id="item-category"
-                    name="itemCategory"
-                    required
-                  >
-                    <option value="" disabled selected>Category *</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="fashion">Fashion</option>
-                    <option value="home">Home</option>
-                    <option value="sports">Sports</option>
-                  </select>
-
-                  <input
-                    class="inputField"
-                    type="number"
-                    id="quantity-for-sale"
-                    name="quantityForSale"
-                    min="1"
-                    required
-                    placeholder="Qty For Sale"
-                    value="0"
-                  />
-
-                  <input
-                  class="inputField"
-                  type="number"
-                  id="sale-price"
-                  name="salePrice"
-                  min="1"
-                  required
-                  placeholder="Sale Price"
-                />
-
-                  <input
-                    class="inputField"
-                    type="number"
-                    id="quantity-available"
-                    name="quantityAvailable"
-                    min="0"
-                    required
-                    placeholder="Qty"
-                    value="2"
-                  />
-                </div>
-
-                <div class="imgSection">
-                  <img
-                    class="editCurrentImg"
-                    src="../images/product-image.jpg"
-                    alt="noImgPlaceholder"
-                  />
-                  <div class="img-buttons">
-                    <button class="upload-button" type="button">Upload</button>
-                    <button id="remove-button" type="button">Remove</button>
-                  </div>
-                </div>
-              </div>
-
-              <button id="submitFormBtn" type="submit">Add</button>
-            </form>
+           
           </div>
         </section>
       </main>

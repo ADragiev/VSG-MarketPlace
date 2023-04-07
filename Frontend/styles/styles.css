@@ -10,6 +10,10 @@ img {
   max-width: 100%;
 }
 
+svg {
+  pointer-events: none;
+}
+
 body {
   background-color: #f0f2f3;
 }
@@ -638,7 +642,7 @@ a {
   z-index: 999;
 }
 
-.add-item-form {
+.add-item-form, .edit-item-form {
   display: flex;
   justify-content: center;
   position: absolute;
@@ -653,23 +657,23 @@ a {
   overflow: hidden;
   padding: 40px 0px 40px 0px;
 }
-.add-item-form .row {
+.add-item-form .row, .edit-item-form .row {
   max-height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 20px;
 }
-.add-item-form .left-side {
+.add-item-form .left-side, .edit-item-form .left-side {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   width: 40%;
 }
-.add-item-form .left-side #item-description {
+.add-item-form .left-side #item-description, .edit-item-form .left-side #item-description {
   resize: none;
 }
-.add-item-form span {
+.add-item-form span, .edit-item-form span {
   justify-content: flex-start;
   font-family: "Inter";
   font-style: normal;
@@ -678,7 +682,7 @@ a {
   line-height: 29px;
   color: #000;
 }
-.add-item-form .imgSection {
+.add-item-form .imgSection, .edit-item-form .imgSection {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -686,15 +690,16 @@ a {
   margin-top: 120px;
   width: 55%;
 }
-.add-item-form .imgSection img {
-  max-width: 100%;
+.add-item-form .imgSection img, .edit-item-form .imgSection img {
+  max-width: 260px;
+  max-height: 200px;
 }
-.add-item-form .inputField {
+.add-item-form .inputField, .edit-item-form .inputField {
   margin: 2.6em 20px 0px 0px;
   border: 0;
   border-bottom: 1px solid #9A9A9A;
 }
-.add-item-form #submitFormBtn {
+.add-item-form #submitFormBtn, .edit-item-form #submitFormBtn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -712,14 +717,15 @@ a {
   padding: 8px 30px 8px 30px;
   margin: 10px 0 20px 0;
 }
-.add-item-form .img-buttons {
+.add-item-form .img-buttons, .edit-item-form .img-buttons {
   display: flex;
   flex-direction: column;
   margin: 10px;
   border-radius: 4px;
 }
 .add-item-form .img-buttons .upload-button,
-.add-item-form .img-buttons #remove-button {
+.add-item-form .img-buttons #remove-button, .edit-item-form .img-buttons .upload-button,
+.edit-item-form .img-buttons #remove-button {
   width: 120px;
   background: #ED6C02;
   display: flex;
@@ -734,7 +740,7 @@ a {
   margin: 10px;
   border-radius: 4px;
 }
-.add-item-form .img-buttons #remove-button {
+.add-item-form .img-buttons #remove-button, .edit-item-form .img-buttons #remove-button {
   background: #ed1c25;
 }
 
@@ -764,11 +770,11 @@ a {
     flex-wrap: nowrap;
     flex-direction: column;
   }
-  .add-item-form {
+  .add-item-form, .edit-item-form {
     height: 85vh;
     width: 80vw;
   }
-  .add-item-form .row {
+  .add-item-form .row, .edit-item-form .row {
     max-height: 100%;
     display: flex;
     justify-content: center;
@@ -776,15 +782,15 @@ a {
     flex-direction: column;
     margin: 20px;
   }
-  .add-item-form .left-side {
+  .add-item-form .left-side, .edit-item-form .left-side {
     position: relative;
     width: 95%;
   }
-  .add-item-form .imgSection {
+  .add-item-form .imgSection, .edit-item-form .imgSection {
     margin-top: 10px;
     width: 100%;
   }
-  .add-item-form .imgSection .img-buttons {
+  .add-item-form .imgSection .img-buttons, .edit-item-form .imgSection .img-buttons {
     flex-direction: row;
   }
 }
