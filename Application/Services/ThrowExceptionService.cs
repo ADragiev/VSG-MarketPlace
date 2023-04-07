@@ -44,5 +44,13 @@ namespace Application.Services
                 throw new HttpException("Order cannot be rejected, because it is not pending!", HttpStatusCode.BadRequest);
             }
         }
+
+        public static void ThrowExceptionWhenIdsDoNotMatch(int firstId, int secondId)
+        {
+            if (firstId != secondId)
+            {
+                throw new HttpException("Requested Ids do not match!", HttpStatusCode.BadRequest);
+            }
+        }
     }
 }

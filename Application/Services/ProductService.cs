@@ -31,8 +31,6 @@ namespace Application.Services
         public async Task<ProductGetDto> Create(ProductCreateDto dto)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
-            //ThrowExceptionService.ThrowExceptionWhenMoreThanOneImageIsDefault(dto.Images);
-            //TODO: Да покрия и случая в който няма дефолтна или няма снимки
 
             var product = mapper.Map<Product>(dto);
             var productId = await productRepo.Create(product);
@@ -57,5 +55,20 @@ namespace Application.Services
             return await productRepo.GetAllInventoryProducts();
         }
 
+        public async Task<ProductUpdatetDto> GetForUpdate(int id)
+        {
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
+            return await productRepo.GetForEdit(id);
+        }
+
+        public async Task Update(ProductUpdatetDto dto)
+        {
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(dto.Id, productRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
+
+            var productToUpdate = mapper.Map<Product>(dto);
+
+            await productRepo.Update(productToUpdate);
+        }
     }
 }

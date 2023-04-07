@@ -44,6 +44,18 @@ namespace Infrastructure.Repositories
             return products.ToList();
         }
 
+        public async Task<ProductUpdatetDto> GetForEdit(int id)
+        {
+            var sql = @"SELECT p.Id, p.Code, p.FullName, p.Description, p.Price, p.SaleQty, p.Price, p.SaleQty, p.CombinedQty, c.Id AS CategoryId
+                        FROM Products AS p
+                        JOIN Categories AS c ON p.CategoryId = c.Id
+                        WHERE p.Id = 1";
+
+            var productForEdit = await Connection.QueryFirstOrDefaultAsync<ProductUpdatetDto>(sql, null, Transaction);
+
+            return productForEdit;
+        }
+
         public async Task<ProductDetailDto> GetProductDetail(int id)
         {
             var sql = @"SELECT p.Id, p.FullName, p.Price, c.CategoryName, p.SaleQty, p.Description, i.ImageUrl
@@ -53,9 +65,9 @@ namespace Infrastructure.Repositories
                         LEFT JOIN Images AS i ON i.ProductId = p.Id
                         WHERE p.Id = @id";
 
-            var productDetail = await Connection.QueryAsync<ProductDetailDto>(sql, new { id}, Transaction);
+            var productDetail = await Connection.QueryFirstOrDefaultAsync<ProductDetailDto>(sql, new { id }, Transaction);
 
-            return productDetail.FirstOrDefault();
+            return productDetail;
         }
     }
 }

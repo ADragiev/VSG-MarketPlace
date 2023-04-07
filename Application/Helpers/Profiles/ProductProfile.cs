@@ -16,6 +16,8 @@ namespace Application.Helpers.Profiles
             CreateMap<Product, ProductGetDto>();
 
             CreateMap<ProductCreateDto, Product>();
+
+            CreateMap<ProductUpdatetDto, Product>();
         }
     }
 }
