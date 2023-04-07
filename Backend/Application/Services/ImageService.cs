@@ -77,7 +77,6 @@ namespace Application.Services
             var uploadResult = await cloudinary.UploadAsync(@uploadParams);
 
             await SaveImageInDatabase(productId, uploadResult.SecureUrl.AbsoluteUri, uploadResult.PublicId);
-
         }
 
         private async Task SaveImageInDatabase(int productId, string url, string publicId)
