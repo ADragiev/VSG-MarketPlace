@@ -10,6 +10,5 @@ namespace Application.Models.ImageModels.Dtos
     public class ImageCreateDto
     {
         public IFormFile Image { get; set; }
-        public bool IsDefault { get; set; }
     }
 }

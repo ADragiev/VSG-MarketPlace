@@ -82,7 +82,6 @@ namespace Application.Services
             Image newImage = new Image()
             {
                 ImageUrl = uploadResult.Url.AbsoluteUri,
-                IsDefault = image.IsDefault,
                 ProductId = productId,
                 ImagePublicId = uploadResult.PublicId
             };

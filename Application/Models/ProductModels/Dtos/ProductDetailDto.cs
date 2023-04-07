@@ -19,6 +19,6 @@ namespace Application.Models.ProductModels.Dtos
 
         public int SaleQty { get; set; }
 
-        public List<ImageProductDetailsDto> Images { get; set; } = new List<ImageProductDetailsDto>();
+        public string ImageUrl { get; set; }
     }
 }

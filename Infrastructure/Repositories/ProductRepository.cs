@@ -26,8 +26,7 @@ namespace Infrastructure.Repositories
                         FROM 
                         Products AS p 
                         JOIN Categories AS c ON p.CategoryId = c.Id 
-                        JOIN Images AS i ON i.ProductId = p.Id 
-                        WHERE i.IsDefault = 1";
+                        JOIN Images AS i ON i.ProductId = p.Id";
 
             var products = await Connection.QueryAsync<ProductGetBaseDto>(sql, null, Transaction);
             return products.ToList();
@@ -54,20 +53,9 @@ namespace Infrastructure.Repositories
                         LEFT JOIN Images AS i ON i.ProductId = p.Id
                         WHERE p.Id = @id";
 
-            var products = await Connection.QueryAsync<ProductDetailDto, ImageProductDetailsDto, ProductDetailDto>(sql, (product, image) =>
-            {
-                product.Images.Add(image);
-                return product;
-            }, new { id }, Transaction, splitOn: "ImageUrl");
+            var productDetail = await Connection.QueryAsync<ProductDetailDto>(sql, new { id}, Transaction);
 
-            var result = products.GroupBy(p => p.FullName).Select(p =>
-            {
-                var groupedProduct = p.First();
-                groupedProduct.Images = p.Select(p => p.Images.Single()).ToList();
-                return groupedProduct;
-            });
-
-            return result.FirstOrDefault();
+            return productDetail.FirstOrDefault();
         }
     }
 }

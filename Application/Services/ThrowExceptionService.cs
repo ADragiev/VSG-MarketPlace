@@ -27,15 +27,15 @@ namespace Application.Services
             }
         }
 
-        public static void ThrowExceptionWhenMoreThanOneImageIsDefault(List<ImageCreateDto> images)
-        {
-            var defaultImagesCount = images.Count(i => i.IsDefault == true);
+        //public static void ThrowExceptionWhenMoreThanOneImageIsDefault(List<ImageCreateDto> images)
+        //{
+        //    var defaultImagesCount = images.Count(i => i.IsDefault == true);
 
-            if (defaultImagesCount > 1)
-            {
-                throw new HttpException("There can be only one default image!", HttpStatusCode.BadRequest);
-            }
-        }
+        //    if (defaultImagesCount > 1)
+        //    {
+        //        throw new HttpException("There can be only one default image!", HttpStatusCode.BadRequest);
+        //    }
+        //}
 
         public static void ThrowExceptionWhenOrderIsNotPending(Order order)
         {
