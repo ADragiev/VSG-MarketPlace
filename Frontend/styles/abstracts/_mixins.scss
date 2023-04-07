@@ -1,0 +1,15 @@
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @mixin roboto-font{
+      font-family: "Roboto";
+      font-style: normal;
+      font-weight: 400;
+  }
+  @mixin inter-font{
+    font-family: "Inter";
+    font-style: normal;
+}
