@@ -4,15 +4,7 @@ using Application.Models.ImageModels.Interfaces;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -20,11 +12,11 @@ namespace Application.Services
     {
         private readonly IConfiguration config;
         private readonly Cloudinary cloudinary;
-        private readonly IGenericRepository<Image> imageRepo;
+        private readonly IImageRepository imageRepo;
         private readonly IGenericRepository<Product> productRepo;
 
         public ImageService(IConfiguration config,
-            IGenericRepository<Image> imageRepo,
+            IImageRepository imageRepo,
             IGenericRepository<Product> productRepo)
         {
             this.config = config;
@@ -79,14 +71,35 @@ namespace Application.Services
             };
 
             var uploadResult = await cloudinary.UploadAsync(@uploadParams);
-            Image newImage = new Image()
-            {
-                ImageUrl = uploadResult.Url.AbsoluteUri,
-                ProductId = productId,
-                ImagePublicId = uploadResult.PublicId
-            };
 
-            await imageRepo.Create(newImage);
+            await SaveImageInDatabase(productId, uploadResult.SecureUrl.AbsoluteUri, uploadResult.PublicId);
+
+        }
+
+        private async Task SaveImageInDatabase(int productId, string url, string publicId)
+        {
+            var image = await imageRepo.GetImageByProductId(productId);
+            if(image == null)
+            {
+                Image newImage = new Image()
+                {
+                    ImageUrl = url,
+                    ProductId = productId,
+                    ImagePublicId = publicId
+                };
+
+                await imageRepo.Create(newImage);
+            }
+            else
+            {
+                await imageRepo.SetField(image.Id, "ImageUrl", url);
+                await imageRepo.SetField(image.Id, "ImagePublicId", publicId);
+
+                await cloudinary.DeleteResourcesAsync(new DelResParams()
+                {
+                    PublicIds = new List<string>() { image.PublicId }
+                });
+            }
         }
     }
 }

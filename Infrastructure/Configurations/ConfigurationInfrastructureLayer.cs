@@ -1,4 +1,5 @@
 ﻿using Application.Models.GenericRepo;
+using Application.Models.ImageModels.Interfaces;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
 using Infrastructure.Repositories;
@@ -15,6 +16,7 @@ namespace Infrastructure.Configurations
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
 
             return services;
         }

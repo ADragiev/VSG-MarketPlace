@@ -49,9 +49,9 @@ namespace Infrastructure.Repositories
             var sql = @"SELECT p.Id, p.Code, p.FullName, p.Description, p.Price, p.SaleQty, p.Price, p.SaleQty, p.CombinedQty, c.Id AS CategoryId
                         FROM Products AS p
                         JOIN Categories AS c ON p.CategoryId = c.Id
-                        WHERE p.Id = 1";
+                        WHERE p.Id = @id";
 
-            var productForEdit = await Connection.QueryFirstOrDefaultAsync<ProductUpdatetDto>(sql, null, Transaction);
+            var productForEdit = await Connection.QueryFirstOrDefaultAsync<ProductUpdatetDto>(sql, new { id }, Transaction);
 
             return productForEdit;
         }
