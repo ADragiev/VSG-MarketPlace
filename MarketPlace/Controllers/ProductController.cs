@@ -57,5 +57,11 @@ namespace MarketPlaceDapper.Controllers
         {
             return await productService.Create(dto);
         }
+
+        [HttpDelete("{id}")]
+        public async Task DeleteProduct(int id)
+        {
+            await productService.Delete(id);
+        }
     }
 }

@@ -20,11 +20,5 @@ namespace MarketPlace.Controllers
         {
             await imageService.UploadImages(productId, image);
         }
-
-        [HttpDelete("{id}")]
-        public async Task DeleteImage(int id)
-        {
-            await imageService.DeleteImage(id);
-        }
     }
 }

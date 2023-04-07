@@ -15,6 +15,8 @@ namespace Application.Models.ProductModels.Intefaces
         Task<ProductUpdatetDto> GetForUpdate(int id);
         Task Update(ProductUpdatetDto dto);
 
+        Task Delete(int id); 
+
         Task<List<ProductGetBaseDto>> GetAllForIndex();
 
         Task<ProductDetailDto> GetDetails(int id);

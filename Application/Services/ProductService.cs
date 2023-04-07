@@ -70,5 +70,13 @@ namespace Application.Services
 
             await productRepo.Update(productToUpdate);
         }
+
+        public async Task Delete(int id)
+        {
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
+
+            await imageService.DeleteImageByProductId(id);
+            await productRepo.Delete(id);
+        }
     }
 }

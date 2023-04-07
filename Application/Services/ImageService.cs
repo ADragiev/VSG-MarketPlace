@@ -33,16 +33,20 @@ namespace Application.Services
             this.productRepo = productRepo;
         }
 
-        public async Task DeleteImage(int id)
+        public async Task DeleteImageByProductId(int productId)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, imageRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
 
-            var image = await imageRepo.GetByID(id);
-            await cloudinary.DeleteResourcesAsync(new DelResParams()
+            var image = await imageRepo.GetImageByProductId(productId);
+
+            if(image!=null)
             {
-                PublicIds = new List<string>() { image.ImagePublicId }
-            });
-            await imageRepo.Delete(id);
+                await cloudinary.DeleteResourcesAsync(new DelResParams()
+                {
+                    PublicIds = new List<string>() { image.PublicId }
+                });
+                await imageRepo.Delete(image.Id);
+            }
         }
 
         public async Task UploadImages(int productId, ImageCreateDto image)
