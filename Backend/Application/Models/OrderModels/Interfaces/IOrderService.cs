@@ -12,7 +12,7 @@ namespace Application.Models.OrderModels.Interfaces
         Task<OrderGetDto> Create(OrderCreateDto dto);
 
         Task<List<OrderPendingDto>> GetAllPendingOrders();
-        Task<List<OrderGetMineDto>> GetMyOrders(string email);
+        Task<List<OrderGetMineWithStringStatusDto>> GetMyOrders(string email);
 
         Task CompleteOrder(int id);
 
