@@ -145,7 +145,6 @@
     margin-top: 120px;
     width: 55%;
     img{
-      max-width: 260px;
      max-height: 200px;
     }
   }
@@ -220,6 +219,12 @@
   }
   #inventoryMain{
     display: block;
+    #search-container{
+      justify-content: space-around;
+      .input-div{
+        width: 40%;
+      }
+    }
   }
   .table-wrapper{
     justify-content: center;

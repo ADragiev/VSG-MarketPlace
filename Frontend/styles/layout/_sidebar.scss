@@ -16,14 +16,14 @@
       justify-content: left;
       align-items: center;
       margin: 1em 1em 0 1em;
-      padding: 0.8em;
       border-radius: 10px;
-  
+      
       svg {
         margin-right: 1vw;
       }
-  
+      
       a {
+        padding: 0.8em;
         width: 100%;
         @include roboto-font;
         font-weight: 500;

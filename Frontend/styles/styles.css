@@ -68,13 +68,13 @@ body {
   justify-content: left;
   align-items: center;
   margin: 1em 1em 0 1em;
-  padding: 0.8em;
   border-radius: 10px;
 }
 .sidebar .menu-item svg {
   margin-right: 1vw;
 }
 .sidebar .menu-item a {
+  padding: 0.8em;
   width: 100%;
   font-family: "Roboto";
   font-style: normal;
@@ -696,7 +696,6 @@ a {
   width: 55%;
 }
 .add-item-form .imgSection img, .edit-item-form .imgSection img {
-  max-width: 260px;
   max-height: 200px;
 }
 .add-item-form .inputField, .edit-item-form .inputField {
@@ -769,6 +768,12 @@ a {
   }
   #inventoryMain {
     display: block;
+  }
+  #inventoryMain #search-container {
+    justify-content: space-around;
+  }
+  #inventoryMain #search-container .input-div {
+    width: 40%;
   }
   .table-wrapper {
     justify-content: center;
