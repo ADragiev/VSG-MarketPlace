@@ -12,23 +12,20 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:ital,wght@0,100;1,400&display=swap"
       rel="stylesheet"
-      />
-      <script src="./index.js" defer type="module"></script>
-    <script src="detailsPopup.js" type="module" defer></script>
-    <script src="/Frontend/src/hamburger.js" defer> </script>
-    <script src="popup.js" defer type="module"></script>
-    <script src="createModal.js" defer type="module"> </script>
-    <title>Marketplace</title>
+    />
+    <script src="../Inventory/deleteTooltip.js" defer type="module"></script>
+    <script src="/Frontend/src/hamburger.js" defer></script>
+    <title>My Orders</title>
   </head>
   <body>
     <header class="header">
       <a href="/Frontend/index.html">
         <img src="../images/vsg_marketplace-mini-logo 1.jpg" alt="mini-logo" />
       </a>
-      <span>Marketplace</span>
+      <span>My Orders</span>
       <div id="greetingContainer" class="user">
         <span> Hi, user! </span>
-        <img src="../images/Profile Img.jpg" alt="Profile-pic" />   
+        <img src="../images/Profile Img.jpg" alt="Profile-pic" />
       </div>
       <div class="hamburger-icon-container">
         <div class="hamburger-lines">
@@ -36,16 +33,15 @@
           <span class="line line1"></span>
           <span class="line line2"></span>
           <span class="line line3"></span>
-        </div> 
+        </div>
       </div>
-    
     </header>
     <div class="container">
       <aside class="sidebar">
         <nav>
           <ul>
-            <li class="menu-item" id="active">
-              <a>
+            <li class="menu-item">
+              <a href="/Frontend/Marketplace/marketplace.html">
                 <svg
                   width="14"
                   height="14"
@@ -96,7 +92,7 @@
                 <span> Pending Orders </span>
               </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item" id="active">
               <a href="/Frontend/My-Orders/myOrders.html">
                 <svg
                   width="12"
@@ -135,12 +131,92 @@
         </nav>
       </aside>
 
-      <main class="main" id="main-list-wrapper">
-       
+      <main class="main">
+        <section class="list-wrapper infoDetails">
+          <div class="header-row">
+            <span class="ProductNameColumn">Name</span>
+            <span class="ProductQtyColumn">QTY</span>
+            <span class="ProductPriceColumn">Price</span>
+            <span class="ProductDateColumn">Order Date</span>
+            <span class="ProductStatus">Status </span>
+          </div>
+          <div class="item-row">
+            <span class="ProductNameColumn"
+              >MacBook Pro 16” M1 Max 32GB 1TB</span
+            >
+            <span class="ProductQtyColumn">1</span>
+            <span class="ProductPriceColumn">5000 BGN</span>
+            <span class="ProductDateColumn">2023-03-13 16:30</span>
+            <div class="ProductStatus popup">
+              <span class="status">Pending</span>
+              <div class="popuptext">
+                <span> Are you sure you want to reject this order? </span>
+                <div class="buttons-container">
+                  <button class="btnYesNo">YES</button>
+                  <button class="btnYesNo">NO</button>
+                </div>
+              </div>
+              <a class="deleteIcon">
+                <svg
+                
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.8203 1.35156L7.17188 6L11.8203 10.6484L10.6484 11.8203L6 7.17188L1.35156 11.8203L0.179688 10.6484L4.82812 6L0.179688 1.35156L1.35156 0.179688L6 4.82812L10.6484 0.179688L11.8203 1.35156Z"
+                  fill="#ED1C25"
+                />
+              </svg>
+              </a>
+             
+            </div>
+          </div>
+          <div class="item-row">
+            <span class="ProductNameColumn">Gaming Chair RedDragon</span>
+            <span class="ProductQtyColumn">10</span>
+            <span class="ProductPriceColumn">900 BGN</span>
+            <span class="ProductDateColumn">2023-03-13 12:30</span>
+            <div class="ProductStatus">
+              <span class="status">Finished</span>
+            </div>
+          </div>
+          <div class="item-row">
+            <span class="ProductNameColumn">Monitor Dell 27” IPS + Stand</span>
+            <span class="ProductQtyColumn">3</span>
+            <span class="ProductPriceColumn">750 BGN</span>
+            <span class="ProductDateColumn">2023-03-13 20:30</span>
+            <div class="ProductStatus popup">
+              <span class="status">Pending</span>
+              <div class="popuptext">
+                <span> Are you sure you want to reject this order? </span>
+                <div class="buttons-container">
+                  <button class="btnYesNo">YES</button>
+                  <button class="btnYesNo">NO</button>
+                </div>
+              </div>
+              <a class="deleteIcon">
+                <svg
+               
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.8203 1.35156L7.17188 6L11.8203 10.6484L10.6484 11.8203L6 7.17188L1.35156 11.8203L0.179688 10.6484L4.82812 6L0.179688 1.35156L1.35156 0.179688L6 4.82812L10.6484 0.179688L11.8203 1.35156Z"
+                  fill="#ED1C25"
+                />
+              </svg>
+              </a>
+              
+            </div>
+          </div>
+        </section>
       </main>
-    </div>
-    <div class="modal">
-     
     </div>
   </body>
 </html>

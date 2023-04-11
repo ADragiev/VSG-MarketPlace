@@ -12,20 +12,18 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:ital,wght@0,100;1,400&display=swap"
       rel="stylesheet"
-      />
-      <script src="./index.js" defer type="module"></script>
-    <script src="detailsPopup.js" type="module" defer></script>
-    <script src="/Frontend/src/hamburger.js" defer> </script>
-    <script src="popup.js" defer type="module"></script>
-    <script src="createModal.js" defer type="module"> </script>
-    <title>Marketplace</title>
+    />
+    <script src="popup.js"></script>
+    <script src="/Frontend/src/hamburger.js" defer ></script>
+
+    <title>Pending Orders</title>
   </head>
   <body>
     <header class="header">
       <a href="/Frontend/index.html">
         <img src="../images/vsg_marketplace-mini-logo 1.jpg" alt="mini-logo" />
       </a>
-      <span>Marketplace</span>
+      <span>Pending Orders</span>
       <div id="greetingContainer" class="user">
         <span> Hi, user! </span>
         <img src="../images/Profile Img.jpg" alt="Profile-pic" />   
@@ -38,14 +36,13 @@
           <span class="line line3"></span>
         </div> 
       </div>
-    
     </header>
     <div class="container">
       <aside class="sidebar">
         <nav>
           <ul>
-            <li class="menu-item" id="active">
-              <a>
+            <li class="menu-item">
+              <a href="/Frontend/Marketplace/marketplace.html">
                 <svg
                   width="14"
                   height="14"
@@ -78,7 +75,7 @@
                 <span> Inventory </span>
               </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item" id="active">
               <a href="/Frontend/Pending-Orders/pendingOrders.html">
                 <svg
                   width="11"
@@ -135,12 +132,48 @@
         </nav>
       </aside>
 
-      <main class="main" id="main-list-wrapper">
-       
+      <main class="main">
+        <section class="list-wrapper infoDetails">
+          <div class="header-row">
+            <span class="codeColumn">Code</span>
+            <span class="qtyColumn">QTY</span>
+            <span class="priceColumn">Price</span>
+            <span class="emailColumn">Ordered By</span>
+            <span class="dateColumn">Order Date</span>
+            <span class="btnColumn">Action</span>
+          </div>
+          <div class="item-row">
+            <div class="div-wrapper">
+              <span class="codeColumn">1</span>
+              <span class="qtyColumn">1</span>
+              <span class="priceColumn">5000 BGN</span>
+            </div>
+            <span class="emailColumn">smechkov@vsgbg.com</span>
+            <span class="dateColumn">2023-03-13 16:30</span>
+            <button class="btnColumn completeBtn" >Complete</button>
+          </div>
+          <div class="item-row">
+            <div class="div-wrapper">
+              <span class="codeColumn">2</span>
+              <span class="qtyColumn">10</span>
+              <span class="priceColumn">900 BGN</span>
+            </div>
+            <span class="emailColumn">smechkov@vsgbg.com</span>
+            <span class="dateColumn">2023-03-13 12:30</span>
+            <button class="btnColumn completeBtn">Complete</button>
+          </div>
+          <div class="item-row">
+            <div class="div-wrapper">
+              <span class="codeColumn">3</span>
+              <span class="qtyColumn">3</span>
+              <span class="priceColumn">750 BGN</span>
+            </div>
+            <span class="emailColumn">smechkov@vsgbg.com</span>
+            <span class="dateColumn">2023-03-13 20:30</span>
+            <button class="btnColumn completeBtn">Complete</button>
+          </div>
+        </section>
       </main>
-    </div>
-    <div class="modal">
-     
     </div>
   </body>
 </html>

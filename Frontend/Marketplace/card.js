@@ -31,7 +31,7 @@ export const createCard = (id, image, category, price) => {
       <div class="popuptext">
         <span>
           Are you sure you want to buy <strong>1</strong> item for
-          <strong>5000 BGN?</strong>
+          <strong>${price} BGN?</strong>
         </span>
         <div class="buttons-container">
           <button class="btnYesNo">YES</button>

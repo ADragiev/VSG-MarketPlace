@@ -21,7 +21,6 @@ export function closeModal() {
 }
 
 function closing(e) {
-    console.log(e.target);
   e?.preventDefault();
     e.target.parentElement.remove()
     modal.style.display = "none";

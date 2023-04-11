@@ -21,8 +21,6 @@ export function closeModal() {
 
 function closing(e) {
   e?.preventDefault();
-  if (e.target.tagName  === 'path') {
-    e.target.parentElement.parentElement.parentElement.remove()
+    e.target.parentElement.remove()
     modal.style.display = "none";
-  }
 }

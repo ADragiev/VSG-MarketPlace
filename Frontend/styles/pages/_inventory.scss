@@ -37,6 +37,7 @@
   .input-div {
     border-bottom: 1px solid $black-color;
     margin-right: 20px;
+    display: flex
   }
 }
 #addNewItemBtn {
@@ -243,6 +244,9 @@
     width: 100%;
     .img-buttons{
       flex-direction: row;
+      .upload-button, #remove-button{
+        width: 100px;
+      }
     }
   }
 }
