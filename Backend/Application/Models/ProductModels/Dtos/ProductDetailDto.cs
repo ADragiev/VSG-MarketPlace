@@ -13,12 +13,12 @@ namespace Application.Models.ProductModels.Dtos
 
         public decimal Price { get; set; }
 
-        public string CategoryName { get; set; }
+        public string Category { get; set; }
 
         public string Description { get; set; }
 
         public int SaleQty { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Application.Models.ProductModels.Dtos
 
         public string FullName { get; set; }
 
-        public string CategoryName { get; set; }
+        public string Category { get; set; }
 
         public int SaleQty { get; set; }
 

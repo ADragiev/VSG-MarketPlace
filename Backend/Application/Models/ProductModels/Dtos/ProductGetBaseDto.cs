@@ -16,6 +16,6 @@ namespace Application.Models.ProductModels.Dtos
 
         public int SaleQty { get; set; }
 
-        public string DefaultImage { get; set; }
+        public string Image { get; set; }
     }
 }
