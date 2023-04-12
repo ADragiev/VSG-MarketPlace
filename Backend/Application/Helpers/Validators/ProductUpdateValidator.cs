@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Helpers.Validators
 {
-    public class ProductUpdateValidator : AbstractValidator<ProductUpdatetDto>
+    public class ProductUpdateValidator : AbstractValidator<ProductUpdateDto>
     {
         public ProductUpdateValidator()
         {

@@ -17,7 +17,7 @@ namespace Application.Helpers.Profiles
 
             CreateMap<ProductCreateDto, Product>();
 
-            CreateMap<ProductUpdatetDto, Product>();
+            CreateMap<ProductUpdateDto, Product>();
         }
     }
 }

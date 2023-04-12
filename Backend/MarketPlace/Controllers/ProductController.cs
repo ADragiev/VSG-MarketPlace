@@ -39,14 +39,14 @@ namespace MarketPlace.Controllers
 
         [HttpGet]
         [Route("Update/{id}")]
-        public async Task<ProductUpdatetDto> GetProductForEdit(int id)
+        public async Task<ProductGetForUpdateDto> GetProductForEdit(int id)
         {
             return await productService.GetForUpdate(id);
         }
 
         [HttpPut]
         [Route("Update/{id}")]
-        public async Task GetProductForEdit(int id, ProductUpdatetDto dto)
+        public async Task UpdateProduct(int id, ProductUpdateDto dto)
         {
             ThrowExceptionService.ThrowExceptionWhenIdsDoNotMatch(id, dto.Id);
             await productService.Update(dto);

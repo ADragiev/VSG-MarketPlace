@@ -55,13 +55,13 @@ namespace Application.Services
             return await productRepo.GetAllInventoryProducts();
         }
 
-        public async Task<ProductUpdatetDto> GetForUpdate(int id)
+        public async Task<ProductGetForUpdateDto> GetForUpdate(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
             return await productRepo.GetForEdit(id);
         }
 
-        public async Task Update(ProductUpdatetDto dto)
+        public async Task Update(ProductUpdateDto dto)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(dto.Id, productRepo);
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);

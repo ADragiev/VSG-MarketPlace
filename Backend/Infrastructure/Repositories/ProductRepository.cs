@@ -44,14 +44,15 @@ namespace Infrastructure.Repositories
             return products.ToList();
         }
 
-        public async Task<ProductUpdatetDto> GetForEdit(int id)
+        public async Task<ProductGetForUpdateDto> GetForEdit(int id)
         {
-            var sql = @"SELECT p.Id, p.Code, p.FullName, p.Description, p.Price, p.SaleQty, p.Price, p.SaleQty, p.CombinedQty, c.Id AS CategoryId
+            var sql = @"SELECT p.Id, p.Code, p.FullName, p.Description, p.Price, p.SaleQty, p.Price, p.SaleQty, p.CombinedQty, c.Id AS CategoryId, i.ImageUrl AS Image
                         FROM Product AS p
                         JOIN Category AS c ON p.CategoryId = c.Id
+						JOIN [Image] AS i On i.ProductId = p.Id
                         WHERE p.Id = @id";
 
-            var productForEdit = await Connection.QueryFirstOrDefaultAsync<ProductUpdatetDto>(sql, new { id }, Transaction);
+            var productForEdit = await Connection.QueryFirstOrDefaultAsync<ProductGetForUpdateDto>(sql, new { id }, Transaction);
 
             return productForEdit;
         }
