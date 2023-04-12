@@ -13,6 +13,17 @@ builder.Services.AddConfigurationInfrastructureLayer();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "CORSPolicy", policy =>
+                {
+                    policy
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins("*");
+                });
+         });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,6 +32,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("CORSPolicy");
 
 app.UseHttpsRedirection();
 
