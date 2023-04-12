@@ -26,7 +26,8 @@ namespace Infrastructure.Repositories
                         FROM 
                         Product AS p 
                         JOIN Category AS c ON p.CategoryId = c.Id 
-                        JOIN Image AS i ON i.ProductId = p.Id";
+                        LEFT JOIN Image AS i ON i.ProductId = p.Id
+                        WHERE p.SaleQty > 0";
 
             var products = await Connection.QueryAsync<ProductGetBaseDto>(sql, null, Transaction);
             return products.ToList();
