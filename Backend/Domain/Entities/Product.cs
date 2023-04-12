@@ -2,7 +2,6 @@
 
 namespace Domain.Entities
 {
-    [Table("Products")]
     public class Product : BaseEntity
     {
         public string Code { get; set; }

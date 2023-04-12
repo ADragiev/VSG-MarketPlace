@@ -24,9 +24,9 @@ namespace Infrastructure.Repositories
         {
             var sql = @"SELECT p.Id, c.CategoryName AS Category, p.Price, p.SaleQty, i.ImageUrl AS Image
                         FROM 
-                        Products AS p 
-                        JOIN Categories AS c ON p.CategoryId = c.Id 
-                        JOIN Images AS i ON i.ProductId = p.Id";
+                        Product AS p 
+                        JOIN Category AS c ON p.CategoryId = c.Id 
+                        JOIN Image AS i ON i.ProductId = p.Id";
 
             var products = await Connection.QueryAsync<ProductGetBaseDto>(sql, null, Transaction);
             return products.ToList();
@@ -36,8 +36,8 @@ namespace Infrastructure.Repositories
         {
             var sql = @"SELECT p.Id, p.Code, p.FullName, c.CategoryName AS Category, p.SaleQty, p.CombinedQty
                         FROM
-                        Products AS p
-                        JOIN Categories AS c ON p.CategoryId = c.Id";
+                        Product AS p
+                        JOIN Category AS c ON p.CategoryId = c.Id";
 
             var products = await Connection.QueryAsync<ProductInventoryGetDto>(sql, null, Transaction);
 
@@ -47,8 +47,8 @@ namespace Infrastructure.Repositories
         public async Task<ProductUpdatetDto> GetForEdit(int id)
         {
             var sql = @"SELECT p.Id, p.Code, p.FullName, p.Description, p.Price, p.SaleQty, p.Price, p.SaleQty, p.CombinedQty, c.Id AS CategoryId
-                        FROM Products AS p
-                        JOIN Categories AS c ON p.CategoryId = c.Id
+                        FROM Product AS p
+                        JOIN Category AS c ON p.CategoryId = c.Id
                         WHERE p.Id = @id";
 
             var productForEdit = await Connection.QueryFirstOrDefaultAsync<ProductUpdatetDto>(sql, new { id }, Transaction);
@@ -60,9 +60,9 @@ namespace Infrastructure.Repositories
         {
             var sql = @"SELECT p.Id, p.FullName, p.Price, c.CategoryName AS Category, p.SaleQty, p.Description, i.ImageUrl AS Image
                         FROM
-                        Products AS p
-                        JOIN Categories AS c ON p.CategoryId  = c.Id
-                        LEFT JOIN Images AS i ON i.ProductId = p.Id
+                        Product AS p
+                        JOIN Category AS c ON p.CategoryId  = c.Id
+                        LEFT JOIN Image AS i ON i.ProductId = p.Id
                         WHERE p.Id = @id";
 
             var productDetail = await Connection.QueryFirstOrDefaultAsync<ProductDetailDto>(sql, new { id }, Transaction);

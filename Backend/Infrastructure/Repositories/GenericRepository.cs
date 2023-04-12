@@ -40,14 +40,9 @@ namespace Infrastructure.Repositories
 
         public async Task SetField(int id, string fieldName, object value)
         {
-            var tableAttribute =
-                (System.ComponentModel.DataAnnotations.Schema.TableAttribute)typeof(T)
-                    .GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.Schema.TableAttribute), false)
-                    .FirstOrDefault();
+            var tableName = typeof(T).Name;
 
-            var tableName = tableAttribute.Name;
-
-            var sql = @$"UPDATE {tableName}
+            var sql = @$"UPDATE [{tableName}]
                       SET {fieldName} = @value
                         WHERE Id = @id";
 

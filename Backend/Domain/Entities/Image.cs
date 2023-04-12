@@ -2,7 +2,6 @@
 
 namespace Domain.Entities
 {
-    [Table("Images")]
     public class Image : BaseEntity
     {
 

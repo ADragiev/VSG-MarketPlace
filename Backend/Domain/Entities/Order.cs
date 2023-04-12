@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
-    [Table("Orders")]
     public class Order : BaseEntity
     {
         public int Qty { get; set; }
