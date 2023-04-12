@@ -53,7 +53,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost]
-        public async Task<ProductGetDto> CreateProduct(ProductCreateDto dto)
+        public async Task<ProductGetDto> CreateProduct([FromBody]ProductCreateDto dto)
         {
             return await productService.Create(dto);
         }
