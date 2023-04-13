@@ -9,6 +9,7 @@ namespace Application.Models.OrderModels.Dtos
 {
     public class OrderGetMineDto
     {
+        private string orderStatus;
         public int Id { get; set; }
         public string ProductName { get; set; }
 
@@ -18,6 +19,15 @@ namespace Application.Models.OrderModels.Dtos
 
         public DateTime OrderDate { get; set; }
 
-        public OrderStatus OrderStatus { get; set; }
+        public string Status
+        {
+            get => orderStatus;
+            set
+            {
+                int i = int.Parse(value);
+                OrderStatus os = (OrderStatus)i;
+                orderStatus = os.ToString();
+            }
+        }
     }
 }

@@ -51,7 +51,6 @@ namespace Application.Services
                 }
             });
             return products;
-            //return await productRepo.GetAllIndexProducts();
         }
 
         public async Task<ProductDetailDto> GetDetails(int id)

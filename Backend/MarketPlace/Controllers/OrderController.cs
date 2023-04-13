@@ -22,7 +22,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet("MyOrders")]
-        public async Task<List<OrderGetMineWithStringStatusDto>> GetMyOrders(string email)
+        public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
         {
             return await orderService.GetMyOrders(email);
         }

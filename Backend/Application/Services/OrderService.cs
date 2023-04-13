@@ -60,10 +60,11 @@ namespace Application.Services
             return await orderRepo.GetAllPendingOrders();
         }
 
-        public async Task<List<OrderGetMineWithStringStatusDto>> GetMyOrders(string email)
+        public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
         {
             var myOrders= await orderRepo.GetMyOrders(email);
-            return mapper.Map<List<OrderGetMineWithStringStatusDto>>(myOrders);
+            myOrders.ForEach(o => o.Status = o.Status);
+            return myOrders;
         }
 
         public async Task RejectOrder(int id)
