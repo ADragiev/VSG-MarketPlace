@@ -48,8 +48,7 @@ namespace MarketPlace.Controllers
         [Route("Update/{id}")]
         public async Task UpdateProduct(int id, ProductUpdateDto dto)
         {
-            ThrowExceptionService.ThrowExceptionWhenIdsDoNotMatch(id, dto.Id);
-            await productService.Update(dto);
+            await productService.Update(id, dto);
         }
 
         [HttpPost]

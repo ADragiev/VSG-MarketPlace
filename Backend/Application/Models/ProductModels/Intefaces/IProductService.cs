@@ -13,7 +13,7 @@ namespace Application.Models.ProductModels.Intefaces
     {
         Task<ProductGetDto> Create(ProductCreateDto dto);
         Task<ProductGetForUpdateDto> GetForUpdate(int id);
-        Task Update(ProductUpdateDto dto);
+        Task Update(int id, ProductUpdateDto dto);
 
         Task Delete(int id); 
 

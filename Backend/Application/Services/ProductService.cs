@@ -80,12 +80,13 @@ namespace Application.Services
             return product;
         }
 
-        public async Task Update(ProductUpdateDto dto)
+        public async Task Update(int id, ProductUpdateDto dto)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(dto.Id, productRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
 
             var productToUpdate = mapper.Map<Product>(dto);
+            productToUpdate.Id = id;
 
             await productRepo.Update(productToUpdate);
         }
