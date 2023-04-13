@@ -1,0 +1,35 @@
+﻿using FluentMigrator;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Migrations
+{
+    [Migration(202304131700)]
+    public class ProductTable : Migration
+    {
+        public override void Up()
+        {
+            Create.Table("Product")
+                .WithColumn("Id").AsInt64().PrimaryKey().Identity().NotNullable()
+                .WithColumn("Code").AsString(50).NotNullable()
+                .WithColumn("FullName").AsString(50).NotNullable()
+                .WithColumn("Price").AsDecimal(19, 2).NotNullable()
+                .WithColumn("SaleQty").AsInt64().NotNullable()
+                .WithColumn("CombinedQty").AsInt64().NotNullable()
+                .WithColumn("Description").AsString(200).Nullable()
+                .WithColumn("CategoryId").AsInt64().NotNullable();
+
+            Create.ForeignKey()
+                .FromTable("Product").ForeignColumn("CategoryId")
+                .ToTable("Category").PrimaryColumn("Id");
+        }
+
+        public override void Down()
+        {
+            Delete.Table("Product");
+        }
+    }
+}
