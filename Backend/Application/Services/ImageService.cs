@@ -71,22 +71,21 @@ namespace Application.Services
             var uploadParams = new ImageUploadParams()
             {
                 File = new FileDescription(imagePath),
-                Folder = "MarketPlace/Images"
+                Folder = "MarketPlace/"
             };
 
             var uploadResult = await cloudinary.UploadAsync(@uploadParams);
 
-            await SaveImageInDatabase(productId, uploadResult.SecureUrl.AbsoluteUri, uploadResult.PublicId);
+            await SaveImageInDatabase(productId, uploadResult.PublicId);
         }
 
-        private async Task SaveImageInDatabase(int productId, string url, string publicId)
+        private async Task SaveImageInDatabase(int productId, string publicId)
         {
             var image = await imageRepo.GetImageByProductId(productId);
             if(image == null)
             {
                 Image newImage = new Image()
                 {
-                    ImageUrl = url,
                     ProductId = productId,
                     ImagePublicId = publicId
                 };
@@ -95,7 +94,6 @@ namespace Application.Services
             }
             else
             {
-                await imageRepo.SetField(image.Id, "ImageUrl", url);
                 await imageRepo.SetField(image.Id, "ImagePublicId", publicId);
 
                 await cloudinary.DeleteResourcesAsync(new DelResParams()

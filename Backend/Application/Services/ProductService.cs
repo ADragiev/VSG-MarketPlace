@@ -1,4 +1,5 @@
-﻿using Application.Models.GenericRepo;
+﻿using Application.Helpers.Constants;
+using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
@@ -41,13 +42,27 @@ namespace Application.Services
 
         public async Task<List<ProductGetBaseDto>> GetAllForIndex()
         {
-            return await productRepo.GetAllIndexProducts();
+            var products = await productRepo.GetAllIndexProducts();
+            products.ForEach(p =>
+            {
+                if (p.Image != null)
+                {   
+                    p.Image = CloudinaryConstants.baseUrl + p.Image;
+                }
+            });
+            return products;
+            //return await productRepo.GetAllIndexProducts();
         }
 
         public async Task<ProductDetailDto> GetDetails(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
-            return await productRepo.GetProductDetail(id);
+            var product = await productRepo.GetProductDetail(id);
+            if (product.Image != null)
+            {
+                product.Image = CloudinaryConstants.baseUrl + product.Image;
+            }
+            return product;
         }
 
         public async Task<List<ProductInventoryGetDto>> GetAllForInventory()
@@ -58,7 +73,12 @@ namespace Application.Services
         public async Task<ProductGetForUpdateDto> GetForUpdate(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
-            return await productRepo.GetForEdit(id);
+            var product = await productRepo.GetForEdit(id);
+            if (product.Image != null)
+            {
+                product.Image = CloudinaryConstants.baseUrl + product.Image;
+            }
+            return product;
         }
 
         public async Task Update(ProductUpdateDto dto)
