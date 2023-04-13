@@ -1,12 +1,9 @@
-﻿using FluentMigrator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using FluentMigrator;
 
 namespace Infrastructure.Migrations
 {
+    [Migration(202304131803)]
     public class OrderTable : Migration
     {
         public override void Up()
