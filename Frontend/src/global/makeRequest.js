@@ -1,4 +1,4 @@
-const baseURL = "https://fakestoreapi.com";
+const baseURL = "https://localhost:7054";
 
 export const makeRequest = async ({
   path,
@@ -7,9 +7,11 @@ export const makeRequest = async ({
   headers = {}
 }) => {
   try {
+    const token = localStorage.getItem("token");
 
     const options = {
       headers: {
+        Authorization: "Bearer " + token,
         "Content-Type": "application/json",
         ...headers
       }
@@ -32,4 +34,11 @@ export const makeRequest = async ({
   } catch (err) {
     throw Error(err);
   }
+};
+export const postImage = async (id, image) => {
+  let response = await fetch(baseURL + '/Image/' + id,{
+    method: "POST",
+    body: image,
+  })
+  return response;
 };

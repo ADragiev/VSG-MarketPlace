@@ -2,11 +2,11 @@ export function createRow(product){
     const row = document.createElement("tr");
           row.id = product.id
           row.innerHTML = `
-      <td>${product.id}</td>
-      <td>${product.title}</td>
+      <td>${product.code}</td>
+      <td>${product.fullName}</td>
       <td>${product.category}</td>
-      <td>0</td>
-      <td>2</td>
+      <td>${product.saleQty}</td>
+      <td>${product.combinedQty}</td>
       <td class="actionButtons">
         <a class="edit-icon"
           ><svg

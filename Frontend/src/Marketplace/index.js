@@ -11,6 +11,6 @@ import { loadProducts } from "../global/itemsService.js"
 
 const productsData = await loadProducts();
 productsData.forEach((product) => {
-  createCard(product.id, product.image, product.category, product.price);
+  createCard(product.id, product.image, product.saleQty, product.category, product.price);
 });
 showModal();

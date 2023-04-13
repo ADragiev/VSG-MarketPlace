@@ -15,14 +15,16 @@ export function addBtn() {
   Array.from(document.getElementsByClassName("btnYesNo")).forEach((x) => {
     x.addEventListener("click", async (e) => {
       e.preventDefault();
+      console.log(x);
       const id = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
       e.target.parentElement.parentElement.className = "popuptext";
-
       if (e.target.textContent == "YES") {
-        let response = await makeRequest({
-          path: "/products/" + id,
+        let response = await fetch(
+          `https://localhost:7054/Product/${id}`,
+          {
           method: "DELETE"
         });
+        // location.reload()
         console.log(response);
       }
     });

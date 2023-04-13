@@ -6,11 +6,11 @@ export async function showModal() {
   editIcons.forEach((editIcon) => {
     editIcon.addEventListener("click", async (e) => {
       e.preventDefault();
-      
-              const rowId = e.target.parentElement.parentElement.id
-          await createEditModal(rowId);
-           modal.style.display = "flex";
-           closeModal()
+
+      const rowId = e.target.parentElement.parentElement.id;
+      await createEditModal(rowId);
+      modal.style.display = "flex";
+      closeModal();
     });
   });
 }
@@ -22,6 +22,6 @@ export function closeModal() {
 
 function closing(e) {
   e?.preventDefault();
-    e.target.parentElement.remove()
-    modal.style.display = "none";
+  e.target.parentElement.remove();
+  modal.style.display = "none";
 }

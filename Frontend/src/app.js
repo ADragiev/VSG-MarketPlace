@@ -15,3 +15,6 @@ import './Inventory/createTable.js';
 import './Inventory/deleteTooltip.js';
 import './Inventory/showEditModal.js';
 
+
+
+

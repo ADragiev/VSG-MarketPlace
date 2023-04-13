@@ -1,4 +1,5 @@
-import { makeRequest } from "../global/makeRequest.js";
+import { loadCategories, postImageById } from "../global/itemsService.js";
+import { makeRequest, postImage } from "../global/makeRequest.js";
 
 const modal = document.querySelector(".add-item-modal");
 const editModal = document.querySelector(".edit-item-modal");
@@ -7,17 +8,44 @@ document.getElementById("addNewItemBtn").addEventListener("click", () => {
   modal.style.display = "block";
 });
 
+ async function categories() {
+  const selectList = document.querySelector('#item-category')
+  const categories = await loadCategories()
+  categories.forEach(c => {
+    let option = document.createElement('option')
+    option.value = c.categoryId
+    option.textContent = c.categoryName
+    selectList.appendChild(option)
+  })
+}
+categories()
+
 const formElement = document.querySelector(".add-item-form");
 formElement.onsubmit = async (e) => {
   e.preventDefault();
-  let formData = Object.fromEntries(new FormData(e.target));
+  let formData = new FormData(e.target)
+  let image = formData.get('image')
+  
+  // console.log(Array.from(newFormData));
+  // console.log(Array.from(formData));
+  // ^^ WORKS 
+  let data = Object.fromEntries(formData);
   let response = await makeRequest({
-    path: "/products",
+    path: "/Product",
     method: "POST",
-    data: formData,
+    data
+    
   });
+  let productId = response.id
+  // productId = 20...
+  if (image.name) {
+    let imageFormData = new FormData()
+    imageFormData.append("image", image)
+    formData.delete('image')
+    await postImage(productId, imageFormData)
+  }
+
   modal.style.display = 'none'
-  console.log(formData);
 };
 
 export const showEditForm = () => {
@@ -37,7 +65,7 @@ export const showEditForm = () => {
   });
 };
 
-function uploadPicture() {
+ function uploadPicture() {
   const addImagePreview = document.querySelector("#addCurrentImg");
 
   document.querySelectorAll(".upload-button").forEach(btn =>{
@@ -59,7 +87,7 @@ function uploadPicture() {
 }
 uploadPicture()
 
-function removePicture() {
+ function removePicture() {
 
   document.querySelector('#remove-button').addEventListener('click', ()=>{
       const addImagePreview = document.querySelector("#addCurrentImg");

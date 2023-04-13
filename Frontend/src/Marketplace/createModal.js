@@ -1,9 +1,9 @@
-import { loadProductById } from "../global/itemsService.js"
+import { loadProductById, loadProductsDetails } from "../global/itemsService.js"
 
 export const createModal = async (id) =>{
 
     const modal = document.querySelector('.modal')
-    const product = await loadProductById(id)
+    const product = await loadProductsDetails(id)
     const modalContent = document.createElement('div')
     modalContent.className = 'modal-content'
 
@@ -25,7 +25,7 @@ export const createModal = async (id) =>{
     <a class="productImage">
     <img
    
-    src="${product.image}"
+    src="${product.image ? product.image : `../../images/no_image-placeholder.png`}"
     alt="ProductImage"
   />
     </a>
@@ -34,7 +34,7 @@ export const createModal = async (id) =>{
       <div class="details-section">
         <div class="name-details">
           <span
-            >${product.title}</span
+            >${product.fullName}</span
           >
           <small>${product.category}</small>
         </div>

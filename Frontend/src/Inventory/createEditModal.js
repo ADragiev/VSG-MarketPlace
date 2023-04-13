@@ -1,5 +1,5 @@
-import { loadProductById } from "../global/itemsService.js"
-import { makeRequest } from "../global/makeRequest.js"
+import { loadCategories, loadProductById } from "../global/itemsService.js"
+import { makeRequest, postImage } from "../global/makeRequest.js"
 
 export const createEditModal = async (id) =>{
 
@@ -29,26 +29,26 @@ export const createEditModal = async (id) =>{
                     class="inputField"
                     type="text"
                     id="item-code"
-                    name="itemCode"
+                    name="code"
                     placeholder="Code *"
                     required
-                    value="${product.id}"
+                    value="${product.code}"
                   />
 
                   <input
                     class="inputField"
                     type="text"
                     id="item-name"
-                    name="itemName"
+                    name="fullName"
                     placeholder="Name *"
                     required
-                    value="${product.title}"
+                    value="${product.fullName}"
                   />
 
                   <textarea
                     class="inputField"
                     id="item-description"
-                    name="itemDescription"
+                    name="description"
                     rows="4"
                     required
                     placeholder="Description"
@@ -57,33 +57,29 @@ export const createEditModal = async (id) =>{
 
                   <select
                     class="inputField"
-                    id="item-category"
-                    name="itemCategory"
+                    id="edit-item-category"
+                    name="categoryId"
                     required
                   >
-                    <option value="" disabled selected>Category *</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="fashion">Fashion</option>
-                    <option value="home">Home</option>
-                    <option value="sports">Sports</option>
+                   
                   </select>
 
                   <input
                     class="inputField"
                     type="number"
                     id="quantity-for-sale"
-                    name="quantityForSale"
+                    name="saleQty"
                     min="1"
                     required
                     placeholder="Qty For Sale"
-                    value="0"
+                    value="${product.saleQty}"
                   />
 
                   <input
                   class="inputField"
                   type="number"
-                  id="sale-price"
-                  name="salePrice"
+                  id="price"
+                  name="price"
                   min="1"
                   required
                   placeholder="Sale Price"
@@ -94,43 +90,99 @@ export const createEditModal = async (id) =>{
                     class="inputField"
                     type="number"
                     id="quantity-available"
-                    name="quantityAvailable"
+                    name="combinedQty"
                     min="0"
                     required
                     placeholder="Qty"
-                    value="2"
+                    value="${product.combinedQty}"
                   />
                 </div>
 
                 <div class="imgSection">
+                <input name="image"  id="editfileUpload" type="file" style="display: none;">
                   <img
                     class="editCurrentImg"
-                    src="${product.image}"
+                    src="${product.image ? product.image : `../../images/no_image-placeholder.png`}"
                     alt="noImgPlaceholder"
                   />
                   <div class="img-buttons">
-                    <button class="upload-button" type="button">Upload</button>
-                    <button id="remove-button" type="button">Remove</button>
+                    <button id"#addCurrentImg" class="upload-button" type="button">Upload</button>
+                    <button id="edit-remove-button" type="button">Remove</button>
                   </div>
                 </div>
               </div>
 
-              <button id="submitFormBtn" type="submit">Add</button>
+              <button id="submitFormBtn" type="submit">Modify</button>
             </form>
     `
+    async function categories() {
+      const selectList = document.querySelector('#edit-item-category')
+      const categories = await loadCategories()
+      categories.forEach(c => {
+        let option = document.createElement('option')
+        option.value = c.categoryId
+        option.textContent = c.categoryName
+        selectList.appendChild(option)
+      })
+    }
+    categories()
+
+
 
     const formElement = document.querySelector(".edit-item-form");
     formElement.onsubmit = async (e) => {
     e.preventDefault();
-    let formData = Object.fromEntries(new FormData(e.target));
-    let response = await makeRequest({
-        path: "/products/" + id,
-        method: "PUT",
-        data: formData,
-    });
+    let data = Object.fromEntries(new FormData(e.target));
+    console.log(data);
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+  };
+    let response = await fetch(`https://localhost:7054/Product/Update/${id}`, requestOptions);
+    if (data.image.name) {
+      //  data.delete('image')
+      let imageFormData = new FormData()
+      imageFormData.append("image", data.image)
+      await postImage(id, imageFormData)
+    }
+    location.reload()
+    console.log(response);
   editModal.style.display = 'none'
-  console.log(response);
 };
+
+
+function uploadPicture() {
+  const addImagePreview = document.querySelector(".editCurrentImg");
+
+  document.querySelectorAll(".upload-button").forEach(btn =>{
+     btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const input = document.querySelector("#editfileUpload");
+        input.addEventListener("change", () => {
+          const file = input.files[0];
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            addImagePreview.src = event.target.result;
+
+          };
+          reader.readAsDataURL(file);
+        });
+        input.click();
+      });
+  })
+}
+uploadPicture()
+
+
+
+function removePicture() {
+  document.querySelector('#edit-remove-button').addEventListener('click', ()=>{
+      const addImagePreview = document.querySelector(".editCurrentImg");
+      addImagePreview.src = '../../images/no_image-placeholder.png'
+  })
+}
+removePicture()
 }
 
 ////TODO: DELETE ITEM/////
