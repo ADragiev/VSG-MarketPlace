@@ -1,4 +1,5 @@
-﻿using Application.Models.GenericRepo;
+﻿using Application.Models.CategoryModels.Contacts;
+using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
@@ -13,10 +14,11 @@ namespace Infrastructure.Configurations
         public static IServiceCollection AddConfigurationInfrastructureLayer(this IServiceCollection services)
         { 
             services.AddScoped<IMarketPlaceContext, MarketPlaceContext>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             return services;
         }

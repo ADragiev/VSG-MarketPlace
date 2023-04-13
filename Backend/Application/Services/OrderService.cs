@@ -1,6 +1,7 @@
 ﻿using Application.Models.GenericRepo;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
+using Application.Models.ProductModels.Intefaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
@@ -15,11 +16,11 @@ namespace Application.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository orderRepo;
-        private readonly IGenericRepository<Product> productRepo;
+        private readonly IProductRepository productRepo;
         private readonly IMapper mapper;
 
         public OrderService(IOrderRepository orderRepo,
-            IGenericRepository<Product> productRepo,
+            IProductRepository productRepo,
             IMapper mapper)
         {
             this.orderRepo = orderRepo;

@@ -13,10 +13,10 @@ namespace Application.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly IGenericRepository<Category> categoryRepo;
+        private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;
 
-        public CategoryService(IGenericRepository<Category> categoryRepo, IMapper mapper)
+        public CategoryService(ICategoryRepository categoryRepo, IMapper mapper)
         {
             this.categoryRepo = categoryRepo;
             this.mapper = mapper;

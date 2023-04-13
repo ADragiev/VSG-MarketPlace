@@ -1,6 +1,7 @@
 ﻿using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
+using Application.Models.ProductModels.Intefaces;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Domain.Entities;
@@ -13,11 +14,11 @@ namespace Application.Services
         private readonly IConfiguration config;
         private readonly Cloudinary cloudinary;
         private readonly IImageRepository imageRepo;
-        private readonly IGenericRepository<Product> productRepo;
+        private readonly IProductRepository productRepo;
 
         public ImageService(IConfiguration config,
             IImageRepository imageRepo,
-            IGenericRepository<Product> productRepo)
+            IProductRepository productRepo)
         {
             this.config = config;
             var cloudName = this.config.GetValue<string>("Cloudinary:CloudName");

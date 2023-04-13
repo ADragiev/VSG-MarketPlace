@@ -1,4 +1,5 @@
 ﻿using Application.Helpers.Constants;
+using Application.Models.CategoryModels.Contacts;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
@@ -11,14 +12,14 @@ namespace Application.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository productRepo;
-        private readonly IGenericRepository<Image> imageRepo;
-        private readonly IGenericRepository<Category> categoryRepo;
+        private readonly IImageRepository imageRepo;
+        private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;
         private readonly IImageService imageService;
 
         public ProductService(IProductRepository productRepo,
-            IGenericRepository<Image> imageRepo,
-            IGenericRepository<Category> categoryRepo,
+            IImageRepository imageRepo,
+            ICategoryRepository categoryRepo,
             IMapper mapper,
             IImageService imageService)
         {

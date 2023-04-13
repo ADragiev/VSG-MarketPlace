@@ -6,7 +6,7 @@ using System.Data;
 
 namespace Infrastructure.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T>
+    public abstract class GenericRepository<T> : IGenericRepository<T>
     {
         private readonly IMarketPlaceContext marketPlaceContext;
         public GenericRepository(IMarketPlaceContext marketPlaceContext)
