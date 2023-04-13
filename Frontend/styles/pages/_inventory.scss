@@ -177,7 +177,7 @@
     border-radius: 4px;
 
     .upload-button,
-    #remove-button {
+    #edit-remove-button {
       width: 120px;
       background: $upload-button-color;
     @include flex-center;
@@ -190,7 +190,7 @@
       margin: 10px;
       border-radius: 4px;
     }
-    #remove-button {
+    #edit-remove-button {
       background: $main-color;
     }
   }

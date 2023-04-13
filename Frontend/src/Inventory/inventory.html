@@ -205,7 +205,7 @@
                     class="inputField"
                     type="text"
                     id="item-code"
-                    name="itemCode"
+                    name="code"
                     placeholder="Code *"
                     required
                   />
@@ -214,7 +214,7 @@
                     class="inputField"
                     type="text"
                     id="item-name"
-                    name="itemName"
+                    name="fullName"
                     placeholder="Name *"
                     required
                   />
@@ -222,7 +222,7 @@
                   <textarea
                     class="inputField"
                     id="item-description"
-                    name="itemDescription"
+                    name="description"
                     rows="4"
                     required
                     placeholder="Description"
@@ -231,21 +231,19 @@
                   <select
                     class="inputField"
                     id="item-category"
-                    name="itemCategory"
+                    name="categoryId"
                     required
                   >
-                    <option value="" disabled selected>Category *</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="fashion">Fashion</option>
-                    <option value="home">Home</option>
-                    <option value="sports">Sports</option>
+                    <!-- <option value="" disabled selected>Category *</option>
+                    <option value="1">Electronics</option>
+                    <option value="2">Fashion</option> -->
                   </select>
 
                   <input
                     class="inputField"
                     type="number"
                     id="quantity-for-sale"
-                    name="quantityForSale"
+                    name="saleQty"
                     min="1"
                     required
                     placeholder="Qty For Sale"
@@ -255,7 +253,7 @@
                   class="inputField"
                   type="number"
                   id="sale-price"
-                  name="quantityForSale"
+                  name="price"
                   min="1"
                   required
                   placeholder="Sale price"
@@ -265,7 +263,7 @@
                     class="inputField"
                     type="number"
                     id="quantity-available"
-                    name="quantityAvailable"
+                    name="combinedQty"
                     min="0"
                     required
                     placeholder="Qty"
@@ -278,7 +276,7 @@
                     src="../../images/no_image-placeholder.png"
                     alt="noImgPlaceholder"
                   />
-                  <input name="uploadedImage" id="fileUpload" type="file" style="display: none;">
+                  <input name="image"  id="fileUpload" type="file" style="display: none;">
                   <div class="img-buttons">
                     <button class="upload-button" type="button">Upload</button>
                     <button id="remove-button" type="button">Remove</button>

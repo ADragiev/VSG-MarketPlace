@@ -1,7 +1,7 @@
 
 import { addBtn, showPopup } from "./popup.js";
 
-export const createCard = (id, image, category, price) => {
+export const createCard = (id, image, qty, category, price) => {
   const listWrapper = document.querySelector(".main");
 
   const cardDiv = document.createElement("div");
@@ -11,7 +11,7 @@ export const createCard = (id, image, category, price) => {
     <a class="product-image">
     <img
     
-    src="${image}"
+    src="${image ? image : `../../images/no_image-placeholder.png` }"
     alt="ProductImage"
   />
     </a>
@@ -46,9 +46,9 @@ export const createCard = (id, image, category, price) => {
     `;
 
   const select = cardDiv.querySelector(".selectQty");
-  const randomNum = Math.floor(Math.random() * 11 + 1);
+  
 
-  for (let i = 1; i < randomNum + 1; i++) {
+  for (let i = 1; i < qty + 1; i++) {
     const option = document.createElement("option");
     option.value = i;
     option.text = i;
@@ -59,7 +59,7 @@ export const createCard = (id, image, category, price) => {
     select.appendChild(option);
   }
   listWrapper.appendChild(cardDiv);
-
+  
+  addBtn(cardDiv);
   showPopup();
-  addBtn();
 };

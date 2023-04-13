@@ -266,7 +266,7 @@ a {
   transform: scale(1.1);
 }
 .card-item .product-image img {
-  max-height: 150px;
+  height: 150px;
 }
 .card-item .selectQty {
   border-bottom: 1px solid #000;
@@ -728,8 +728,8 @@ a {
   border-radius: 4px;
 }
 .add-item-form .img-buttons .upload-button,
-.add-item-form .img-buttons #remove-button, .edit-item-form .img-buttons .upload-button,
-.edit-item-form .img-buttons #remove-button {
+.add-item-form .img-buttons #edit-remove-button, .edit-item-form .img-buttons .upload-button,
+.edit-item-form .img-buttons #edit-remove-button {
   width: 120px;
   background: #ED6C02;
   display: flex;
@@ -744,7 +744,7 @@ a {
   margin: 10px;
   border-radius: 4px;
 }
-.add-item-form .img-buttons #remove-button, .edit-item-form .img-buttons #remove-button {
+.add-item-form .img-buttons #edit-remove-button, .edit-item-form .img-buttons #edit-remove-button {
   background: #ed1c25;
 }
 
