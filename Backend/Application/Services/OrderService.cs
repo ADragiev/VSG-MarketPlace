@@ -63,7 +63,7 @@ namespace Application.Services
         public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
         {
             var myOrders= await orderRepo.GetMyOrders(email);
-            myOrders.ForEach(o => o.Status = o.Status);
+            myOrders.ForEach(o => o.OrderStatus = ((OrderStatus)int.Parse(o.OrderStatus)).ToString());
             return myOrders;
         }
 
