@@ -38,7 +38,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("CORSPolicy");
 
-app.UpdateDatabase();
+//app.UpdateDatabase();
+using var scope = app.Services.CreateScope();
+ConfigurationMigration.UpdateDatabase(scope.ServiceProvider);
 
 app.UseHttpsRedirection();
 

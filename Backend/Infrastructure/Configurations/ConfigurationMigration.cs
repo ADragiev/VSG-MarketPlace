@@ -26,8 +26,14 @@ namespace Infrastructure.Configurations
         public static void UpdateDatabase(this IApplicationBuilder app)
         {
             using var scope = app.ApplicationServices.CreateScope();
-            var migrator = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
-            migrator.MigrateUp();
+            var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+            runner.MigrateUp();
+        }
+
+        public static void UpdateDatabase(IServiceProvider serviceProvider)
+        {
+            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+            runner.MigrateUp();
         }
     }
 }
