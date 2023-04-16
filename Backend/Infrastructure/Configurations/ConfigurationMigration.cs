@@ -3,6 +3,7 @@ using FluentMigrator.Runner;
 using Infrastructure.Migrations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,25 +16,38 @@ namespace Infrastructure.Configurations
     {
         public static IServiceCollection AddConfigurationMigration(this IServiceCollection serviceCollection)
         {
-            return serviceCollection
+            serviceCollection
             .AddFluentMigratorCore()
             .ConfigureRunner(rb => rb
                 .AddSqlServer()
                 .WithGlobalConnectionString("DefaultConnection")
                 .ScanIn(typeof(CategoryTable).Assembly).For.Migrations());
+
+            serviceCollection.AddSingleton<Database>();
+
+            return serviceCollection;
         }
 
-        public static void UpdateDatabase(this IApplicationBuilder app)
+        public static void CreateDatabase(this IApplicationBuilder app)
+        {
+            //What is the difference between IHost and IApplicationBuilder
+            using var scope = app.ApplicationServices.CreateScope();
+
+            var database = scope.ServiceProvider.GetRequiredService<Database>();
+            database.CreateDatabase();
+        }
+
+        public static void CreateTables(this IApplicationBuilder app)
         {
             using var scope = app.ApplicationServices.CreateScope();
             var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
             runner.MigrateUp();
         }
 
-        public static void UpdateDatabase(IServiceProvider serviceProvider)
-        {
-            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
-            runner.MigrateUp();
-        }
+        //public static void UpdateDatabase(IServiceProvider serviceProvider)
+        //{
+        //    var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+        //    runner.MigrateUp();
+        //}
     }
 }

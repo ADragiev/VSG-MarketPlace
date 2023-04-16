@@ -35,12 +35,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseCors("CORSPolicy");
 
-//app.UpdateDatabase();
-using var scope = app.Services.CreateScope();
-ConfigurationMigration.UpdateDatabase(scope.ServiceProvider);
+app.CreateDatabase();
+app.CreateTables();
+//using var scope = app.Services.CreateScope();
+//ConfigurationMigration.UpdateDatabase(scope.ServiceProvider);
+//Is it bad practice to do it this way?
 
 app.UseHttpsRedirection();
 

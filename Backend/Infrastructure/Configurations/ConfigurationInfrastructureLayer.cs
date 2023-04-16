@@ -14,7 +14,6 @@ namespace Infrastructure.Configurations
         public static IServiceCollection AddConfigurationInfrastructureLayer(this IServiceCollection services)
         { 
             services.AddScoped<IMarketPlaceContext, MarketPlaceContext>();
-            //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
