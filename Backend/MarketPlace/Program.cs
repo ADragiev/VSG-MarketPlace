@@ -43,9 +43,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors("CORSPolicy");
 app.CreateDatabase();
 app.CreateTables();
-//using var scope = app.Services.CreateScope();
-//ConfigurationMigration.UpdateDatabase(scope.ServiceProvider);
-//Is it bad practice to do it this way?
 
 app.UseHttpsRedirection();
 

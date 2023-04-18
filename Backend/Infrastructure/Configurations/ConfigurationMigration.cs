@@ -30,7 +30,6 @@ namespace Infrastructure.Configurations
 
         public static void CreateDatabase(this IApplicationBuilder app)
         {
-            //What is the difference between IHost and IApplicationBuilder
             using var scope = app.ApplicationServices.CreateScope();
 
             var database = scope.ServiceProvider.GetRequiredService<Database>();
@@ -43,11 +42,5 @@ namespace Infrastructure.Configurations
             var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
             runner.MigrateUp();
         }
-
-        //public static void UpdateDatabase(IServiceProvider serviceProvider)
-        //{
-        //    var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
-        //    runner.MigrateUp();
-        //}
     }
 }
