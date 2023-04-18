@@ -27,7 +27,6 @@ namespace Application.Helpers.Middlewares
         {
             try
             {
-                throw new Exception("asd");
                 await next(context);
                 marketPlaceContext.Transaction.Commit();
             }
