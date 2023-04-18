@@ -1,11 +1,17 @@
 ﻿using Application.Helpers.Profiles;
+using Application.Helpers.Validators;
 using Application.Models.CategoryModels.Contacts;
+using Application.Models.CategoryModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
+using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
+using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using Application.Services;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Reflection;
 
 namespace Application.Helpers.Configurations
@@ -20,8 +26,10 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IImageService, ImageService>();
 
-            services.AddControllers()
-                .AddFluentValidation(c => c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddScoped<IValidator<CategoryCreateDto>, CategoryCreateValidator>();
+            services.AddScoped<IValidator<OrderCreateDto>, OrderCreateValidator>();
+            services.AddScoped<IValidator<ProductCreateDto>, ProductCreateValidator>();
+            services.AddScoped<IValidator<ProductUpdateDto>, ProductUpdateValidator>();
             return services;
         }
     }

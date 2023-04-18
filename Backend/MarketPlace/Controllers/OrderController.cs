@@ -1,5 +1,7 @@
 ﻿using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
@@ -9,10 +11,13 @@ namespace MarketPlace.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService orderService;
+        private readonly IValidator<OrderCreateDto> createValidator;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService,
+            IValidator<OrderCreateDto> createValidator)
         {
             this.orderService = orderService;
+            this.createValidator = createValidator;
         }
 
         [HttpGet("Pending")]
@@ -44,6 +49,12 @@ namespace MarketPlace.Controllers
         [HttpPost]
         public async Task<OrderGetDto> CreateOrder(OrderCreateDto dto)
         {
+            ValidationResult result = await createValidator.ValidateAsync(dto);
+            if(!result.IsValid)
+            {
+                throw new ValidationException(result.Errors);
+            }
+
             return await orderService.Create(dto);
         }
     }
