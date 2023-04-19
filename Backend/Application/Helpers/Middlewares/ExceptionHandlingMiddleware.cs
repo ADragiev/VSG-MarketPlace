@@ -35,13 +35,13 @@ namespace Application.Helpers.Middlewares
             {
                 marketPlaceContext.Transaction.Rollback();
 
-                HandleException(ex, context);
+                await HandleException(ex, context);
             }
 
 
         }
 
-        private async void HandleException(Exception ex, HttpContext context)
+        private async Task HandleException(Exception ex, HttpContext context)
         {
             List<ProblemDetails> problems = new List<ProblemDetails>();
             if (ex is HttpException httpException)
