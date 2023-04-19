@@ -49,12 +49,7 @@ namespace MarketPlace.Controllers
         [HttpPost]
         public async Task<OrderGetDto> CreateOrder(OrderCreateDto dto)
         {
-            ValidationResult result = await createValidator.ValidateAsync(dto);
-            if(!result.IsValid)
-            {
-                throw new ValidationException(result.Errors);
-            }
-
+            await createValidator.ValidateAndThrowAsync(dto);
             return await orderService.Create(dto);
         }
     }

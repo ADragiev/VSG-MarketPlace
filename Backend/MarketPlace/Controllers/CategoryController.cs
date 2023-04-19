@@ -39,11 +39,7 @@ namespace MarketPlace.Controllers
         [HttpPost]
         public async Task<CategoryGetDto> CreateCategory(CategoryCreateDto dto)
         {
-            ValidationResult result = await createValidator.ValidateAsync(dto);
-            if (!result.IsValid)
-            {
-                throw new ValidationException(result.Errors);
-            }
+            await createValidator.ValidateAndThrowAsync(dto);
             return await categoryService.Create(dto);
         }
 

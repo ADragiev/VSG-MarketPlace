@@ -57,24 +57,14 @@ namespace MarketPlace.Controllers
         [Route("Update/{id}")]
         public async Task UpdateProduct(int id, ProductUpdateDto dto)
         {
-            ValidationResult result = await updateValidator.ValidateAsync(dto);
-            if (!result.IsValid)
-            {
-                throw new ValidationException(result.Errors);
-            }
-
+            await updateValidator.ValidateAndThrowAsync(dto);
             await productService.Update(id, dto);
         }
 
         [HttpPost]
         public async Task<ProductGetDto> CreateProduct([FromBody]ProductCreateDto dto)
         {
-            ValidationResult result = await createValidator.ValidateAsync(dto);
-            if(!result.IsValid)
-            {
-                throw new ValidationException(result.Errors);
-            }
-
+            await createValidator.ValidateAndThrowAsync(dto);
             return await productService.Create(dto);
         }
 
