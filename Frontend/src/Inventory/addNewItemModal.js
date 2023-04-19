@@ -34,7 +34,6 @@ formElement.onsubmit = async (e) => {
     path: "/Product",
     method: "POST",
     data
-    
   });
   let productId = response.id
   // productId = 20...
@@ -44,7 +43,7 @@ formElement.onsubmit = async (e) => {
     formData.delete('image')
     await postImage(productId, imageFormData)
   }
-
+  location.reload()
   modal.style.display = 'none'
 };
 

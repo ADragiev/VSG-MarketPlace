@@ -1,13 +1,21 @@
 import { loadPendingOrders } from "../global/itemsService.js";
+import { makeRequest } from "../global/makeRequest.js";
 import { createPendingOrderRow } from "./createPendingOrderRow.js";
 
 const createOrders = async () => {
-    const main = document.querySelector(".infoDetails");
-    const products = await loadPendingOrders();
+  const main = document.querySelector(".infoDetails");
+  const products = await loadPendingOrders();
 
-    products.forEach(p => {
-        const div = createPendingOrderRow(p)
-        main.append(div)
+  products.forEach((p) => {
+    const div = createPendingOrderRow(p);
+    let completeBtn = div.querySelector(".completeBtn");
+    completeBtn.addEventListener("click", async () => {
+      await fetch(`https://localhost:7054/Order/CompleteOrder/${div.id}`, {
+        method: "PUT",
+      });
+      location.reload();
     });
-  };
-createOrders()
+    main.append(div);
+  });
+};
+createOrders();

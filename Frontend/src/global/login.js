@@ -1,7 +1,8 @@
 import { loginRequest, msalInstance } from "../authConfig.js";
 
 document.querySelector("#login").addEventListener("click", async  () => {
-  const result = await msalInstance.loginRedirect(loginRequest);
-
-  console.log(result);
+ let login =  await msalInstance.loginPopup(loginRequest);
+ let response = login.account
+ sessionStorage.setItem('user', JSON.stringify(response))
+ window.location.href = "marketplace.html";
 });

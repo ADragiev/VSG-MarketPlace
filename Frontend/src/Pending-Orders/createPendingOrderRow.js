@@ -1,6 +1,6 @@
 export function createPendingOrderRow(product){
     const div = document.createElement("div");
-     div.className = 'item-row'
+      div.className = 'item-row'
           div.id = product.id
           div.innerHTML = `
          
@@ -14,5 +14,7 @@ export function createPendingOrderRow(product){
           <button class="btnColumn completeBtn" >Complete</button>
        
       `
+
+      
       return div;
 }
