@@ -1,8 +1,13 @@
 using Application.Helpers.Configurations;
 using Application.Helpers.Middlewares;
 using Infrastructure.Configurations;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+}).UseNLog();
 
 // Add services to the container.
 
@@ -36,12 +41,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("CORSPolicy");
-
 app.CreateDatabase();
 app.CreateTables();
-//using var scope = app.Services.CreateScope();
-//ConfigurationMigration.UpdateDatabase(scope.ServiceProvider);
-//Is it bad practice to do it this way?
 
 app.UseHttpsRedirection();
 

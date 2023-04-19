@@ -1,6 +1,9 @@
-﻿using Application.Models.CategoryModels.Contacts;
+﻿using Application.Helpers.Validators;
+using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
 using Application.Models.ExceptionModels;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -11,10 +14,12 @@ namespace MarketPlace.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService categoryService;
+        private readonly IValidator<CategoryCreateDto> createValidator;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService,
+            IValidator<CategoryCreateDto> createValidator)
         {
-            this.categoryService = categoryService;
+            this.createValidator = createValidator;
         }
 
         [HttpGet]
@@ -33,13 +38,17 @@ namespace MarketPlace.Controllers
         [HttpPost]
         public async Task<CategoryGetDto> CreateCategory(CategoryCreateDto dto)
         {
+            ValidationResult result = await createValidator.ValidateAsync(dto);
+            if (!result.IsValid)
+            {
+                throw new ValidationException(result.Errors);
+            }
             return await categoryService.Create(dto);
         }
 
         [HttpPut("{id}")]
         public async Task UpdateCategory(int id, CategoryUpdateDto dto)
         {
-            //TODO: Check if Ids are the same!
             await categoryService.Update(dto);
         }
 
