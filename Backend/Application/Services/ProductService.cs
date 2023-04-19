@@ -82,7 +82,6 @@ namespace Application.Services
         public async Task Update(int id, ProductUpdateDto dto)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
 
             var productToUpdate = mapper.Map<Product>(dto);
             productToUpdate.Id = id;
