@@ -32,8 +32,6 @@ namespace Application.Services
 
         public async Task<ProductGetDto> Create(ProductCreateDto dto)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
-
             var product = mapper.Map<Product>(dto);
             var productId = await productRepo.Create(product);
             product.Id = productId;

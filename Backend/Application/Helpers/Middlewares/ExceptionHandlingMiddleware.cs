@@ -37,8 +37,6 @@ namespace Application.Helpers.Middlewares
 
                 await HandleException(ex, context);
             }
-
-
         }
 
         private async Task HandleException(Exception ex, HttpContext context)
