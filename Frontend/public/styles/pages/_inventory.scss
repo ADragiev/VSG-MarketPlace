@@ -189,6 +189,9 @@
       border: 0;
       margin: 10px;
       border-radius: 4px;
+      &:hover{
+        cursor: pointer;
+      }
     }
     #edit-remove-button, #remove-button {
       background: $main-color;

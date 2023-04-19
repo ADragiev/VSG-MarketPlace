@@ -3,7 +3,7 @@ import { addBtn, showPopup } from "./popup.js";
 
 export const createCard = (id, image, qty, category, price) => {
   const listWrapper = document.querySelector(".main");
-
+  let priceToPass = price
   const cardDiv = document.createElement("div");
   cardDiv.id = id;
   cardDiv.className = "card-item";
@@ -52,14 +52,10 @@ export const createCard = (id, image, qty, category, price) => {
     const option = document.createElement("option");
     option.value = i;
     option.text = i;
-    if (i == 1) {
-      option.selected = true;
-    }
-
     select.appendChild(option);
   }
   listWrapper.appendChild(cardDiv);
   
   addBtn(cardDiv);
-  showPopup();
+  showPopup(cardDiv, priceToPass);
 };
