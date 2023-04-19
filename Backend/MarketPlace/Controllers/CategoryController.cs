@@ -20,6 +20,7 @@ namespace MarketPlace.Controllers
             IValidator<CategoryCreateDto> createValidator)
         {
             this.createValidator = createValidator;
+            this.categoryService = categoryService;
         }
 
         [HttpGet]
