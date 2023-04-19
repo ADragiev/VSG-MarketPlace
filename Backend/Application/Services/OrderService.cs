@@ -37,7 +37,10 @@ namespace Application.Services
 
         public async Task<OrderGetDto> Create(OrderCreateDto dto)
         {
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(dto.ProductId, productRepo);
             var product = await productRepo.GetByID(dto.ProductId);
+
+            ThrowExceptionService.ThrowExceptionWhenNotEnoughQuantity(product.SaleQty, dto.Qty);
 
             var newSaleQty = product.SaleQty - dto.Qty;
             await productRepo.SetField(product.Id, "SaleQty", newSaleQty);

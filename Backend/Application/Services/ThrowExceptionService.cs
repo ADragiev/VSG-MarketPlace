@@ -26,5 +26,13 @@ namespace Application.Services
                 throw new HttpException("Order cannot be rejected, because it is not pending!", HttpStatusCode.BadRequest);
             }
         }
+
+        public static void ThrowExceptionWhenNotEnoughQuantity(int saleQty, int orderQty)
+        {
+            if (orderQty > saleQty)
+            {
+                throw new HttpException("Not enough quantity for sale!", HttpStatusCode.BadRequest);
+            }
+        }
     }
 }
