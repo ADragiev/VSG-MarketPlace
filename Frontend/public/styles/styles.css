@@ -744,6 +744,11 @@ a {
   margin: 10px;
   border-radius: 4px;
 }
+.add-item-form .img-buttons .upload-button:hover,
+.add-item-form .img-buttons #edit-remove-button:hover, .add-item-form .img-buttons #remove-button:hover, .edit-item-form .img-buttons .upload-button:hover,
+.edit-item-form .img-buttons #edit-remove-button:hover, .edit-item-form .img-buttons #remove-button:hover {
+  cursor: pointer;
+}
 .add-item-form .img-buttons #edit-remove-button, .add-item-form .img-buttons #remove-button, .edit-item-form .img-buttons #edit-remove-button, .edit-item-form .img-buttons #remove-button {
   background: #ed1c25;
 }
