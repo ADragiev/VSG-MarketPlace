@@ -1,5 +1,6 @@
 ﻿using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
@@ -9,15 +10,18 @@ namespace MarketPlace.Controllers
     public class ImageController : ControllerBase
     {
         private readonly IImageService imageService;
+        private readonly IValidator<ImageCreateDto> imageValidator;
 
-        public ImageController(IImageService imageService)
+        public ImageController(IImageService imageService, IValidator<ImageCreateDto> imageValidator)
         {
             this.imageService = imageService;
+            this.imageValidator = imageValidator;
         }
 
         [HttpPost("{productId}")]
         public async Task UploadImage(int productId, [FromForm] ImageCreateDto image)
         {
+            await imageValidator.ValidateAndThrowAsync(image);
             await imageService.UploadImages(productId, image);
         }
     }

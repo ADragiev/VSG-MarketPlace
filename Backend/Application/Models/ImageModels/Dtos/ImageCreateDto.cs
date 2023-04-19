@@ -9,6 +9,6 @@ namespace Application.Models.ImageModels.Dtos
 {
     public class ImageCreateDto
     {
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }

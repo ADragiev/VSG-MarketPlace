@@ -2,6 +2,7 @@
 using Application.Helpers.Validators;
 using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
+using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
@@ -30,6 +31,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IValidator<OrderCreateDto>, OrderCreateValidator>();
             services.AddScoped<IValidator<ProductCreateDto>, ProductCreateValidator>();
             services.AddScoped<IValidator<ProductUpdateDto>, ProductUpdateValidator>();
+            services.AddScoped<IValidator<ImageCreateDto>, ImageCreateValidator>();
             return services;
         }
     }
