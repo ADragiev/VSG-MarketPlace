@@ -26,14 +26,12 @@ export function addBtn(div) {
             orderedBy,
             productId
           };
-          let response = await makeRequest({
+         await makeRequest({
             path: "/Order",
             method: "POST",
             data
-            
           });
-          console.log(response);
-          // location.reload()
+          location.reload()
         }
        
     });

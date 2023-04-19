@@ -2,7 +2,7 @@ export const header = () =>{
     const title = document.querySelector('title').textContent
     const header = document.querySelector('.header')
     header.innerHTML = `
-    <a href="/Frontend/index.html">
+    <a href="/index.html">
         <img src="../../images/vsg_marketplace-mini-logo 1.jpg" alt="mini-logo" />
       </a>
       <span>${title}</span>
