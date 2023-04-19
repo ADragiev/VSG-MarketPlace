@@ -49,6 +49,9 @@ namespace Application.Services
             await productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
 
             var order = mapper.Map<Order>(dto);
+            order.ProductCode = product.Code;
+            order.ProductName = product.FullName;
+            order.Price = dto.Qty * product.Price;
             var orderId = await orderRepo.Create(order);
 
             var createdOrder = await orderRepo.GetByID(orderId);
@@ -74,13 +77,16 @@ namespace Application.Services
             var order = await orderRepo.GetByID(id);
             ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
 
-            var product = await productRepo.GetByID(order.ProductId);
+            if (order.ProductId != null)
+            {
+                var product = await productRepo.GetByID((int)order.ProductId);
 
-            var newSaleQty = product.SaleQty + order.Qty;
-            await productRepo.SetField(product.Id, "SaleQty", newSaleQty);
+                var newSaleQty = product.SaleQty + order.Qty;
+                await productRepo.SetField(product.Id, "SaleQty", newSaleQty);
 
-            var newCombinedQty = product.CombinedQty + order.Qty;
-            await productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
+                var newCombinedQty = product.CombinedQty + order.Qty;
+                await productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
+            }
 
             await orderRepo.Delete(id);
         }

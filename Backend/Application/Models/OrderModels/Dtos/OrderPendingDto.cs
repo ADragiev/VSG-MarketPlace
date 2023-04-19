@@ -10,7 +10,7 @@ namespace Application.Models.OrderModels.Dtos
     {
         public int Id { get; set; }
 
-        public string Code { get; set; }
+        public string ProductCode { get; set; }
 
         public int Qty { get; set; }
 

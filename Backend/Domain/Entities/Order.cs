@@ -5,6 +5,11 @@ namespace Domain.Entities
 {
     public class Order : BaseEntity
     {
+        public string ProductCode { get; set; }
+
+        public string ProductName { get; set; }
+
+        public decimal Price { get; set; }
         public int Qty { get; set; }
 
         public string OrderedBy { get; set; }
@@ -13,6 +18,6 @@ namespace Domain.Entities
 
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
 
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
     }
 }
