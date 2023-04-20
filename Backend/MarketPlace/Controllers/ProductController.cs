@@ -45,12 +45,12 @@ namespace MarketPlace.Controllers
             return await productService.GetDetails(id);
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<ProductGetForUpdateDto> GetProductForEdit(int id)
-        {
-            return await productService.GetForUpdate(id);
-        }
+        //[HttpGet]
+        //[Route("{id}")]
+        //public async Task<ProductGetForUpdateDto> GetProductForEdit(int id)
+        //{
+        //    return await productService.GetForUpdate(id);
+        //}
 
         [HttpPut]
         [Route("{id}")]

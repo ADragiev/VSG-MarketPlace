@@ -12,7 +12,7 @@ namespace Application.Models.ProductModels.Intefaces
     public interface IProductService
     {
         Task<ProductGetDto> Create(ProductCreateDto dto);
-        Task<ProductGetForUpdateDto> GetForUpdate(int id);
+        //Task<ProductGetForUpdateDto> GetForUpdate(int id);
         Task Update(int id, ProductUpdateDto dto);
 
         Task Delete(int id); 

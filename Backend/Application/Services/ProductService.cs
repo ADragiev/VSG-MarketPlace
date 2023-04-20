@@ -65,19 +65,27 @@ namespace Application.Services
 
         public async Task<List<ProductInventoryGetDto>> GetAllForInventory()
         {
-            return await productRepo.GetAllInventoryProducts();
+            var products = await productRepo.GetAllInventoryProducts();
+            products.ForEach(p =>
+            {
+                if (p.Image != null)
+                {
+                    p.Image = CloudinaryConstants.baseUrl + p.Image;
+                }
+            });
+            return products;
         }
 
-        public async Task<ProductGetForUpdateDto> GetForUpdate(int id)
-        {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
-            var product = await productRepo.GetForEdit(id);
-            if (product.Image != null)
-            {
-                product.Image = CloudinaryConstants.baseUrl + product.Image;
-            }
-            return product;
-        }
+        //public async Task<ProductGetForUpdateDto> GetForUpdate(int id)
+        //{
+        //    await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
+        //    var product = await productRepo.GetForEdit(id);
+        //    if (product.Image != null)
+        //    {
+        //        product.Image = CloudinaryConstants.baseUrl + product.Image;
+        //    }
+        //    return product;
+        //}
 
         public async Task Update(int id, ProductUpdateDto dto)
         {

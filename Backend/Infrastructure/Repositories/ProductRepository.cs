@@ -35,28 +35,29 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductInventoryGetDto>> GetAllInventoryProducts()
         {
-            var sql = @"SELECT p.Id, p.Code, p.FullName, c.CategoryName AS Category, p.SaleQty, p.CombinedQty
+            var sql = @" SELECT p.Id, p.Code, p.FullName, p.Price, p.Description, c.CategoryName AS Category, c.Id AS CategoryId, p.SaleQty, p.CombinedQty, i.ImagePublicId AS Image
                         FROM
-                        Product AS p
-                        JOIN Category AS c ON p.CategoryId = c.Id";
+                        [Product] AS p
+                        JOIN [Category] AS c ON p.CategoryId = c.Id
+						LEFT JOIN [Image] AS i ON i.ProductId = p.Id";
 
             var products = await Connection.QueryAsync<ProductInventoryGetDto>(sql, null, Transaction);
 
             return products.ToList();
         }
 
-        public async Task<ProductGetForUpdateDto> GetForEdit(int id)
-        {
-            var sql = @"SELECT p.Id, p.Code, p.FullName, p.Description, p.Price, p.SaleQty, p.Price, p.SaleQty, p.CombinedQty, c.Id AS CategoryId, i.ImagePublicId AS Image
-                        FROM Product AS p
-                        JOIN Category AS c ON p.CategoryId = c.Id
-						LEFT JOIN [Image] AS i On i.ProductId = p.Id
-                        WHERE p.Id = @id";
+      //  public async Task<ProductGetForUpdateDto> GetForEdit(int id)
+      //  {
+      //      var sql = @"SELECT p.Id, p.Code, p.FullName, p.Description, p.Price, p.SaleQty, p.SaleQty, p.CombinedQty, c.Id AS CategoryId, i.ImagePublicId AS Image
+      //                  FROM Product AS p
+      //                  JOIN Category AS c ON p.CategoryId = c.Id
+						//LEFT JOIN [Image] AS i On i.ProductId = p.Id
+      //                  WHERE p.Id = @id";
 
-            var productForEdit = await Connection.QueryFirstOrDefaultAsync<ProductGetForUpdateDto>(sql, new { id }, Transaction);
+      //      var productForEdit = await Connection.QueryFirstOrDefaultAsync<ProductGetForUpdateDto>(sql, new { id }, Transaction);
 
-            return productForEdit;
-        }
+      //      return productForEdit;
+      //  }
 
         public async Task<ProductDetailDto> GetProductDetail(int id)
         {
