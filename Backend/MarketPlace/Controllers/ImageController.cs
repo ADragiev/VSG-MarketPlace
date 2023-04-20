@@ -24,5 +24,11 @@ namespace MarketPlace.Controllers
             await imageValidator.ValidateAndThrowAsync(image);
             await imageService.UploadImages(productId, image);
         }
+
+        [HttpDelete("{productId}")]
+        public async Task DeleteImage(int productId)
+        {
+            await imageService.DeleteImageByProductId(productId);
+        }
     }
 }
