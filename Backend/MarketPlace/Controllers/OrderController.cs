@@ -20,16 +20,16 @@ namespace MarketPlace.Controllers
             this.createValidator = createValidator;
         }
 
-        [HttpGet("Pending")]
+        [HttpGet]
         public async Task<List<OrderPendingDto>> GetPendingOrders()
         {
             return await orderService.GetAllPendingOrders();
         }
 
-        [HttpGet("MyOrders")]
-        public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
+        [HttpGet("{username}")]
+        public async Task<List<OrderGetMineDto>> GetMyOrders(string username)
         {
-            return await orderService.GetMyOrders(email);
+            return await orderService.GetMyOrders(username);
         }
 
 
