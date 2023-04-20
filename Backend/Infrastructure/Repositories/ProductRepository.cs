@@ -45,32 +45,5 @@ namespace Infrastructure.Repositories
 
             return products.ToList();
         }
-
-      //  public async Task<ProductGetForUpdateDto> GetForEdit(int id)
-      //  {
-      //      var sql = @"SELECT p.Id, p.Code, p.FullName, p.Description, p.Price, p.SaleQty, p.SaleQty, p.CombinedQty, c.Id AS CategoryId, i.ImagePublicId AS Image
-      //                  FROM Product AS p
-      //                  JOIN Category AS c ON p.CategoryId = c.Id
-						//LEFT JOIN [Image] AS i On i.ProductId = p.Id
-      //                  WHERE p.Id = @id";
-
-      //      var productForEdit = await Connection.QueryFirstOrDefaultAsync<ProductGetForUpdateDto>(sql, new { id }, Transaction);
-
-      //      return productForEdit;
-      //  }
-
-        //public async Task<ProductDetailDto> GetProductDetail(int id)
-        //{
-        //    var sql = @"SELECT p.Id, p.FullName, p.Price, c.CategoryName AS Category, p.SaleQty, p.Description, i.ImagePublicId AS Image
-        //                FROM
-        //                Product AS p
-        //                JOIN Category AS c ON p.CategoryId  = c.Id
-        //                LEFT JOIN Image AS i ON i.ProductId = p.Id
-        //                WHERE p.Id = @id";
-
-        //    var productDetail = await Connection.QueryFirstOrDefaultAsync<ProductDetailDto>(sql, new { id }, Transaction);
-
-        //    return productDetail;
-        //}
     }
 }

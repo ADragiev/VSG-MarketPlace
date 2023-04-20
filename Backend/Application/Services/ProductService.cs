@@ -52,17 +52,6 @@ namespace Application.Services
             return products;
         }
 
-        //public async Task<ProductDetailDto> GetDetails(int id)
-        //{
-        //    await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
-        //    var product = await productRepo.GetProductDetail(id);
-        //    if (product.Image != null)
-        //    {
-        //        product.Image = CloudinaryConstants.baseUrl + product.Image;
-        //    }
-        //    return product;
-        //}
-
         public async Task<List<ProductInventoryGetDto>> GetAllForInventory()
         {
             var products = await productRepo.GetAllInventoryProducts();
@@ -76,16 +65,6 @@ namespace Application.Services
             return products;
         }
 
-        //public async Task<ProductGetForUpdateDto> GetForUpdate(int id)
-        //{
-        //    await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
-        //    var product = await productRepo.GetForEdit(id);
-        //    if (product.Image != null)
-        //    {
-        //        product.Image = CloudinaryConstants.baseUrl + product.Image;
-        //    }
-        //    return product;
-        //}
 
         public async Task Update(int id, ProductUpdateDto dto)
         {

@@ -13,10 +13,6 @@ namespace Application.Models.ProductModels.Intefaces
     {
         Task<List<ProductGetBaseDto>> GetAllIndexProducts();
 
-        //Task<ProductGetForUpdateDto> GetForEdit(int id);
-
-        //Task<ProductDetailDto> GetProductDetail(int id);
-
         Task<List<ProductInventoryGetDto>> GetAllInventoryProducts();
     }
 }

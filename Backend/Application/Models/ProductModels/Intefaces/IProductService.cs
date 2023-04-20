@@ -12,14 +12,12 @@ namespace Application.Models.ProductModels.Intefaces
     public interface IProductService
     {
         Task<ProductGetDto> Create(ProductCreateDto dto);
-        //Task<ProductGetForUpdateDto> GetForUpdate(int id);
+
         Task Update(int id, ProductUpdateDto dto);
 
         Task Delete(int id); 
 
         Task<List<ProductGetBaseDto>> GetAllForIndex();
-
-        //Task<ProductDetailDto> GetDetails(int id);
 
         Task<List<ProductInventoryGetDto>> GetAllForInventory();
     }
