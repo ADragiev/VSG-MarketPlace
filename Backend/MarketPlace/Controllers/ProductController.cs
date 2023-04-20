@@ -26,7 +26,6 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        [Route("Index")]
         public async Task<List<ProductGetBaseDto>> GetAllProductsForIndexPage()
         {
             return await productService.GetAllForIndex();
@@ -47,14 +46,14 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        [Route("Update/{id}")]
+        [Route("{id}")]
         public async Task<ProductGetForUpdateDto> GetProductForEdit(int id)
         {
             return await productService.GetForUpdate(id);
         }
 
         [HttpPut]
-        [Route("Update/{id}")]
+        [Route("{id}")]
         public async Task UpdateProduct(int id, ProductUpdateDto dto)
         {
             await updateValidator.ValidateAndThrowAsync(dto);

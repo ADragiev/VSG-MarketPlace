@@ -33,13 +33,13 @@ namespace MarketPlace.Controllers
         }
 
 
-        [HttpPut("CompleteOrder/{id}")]
+        [HttpPut("{id}")]
         public async Task CompleteOrder(int id)
         {
             await orderService.CompleteOrder(id);
         }
 
-        [HttpDelete("Reject/{id}")]
+        [HttpDelete("{id}")]
         public async Task RejectOrder(int id)
         {
             await orderService.RejectOrder(id);
