@@ -1,17 +1,14 @@
 import { createModal } from "./createModal.js";
 
 const modal = document.querySelector(".modal");
-export async function showModal() {
-  const productDivs = document.querySelectorAll(".product-image");
-  productDivs.forEach((productDiv) => {
-    productDiv.addEventListener("click", async (e) => {
+export async function showModal(cardDiv, product) {
+  const productImage = cardDiv.querySelector(".product-image");
+   productImage.addEventListener("click", async (e) => {
       e.preventDefault();
-      const productId = e.target.parentElement.parentElement.id;
-      await createModal(productId);
+      await createModal(product);
       modal.style.display = "flex";
       closeModal()
     });
-  });
 }
 export function closeModal() {
   document

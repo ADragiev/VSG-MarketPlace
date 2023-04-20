@@ -21,7 +21,7 @@ export function confirmBtn(div) {
         if (e.target.textContent == "YES") {
          
          await fetch(
-          `https://localhost:7054/Order/Reject/${productId}`,
+          `https://localhost:7054/Order/${productId}`,
           {
           method: "DELETE"
         }

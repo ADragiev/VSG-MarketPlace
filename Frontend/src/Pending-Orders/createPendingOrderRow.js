@@ -5,7 +5,7 @@ export function createPendingOrderRow(product){
           div.innerHTML = `
          
           <div class="div-wrapper">
-            <span class="codeColumn">${product.code}</span>
+            <span class="codeColumn">${product.productCode}</span>
             <span class="qtyColumn">${product.qty}</span>
             <span class="priceColumn">${product.price} BGN</span>
           </div>

@@ -1,7 +1,10 @@
-export function createRow(product){
-    const row = document.createElement("tr");
-          row.id = product.id
-          row.innerHTML = `
+import { createEditModal } from "./createEditModal";
+import { closeModal, showModal } from "./showEditModal";
+
+export function createRow(product) {
+  const row = document.createElement("tr");
+  row.id = product.id;
+  row.innerHTML = `
       <td>${product.code}</td>
       <td>${product.fullName}</td>
       <td>${product.category}</td>
@@ -15,7 +18,7 @@ export function createRow(product){
             viewBox="0 0 16 16"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            class="editIcon"
+            
           >
             <path
               d="M13.8125 4.6875L12.5938 5.90625L10.0938 3.40625L11.3125 2.1875C11.4375 2.0625 11.5938 2 11.7812 2C11.9688 2 12.125 2.0625 12.25 2.1875L13.8125 3.75C13.9375 3.875 14 4.03125 14 4.21875C14 4.40625 13.9375 4.5625 13.8125 4.6875ZM2 11.5L9.375 4.125L11.875 6.625L4.5 14H2V11.5Z"
@@ -46,7 +49,51 @@ export function createRow(product){
           </a>
         </div>
       </td>
-      `
+      `;
 
-      return row;
+  const deleteBtn = row.querySelector(".deleteIcon");
+  deleteBtn.addEventListener("click", (e) => {
+    e.target.parentElement.parentElement.parentElement
+      .querySelector(".popuptext")
+      .classList.add("show");
+  });
+
+  row.querySelectorAll(".btnYesNo").forEach(btn =>{
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.target.parentElement.parentElement.className = "popuptext";
+      if (e.target.textContent == "YES") {
+        let response = await fetch(
+          `https://localhost:7054/Product/${product.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+        location.reload();
+        console.log(response);
+      }
+      else{
+      e.target.parentElement.parentElement.className = "popuptext";
+      }
+  })
+  });
+  
+  let modal = document.querySelector('.edit-item-modal')
+
+
+  
+  const editIcons = row.querySelector(".edit-icon");
+  editIcons.addEventListener("click", async () => {
+    modal.style.display = "flex";
+    await createEditModal(product);
+    closeModal(modal);
+      });
+  
+    const closeBtn = document.querySelector(".close-modal-button");
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+
+  return row;
 }

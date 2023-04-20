@@ -1,6 +1,5 @@
 import { makeRequest } from "../src/makeRequest.js";
 
-
 export const loadProducts = async () => {
   try {
     const data = await makeRequest({ path: "/products" });
@@ -18,5 +17,3 @@ export const loadProductById = async (id) => {
     console.error(err);
   }
 };
-
-

@@ -1,24 +1,25 @@
 
+import { showModal } from "./detailsPopup.js";
 import { addBtn, showPopup } from "./popup.js";
 
-export const createCard = (id, image, qty, category, price) => {
+export const createCard = (product) => {
   const listWrapper = document.querySelector(".main");
-  let priceToPass = price
+  let priceToPass = product.price
   const cardDiv = document.createElement("div");
-  cardDiv.id = id;
+  cardDiv.id = product.id;
   cardDiv.className = "card-item";
   cardDiv.innerHTML = `
     <a class="product-image">
     <img
     
-    src="${image ? image : `../../images/no_image-placeholder.png` }"
+    src="${product.image ? product.image : `../../images/no_image-placeholder.png` }"
     alt="ProductImage"
   />
     </a>
   <div class="details">
     <div class="name-price">
-      <p>${price} BGN</p>
-      <p>${category}</p>
+      <p>${product.price} BGN</p>
+      <p>${product.category}</p>
     </div>
     <div class="qty">
       <p>Qty</p>
@@ -31,7 +32,7 @@ export const createCard = (id, image, qty, category, price) => {
       <div class="popuptext">
         <span>
           Are you sure you want to buy <strong>1</strong> item for
-          <strong>${price} BGN?</strong>
+          <strong>${product.price} BGN?</strong>
         </span>
         <div class="buttons-container">
           <button class="btnYesNo">YES</button>
@@ -48,7 +49,7 @@ export const createCard = (id, image, qty, category, price) => {
   const select = cardDiv.querySelector(".selectQty");
   
 
-  for (let i = 1; i < qty + 1; i++) {
+  for (let i = 1; i < product.saleQty + 1; i++) {
     const option = document.createElement("option");
     option.value = i;
     option.text = i;
@@ -58,4 +59,6 @@ export const createCard = (id, image, qty, category, price) => {
   
   addBtn(cardDiv);
   showPopup(cardDiv, priceToPass);
+  showModal(cardDiv, product);
+
 };

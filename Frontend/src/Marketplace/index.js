@@ -6,11 +6,9 @@ import './createModal.js';
 
 
 import { createCard } from "./card.js";
-import { showModal } from "./detailsPopup.js";
 import { loadProducts } from "../global/itemsService.js"
 
 const productsData = await loadProducts();
 productsData.forEach((product) => {
-  createCard(product.id, product.image, product.saleQty, product.category, product.price);
+  createCard(product);
 });
-showModal();

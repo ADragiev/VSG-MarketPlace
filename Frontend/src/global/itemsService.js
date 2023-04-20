@@ -2,7 +2,7 @@ import { makeRequest } from "./makeRequest.js";
 
 export const loadProducts = async () => {
   try {
-    const data = await makeRequest({ path: "/Product/Index" });
+    const data = await makeRequest({ path: "/Product" });
     return data;
   } catch (err) {
     console.error(err);
@@ -27,7 +27,7 @@ export const loadProductsDetails = async (id) => {
 
 export const loadPendingOrders = async () => {
   try {
-    const data = await makeRequest({ path: "/Order/Pending" });
+    const data = await makeRequest({ path: "/Order" });
     return data;
   } catch (err) {
     console.error(err);
@@ -57,6 +57,17 @@ export const deleteProduct = async (id) => {
     console.error(err);
   }
 };
+export const deleteImage = async (id) => {
+  try {
+    const data = await makeRequest({
+      path: "/Image/" + id,
+      method: "DELETE",
+    });
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
 export const loadCategories = async () => {
   try {
     const data = await makeRequest({ path: "/Category" });
@@ -68,7 +79,7 @@ export const loadCategories = async () => {
 
 export const loadProductById = async (id) => {
   try {
-    const data = await makeRequest({ path: "/Product/Update/" + id });
+    const data = await makeRequest({ path: "/Product/" + id });
     return data;
   } catch (err) {
     console.error(err);

@@ -10,7 +10,7 @@ const createOrders = async () => {
     const div = createPendingOrderRow(p);
     let completeBtn = div.querySelector(".completeBtn");
     completeBtn.addEventListener("click", async () => {
-      await fetch(`https://localhost:7054/Order/CompleteOrder/${div.id}`, {
+      await fetch(`https://localhost:7054/Order/${div.id}`, {
         method: "PUT",
       });
       location.reload();
