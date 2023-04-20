@@ -1,4 +1,5 @@
-﻿using Application.Models.GenericRepo;
+﻿using Application.Models.ExceptionModels;
+using Application.Models.GenericRepo;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
@@ -8,6 +9,7 @@ using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -96,8 +98,11 @@ namespace Application.Services
 
         private string FormatDate(string dateString)
         {
-            var date = DateTime.Parse(dateString);
-            return date.ToString("yyyy-MM-dd HH:mm");
+            if(DateTime.TryParse(dateString, out var date))
+            {
+                return date.ToString("yyyy-MM-dd HH:mm");
+            };
+            throw new HttpException("Cannot parse date", HttpStatusCode.BadRequest);
         }
     }
 }
