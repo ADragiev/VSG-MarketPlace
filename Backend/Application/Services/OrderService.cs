@@ -8,6 +8,7 @@ using Domain.Entities;
 using Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -98,7 +99,7 @@ namespace Application.Services
 
         private string FormatDate(string dateString)
         {
-            if(DateTime.TryParse(dateString, out var date))
+            if(DateTime.TryParse(dateString, CultureInfo.InvariantCulture,DateTimeStyles.None, out var date))
             {
                 return date.ToString("yyyy-MM-dd HH:mm");
             };
