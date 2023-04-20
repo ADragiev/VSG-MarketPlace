@@ -60,13 +60,16 @@ namespace Application.Services
 
         public async Task<List<OrderPendingDto>> GetAllPendingOrders()
         {
-            return await orderRepo.GetAllPendingOrders();
+            var pendingOrders = await orderRepo.GetAllPendingOrders();
+            pendingOrders.ForEach(o => o.OrderDate = FormatDate(o.OrderDate));
+            return pendingOrders;
         }
 
         public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
         {
             var myOrders= await orderRepo.GetMyOrders(email);
             myOrders.ForEach(o => o.OrderStatus = ((OrderStatus)int.Parse(o.OrderStatus)).ToString());
+            myOrders.ForEach(o => o.OrderDate = FormatDate(o.OrderDate));
             return myOrders;
         }
 
@@ -89,6 +92,12 @@ namespace Application.Services
             }
 
             await orderRepo.Delete(id);
+        }
+
+        private string FormatDate(string dateString)
+        {
+            var date = DateTime.Parse(dateString);
+            return date.ToString("yyyy-MM-dd HH:mm");
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Application.Models.OrderModels.Dtos
 
         public string OrderedBy { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; }
 
     }
 }
