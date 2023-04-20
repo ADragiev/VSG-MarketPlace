@@ -35,7 +35,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductInventoryGetDto>> GetAllInventoryProducts()
         {
-            var sql = @" SELECT p.Id, p.Code, p.FullName, p.Price, p.Description, c.CategoryName AS Category, c.Id AS CategoryId, p.SaleQty, p.CombinedQty, i.ImagePublicId AS Image
+            var sql = @" SELECT p.Id, p.Code, p.FullName, p.Price, p.Description, c.CategoryName AS Category, p.SaleQty, p.CombinedQty, i.ImagePublicId AS Image
                         FROM
                         [Product] AS p
                         JOIN [Category] AS c ON p.CategoryId = c.Id
