@@ -15,7 +15,7 @@ namespace Application.Models.ProductModels.Intefaces
 
         //Task<ProductGetForUpdateDto> GetForEdit(int id);
 
-        Task<ProductDetailDto> GetProductDetail(int id);
+        //Task<ProductDetailDto> GetProductDetail(int id);
 
         Task<List<ProductInventoryGetDto>> GetAllInventoryProducts();
     }

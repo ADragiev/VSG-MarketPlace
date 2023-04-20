@@ -19,7 +19,7 @@ namespace Application.Models.ProductModels.Intefaces
 
         Task<List<ProductGetBaseDto>> GetAllForIndex();
 
-        Task<ProductDetailDto> GetDetails(int id);
+        //Task<ProductDetailDto> GetDetails(int id);
 
         Task<List<ProductInventoryGetDto>> GetAllForInventory();
     }

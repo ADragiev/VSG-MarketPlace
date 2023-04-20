@@ -22,7 +22,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductGetBaseDto>> GetAllIndexProducts()
         {
-            var sql = @"SELECT p.Id, c.CategoryName AS Category, p.Price, p.SaleQty, i.ImagePublicId AS Image
+            var sql = @"SELECT p.Id, p.FullName, p.Description, c.CategoryName AS Category, p.Price, p.SaleQty, i.ImagePublicId AS Image
                         FROM 
                         Product AS p 
                         JOIN Category AS c ON p.CategoryId = c.Id 
@@ -59,18 +59,18 @@ namespace Infrastructure.Repositories
       //      return productForEdit;
       //  }
 
-        public async Task<ProductDetailDto> GetProductDetail(int id)
-        {
-            var sql = @"SELECT p.Id, p.FullName, p.Price, c.CategoryName AS Category, p.SaleQty, p.Description, i.ImagePublicId AS Image
-                        FROM
-                        Product AS p
-                        JOIN Category AS c ON p.CategoryId  = c.Id
-                        LEFT JOIN Image AS i ON i.ProductId = p.Id
-                        WHERE p.Id = @id";
+        //public async Task<ProductDetailDto> GetProductDetail(int id)
+        //{
+        //    var sql = @"SELECT p.Id, p.FullName, p.Price, c.CategoryName AS Category, p.SaleQty, p.Description, i.ImagePublicId AS Image
+        //                FROM
+        //                Product AS p
+        //                JOIN Category AS c ON p.CategoryId  = c.Id
+        //                LEFT JOIN Image AS i ON i.ProductId = p.Id
+        //                WHERE p.Id = @id";
 
-            var productDetail = await Connection.QueryFirstOrDefaultAsync<ProductDetailDto>(sql, new { id }, Transaction);
+        //    var productDetail = await Connection.QueryFirstOrDefaultAsync<ProductDetailDto>(sql, new { id }, Transaction);
 
-            return productDetail;
-        }
+        //    return productDetail;
+        //}
     }
 }
