@@ -20,6 +20,7 @@ namespace Application.Helpers.Validators
             RuleFor(p => p.Name).MaximumLength(50).NotNull().WithMessage("Product code is required!").NotEmpty().WithMessage("Product name is required");
             RuleFor(p => p.Price).GreaterThanOrEqualTo(0).WithMessage("Price must be positive number");
             RuleFor(p => p.SaleQty).GreaterThanOrEqualTo(0).WithMessage("Sale quantity must be positive number");
+            RuleFor(p => p.Description).MaximumLength(200).WithMessage("Description length cannot be over 200 characters!");
             RuleFor(p => p.CombinedQty).GreaterThanOrEqualTo(p => p.SaleQty).WithMessage("Combined quantity must be greater than or equal to sale quantity");
             RuleFor(p => p.CategoryId).MustAsync(async (categoryId, cancellation) =>
             {
