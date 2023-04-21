@@ -14,7 +14,7 @@ namespace Infrastructure.Migrations
         {
             Create.Table("Image")
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity().NotNullable()
-                .WithColumn("ImagePublicId").AsString(100).NotNullable()
+                .WithColumn("PublicId").AsString(100).NotNullable()
                 .WithColumn("ProductId").AsInt64().NotNullable();
 
             Create.ForeignKey()

@@ -15,8 +15,8 @@ namespace Infrastructure.Migrations
               .WithColumn("Price").AsDecimal(19,2).NotNullable()
               .WithColumn("Qty").AsInt64().NotNullable()
               .WithColumn("OrderedBy").AsString(50).NotNullable()
-              .WithColumn("OrderDate").AsDateTime().NotNullable()
-              .WithColumn("OrderStatus").AsInt64().NotNullable()
+              .WithColumn("Date").AsDateTime().NotNullable()
+              .WithColumn("Status").AsInt64().NotNullable()
               .WithColumn("ProductId").AsInt64().Nullable();
 
             Create.ForeignKey()

@@ -15,16 +15,21 @@ namespace Infrastructure.Migrations
             Create.Table("Product")
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity().NotNullable()
                 .WithColumn("Code").AsString(50).NotNullable()
-                .WithColumn("FullName").AsString(50).NotNullable()
+                .WithColumn("Name").AsString(50).NotNullable()
                 .WithColumn("Price").AsDecimal(19, 2).NotNullable()
                 .WithColumn("SaleQty").AsInt64().NotNullable()
                 .WithColumn("CombinedQty").AsInt64().NotNullable()
                 .WithColumn("Description").AsString(200).Nullable()
-                .WithColumn("CategoryId").AsInt64().NotNullable();
+                .WithColumn("CategoryId").AsInt64().NotNullable()
+                .WithColumn("LocationId").AsInt64().NotNullable();
 
             Create.ForeignKey()
                 .FromTable("Product").ForeignColumn("CategoryId")
                 .ToTable("Category").PrimaryColumn("Id");
+
+            Create.ForeignKey()
+                .FromTable("Product").ForeignColumn("LocationId")
+                .ToTable("Location").PrimaryColumn("Id");
         }
 
         public override void Down()
