@@ -4,10 +4,15 @@ using Infrastructure.Configurations;
 using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Host.ConfigureLogging(logging =>
 {
     logging.ClearProviders();
 }).UseNLog();
+
+IConfigurationRoot config = new ConfigurationBuilder()
+    .AddJsonFile(path: "AppSettings.json").Build();
+NLog.Extensions.Logging.ConfigSettingLayoutRenderer.DefaultConfiguration = config;
 
 // Add services to the container.
 
