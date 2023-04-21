@@ -18,7 +18,7 @@ const createTable = async () => {
     const searchValue = e.target.value.toLowerCase();
     if (searchValue) {
       const filteredProducts = products.filter((p) =>
-        p.fullName.toLowerCase().includes(searchValue)
+        p.name.toLowerCase().includes(searchValue)
       );
       filteredProducts.forEach((product) => {
         const row = createRow(product);
