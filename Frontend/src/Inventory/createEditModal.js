@@ -4,6 +4,11 @@ import { postImage } from "../global/makeRequest.js"
 export const createEditModal = async (product) =>{
 
     const editModal = document.querySelector('.edit-item-modal')
+    editModal.addEventListener('click', (e)=>{
+      if (e.target.className == 'edit-item-modal') {
+        editModal.style.display = "none";  
+          }
+    })
    
     editModal.innerHTML = `
     <form class="edit-item-form">
