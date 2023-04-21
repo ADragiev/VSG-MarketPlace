@@ -23,7 +23,7 @@ namespace Infrastructure.Migrations
         }
         public void CreateDatabase()
         {
-            var query = $"SELECT * FROM sys.databases WHERE name = '@databaseName'";
+            var query = $"SELECT * FROM sys.databases WHERE name = @databaseName";
 
             using (var connection = new SqlConnection(masterConnectionString))
             {
