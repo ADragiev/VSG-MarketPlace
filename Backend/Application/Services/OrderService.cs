@@ -35,7 +35,7 @@ namespace Application.Services
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
 
-            await orderRepo.SetField(id, "OrderStatus", OrderStatus.Finished);
+            await orderRepo.SetField(id, "Status", OrderStatus.Finished);
         }
 
         public async Task<OrderGetDto> Create(OrderCreateDto dto)
@@ -64,15 +64,15 @@ namespace Application.Services
         public async Task<List<OrderPendingDto>> GetAllPendingOrders()
         {
             var pendingOrders = await orderRepo.GetAllPendingOrders();
-            pendingOrders.ForEach(o => o.OrderDate = FormatDate(o.OrderDate));
+            pendingOrders.ForEach(o => o.Date = FormatDate(o.Date));
             return pendingOrders;
         }
 
         public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
         {
             var myOrders= await orderRepo.GetMyOrders(email);
-            myOrders.ForEach(o => o.OrderStatus = ((OrderStatus)int.Parse(o.OrderStatus)).ToString());
-            myOrders.ForEach(o => o.OrderDate = FormatDate(o.OrderDate));
+            myOrders.ForEach(o => o.Status = ((OrderStatus)int.Parse(o.Status)).ToString());
+            myOrders.ForEach(o => o.Date = FormatDate(o.Date));
             return myOrders;
         }
 

@@ -14,9 +14,9 @@ namespace Application.Models.OrderModels.Dtos
 
         public string OrderedBy { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        public DateTime Date { get; set; }
 
-        public OrderStatus OrderStatus { get; set; }
+        public OrderStatus Status { get; set; }
 
         public int ProductId { get; set; }
     }

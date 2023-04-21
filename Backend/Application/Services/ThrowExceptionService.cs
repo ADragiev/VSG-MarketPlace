@@ -21,7 +21,7 @@ namespace Application.Services
 
         public static void ThrowExceptionWhenOrderIsNotPending(Order order)
         {
-            if (order.OrderStatus != OrderStatus.Pending)
+            if (order.Status != OrderStatus.Pending)
             {
                 throw new HttpException("Order cannot be rejected, because it is not pending!", HttpStatusCode.BadRequest);
             }

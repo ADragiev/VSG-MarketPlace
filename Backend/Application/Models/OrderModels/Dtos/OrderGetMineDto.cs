@@ -16,8 +16,8 @@ namespace Application.Models.OrderModels.Dtos
 
         public decimal Price { get; set; }
 
-        public string OrderDate { get; set; }
+        public string Date { get; set; }
 
-        public string OrderStatus { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -21,9 +21,9 @@ namespace Infrastructure.Repositories
 
         public async Task<List<OrderPendingDto>> GetAllPendingOrders()
         {
-            var sql = @"SELECT Id, ProductCode, Qty, Price, OrderedBy, OrderDate
+            var sql = @"SELECT Id, ProductCode, Qty, Price, OrderedBy, Date
                         FROM [Order]
-                        WHERE OrderStatus = 0";
+                        WHERE Status = 0";
 
             var pendingOrders = await Connection.QueryAsync<OrderPendingDto>(sql, null, Transaction);
             return pendingOrders.ToList();
@@ -31,8 +31,8 @@ namespace Infrastructure.Repositories
 
         public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
         {
-            var sql = @"SELECT Id, ProductName, Qty, Price, OrderDate, OrderStatus
-                        FROM [Order] AS o
+            var sql = @"SELECT Id, ProductName, Qty, Price, Date, Status
+                        FROM [Order]
                         WHERE OrderedBy = @email";
 
             var orders = await Connection.QueryAsync<OrderGetMineDto>(sql, new { email }, Transaction);

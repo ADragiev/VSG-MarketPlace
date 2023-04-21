@@ -14,9 +14,9 @@ namespace Domain.Entities
 
         public string OrderedBy { get; set; }
 
-        public DateTime OrderDate { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; } = DateTime.Now;
 
-        public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
         public int? ProductId { get; set; }
     }

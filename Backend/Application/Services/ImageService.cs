@@ -95,7 +95,7 @@ namespace Application.Services
             }
             else
             {
-                await imageRepo.SetField(image.Id, "ImagePublicId", publicId);
+                await imageRepo.SetField(image.Id, "PublicId", publicId);
 
                 await cloudinary.DeleteResourcesAsync(new DelResParams()
                 {
