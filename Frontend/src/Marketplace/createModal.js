@@ -33,7 +33,7 @@ export const createModal = async (product) =>{
       <div class="details-section">
         <div class="name-details">
           <span
-            >${product.fullName}</span
+            >${product.name}</span
           >
           <small>${product.category}</small>
         </div>

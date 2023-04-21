@@ -1,4 +1,4 @@
-import { deleteImage, loadCategories, loadProductById } from "../global/itemsService.js"
+import { deleteImage, loadCategories, loadLocations, loadProductById } from "../global/itemsService.js"
 import { postImage } from "../global/makeRequest.js"
 
 export const createEditModal = async (product) =>{
@@ -38,10 +38,10 @@ export const createEditModal = async (product) =>{
                     class="inputField"
                     type="text"
                     id="item-name"
-                    name="fullName"
+                    name="name"
                     placeholder="Name *"
                     required
-                    value="${product.fullName}"
+                    value="${product.name}"
                   />
 
                   <textarea
@@ -60,8 +60,20 @@ export const createEditModal = async (product) =>{
                     name="categoryId"
                     required
                   >
+                 <option value="" disabled selected>Category *</option>
                     
                   </select>
+
+                  <select
+                  class="inputField"
+                  id="locationForEdit"
+                  name="locationId"
+                  required
+                >
+                <option value="" disabled selected>Location *</option>
+
+                 
+                </select>
 
                   <input
                     class="inputField"
@@ -120,15 +132,31 @@ export const createEditModal = async (product) =>{
       categories.forEach(c => {
     
         let option = document.createElement('option')
-        option.value = c.categoryId
-        option.textContent = c.categoryName
-        if (c.categoryName == product.category) {
+        option.value = c.id
+        option.textContent = c.name
+        if (c.name == product.category) {
           option.selected = 'selected'
         }
         selectList.appendChild(option)
       })
     }
     categories()
+
+    async function selectLocation() {
+      const selectList = document.querySelector('#locationForEdit')
+      const locations = await loadLocations()
+      locations.forEach(l => {
+    
+        let option = document.createElement('option')
+        option.value = l.id
+        option.textContent = l.name
+        if (l.name == product.location) {
+          option.selected = 'selected'
+        }
+        selectList.appendChild(option)
+      })
+    }
+    selectLocation()
 
 
 

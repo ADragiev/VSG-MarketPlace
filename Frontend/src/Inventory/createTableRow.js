@@ -6,7 +6,7 @@ export function createRow(product) {
   row.id = product.id;
   row.innerHTML = `
       <td>${product.code}</td>
-      <td>${product.fullName}</td>
+      <td>${product.name}</td>
       <td>${product.category}</td>
       <td>${product.saleQty}</td>
       <td>${product.combinedQty}</td>

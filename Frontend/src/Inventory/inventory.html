@@ -214,7 +214,7 @@
                     class="inputField"
                     type="text"
                     id="item-name"
-                    name="fullName"
+                    name="name"
                     placeholder="Name *"
                     required
                   />
@@ -228,16 +228,29 @@
                     placeholder="Description"
                   ></textarea>
 
+                  
                   <select
                     class="inputField"
                     id="item-category"
                     name="categoryId"
                     required
                   >
-                    <!-- <option value="" disabled selected>Category *</option>
-                    <option value="1">Electronics</option>
-                    <option value="2">Fashion</option> -->
+                  <option value="" disabled selected>Category *</option>
+                 
                   </select>
+
+
+                  <select
+                  class="inputField"
+                  id="location"
+                  name="locationId"
+                  required
+                >
+
+                <option value="" disabled selected>Location *</option>
+
+                 
+                </select>
 
                   <input
                     class="inputField"
@@ -266,7 +279,7 @@
                     name="combinedQty"
                     min="0"
                     required
-                    placeholder="Qty"
+                    placeholder="Qty *"
                   />
                 </div>
 

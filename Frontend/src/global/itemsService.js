@@ -76,6 +76,14 @@ export const loadCategories = async () => {
     console.error(err);
   }
 };
+export const loadLocations = async () => {
+  try {
+    const data = await makeRequest({ path: "/Location" });
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 export const loadProductById = async (id) => {
   try {

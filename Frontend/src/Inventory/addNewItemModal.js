@@ -1,4 +1,4 @@
-import { loadCategories, postImageById } from "../global/itemsService.js";
+import { loadCategories, loadLocations, postImageById } from "../global/itemsService.js";
 import { makeRequest, postImage } from "../global/makeRequest.js";
 
 const modal = document.querySelector(".add-item-modal");
@@ -13,12 +13,24 @@ document.getElementById("addNewItemBtn").addEventListener("click", () => {
   const categories = await loadCategories()
   categories.forEach(c => {
     let option = document.createElement('option')
-    option.value = c.categoryId
-    option.textContent = c.categoryName
+    option.value = c.id
+    option.textContent = c.name
     selectList.appendChild(option)
   })
 }
 categories()
+
+async function locations() {
+  const locationList = document.querySelector('#location')
+  const locations = await loadLocations()
+  locations.forEach(l => {
+    let option = document.createElement('option')
+    option.value = l.id
+    option.textContent = l.name
+    locationList.appendChild(option)
+  })
+}
+locations()
 
 const formElement = document.querySelector(".add-item-form");
 formElement.onsubmit = async (e) => {

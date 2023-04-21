@@ -10,9 +10,9 @@ export function createOrderRow(product) {
           >
           <span class="ProductQtyColumn">${product.qty}</span>
           <span class="ProductPriceColumn">${product.price} BGN</span>
-          <span class="ProductDateColumn">${product.orderDate}</span>
+          <span class="ProductDateColumn">${product.date}</span>
           <div class="ProductStatus popup">
-            <span class="status">${product.orderStatus}</span>
+            <span class="status">${product.status}</span>
             <div class="popuptext">
               <span> Are you sure you want to reject this order? </span>
               <div class="buttons-container">
@@ -21,7 +21,7 @@ export function createOrderRow(product) {
               </div>
             </div>
             <a class="deleteIcon" style="display:${
-              product.orderStatus == "Finished" ? "none" : "block"
+              product.status == "Finished" ? "none" : "block"
             }">
               <svg
               

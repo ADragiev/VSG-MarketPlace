@@ -10,7 +10,7 @@ export function createPendingOrderRow(product){
             <span class="priceColumn">${product.price} BGN</span>
           </div>
           <span class="emailColumn">${product.orderedBy}</span>
-          <span class="dateColumn">${product.orderDate}</span>
+          <span class="dateColumn">${product.date}</span>
           <button class="btnColumn completeBtn" >Complete</button>
        
       `

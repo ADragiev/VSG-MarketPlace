@@ -678,6 +678,12 @@ a {
 .add-item-form .left-side #item-description, .edit-item-form .left-side #item-description {
   resize: none;
 }
+.add-item-form .left-side select:required:invalid, .edit-item-form .left-side select:required:invalid {
+  color: gray;
+}
+.add-item-form .left-side option[value=""][disabled], .edit-item-form .left-side option[value=""][disabled] {
+  display: none;
+}
 .add-item-form span, .edit-item-form span {
   justify-content: flex-start;
   font-family: "Inter";

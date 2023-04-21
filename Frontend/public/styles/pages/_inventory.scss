@@ -129,6 +129,12 @@
     #item-description{
       resize: none;
     }
+    select:required:invalid {
+      color: gray;
+    }
+    option[value=""][disabled] {
+      display: none;
+    }
   }
   span {
     justify-content: flex-start;
