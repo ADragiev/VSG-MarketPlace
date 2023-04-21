@@ -4,6 +4,7 @@ using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
+using Application.Models.LocationModels.Interfaces;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
@@ -26,6 +27,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<ILocationService, LocationService>();
 
             services.AddScoped<IValidator<CategoryCreateDto>, CategoryCreateValidator>();
             services.AddScoped<IValidator<OrderCreateDto>, OrderCreateValidator>();
