@@ -60,8 +60,8 @@ formElement.onsubmit = async (e) => {
     formData.delete('image')
     await postImage(productId, imageFormData)
   }
-  location.reload()
   modal.style.display = 'none'
+  location.reload()
 };
 
 
