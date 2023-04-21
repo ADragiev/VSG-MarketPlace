@@ -23,26 +23,26 @@ namespace MarketPlace.Controllers
         [HttpGet]
         public async Task<List<OrderPendingDto>> GetPendingOrders()
         {
-            return await orderService.GetAllPendingOrders();
+            return await orderService.GetAllPendingOrdersAsync();
         }
 
         [HttpGet("{username}")]
         public async Task<List<OrderGetMineDto>> GetMyOrders(string username)
         {
-            return await orderService.GetMyOrders(username);
+            return await orderService.GetMyOrdersAsync(username);
         }
 
 
         [HttpPut("{id}")]
         public async Task CompleteOrder(int id)
         {
-            await orderService.CompleteOrder(id);
+            await orderService.CompleteOrderAsync(id);
         }
 
         [HttpDelete("{id}")]
         public async Task RejectOrder(int id)
         {
-            await orderService.RejectOrder(id);
+            await orderService.RejectOrderAsync(id);
         }
 
 
@@ -50,7 +50,7 @@ namespace MarketPlace.Controllers
         public async Task<OrderGetDto> CreateOrder(OrderCreateDto dto)
         {
             await createValidator.ValidateAndThrowAsync(dto);
-            return await orderService.Create(dto);
+            return await orderService.CreateAsync(dto);
         }
     }
 }

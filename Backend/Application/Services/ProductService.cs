@@ -30,18 +30,18 @@ namespace Application.Services
             this.imageService = imageService;
         }
 
-        public async Task<ProductGetDto> Create(ProductCreateDto dto)
+        public async Task<ProductGetDto> CreateAsync(ProductCreateDto dto)
         {
             var product = mapper.Map<Product>(dto);
-            var productId = await productRepo.Create(product);
+            var productId = await productRepo.CreateAsync(product);
             product.Id = productId;
 
             return mapper.Map<ProductGetDto>(product);
         }
 
-        public async Task<List<ProductGetBaseDto>> GetAllForIndex()
+        public async Task<List<ProductGetBaseDto>> GetAllForIndexAsync()
         {
-            var products = await productRepo.GetAllIndexProducts();
+            var products = await productRepo.GetAllIndexProductsAsync();
             products.ForEach(p =>
             {
                 if (p.Image != null)
@@ -52,9 +52,9 @@ namespace Application.Services
             return products;
         }
 
-        public async Task<List<ProductInventoryGetDto>> GetAllForInventory()
+        public async Task<List<ProductInventoryGetDto>> GetAllForInventoryAsync()
         {
-            var products = await productRepo.GetAllInventoryProducts();
+            var products = await productRepo.GetAllInventoryProductsAsync();
             products.ForEach(p =>
             {
                 if (p.Image != null)
@@ -66,22 +66,22 @@ namespace Application.Services
         }
 
 
-        public async Task Update(int id, ProductUpdateDto dto)
+        public async Task UpdateAsync(int id, ProductUpdateDto dto)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
 
             var productToUpdate = mapper.Map<Product>(dto);
             productToUpdate.Id = id;
 
-            await productRepo.Update(productToUpdate);
+            await productRepo.UpdateAsync(productToUpdate);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
 
-            await imageService.DeleteImageByProductId(id);
-            await productRepo.Delete(id);
+            await imageService.DeleteImageByProductIdAsync(id);
+            await productRepo.DeleteAsync(id);
         }
     }
 }

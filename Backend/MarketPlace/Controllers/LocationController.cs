@@ -18,7 +18,7 @@ namespace MarketPlace.Controllers
         [HttpGet]
         public async Task<List<LocationGetDto>> GetAll()
         {
-            return await locationService.All();
+            return await locationService.AllAsync();
         }
     }
 }

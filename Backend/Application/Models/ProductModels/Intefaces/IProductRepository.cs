@@ -11,8 +11,8 @@ namespace Application.Models.ProductModels.Intefaces
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-        Task<List<ProductGetBaseDto>> GetAllIndexProducts();
+        Task<List<ProductGetBaseDto>> GetAllIndexProductsAsync();
 
-        Task<List<ProductInventoryGetDto>> GetAllInventoryProducts();
+        Task<List<ProductInventoryGetDto>> GetAllInventoryProductsAsync();
     }
 }

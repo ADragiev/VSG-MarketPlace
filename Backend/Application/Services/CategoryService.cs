@@ -22,43 +22,43 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
-        public async Task<List<CategoryGetDto>> All()
+        public async Task<List<CategoryGetDto>> AllAsync()
         {
-            var categories = await categoryRepo.GetAll();
+            var categories = await categoryRepo.AllAsync();
             return mapper.Map<List<CategoryGetDto>>(categories);
         }
 
-        public async Task<CategoryGetDto> Create(CategoryCreateDto dto)
+        public async Task<CategoryGetDto> CreateAsync(CategoryCreateDto dto)
         {
             var category = mapper.Map<Category>(dto);
 
-            int id = await categoryRepo.Create(category);
+            int id = await categoryRepo.CreateAsync(category);
             
-            var createdCategory = await categoryRepo.GetByID(id);
+            var createdCategory = await categoryRepo.GetByIdAsync(id);
             return mapper.Map<CategoryGetDto>(createdCategory);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
 
-            await categoryRepo.Delete(id);
+            await categoryRepo.DeleteAsync(id);
         }
 
-        public async Task<CategoryGetDto> GetById(int id)
+        public async Task<CategoryGetDto> GetByIdAsync(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
-            var category = await categoryRepo.GetByID(id);
+            var category = await categoryRepo.GetByIdAsync(id);
 
             return mapper.Map<CategoryGetDto>(category);
         }
 
-        public async Task Update(CategoryUpdateDto dto)
+        public async Task UpdateAsync(CategoryUpdateDto dto)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.Id, categoryRepo);
 
             var categoryToUpdate = mapper.Map<Category>(dto);
-            await categoryRepo.Update(categoryToUpdate);
+            await categoryRepo.UpdateAsync(categoryToUpdate);
         }
     }
 }

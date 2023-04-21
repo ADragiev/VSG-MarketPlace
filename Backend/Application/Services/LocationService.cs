@@ -21,9 +21,9 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
-        public async Task<List<LocationGetDto>> All()
+        public async Task<List<LocationGetDto>> AllAsync()
         {
-            var locations = await locationRepo.GetAll();
+            var locations = await locationRepo.AllAsync();
             return mapper.Map<List<LocationGetDto>>(locations);
         }
     }

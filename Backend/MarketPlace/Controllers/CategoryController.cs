@@ -26,33 +26,33 @@ namespace MarketPlace.Controllers
         [HttpGet]
         public async Task<List<CategoryGetDto>> GetAll()
         {
-            return await categoryService.All();
+            return await categoryService.AllAsync();
         }
 
 
         [HttpGet("{id}")]
         public async Task<CategoryGetDto> GetCategoryById(int id)
         {
-            return await categoryService.GetById(id);
+            return await categoryService.GetByIdAsync(id);
         }
 
         [HttpPost]
         public async Task<CategoryGetDto> CreateCategory(CategoryCreateDto dto)
         {
             await createValidator.ValidateAndThrowAsync(dto);
-            return await categoryService.Create(dto);
+            return await categoryService.CreateAsync(dto);
         }
 
         [HttpPut("{id}")]
         public async Task UpdateCategory(int id, CategoryUpdateDto dto)
         {
-            await categoryService.Update(dto);
+            await categoryService.UpdateAsync(dto);
         }
 
         [HttpDelete("{id}")]
         public async Task DeleteCategory(int id)
         {
-            await categoryService.Delete(id);
+            await categoryService.DeleteAsync(id);
         }
     }
 }

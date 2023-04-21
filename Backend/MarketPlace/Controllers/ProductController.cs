@@ -28,14 +28,14 @@ namespace MarketPlace.Controllers
         [HttpGet]
         public async Task<List<ProductGetBaseDto>> GetAllProductsForIndexPage()
         {
-            return await productService.GetAllForIndex();
+            return await productService.GetAllForIndexAsync();
         }
 
         [HttpGet]
         [Route("Inventory")]
         public async Task<List<ProductInventoryGetDto>> GetAllProductsForInventoryPage()
         {
-            return await productService.GetAllForInventory();
+            return await productService.GetAllForInventoryAsync();
         }
 
         [HttpPut]
@@ -43,20 +43,20 @@ namespace MarketPlace.Controllers
         public async Task UpdateProduct(int id, ProductUpdateDto dto)
         {
             await updateValidator.ValidateAndThrowAsync(dto);
-            await productService.Update(id, dto);
+            await productService.UpdateAsync(id, dto);
         }
 
         [HttpPost]
         public async Task<ProductGetDto> CreateProduct([FromBody]ProductCreateDto dto)
         {
             await createValidator.ValidateAndThrowAsync(dto);
-            return await productService.Create(dto);
+            return await productService.CreateAsync(dto);
         }
 
         [HttpDelete("{id}")]
         public async Task DeleteProduct(int id)
         {
-            await productService.Delete(id);
+            await productService.DeleteAsync(id);
         }
     }
 }

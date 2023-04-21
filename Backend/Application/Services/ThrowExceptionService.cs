@@ -11,7 +11,7 @@ namespace Application.Services
     {
         public static async Task ThrowExceptionWhenIdNotFound<T>(int id, IGenericRepository<T> repo)
         {
-            var entity = await repo.GetByID(id);
+            var entity = await repo.GetByIdAsync(id);
 
             if (entity == null)
             {

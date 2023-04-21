@@ -9,6 +9,6 @@ namespace Application.Models.LocationModels.Interfaces
 {
     public interface ILocationService
     {
-        Task<List<LocationGetDto>> All();
+        Task<List<LocationGetDto>> AllAsync();
     }
 }

@@ -17,28 +17,28 @@ namespace Infrastructure.Repositories
         public IDbConnection Connection => marketPlaceContext.Connection;
         public IDbTransaction Transaction => marketPlaceContext.Transaction;
 
-        public async Task<int> Create(T entity)
+        public async Task<int> CreateAsync(T entity)
         {
             return (int)await Connection.InsertAsync<T>(entity, Transaction);
             //Is it good to cast like this
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             await Connection.DeleteAsync<T>(id, Transaction);
         }
 
-        public async Task<List<T>> GetAll()
+        public async Task<List<T>> AllAsync()
         {
             return (await Connection.GetListAsync<T>(null, null, Transaction)).ToList();
         }
 
-        public async Task<T> GetByID(int CategoryId)
+        public async Task<T> GetByIdAsync(int CategoryId)
         {
             return await Connection.GetAsync<T>(CategoryId, Transaction);
         }
 
-        public async Task SetField(int id, string fieldName, object value)
+        public async Task SetFieldAsync(int id, string fieldName, object value)
         {
             var tableName = typeof(T).Name;
 
@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
             await Connection.ExecuteAsync(sql, new { value, id }, Transaction);
         }
 
-        public async Task Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             await Connection.UpdateAsync<T>(entity, Transaction);
         }

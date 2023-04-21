@@ -8,16 +8,16 @@ namespace Application.Models.GenericRepo
 {
     public interface IGenericRepository<T>
     {
-        Task<List<T>> GetAll();
+        Task<List<T>> AllAsync();
 
-        Task<T> GetByID(int id);
+        Task<T> GetByIdAsync(int id);
 
-        Task<int> Create(T entity);
+        Task<int> CreateAsync(T entity);
 
-        Task Update(T entity);
+        Task UpdateAsync(T entity);
 
-        Task Delete(int id);
+        Task DeleteAsync(int id);
 
-        Task SetField(int id, string fieldName, object value);
+        Task SetFieldAsync(int id, string fieldName, object value);
     }
 }

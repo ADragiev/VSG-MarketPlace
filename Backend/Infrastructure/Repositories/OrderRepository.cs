@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<List<OrderPendingDto>> GetAllPendingOrders()
+        public async Task<List<OrderPendingDto>> GetAllPendingOrdersAsync()
         {
             var sql = @"SELECT Id, ProductCode, Qty, Price, OrderedBy, Date
                         FROM [Order]
@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories
             return pendingOrders.ToList();
         }
 
-        public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
+        public async Task<List<OrderGetMineDto>> GetMyOrdersAsync(string email)
         {
             var sql = @"SELECT Id, ProductName, Qty, Price, Date, Status
                         FROM [Order]

@@ -9,14 +9,14 @@ namespace Application.Models.CategoryModels.Contacts
 {
     public interface ICategoryService
     {
-        Task<List<CategoryGetDto>> All();
+        Task<List<CategoryGetDto>> AllAsync();
 
-        Task<CategoryGetDto> GetById(int id);
+        Task<CategoryGetDto> GetByIdAsync(int id);
 
-        Task<CategoryGetDto> Create(CategoryCreateDto dto);
+        Task<CategoryGetDto> CreateAsync(CategoryCreateDto dto);
 
-        Task Delete(int id);
+        Task DeleteAsync(int id);
 
-        Task Update(CategoryUpdateDto dto);
+        Task UpdateAsync(CategoryUpdateDto dto);
     }
 }

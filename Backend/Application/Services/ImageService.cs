@@ -34,11 +34,11 @@ namespace Application.Services
             this.productRepo = productRepo;
         }
 
-        public async Task DeleteImageByProductId(int productId)
+        public async Task DeleteImageByProductIdAsync(int productId)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
 
-            var image = await imageRepo.GetImageByProductId(productId);
+            var image = await imageRepo.GetImageByProductIdAsync(productId);
 
             if(image!=null)
             {
@@ -46,11 +46,11 @@ namespace Application.Services
                 {
                     PublicIds = new List<string>() { image.PublicId }
                 });
-                await imageRepo.Delete(image.Id);
+                await imageRepo.DeleteAsync(image.Id);
             }
         }
 
-        public async Task UploadImages(int productId, ImageCreateDto image)
+        public async Task UploadImageAsync(int productId, ImageCreateDto image)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
             cloudinary.Api.Secure = true;
@@ -82,7 +82,7 @@ namespace Application.Services
 
         private async Task SaveImageInDatabase(int productId, string publicId)
         {
-            var image = await imageRepo.GetImageByProductId(productId);
+            var image = await imageRepo.GetImageByProductIdAsync(productId);
             if(image == null)
             {
                 Image newImage = new Image()
@@ -91,11 +91,11 @@ namespace Application.Services
                     PublicId = publicId
                 };
 
-                await imageRepo.Create(newImage);
+                await imageRepo.CreateAsync(newImage);
             }
             else
             {
-                await imageRepo.SetField(image.Id, "PublicId", publicId);
+                await imageRepo.SetFieldAsync(image.Id, "PublicId", publicId);
 
                 await cloudinary.DeleteResourcesAsync(new DelResParams()
                 {

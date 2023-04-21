@@ -28,12 +28,12 @@ namespace Application.Helpers.Validators
             RuleFor(p => p.CombinedQty).GreaterThanOrEqualTo(p => p.SaleQty).WithMessage("Combined quantity must be greater than or equal to sale quantity");
             RuleFor(p => p.CategoryId).MustAsync(async (categoryId, cancellation) =>
             {
-                var category = await categoryRepo.GetByID(categoryId);
+                var category = await categoryRepo.GetByIdAsync(categoryId);
                 return category != null;
             }).WithMessage("Category Id is not valid!");
             RuleFor(p => p.LocationId).MustAsync(async (locationId, cancellation) =>
             {
-                var location = await locationRepo.GetByID(locationId);
+                var location = await locationRepo.GetByIdAsync(locationId);
                 return location != null;
             }).WithMessage("Location Id is not valid!");
         }

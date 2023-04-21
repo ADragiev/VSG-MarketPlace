@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<List<ProductGetBaseDto>> GetAllIndexProducts()
+        public async Task<List<ProductGetBaseDto>> GetAllIndexProductsAsync()
         {
             var sql = @"SELECT p.Id, p.Name, p.Description, c.Name AS Category, p.Price, p.SaleQty, i.PublicId AS Image
                         FROM 
@@ -33,7 +33,7 @@ namespace Infrastructure.Repositories
             return products.ToList();
         }
 
-        public async Task<List<ProductInventoryGetDto>> GetAllInventoryProducts()
+        public async Task<List<ProductInventoryGetDto>> GetAllInventoryProductsAsync()
         {
             var sql = @" SELECT p.Id, p.Code, p.Name, p.Price, p.Description, c.Name AS Category, p.SaleQty, p.CombinedQty, i.PublicId AS Image, l.Name AS Location
                         FROM

@@ -22,13 +22,13 @@ namespace MarketPlace.Controllers
         public async Task UploadImage(int productId, [FromForm] ImageCreateDto image)
         {
             await imageValidator.ValidateAndThrowAsync(image);
-            await imageService.UploadImages(productId, image);
+            await imageService.UploadImageAsync(productId, image);
         }
 
         [HttpDelete("{productId}")]
         public async Task DeleteImage(int productId)
         {
-            await imageService.DeleteImageByProductId(productId);
+            await imageService.DeleteImageByProductIdAsync(productId);
         }
     }
 }

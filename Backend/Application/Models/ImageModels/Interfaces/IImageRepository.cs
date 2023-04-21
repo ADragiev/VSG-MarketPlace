@@ -11,6 +11,6 @@ namespace Application.Models.ImageModels.Interfaces
 {
     public interface IImageRepository : IGenericRepository<Image>
     {
-        Task<ImageGetDto> GetImageByProductId(int productId);
+        Task<ImageGetDto> GetImageByProductIdAsync(int productId);
     }
 }

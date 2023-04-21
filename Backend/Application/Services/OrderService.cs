@@ -31,70 +31,70 @@ namespace Application.Services
             this.mapper = mapper;
         }
 
-        public async Task CompleteOrder(int id)
+        public async Task CompleteOrderAsync(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
 
-            await orderRepo.SetField(id, "Status", OrderStatus.Finished);
+            await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Finished);
         }
 
-        public async Task<OrderGetDto> Create(OrderCreateDto dto)
+        public async Task<OrderGetDto> CreateAsync(OrderCreateDto dto)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(dto.ProductId, productRepo);
-            var product = await productRepo.GetByID(dto.ProductId);
+            var product = await productRepo.GetByIdAsync(dto.ProductId);
 
             ThrowExceptionService.ThrowExceptionWhenNotEnoughQuantity(product.SaleQty, dto.Qty);
 
             var newSaleQty = product.SaleQty - dto.Qty;
-            await productRepo.SetField(product.Id, "SaleQty", newSaleQty);
+            await productRepo.SetFieldAsync(product.Id, "SaleQty", newSaleQty);
 
             var newCombinedQty = product.CombinedQty - dto.Qty;
-            await productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
+            await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
 
             var order = mapper.Map<Order>(dto);
             order.ProductCode = product.Code;
             order.ProductName = product.Name;
             order.Price = dto.Qty * product.Price;
-            var orderId = await orderRepo.Create(order);
+            var orderId = await orderRepo.CreateAsync(order);
 
-            var createdOrder = await orderRepo.GetByID(orderId);
+            var createdOrder = await orderRepo.GetByIdAsync(orderId);
             return mapper.Map<OrderGetDto>(createdOrder);
         }
 
-        public async Task<List<OrderPendingDto>> GetAllPendingOrders()
+        public async Task<List<OrderPendingDto>> GetAllPendingOrdersAsync()
         {
-            var pendingOrders = await orderRepo.GetAllPendingOrders();
+            var pendingOrders = await orderRepo.GetAllPendingOrdersAsync();
             pendingOrders.ForEach(o => o.Date = FormatDate(o.Date));
             return pendingOrders;
         }
 
-        public async Task<List<OrderGetMineDto>> GetMyOrders(string email)
+        public async Task<List<OrderGetMineDto>> GetMyOrdersAsync(string email)
         {
-            var myOrders= await orderRepo.GetMyOrders(email);
+            var myOrders= await orderRepo.GetMyOrdersAsync(email);
             myOrders.ForEach(o => o.Status = ((OrderStatus)int.Parse(o.Status)).ToString());
             myOrders.ForEach(o => o.Date = FormatDate(o.Date));
             return myOrders;
         }
 
-        public async Task RejectOrder(int id)
+        public async Task RejectOrderAsync(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
 
-            var order = await orderRepo.GetByID(id);
+            var order = await orderRepo.GetByIdAsync(id);
             ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
 
             if (order.ProductId != null)
             {
-                var product = await productRepo.GetByID((int)order.ProductId);
+                var product = await productRepo.GetByIdAsync((int)order.ProductId);
 
                 var newSaleQty = product.SaleQty + order.Qty;
-                await productRepo.SetField(product.Id, "SaleQty", newSaleQty);
+                await productRepo.SetFieldAsync(product.Id, "SaleQty", newSaleQty);
 
                 var newCombinedQty = product.CombinedQty + order.Qty;
-                await productRepo.SetField(product.Id, "CombinedQty", newCombinedQty);
+                await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
             }
 
-            await orderRepo.Delete(id);
+            await orderRepo.DeleteAsync(id);
         }
 
         private string FormatDate(string dateString)

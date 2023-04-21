@@ -11,14 +11,14 @@ namespace Application.Models.ProductModels.Intefaces
 {
     public interface IProductService
     {
-        Task<ProductGetDto> Create(ProductCreateDto dto);
+        Task<ProductGetDto> CreateAsync(ProductCreateDto dto);
 
-        Task Update(int id, ProductUpdateDto dto);
+        Task UpdateAsync(int id, ProductUpdateDto dto);
 
-        Task Delete(int id); 
+        Task DeleteAsync(int id); 
 
-        Task<List<ProductGetBaseDto>> GetAllForIndex();
+        Task<List<ProductGetBaseDto>> GetAllForIndexAsync();
 
-        Task<List<ProductInventoryGetDto>> GetAllForInventory();
+        Task<List<ProductInventoryGetDto>> GetAllForInventoryAsync();
     }
 }
