@@ -7,6 +7,11 @@ export async function showModal(cardDiv, product) {
       e.preventDefault();
       await createModal(product);
       modal.style.display = "flex";
+      modal.addEventListener('click', (e)=>{
+        if (e.target.className == 'modal') {
+      modal.style.display = "none";  
+        }
+      },)
       closeModal()
     });
 }

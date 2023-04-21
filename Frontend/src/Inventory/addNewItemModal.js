@@ -6,6 +6,11 @@ const editModal = document.querySelector(".edit-item-modal");
 
 document.getElementById("addNewItemBtn").addEventListener("click", () => {
   modal.style.display = "block";
+  modal.addEventListener('click', (e)=>{
+    if (e.target.className == 'add-item-modal') {
+  modal.style.display = "none";  
+    }
+  },)
 });
 
  async function categories() {
