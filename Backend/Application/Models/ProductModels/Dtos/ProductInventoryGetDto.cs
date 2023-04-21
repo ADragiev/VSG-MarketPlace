@@ -15,7 +15,7 @@ namespace Application.Models.ProductModels.Dtos
 
         public decimal Price { get; set; }
 
-        public string FullName { get; set; }
+        public string Name { get; set; }
 
         public string Category { get; set; }
 
@@ -24,5 +24,7 @@ namespace Application.Models.ProductModels.Dtos
         public int CombinedQty { get; set; }
 
         public string Image { get; set; }
+
+        public string Location { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Application.Models.ProductModels.Dtos
         public int Id { get; set; }
         public string Code { get; set; }
 
-        public string FullName { get; set; }
+        public string Name { get; set; }
 
         public decimal Price { get; set; }
 
@@ -23,5 +23,6 @@ namespace Application.Models.ProductModels.Dtos
         public string Description { get; set; }
 
         public int CategoryId { get; set; }
+        public int LocationId { get; set; }
     }
 }

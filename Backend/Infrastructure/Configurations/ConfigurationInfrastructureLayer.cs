@@ -1,6 +1,7 @@
 ﻿using Application.Models.CategoryModels.Contacts;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
+using Application.Models.LocationModels.Interfaces;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
 using Infrastructure.Repositories;
@@ -18,6 +19,7 @@ namespace Infrastructure.Configurations
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
 
             return services;
         }

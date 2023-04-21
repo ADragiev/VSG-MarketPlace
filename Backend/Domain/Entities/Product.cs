@@ -5,7 +5,7 @@ namespace Domain.Entities
     public class Product : BaseEntity
     {
         public string Code { get; set; }
-        public string FullName { get; set; }
+        public string Name { get; set; }
 
         public decimal Price { get; set; }
 
@@ -16,5 +16,6 @@ namespace Domain.Entities
         public string Description { get; set; }
 
         public int CategoryId { get; set; }
+        public int LocationId { get; set; }
     }
 }

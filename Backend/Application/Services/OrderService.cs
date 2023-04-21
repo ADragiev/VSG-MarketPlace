@@ -53,7 +53,7 @@ namespace Application.Services
 
             var order = mapper.Map<Order>(dto);
             order.ProductCode = product.Code;
-            order.ProductName = product.FullName;
+            order.ProductName = product.Name;
             order.Price = dto.Qty * product.Price;
             var orderId = await orderRepo.Create(order);
 

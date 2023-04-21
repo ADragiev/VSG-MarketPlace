@@ -88,7 +88,7 @@ namespace Application.Services
                 Image newImage = new Image()
                 {
                     ProductId = productId,
-                    ImagePublicId = publicId
+                    PublicId = publicId
                 };
 
                 await imageRepo.Create(newImage);

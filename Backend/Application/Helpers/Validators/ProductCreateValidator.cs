@@ -1,4 +1,5 @@
 ﻿using Application.Models.CategoryModels.Contacts;
+using Application.Models.LocationModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
 using FluentValidation;
 
@@ -7,12 +8,16 @@ namespace Application.Helpers.Validators
     public class ProductCreateValidator : AbstractValidator<ProductCreateDto>
     {
         private readonly ICategoryRepository categoryRepo;
+        private readonly ILocationRepository locationRepo;
 
-        public ProductCreateValidator(ICategoryRepository categoryRepo)
+        public ProductCreateValidator(ICategoryRepository categoryRepo
+            , ILocationRepository locationRepo)
         {
             this.categoryRepo = categoryRepo;
+            this.locationRepo = locationRepo;
+
             RuleFor(p => p.Code).NotEmpty().NotNull().WithMessage("Product code is required!");
-            RuleFor(p => p.FullName).MaximumLength(50).NotNull().WithMessage("Product code is required!").NotEmpty().WithMessage("Product name is required");
+            RuleFor(p => p.Name).MaximumLength(50).NotNull().WithMessage("Product code is required!").NotEmpty().WithMessage("Product name is required");
             RuleFor(p => p.Price).GreaterThanOrEqualTo(0).WithMessage("Price must be positive number");
             RuleFor(p => p.SaleQty).GreaterThanOrEqualTo(0).WithMessage("Sale quantity must be positive number");
             RuleFor(p => p.CombinedQty).GreaterThanOrEqualTo(p => p.SaleQty).WithMessage("Combined quantity must be greater than or equal to sale quantity");
@@ -21,6 +26,11 @@ namespace Application.Helpers.Validators
                 var category = await categoryRepo.GetByID(categoryId);
                 return category != null;
             }).WithMessage("Category Id is not valid!");
+            RuleFor(p => p.LocationId).MustAsync(async (locationId, cancellation) =>
+            {
+                var location = await locationRepo.GetByID(locationId);
+                return location != null;
+            }).WithMessage("Location Id is not valid!");
         }
     }
 }
