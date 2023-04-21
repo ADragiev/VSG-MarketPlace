@@ -8,8 +8,8 @@ namespace Application.Models.CategoryModels.Dtos
 {
     public class CategoryGetDto
     {
-        public int CategoryId { get; set; }
+        public int Id { get; set; }
 
-        public string CategoryName  { get; set; }
+        public string Name  { get; set; }
     }
 }

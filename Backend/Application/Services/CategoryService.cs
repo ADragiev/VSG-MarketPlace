@@ -55,7 +55,7 @@ namespace Application.Services
 
         public async Task Update(CategoryUpdateDto dto)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.CategoryId, categoryRepo);
+            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.Id, categoryRepo);
 
             var categoryToUpdate = mapper.Map<Category>(dto);
             await categoryRepo.Update(categoryToUpdate);

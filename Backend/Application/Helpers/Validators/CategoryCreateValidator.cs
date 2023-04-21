@@ -12,7 +12,7 @@ namespace Application.Helpers.Validators
     {
         public CategoryCreateValidator()
         {
-            RuleFor(c => c.CategoryName).NotNull().NotEmpty().WithMessage("Category name cannot be empty!");
+            RuleFor(c => c.Name).NotNull().NotEmpty().WithMessage("Category name cannot be empty!");
         }
     }
 }

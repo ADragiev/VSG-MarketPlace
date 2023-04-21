@@ -8,6 +8,6 @@ namespace Application.Models.CategoryModels.Dtos
 {
     public class CategoryCreateDto
     {
-        public string CategoryName { get; set; }
+        public string Name { get; set; }
     }
 }
