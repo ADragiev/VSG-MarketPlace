@@ -1,11 +1,10 @@
-import { loadCategories, loadProductById } from "../global/itemsService.js"
-import { makeRequest, postImage } from "../global/makeRequest.js"
+import { deleteImage, loadCategories, loadProductById } from "../global/itemsService.js"
+import { postImage } from "../global/makeRequest.js"
 
-export const createEditModal = async (id) =>{
+export const createEditModal = async (product) =>{
 
     const editModal = document.querySelector('.edit-item-modal')
-    const product = await loadProductById(id)
-
+   
     editModal.innerHTML = `
     <form class="edit-item-form">
               <a class="close-modal-button">
@@ -61,7 +60,7 @@ export const createEditModal = async (id) =>{
                     name="categoryId"
                     required
                   >
-                   
+                    
                   </select>
 
                   <input
@@ -119,9 +118,13 @@ export const createEditModal = async (id) =>{
       const selectList = document.querySelector('#edit-item-category')
       const categories = await loadCategories()
       categories.forEach(c => {
+    
         let option = document.createElement('option')
         option.value = c.categoryId
         option.textContent = c.categoryName
+        if (c.categoryName == product.category) {
+          option.selected = 'selected'
+        }
         selectList.appendChild(option)
       })
     }
@@ -139,12 +142,16 @@ export const createEditModal = async (id) =>{
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
   };
-    let response = await fetch(`https://localhost:7054/Product/Update/${id}`, requestOptions);
+    let response = await fetch(`https://localhost:7054/Product/${product.id}`, requestOptions);
+    let img = editModal.querySelector('.editCurrentImg')
     if (data.image.name) {
       //  data.delete('image')
       let imageFormData = new FormData()
       imageFormData.append("image", data.image)
-      await postImage(id, imageFormData)
+      await postImage(product.id, imageFormData)
+    }
+    else if(product.image != img.src ){
+      await deleteImage(product.id)
     }
     location.reload()
     console.log(response);
@@ -178,6 +185,8 @@ uploadPicture()
 
 function removePicture() {
   document.querySelector('#edit-remove-button').addEventListener('click', ()=>{
+    let input = document.querySelector('#editfileUpload')
+    input.value = ''
       const addImagePreview = document.querySelector(".editCurrentImg");
       addImagePreview.src = '../../images/no_image-placeholder.png'
   })
@@ -185,4 +194,4 @@ function removePicture() {
 removePicture()
 }
 
-////TODO: DELETE ITEM/////
+////CREATE REUSEABLE UploadPicture and removePicture function for addNewItemModal and editItemModal/////

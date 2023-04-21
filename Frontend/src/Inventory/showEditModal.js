@@ -1,23 +1,20 @@
 import { createEditModal } from "./createEditModal.js";
 
 const modal = document.querySelector(".edit-item-modal");
-export async function showModal() {
+export async function showModal(product) {
   const editIcons = document.querySelectorAll(".edit-icon");
   editIcons.forEach((editIcon) => {
     editIcon.addEventListener("click", async (e) => {
       e.preventDefault();
-
-      const rowId = e.target.parentElement.parentElement.id;
-      await createEditModal(rowId);
+      await createEditModal(product);
       modal.style.display = "flex";
       closeModal();
     });
   });
 }
-export function closeModal() {
-  document
-    .querySelectorAll(".close-modal-button")
-    .forEach((b) => b.addEventListener("click", closing));
+export function closeModal(modal) {
+  modal
+    .querySelector(".close-modal-button").addEventListener("click", closing);
 }
 
 function closing(e) {

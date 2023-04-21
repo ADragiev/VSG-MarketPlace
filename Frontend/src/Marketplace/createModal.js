@@ -1,9 +1,8 @@
-import { loadProductById, loadProductsDetails } from "../global/itemsService.js"
 
-export const createModal = async (id) =>{
+export const createModal = async (product) =>{
 
     const modal = document.querySelector('.modal')
-    const product = await loadProductsDetails(id)
+    // const product = await loadProductsDetails(id)
     const modalContent = document.createElement('div')
     modalContent.className = 'modal-content'
 

@@ -24,7 +24,7 @@ export function addBtn() {
           {
           method: "DELETE"
         });
-        // location.reload()
+        location.reload()
         console.log(response);
       }
     });

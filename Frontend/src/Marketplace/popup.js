@@ -6,7 +6,7 @@ import { makeRequest } from "../global/makeRequest.js";
        x.addEventListener("click", (e) => {
      let span = cardDiv.querySelector('.popuptext span')
      let qty = cardDiv.querySelector('.selectQty').value
-      span.innerHTML = `Are you sure you want to buy <strong>${qty}</strong> items for <strong>${prize*qty}</strong>?`
+      span.innerHTML = `Are you sure you want to buy <strong>${qty}</strong> ${qty == 1 ? 'item' : 'items'} for <strong>${prize*qty}</strong>?`
       e.target.parentElement.parentElement
         .querySelector(".popuptext")
         .classList.add("show");

@@ -1,10 +1,10 @@
 import { confirmBtn, showConfirmRejectPopup } from "./confirmRejectPopup.js";
 
-export function createOrderRow(product){
-    const div = document.createElement("div");
-      div.className = 'item-row extend'
-          div.id = product.id
-          div.innerHTML = `
+export function createOrderRow(product) {
+  const div = document.createElement("div");
+  div.className = "item-row extend";
+  div.id = product.id;
+  div.innerHTML = `
           <span class="ProductNameColumn"
             >${product.productName}</span
           >
@@ -20,7 +20,9 @@ export function createOrderRow(product){
                 <button class="btnYesNo">NO</button>
               </div>
             </div>
-            <a class="deleteIcon" style="display:${product.orderStatus=='Finished' ? 'none' : 'block'}">
+            <a class="deleteIcon" style="display:${
+              product.orderStatus == "Finished" ? "none" : "block"
+            }">
               <svg
               
               width="12"
@@ -37,9 +39,9 @@ export function createOrderRow(product){
             </a>
            
           </div>
-      `  
+      `;
 
-      confirmBtn(div)
-      showConfirmRejectPopup(div)
-      return div;
+  confirmBtn(div);
+  showConfirmRejectPopup(div);
+  return div;
 }
