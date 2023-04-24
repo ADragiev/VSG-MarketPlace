@@ -21,29 +21,33 @@ export const createCard = (product) => {
       <p>${product.price} BGN</p>
       <p>${product.category}</p>
     </div>
+    <div class="details-wrapper">
     <div class="qty">
-      <p>Qty</p>
-      <select name="qty" class="selectQty">
-       
-      </select>
-    </div>
-
-    <div class="icon popup">
-      <div class="popuptext">
-        <span>
-          Are you sure you want to buy <strong>1</strong> item for
-          <strong>${product.price} BGN?</strong>
-        </span>
-        <div class="buttons-container">
-          <button class="btnYesNo">YES</button>
-          <button class="btnYesNo">NO</button>
-        </div>
-      </div>
-      <a class="circle" id="firstBtn">
-        <img src="../../images/dollar.svg" alt="DollarImage" />
-      </a>
-    </div>
+    <p>Qty</p>
+    <select name="qty" class="selectQty">
+     
+    </select>
   </div>
+
+  <div class="icon popup">
+    <div class="popuptext">
+      <span>
+        Are you sure you want to buy <strong>1</strong> item for
+        <strong>${product.price} BGN?</strong>
+      </span>
+      <div class="buttons-container">
+        <button class="btnYesNo">YES</button>
+        <button class="btnYesNo">NO</button>
+      </div>
+    </div>
+    <a class="circle" id="firstBtn">
+      <img src="../../images/dollar.svg" alt="DollarImage" />
+    </a>
+  </div>
+</div>
+
+    </div>
+   
     `;
 
   const select = cardDiv.querySelector(".selectQty");

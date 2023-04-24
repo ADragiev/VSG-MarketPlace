@@ -274,10 +274,13 @@ a {
 
 .details {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   flex-direction: row;
   background-color: #fff;
   border-radius: 0 0 20px 20px;
+}
+.details .details-wrapper {
+  display: flex;
 }
 
 .name-price {
@@ -305,6 +308,7 @@ a {
   flex-direction: column;
   display: flex;
   justify-content: center;
+  margin-right: 10px;
   align-items: flex-start;
 }
 .icon p,
@@ -531,6 +535,13 @@ a {
   }
   .modal-content {
     width: 70vw;
+    border-radius: 20px;
+  }
+  .modal-content .product-image {
+    border-radius: 20px;
+  }
+  .modal-content img {
+    border-radius: 20px 20px 0px 0px;
   }
 }
 @media screen and (min-width: 769px) {
