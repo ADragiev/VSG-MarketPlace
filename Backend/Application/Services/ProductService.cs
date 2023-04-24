@@ -39,7 +39,7 @@ namespace Application.Services
             return mapper.Map<ProductGetDto>(product);
         }
 
-        public async Task<List<ProductGetBaseDto>> GetAllForIndexAsync()
+        public async Task<List<ProductMarketPlaceGetDto>> GetAllForIndexAsync()
         {
             var products = await productRepo.GetAllIndexProductsAsync();
             products.ForEach(p =>

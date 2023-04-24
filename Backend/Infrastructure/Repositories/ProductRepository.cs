@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<List<ProductGetBaseDto>> GetAllIndexProductsAsync()
+        public async Task<List<ProductMarketPlaceGetDto>> GetAllIndexProductsAsync()
         {
             var sql = @"SELECT p.Id, p.Name, p.Description, c.Name AS Category, p.Price, p.SaleQty, i.PublicId AS Image
                         FROM 
@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories
                         LEFT JOIN Image AS i ON i.ProductId = p.Id
                         WHERE p.SaleQty > 0";
 
-            var products = await Connection.QueryAsync<ProductGetBaseDto>(sql, null, Transaction);
+            var products = await Connection.QueryAsync<ProductMarketPlaceGetDto>(sql, null, Transaction);
             return products.ToList();
         }
 

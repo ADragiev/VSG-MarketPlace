@@ -26,7 +26,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        public async Task<List<ProductGetBaseDto>> GetAllProductsForIndexPage()
+        public async Task<List<ProductMarketPlaceGetDto>> GetAllProductsForIndexPage()
         {
             return await productService.GetAllForIndexAsync();
         }

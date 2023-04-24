@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Models.ProductModels.Dtos
 {
-    public class ProductGetBaseDto
+    public class ProductMarketPlaceGetDto
     {
         public int Id { get; set; }
 
