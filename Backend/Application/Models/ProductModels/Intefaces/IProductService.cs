@@ -17,7 +17,7 @@ namespace Application.Models.ProductModels.Intefaces
 
         Task DeleteAsync(int id); 
 
-        Task<List<ProductGetBaseDto>> GetAllForIndexAsync();
+        Task<List<ProductMarketPlaceGetDto>> GetAllForIndexAsync();
 
         Task<List<ProductInventoryGetDto>> GetAllForInventoryAsync();
     }

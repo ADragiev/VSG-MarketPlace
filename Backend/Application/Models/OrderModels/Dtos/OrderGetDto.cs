@@ -12,6 +12,12 @@ namespace Application.Models.OrderModels.Dtos
         public int Id { get; set; }
         public int Qty { get; set; }
 
+        public string ProductCode { get; set; }
+
+        public string ProductName { get; set; }
+
+        public decimal Price { get; set; }
+
         public string OrderedBy { get; set; }
 
         public DateTime Date { get; set; }
