@@ -9,7 +9,9 @@ export async function showModal(cardDiv, product) {
       modal.style.display = "flex";
       modal.addEventListener('click', (e)=>{
         if (e.target.className == 'modal') {
-      modal.style.display = "none";  
+      modal.style.display = "none";
+      modal.innerHTML = "";  
+
         }
       },)
       closeModal()

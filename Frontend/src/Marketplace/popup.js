@@ -23,7 +23,7 @@ export function addBtn(div) {
         let detailsDiv =  e.target.parentElement.parentElement.parentElement.parentElement
         let qty = detailsDiv.querySelector('.selectQty').value
         let orderedBy = 'user'
-        let productId = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+        let productId = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
         if (e.target.textContent == "YES") {
           let data = {
             qty,
