@@ -16,30 +16,27 @@ namespace Application.Services
 
         private readonly ILocationRepository locationRepo;
         private readonly IMapper mapper;
-        private readonly ICacheService cacheService;
 
         public LocationService(ILocationRepository locationRepo,
-            IMapper mapper,
-            ICacheService cacheService)
+            IMapper mapper)
         {
             this.locationRepo = locationRepo;
             this.mapper = mapper;
-            this.cacheService = cacheService;
         }
 
         public async Task<List<LocationGetDto>> AllAsync()
         {
-            var cachedLocations = await cacheService.GetData<List<LocationGetDto>>(locationsKey);
+            //var cachedLocations = await cacheService.GetData<List<LocationGetDto>>(locationsKey);
 
-            if(cachedLocations != null)
-            {
-                return cachedLocations;
-            }
+            //if(cachedLocations != null)
+            //{
+            //    return cachedLocations;
+            //}
 
             var locations = await locationRepo.AllAsync();
             var locationsDto = mapper.Map<List<LocationGetDto>>(locations);
 
-            await cacheService.SetData(locationsKey, locationsDto, DateTimeOffset.Now.AddMinutes(30));
+            //await cacheService.SetData(locationsKey, locationsDto, DateTimeOffset.Now.AddMinutes(30));
 
             return locationsDto;
         }

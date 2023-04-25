@@ -18,30 +18,27 @@ namespace Application.Services
 
         private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;
-        private readonly ICacheService cacheService;
 
         public CategoryService(ICategoryRepository categoryRepo,
-            IMapper mapper,
-            ICacheService cacheService)
+            IMapper mapper)
         {
             this.categoryRepo = categoryRepo;
             this.mapper = mapper;
-            this.cacheService = cacheService;
         }
 
         public async Task<List<CategoryGetDto>> AllAsync()
         {
-            var cachedCategories = await cacheService.GetData<List<CategoryGetDto>>(categoriesKey);
+            //var cachedCategories = await cacheService.GetData<List<CategoryGetDto>>(categoriesKey);
 
-            if (cachedCategories != null)
-            {
-                return cachedCategories;
-            }
+            //if (cachedCategories != null)
+            //{
+            //    return cachedCategories;
+            //}
 
             var categories = await categoryRepo.AllAsync();
             var categoriesDto =  mapper.Map<List<CategoryGetDto>>(categories);
 
-            await cacheService.SetData(categoriesKey, categoriesDto, DateTimeOffset.Now.AddMinutes(30));
+            //await cacheService.SetData(categoriesKey, categoriesDto, DateTimeOffset.Now.AddMinutes(30));
 
             return categoriesDto;
         }
