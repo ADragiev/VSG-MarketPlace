@@ -29,7 +29,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ILocationService, LocationService>();
-            services.AddScoped<ICacheService, CacheService>();
+            //services.AddScoped<ICacheService, CacheService>();
 
             services.AddScoped<IValidator<CategoryCreateDto>, CategoryCreateValidator>();
             services.AddScoped<IValidator<OrderCreateDto>, OrderCreateValidator>();

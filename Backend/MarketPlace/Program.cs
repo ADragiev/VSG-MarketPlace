@@ -11,7 +11,7 @@ builder.Host.ConfigureLogging(logging =>
 }).UseNLog();
 
 IConfigurationRoot config = new ConfigurationBuilder()
-    .AddJsonFile(path: "AppSettings.json").Build();
+    .AddJsonFile(path: "appsettings.json").Build();
 NLog.Extensions.Logging.ConfigSettingLayoutRenderer.DefaultConfiguration = config;
 
 // Add services to the container.
