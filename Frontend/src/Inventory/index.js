@@ -3,7 +3,7 @@ import '../global/hamburger.js';
 import '../global/itemsService.js';
 import '../global/makeRequest.js';
 
-import './addNewItemModal.js';
+import './addNewItemModal.ts';
 import './createEditModal.js';
 import './createTable.js';
 import './deleteTooltip.js';

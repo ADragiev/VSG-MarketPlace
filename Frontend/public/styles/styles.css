@@ -359,10 +359,10 @@ a {
 }
 .modal-content .productImage {
   align-self: center;
+  padding: 20px;
 }
 .modal-content img {
   max-height: 320px;
-  border-radius: 40px 40px 0px 0px;
 }
 .modal-content section {
   padding: 20px;
@@ -534,7 +534,8 @@ a {
     margin: 10px 0 0 0;
   }
   .modal-content {
-    width: 70vw;
+    width: 90vw;
+    height: 85vh;
     border-radius: 20px;
   }
   .modal-content .product-image {
@@ -716,7 +717,7 @@ a {
   max-height: 200px;
 }
 .add-item-form .inputField, .edit-item-form .inputField {
-  margin: 2.6em 20px 0px 0px;
+  margin: 2em 20px 0px 0px;
   border: 0;
   border-bottom: 1px solid #9A9A9A;
 }

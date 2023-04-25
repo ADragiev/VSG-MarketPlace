@@ -1,23 +1,23 @@
-import { loadCategories, loadLocations, postImageById } from "../global/itemsService.js";
+import { loadCategories, loadLocations } from "../global/itemsService.js";
 import { makeRequest, postImage } from "../global/makeRequest.js";
 
-const modal = document.querySelector(".add-item-modal");
-const editModal = document.querySelector(".edit-item-modal");
+const modal = document.querySelector(".add-item-modal") as HTMLElement;
 
-document.getElementById("addNewItemBtn").addEventListener("click", () => {
+(document.getElementById("addNewItemBtn") as HTMLElement).addEventListener("click", () => {
   modal.style.display = "block";
   modal.addEventListener('click', (e)=>{
-    if (e.target.className == 'add-item-modal') {
+    const target = e.target as HTMLElement;
+    if (target.className == 'add-item-modal') {
   modal.style.display = "none";  
     }
   },)
 });
 
  async function categories() {
-  const selectList = document.querySelector('#item-category')
+  const selectList = document.querySelector('#item-category') as HTMLElement
   const categories = await loadCategories()
   categories.forEach(c => {
-    let option = document.createElement('option')
+    let option = document.createElement('option') as HTMLOptionElement
     option.value = c.id
     option.textContent = c.name
     selectList.appendChild(option)
@@ -26,7 +26,7 @@ document.getElementById("addNewItemBtn").addEventListener("click", () => {
 categories()
 
 async function locations() {
-  const locationList = document.querySelector('#location')
+  const locationList = document.querySelector('#location') as HTMLElement
   const locations = await loadLocations()
   locations.forEach(l => {
     let option = document.createElement('option')
@@ -37,15 +37,14 @@ async function locations() {
 }
 locations()
 
-const formElement = document.querySelector(".add-item-form");
+const formElement = document.querySelector(".add-item-form") as HTMLElement;
 formElement.onsubmit = async (e) => {
   e.preventDefault();
-  let formData = new FormData(e.target)
-  let image = formData.get('image')
+  const target = e.target as HTMLFormElement
+  let formData = new FormData(target)
+  let image = formData.get('image')  as File
   
-  // console.log(Array.from(newFormData));
-  // console.log(Array.from(formData));
-  // ^^ WORKS 
+
   let data = Object.fromEntries(formData);
   let response = await makeRequest({
     path: "/Product",
@@ -53,7 +52,6 @@ formElement.onsubmit = async (e) => {
     data
   });
   let productId = response.id
-  // productId = 20...
   if (image.name) {
     let imageFormData = new FormData()
     imageFormData.append("image", image)
@@ -66,26 +64,24 @@ formElement.onsubmit = async (e) => {
 
 
 
-  const closeBtn = modal.querySelector(".close-modal-button");
+  const closeBtn = modal.querySelector(".close-modal-button") as HTMLElement;
   closeBtn.addEventListener("click", () => {
       modal.style.display = "none";
     });
 
+    const input = document.querySelector("#fileUpload") as HTMLInputElement;
+    const addImagePreview = document.querySelector("#addCurrentImg") as HTMLImageElement;
+    
  function uploadPicture() {
-  const addImagePreview = document.querySelector("#addCurrentImg");
 
   document.querySelectorAll(".upload-button").forEach(btn =>{
      btn.addEventListener("click", (e) => {
         e.preventDefault();
-        const input = document.querySelector("#fileUpload");
-        input.addEventListener("change", () => {
-          const file = input.files[0];
-          const reader = new FileReader();
-          reader.onload = function (event) {
-          addImagePreview.src = event.target.result;
-
-          };
-          reader.readAsDataURL(file);
+        input.addEventListener("change", (e) => {
+          const target = e.target as HTMLInputElement
+          const files = target.files as FileList;
+          const image = URL.createObjectURL(files[0])
+          addImagePreview.src = image;
         });
         input.click();
       });
@@ -95,10 +91,8 @@ uploadPicture()
 
  function removePicture() {
 
-  document.querySelector('#remove-button').addEventListener('click', ()=>{
-    let input = document.querySelector('#fileUpload')
+  (document.querySelector('#remove-button')as HTMLElement) .addEventListener('click', ()=>{
     input.value = ''
-    const addImagePreview = document.querySelector("#addCurrentImg");
     addImagePreview.src = '../../images/no_image-placeholder.png'
   })
 }
