@@ -14,7 +14,7 @@ namespace Application.Services
 {
     public class CategoryService : ICategoryService
     {
-        private const string categoryKey = "categories";
+        private const string categoriesKey = "categories";
 
         private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;
@@ -31,7 +31,7 @@ namespace Application.Services
 
         public async Task<List<CategoryGetDto>> AllAsync()
         {
-            var cachedCategories = await cacheService.GetData<List<CategoryGetDto>>(categoryKey);
+            var cachedCategories = await cacheService.GetData<List<CategoryGetDto>>(categoriesKey);
 
             if (cachedCategories != null)
             {
@@ -41,7 +41,7 @@ namespace Application.Services
             var categories = await categoryRepo.AllAsync();
             var categoriesDto =  mapper.Map<List<CategoryGetDto>>(categories);
 
-            await cacheService.SetData(categoryKey, categoriesDto, DateTimeOffset.Now.AddMinutes(2));
+            await cacheService.SetData(categoriesKey, categoriesDto, DateTimeOffset.Now.AddMinutes(30));
 
             return categoriesDto;
         }

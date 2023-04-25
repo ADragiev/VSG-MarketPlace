@@ -12,6 +12,6 @@ namespace Application.Models.Cache
 
         Task<bool> SetData<T>(string key, T value, DateTimeOffset expirationTime);
 
-        Task<object> RemoveData(string key);
+        Task<bool> RemoveData(string key);
     }
 }

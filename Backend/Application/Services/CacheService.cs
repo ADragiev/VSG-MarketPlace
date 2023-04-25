@@ -19,7 +19,7 @@ namespace Application.Services
         {
             var value = await redisDb.StringGetAsync(key);
 
-            if(!String.IsNullOrEmpty(value))
+            if (!String.IsNullOrEmpty(value))
             {
                 return JsonSerializer.Deserialize<T>(value);
             }
@@ -27,13 +27,13 @@ namespace Application.Services
             return default;
         }
 
-        public async Task<object> RemoveData(string key)
+        public async Task<bool> RemoveData(string key)
         {
             var keyExists = await redisDb.KeyExistsAsync(key);
 
-            if(keyExists)
+            if (keyExists)
             {
-                await redisDb.KeyDeleteAsync(key);
+                return await redisDb.KeyDeleteAsync(key);
             }
             return false;
         }
