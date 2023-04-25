@@ -10,6 +10,6 @@ namespace Domain.Enums
     {
         Pending = 0,
         Finished = 1,
-        Declined = 3
+        Declined = 2
     }
 }

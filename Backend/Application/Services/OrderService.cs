@@ -94,7 +94,7 @@ namespace Application.Services
                 await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
             }
 
-            await orderRepo.DeleteAsync(id);
+            await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Declined);
         }
 
         private string FormatDate(string dateString)

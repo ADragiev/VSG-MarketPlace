@@ -39,7 +39,7 @@ namespace MarketPlace.Controllers
             await orderService.CompleteOrderAsync(id);
         }
 
-        [HttpDelete("{id}")]
+        [HttpPut("{id}")]
         public async Task RejectOrder(int id)
         {
             await orderService.RejectOrderAsync(id);
