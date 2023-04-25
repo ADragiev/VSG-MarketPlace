@@ -17,11 +17,11 @@ export function confirmBtn(div) {
         // e.preventDefault()
         e.target.parentElement.parentElement.className = 'popuptext'
 
-        let productId = e.target.parentElement.parentElement.parentElement.parentElement.id
+        let orderId = e.target.parentElement.parentElement.parentElement.parentElement.id
         if (e.target.textContent == "YES") {
          
          await fetch(
-          `https://localhost:7054/Order/${productId}`,
+          `https://localhost:7054/Order/${orderId}`,
           {
           method: "DELETE"
         }
