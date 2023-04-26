@@ -49,8 +49,8 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            productRepoMock.Setup(productRepoMock => productRepoMock.AllAsync()).Returns(async () => products);
-            productRepoMock.Setup(productRepo => productRepo.GetByIdAsync(1)).Returns(async () => products.First(product => product.Id == 1));
+            productRepoMock.Setup(productRepoMock => productRepoMock.AllAsync()).ReturnsAsync(() => products);
+            productRepoMock.Setup(productRepo => productRepo.GetByIdAsync(1)).ReturnsAsync(() => products.First(product => product.Id == 1));
         }
 
         [Test]
