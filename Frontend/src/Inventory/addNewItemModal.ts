@@ -16,7 +16,7 @@ const modal = document.querySelector(".add-item-modal") as HTMLElement;
  async function categories() {
   const selectList = document.querySelector('#item-category') as HTMLElement
   const categories = await loadCategories()
-  categories.forEach(c => {
+  categories.forEach((c: any) => {
     let option = document.createElement('option') as HTMLOptionElement
     option.value = c.id
     option.textContent = c.name
@@ -28,7 +28,7 @@ categories()
 async function locations() {
   const locationList = document.querySelector('#location') as HTMLElement
   const locations = await loadLocations()
-  locations.forEach(l => {
+  locations.forEach((l: any) => {
     let option = document.createElement('option')
     option.value = l.id
     option.textContent = l.name
@@ -45,7 +45,7 @@ formElement.onsubmit = async (e) => {
   let image = formData.get('image')  as File
   
 
-  let data = Object.fromEntries(formData);
+  let data = Object.fromEntries(formData) ;
   let response = await makeRequest({
     path: "/Product",
     method: "POST",
@@ -71,7 +71,7 @@ formElement.onsubmit = async (e) => {
 
     const input = document.querySelector("#fileUpload") as HTMLInputElement;
     const addImagePreview = document.querySelector("#addCurrentImg") as HTMLImageElement;
-    
+
  function uploadPicture() {
 
   document.querySelectorAll(".upload-button").forEach(btn =>{

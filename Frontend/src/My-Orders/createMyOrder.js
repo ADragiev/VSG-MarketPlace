@@ -4,7 +4,7 @@ const createMyOrders = async () => {
   const main = document.querySelector(".infoDetails");
   const products = await fetch("https://localhost:7054/Order/user");
   const data = await products.json();
-  data.forEach((p) => {
+  data.reverse().forEach((p) => {
     const div = createOrderRow(p);
     let completeBtn = div.querySelector(".deleteIcon");
     completeBtn.addEventListener("click", async () => {

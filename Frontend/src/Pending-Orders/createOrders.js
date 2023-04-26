@@ -1,5 +1,4 @@
 import { loadPendingOrders } from "../global/itemsService.js";
-import { makeRequest } from "../global/makeRequest.js";
 import { createPendingOrderRow } from "./createPendingOrderRow.js";
 
 const createOrders = async () => {
