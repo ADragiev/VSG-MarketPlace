@@ -18,14 +18,17 @@ namespace Tests
 {
     public class OrderServiceTests
     {
-        private readonly Mock<IOrderRepository> orderRepoMock = new Mock<IOrderRepository>();
-        private readonly Mock<IProductRepository> productRepoMock = new Mock<IProductRepository>();
-        private readonly Mock<IMapper> mapperMock = new Mock<IMapper>();
-        private readonly IOrderService orderService;
+        private Mock<IOrderRepository> orderRepoMock;
+        private Mock<IProductRepository> productRepoMock;
+        private Mock<IMapper> mapperMock = new Mock<IMapper>();
+        private  IOrderService orderService;
 
-
-        public OrderServiceTests()
+        [SetUp]
+        public void SetUp()
         {
+            orderRepoMock = new Mock<IOrderRepository>();
+            productRepoMock = new Mock<IProductRepository>();
+            mapperMock = new Mock<IMapper>();
             orderService = new OrderService(orderRepoMock.Object, productRepoMock.Object, mapperMock.Object);
         }
 
@@ -48,7 +51,7 @@ namespace Tests
         [Test]
         public void CreateOrder_MustNotThrow_WhenProductIdIsValid()
         {
-            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1,"a","d",200,"a",20, 30, 1, 1));
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", 20, 30, 1, 1));
 
             mapperMock.Setup(m => m.Map<Order>(It.IsAny<OrderCreateDto>())).Returns(new Order()
             {
@@ -63,7 +66,7 @@ namespace Tests
                 Status = OrderStatus.Pending
             });
 
-            Assert.DoesNotThrowAsync(async () => 
+            Assert.DoesNotThrowAsync(async () =>
             {
                 await orderService.CreateAsync(new OrderCreateDto()
                 {
@@ -181,45 +184,258 @@ namespace Tests
             });
         }
 
-        //[Test]
-        //public void RejectOrder_MustNotThrow_WhenOrderId_IsValid()
-        //{
-        //    orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
-        //    {
-        //        OrderedBy = "User",
-        //        Qty = orderQty,
-        //        ProductId = 1,
-        //        Price = 200,
-        //        Date = DateTime.Now,
-        //        Id = 1,
-        //        ProductCode = "a",
-        //        ProductName = "b",
-        //        Status = OrderStatus.Pending
-        //    });
-
-        //    Assert.ThrowsAsync<HttpException>(async () =>
-        //    {
-        //        await orderService.RejectOrderAsync(1);
-        //    });
-        //}
-
         [Test]
-        public void RejectOrder_MustCallSetField_ForReturnignProductQty()
+        public void RejectOrder_MustNotThrow_WhenOrderId_IsValid()
         {
             int saleQty = 5;
             int combinedQty = 10;
             int orderQty = 5;
-      
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
+            {
+                OrderedBy = "User",
+                Qty = orderQty,
+                ProductId = 1,
+                Price = 200,
+                Date = DateTime.Now,
+                Id = 1,
+                ProductCode = "a",
+                ProductName = "b",
+                Status = OrderStatus.Pending
+            });
+
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", saleQty, combinedQty, 1, 1));
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                await orderService.CreateAsync(new OrderCreateDto()
-                {
-                    ProductId = 1,
-                    OrderedBy = "User",
-                    Qty = orderQty
-                });
+                await orderService.RejectOrderAsync(1);
             });
+        }
+
+
+        [Test]
+        public void RejectOrder_MustNotThrow_WhenOrderStatus_IsPending()
+        {
+            int saleQty = 5;
+            int combinedQty = 10;
+            int orderQty = 5;
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
+            {
+                OrderedBy = "User",
+                Qty = orderQty,
+                ProductId = 1,
+                Price = 200,
+                Date = DateTime.Now,
+                Id = 1,
+                ProductCode = "a",
+                ProductName = "b",
+                Status = OrderStatus.Pending
+            });
+
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", saleQty, combinedQty, 1, 1));
+
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                await orderService.RejectOrderAsync(1);
+            });
+        }
+
+        [Test]
+        public void RejectOrder_MustThrow_WhenOrderStatus_IsNotPending()
+        {
+            int saleQty = 5;
+            int combinedQty = 10;
+            int orderQty = 5;
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
+            {
+                OrderedBy = "User",
+                Qty = orderQty,
+                ProductId = 1,
+                Price = 200,
+                Date = DateTime.Now,
+                Id = 1,
+                ProductCode = "a",
+                ProductName = "b",
+                Status = OrderStatus.Finished
+            });
+
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", saleQty, combinedQty, 1, 1));
+
+            Assert.ThrowsAsync<HttpException>(async () =>
+            {
+                await orderService.RejectOrderAsync(1);
+            });
+        }
+
+        [Test]
+        public async Task RejectOrder_MustCallSetField_ForReturnignProductQty()
+        {
+            int saleQty = 5;
+            int combinedQty = 10;
+            int orderQty = 5;
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
+            {
+                OrderedBy = "User",
+                Qty = orderQty,
+                ProductId = 1,
+                Price = 200,
+                Date = DateTime.Now,
+                Id = 1,
+                ProductCode = "a",
+                ProductName = "b",
+                Status = OrderStatus.Pending
+            });
+
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", saleQty, combinedQty, 1, 1));
+
+            await orderService.RejectOrderAsync(1);
+
+            productRepoMock.Verify(p => p.SetFieldAsync(1, "SaleQty", orderQty + saleQty), Times.Once);
+            productRepoMock.Verify(p => p.SetFieldAsync(1, "CombinedQty", orderQty + combinedQty), Times.Once);
+        }
+
+        [Test]
+        public async Task RejectOrder_MustNotCallSetField_ForReturnignProductQty_IfProductIdIsNull()
+        {
+            int saleQty = 5;
+            int combinedQty = 10;
+            int orderQty = 5;
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
+            {
+                OrderedBy = "User",
+                Qty = orderQty,
+                ProductId = null,
+                Price = 200,
+                Date = DateTime.Now,
+                Id = 1,
+                ProductCode = "a",
+                ProductName = "b",
+                Status = OrderStatus.Pending
+            });
+
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", saleQty, combinedQty, 1, 1));
+
+            await orderService.RejectOrderAsync(1);
+
+            productRepoMock.Verify(p => p.SetFieldAsync(1, "SaleQty", It.IsAny<int>()), Times.Never);
+            productRepoMock.Verify(p => p.SetFieldAsync(1, "CombinedQty", It.IsAny<int>()), Times.Never);
+        }
+
+        [Test]
+        public async Task RejectOrder_MustCallSetField_ForChanginOrderStatusToRejected()
+        {
+            int saleQty = 5;
+            int combinedQty = 10;
+            int orderQty = 5;
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
+            {
+                OrderedBy = "User",
+                Qty = orderQty,
+                ProductId = 1,
+                Price = 200,
+                Date = DateTime.Now,
+                Id = 1,
+                ProductCode = "a",
+                ProductName = "b",
+                Status = OrderStatus.Pending
+            });
+
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", saleQty, combinedQty, 1, 1));
+
+            await orderService.RejectOrderAsync(1);
+
+            orderRepoMock.Verify(p => p.SetFieldAsync(1, "Status", OrderStatus.Declined), Times.Once);
+        }
+
+
+        [Test]
+        public void CompleteOrder_MustThrow_WhenOrderId_IsNotValid()
+        {
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null);
+
+            Assert.ThrowsAsync<HttpException>(async () =>
+            {
+                await orderService.CompleteOrderAsync(1);
+            });
+        }
+
+        [Test]
+        public void CompleteOrder_MustNotThrow_WhenOrderId_IsValid()
+        {
+            int saleQty = 5;
+            int combinedQty = 10;
+            int orderQty = 5;
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
+            {
+                OrderedBy = "User",
+                Qty = orderQty,
+                ProductId = 1,
+                Price = 200,
+                Date = DateTime.Now,
+                Id = 1,
+                ProductCode = "a",
+                ProductName = "b",
+                Status = OrderStatus.Pending
+            });
+
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", saleQty, combinedQty, 1, 1));
+
+            Assert.DoesNotThrowAsync(async () =>
+            {
+                await orderService.CompleteOrderAsync(1);
+            });
+        }
+
+        [Test]
+        public void CompleteOrder_MustThrow_WhenOrderStatus_IsNotPending()
+        {
+            int saleQty = 5;
+            int combinedQty = 10;
+            int orderQty = 5;
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
+            {
+                OrderedBy = "User",
+                Qty = orderQty,
+                ProductId = 1,
+                Price = 200,
+                Date = DateTime.Now,
+                Id = 1,
+                ProductCode = "a",
+                ProductName = "b",
+                Status = OrderStatus.Finished
+            });
+
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", saleQty, combinedQty, 1, 1));
+
+            Assert.ThrowsAsync<HttpException>(async () =>
+            {
+                await orderService.CompleteOrderAsync(1);
+            });
+        }
+
+        [Test]
+        public async Task CompleteOrder_MustCallSetField_ForChanginOrderStatusToFinished()
+        {
+            int saleQty = 5;
+            int combinedQty = 10;
+            int orderQty = 5;
+            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => new Order()
+            {
+                OrderedBy = "User",
+                Qty = orderQty,
+                ProductId = 1,
+                Price = 200,
+                Date = DateTime.Now,
+                Id = 1,
+                ProductCode = "a",
+                ProductName = "b",
+                Status = OrderStatus.Pending
+            });
+
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct(1, "a", "d", 200, "a", saleQty, combinedQty, 1, 1));
+
+            await orderService.CompleteOrderAsync(1);
+
+            orderRepoMock.Verify(p => p.SetFieldAsync(1, "Status", OrderStatus.Finished), Times.Once);
         }
 
 
