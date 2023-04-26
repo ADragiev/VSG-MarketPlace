@@ -2,24 +2,21 @@ import { makeRequest } from "./makeRequest.js";
 
 export const loadProducts = async () => {
   try {
-    const data = await makeRequest({ path: "/Product" });
-    return data;
+    return await makeRequest({ path: "/Product" });
   } catch (err) {
     console.error(err);
   }
 };
 export const loadInventoryItems = async () => {
   try {
-    const data = await makeRequest({ path: "/Product/Inventory" });
-    return data;
+    return await makeRequest({ path: "/Product/Inventory" });
   } catch (err) {
     console.error(err);
   }
 };
 export const loadProductsDetails = async (id) => {
   try {
-    const data = await makeRequest({ path: "/Product/Details/" + id });
-    return data;
+    return await makeRequest({ path: "/Product/Details/" + id });
   } catch (err) {
     console.error(err);
   }
@@ -27,59 +24,52 @@ export const loadProductsDetails = async (id) => {
 
 export const loadPendingOrders = async () => {
   try {
-    const data = await makeRequest({ path: "/Order" });
-    return data;
+    return await makeRequest({ path: "/Order" });
   } catch (err) {
     console.error(err);
   }
 };
 export const postImageById = async (id, image) => {
   try {
-    const data = await makeRequest({
+    return await makeRequest({
       path: "/Image/" + id,
       method: "POST",
       data: image,
     });
-    console.log(data);
-    return data;
   } catch (err) {
     console.error(err);
   }
 };
 export const deleteProduct = async (id) => {
   try {
-    const data = await makeRequest({
+    return await makeRequest({
       path: "/Product/" + id,
       method: "DELETE",
     });
-    return data;
   } catch (err) {
     console.error(err);
   }
 };
 export const deleteImage = async (id) => {
   try {
-    const data = await makeRequest({
+    return await makeRequest({
       path: "/Image/" + id,
       method: "DELETE",
     });
-    return data;
   } catch (err) {
     console.error(err);
   }
 };
 export const loadCategories = async () => {
   try {
-    const data = await makeRequest({ path: "/Category" });
-    return data;
+    return await makeRequest({ path: "/Category" });
   } catch (err) {
     console.error(err);
   }
 };
 export const loadLocations = async () => {
   try {
-    const data = await makeRequest({ path: "/Location" });
-    return data;
+    return await makeRequest({ path: "/Location" });
   } catch (err) {
     console.error(err);
   }
@@ -87,8 +77,7 @@ export const loadLocations = async () => {
 
 export const loadProductById = async (id) => {
   try {
-    const data = await makeRequest({ path: "/Product/" + id });
-    return data;
+    return await makeRequest({ path: "/Product/" + id });
   } catch (err) {
     console.error(err);
   }

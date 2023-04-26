@@ -30,7 +30,7 @@ export const makeRequest = async ({
       return Promise.reject("Something went wrong!");
     }
 
-    return res.json();
+    return res ? await res.json(): res;
   } catch (err) {
     throw Error(err);
   }

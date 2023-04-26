@@ -541,9 +541,6 @@ a {
   .modal-content .product-image {
     border-radius: 20px;
   }
-  .modal-content img {
-    border-radius: 20px 20px 0px 0px;
-  }
 }
 @media screen and (min-width: 769px) {
   .sidebar {

@@ -2,6 +2,7 @@
 import { showModal } from "./detailsPopup.js";
 import { addBtn, showPopup } from "./popup.js";
 
+
 export const createCard = (product) => {
   const listWrapper = document.querySelector(".main");
   let priceToPass = product.price
@@ -60,6 +61,7 @@ export const createCard = (product) => {
     select.appendChild(option);
   }
   listWrapper.appendChild(cardDiv);
+
   
   addBtn(cardDiv);
   showPopup(cardDiv, priceToPass);
