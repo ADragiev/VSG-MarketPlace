@@ -35,6 +35,9 @@ namespace Application.Services
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
 
+            var order = await orderRepo.GetByIdAsync(id);
+            ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
+
             await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Finished);
         }
 

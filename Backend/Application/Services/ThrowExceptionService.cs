@@ -23,7 +23,7 @@ namespace Application.Services
         {
             if (order.Status != OrderStatus.Pending)
             {
-                throw new HttpException("Order cannot be rejected, because it is not pending!", HttpStatusCode.BadRequest);
+                throw new HttpException("Only pending orders can be completed or declined!", HttpStatusCode.BadRequest);
             }
         }
 
