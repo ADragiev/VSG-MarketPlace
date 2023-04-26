@@ -1,11 +1,9 @@
-
 import { showModal } from "./detailsPopup.js";
 import { addBtn, showPopup } from "./popup.js";
 
-
 export const createCard = (product) => {
   const listWrapper = document.querySelector(".main");
-  let priceToPass = product.price
+  let priceToPass = product.price;
   const cardDiv = document.createElement("div");
   cardDiv.id = product.id;
   cardDiv.className = "card-item";
@@ -13,7 +11,9 @@ export const createCard = (product) => {
     <a class="product-image">
     <img
     
-    src="${product.image ? product.image : `../../images/no_image-placeholder.png` }"
+    src="${
+      product.image ? product.image : `../../images/no_image-placeholder.png`
+    }"
     alt="ProductImage"
   />
     </a>
@@ -52,7 +52,6 @@ export const createCard = (product) => {
     `;
 
   const select = cardDiv.querySelector(".selectQty");
-  
 
   for (let i = 1; i < product.saleQty + 1; i++) {
     const option = document.createElement("option");
@@ -62,9 +61,7 @@ export const createCard = (product) => {
   }
   listWrapper.appendChild(cardDiv);
 
-  
   addBtn(cardDiv);
   showPopup(cardDiv, priceToPass);
   showModal(cardDiv, product);
-
 };

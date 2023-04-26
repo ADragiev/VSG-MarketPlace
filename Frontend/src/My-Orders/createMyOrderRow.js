@@ -21,7 +21,7 @@ export function createOrderRow(product) {
               </div>
             </div>
             <a class="deleteIcon" style="display:${
-              product.status == "Pending"  ? "block" : "none"
+              product.status == "Pending" ? "block" : "none"
             }">
               <svg
               

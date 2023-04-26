@@ -1,4 +1,4 @@
-import { deleteImage, loadCategories, loadLocations, loadProductById } from "../global/itemsService.js"
+import { deleteImage, loadCategories, loadLocations } from "../global/itemsService.js"
 import { postImage } from "../global/makeRequest.js"
 
 export const createEditModal = async (product) =>{
