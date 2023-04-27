@@ -21,7 +21,7 @@ namespace Tests
     {
         private Mock<IOrderRepository> orderRepoMock;
         private Mock<IProductRepository> productRepoMock;
-        private Mock<IMapper> mapperMock = new Mock<IMapper>();
+        private Mock<IMapper> mapperMock;
         private IOrderService orderService;
 
         [SetUp]
