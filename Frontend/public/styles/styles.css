@@ -277,7 +277,7 @@ a {
   height: 150px;
 }
 .card-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 .card-item .selectQty {
   border-bottom: 1px solid #000;
