@@ -1,4 +1,5 @@
-﻿using Application.Models.GenericRepo;
+﻿using Application.Models.Cloud;
+using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
@@ -11,27 +12,17 @@ namespace Application.Services
 {
     public class ImageService : IImageService
     {
-        private readonly IConfiguration config;
-        private readonly Cloudinary cloudinary;
         private readonly IImageRepository imageRepo;
         private readonly IProductRepository productRepo;
+        private readonly ICloudService cloudService;
 
-        public ImageService(IConfiguration config,
-            IImageRepository imageRepo,
-            IProductRepository productRepo)
+        public ImageService(IImageRepository imageRepo,
+            IProductRepository productRepo,
+            ICloudService cloudService)
         {
-            this.config = config;
-            var cloudName = this.config.GetValue<string>("Cloudinary:CloudName");
-            var APIKey = this.config.GetValue<string>("Cloudinary:APIKey");
-            var APISecret = this.config.GetValue<string>("Cloudinary:APISecret");
-
-            cloudinary = new Cloudinary(new Account(
-                cloudName,
-                APIKey,
-                APISecret));
-
             this.imageRepo = imageRepo;
             this.productRepo = productRepo;
+            this.cloudService = cloudService;
         }
 
         public async Task DeleteImageByProductIdAsync(int productId)
@@ -42,10 +33,7 @@ namespace Application.Services
 
             if(image!=null)
             {
-                await cloudinary.DeleteResourcesAsync(new DelResParams()
-                {
-                    PublicIds = new List<string>() { image.PublicId }
-                });
+                await cloudService.DeleteAsync(image.PublicId);
                 await imageRepo.DeleteAsync(image.Id);
             }
         }
@@ -53,31 +41,10 @@ namespace Application.Services
         public async Task UploadImageAsync(int productId, ImageCreateDto image)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
-            cloudinary.Api.Secure = true;
 
-            //Turn file into byte array
-            byte[] bytes;
-            using (var memoryStream = new MemoryStream())
-            {
-                image.Image.CopyTo(memoryStream);
-                bytes = memoryStream.ToArray();
-            }
-            string base64 = Convert.ToBase64String(bytes);
+            var publicId = await cloudService.UploadAsync(image.Image);
 
-            //construct image path
-            var prefix = @"data:image/png;base64,";
-            var imagePath = prefix + base64;
-
-            //upload to cloudinary
-            var uploadParams = new ImageUploadParams()
-            {
-                File = new FileDescription(imagePath),
-                Folder = "MarketPlace/"
-            };
-
-            var uploadResult = await cloudinary.UploadAsync(@uploadParams);
-
-            await SaveImageInDatabase(productId, uploadResult.PublicId);
+            await SaveImageInDatabase(productId, publicId);
         }
 
         private async Task SaveImageInDatabase(int productId, string publicId)
@@ -97,10 +64,7 @@ namespace Application.Services
             {
                 await imageRepo.SetFieldAsync(image.Id, "PublicId", publicId);
 
-                await cloudinary.DeleteResourcesAsync(new DelResParams()
-                {
-                    PublicIds = new List<string>() { image.PublicId }
-                });
+                await cloudService.DeleteAsync(image.PublicId);
             }
         }
     }

@@ -3,6 +3,7 @@ using Application.Helpers.Validators;
 using Application.Models.Cache;
 using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
+using Application.Models.Cloud;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.LocationModels.Interfaces;
@@ -30,6 +31,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<ICloudService, CloudinaryService>();
 
             services.AddScoped<IValidator<CategoryCreateDto>, CategoryCreateValidator>();
             services.AddScoped<IValidator<OrderCreateDto>, OrderCreateValidator>();
