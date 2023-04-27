@@ -220,7 +220,7 @@ a {
   background-color: #fff;
   border-radius: 20px;
   margin-top: 2em;
-  width: 76vw;
+  width: 78vw;
   height: 85vh;
   overflow-y: auto;
 }
@@ -444,6 +444,12 @@ a {
 }
 
 @media screen and (max-width: 768px) {
+  .main, #inventoryMain {
+    right: 0;
+    position: fixed;
+    transition: 0.5s;
+    margin: 5%;
+  }
   .user {
     display: none;
   }
@@ -452,6 +458,7 @@ a {
     width: 90vw;
     height: 88vh;
     opacity: 0;
+    transition: 0.5s;
     animation: fadeIn 0.5s ease-in-out forwards;
   }
   @keyframes fadeIn {

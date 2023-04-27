@@ -3,7 +3,8 @@ inputField.addEventListener("change", () => {
   if (inputField.checked) {
     const userDiv = document.getElementsByClassName("user")[0];
     const main = document.getElementsByClassName("main")[0];
-    main.style.display = "none";
+    main.style.position = "fixed";
+    main.style.right = "-100%";
     userDiv.className = "menu-item";
     const sidebar = document.getElementsByClassName("sidebar")[0];
     const navUl = document.querySelector("nav ul");
@@ -16,9 +17,11 @@ inputField.addEventListener("change", () => {
     const userDiv = document.getElementsByClassName("menu-item")[0];
     const main = document.getElementsByClassName("main")[0];
     if (window.location.href.includes("inventory")) {
-      main.style.display = "block";
+        main.style.position = "fixed";
+      main.style.right = "0";
     } else {
-      main.style.display = "flex";
+     main.style.position = "fixed";
+      main.style.right = "0";
     }
     userDiv.className = "user";
     sidebar.style.display = "none";
