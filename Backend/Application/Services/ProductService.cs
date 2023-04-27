@@ -19,6 +19,7 @@ namespace Application.Services
             IMapper mapper,
             IImageService imageService)
         {
+            this.productRepo= productRepo;
             this.mapper = mapper;
             this.imageService = imageService;
         }
