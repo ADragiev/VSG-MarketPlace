@@ -13,8 +13,7 @@ export async function showModal(product) {
   });
 }
 export function closeModal(modal) {
-  modal
-    .querySelector(".close-modal-button").addEventListener("click", closing);
+  modal.querySelector(".close-modal-button").addEventListener("click", closing);
 }
 
 function closing(e) {

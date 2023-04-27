@@ -1,5 +1,5 @@
 import { createEditModal } from "./createEditModal";
-import { closeModal, showModal } from "./showEditModal";
+import { closeModal } from "./showEditModal";
 
 export function createRow(product) {
   const row = document.createElement("tr");
@@ -58,7 +58,7 @@ export function createRow(product) {
       .classList.add("show");
   });
 
-  row.querySelectorAll(".btnYesNo").forEach(btn =>{
+  row.querySelectorAll(".btnYesNo").forEach((btn) => {
     btn.addEventListener("click", async (e) => {
       e.preventDefault();
       e.target.parentElement.parentElement.className = "popuptext";
@@ -71,29 +71,25 @@ export function createRow(product) {
         );
         location.reload();
         console.log(response);
+      } else {
+        e.target.parentElement.parentElement.className = "popuptext";
       }
-      else{
-      e.target.parentElement.parentElement.className = "popuptext";
-      }
-  })
+    });
   });
-  
-  let modal = document.querySelector('.edit-item-modal')
 
+  let modal = document.querySelector(".edit-item-modal");
 
-  
   const editIcons = row.querySelector(".edit-icon");
   editIcons.addEventListener("click", async () => {
     modal.style.display = "flex";
     await createEditModal(product);
     closeModal(modal);
-      });
-  
-    const closeBtn = document.querySelector(".close-modal-button");
-    closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-      });
+  });
 
+  const closeBtn = document.querySelector(".close-modal-button");
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
 
   return row;
 }

@@ -1,5 +1,3 @@
-import { makeRequest } from "../global/makeRequest.js";
-
 export function showDeletePopup() {
   const deleteBtn = Array.from(document.getElementsByClassName("deleteIcon"));
   deleteBtn.forEach((x) =>
@@ -16,15 +14,15 @@ export function addBtn() {
     x.addEventListener("click", async (e) => {
       e.preventDefault();
       console.log(x);
-      const id = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id
+      const id =
+        e.target.parentElement.parentElement.parentElement.parentElement
+          .parentElement.id;
       e.target.parentElement.parentElement.className = "popuptext";
       if (e.target.textContent == "YES") {
-        let response = await fetch(
-          `https://localhost:7054/Product/${id}`,
-          {
-          method: "DELETE"
+        let response = await fetch(`https://localhost:7054/Product/${id}`, {
+          method: "DELETE",
         });
-        location.reload()
+        location.reload();
         console.log(response);
       }
     });

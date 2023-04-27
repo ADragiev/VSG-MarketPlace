@@ -1,12 +1,9 @@
+export const createModal = async (product) => {
+  const modal = document.querySelector(".modal");
+  const modalContent = document.createElement("div");
+  modalContent.className = "modal-content";
 
-export const createModal = async (product) =>{
-
-    const modal = document.querySelector('.modal')
-    // const product = await loadProductsDetails(id)
-    const modalContent = document.createElement('div')
-    modalContent.className = 'modal-content'
-
-    modalContent.innerHTML = `
+  modalContent.innerHTML = `
     <a class="close-button">
       <svg
         width="18"
@@ -24,7 +21,9 @@ export const createModal = async (product) =>{
     <a class="productImage">
     <img
    
-    src="${product.image ? product.image : `../../images/no_image-placeholder.png`}"
+    src="${
+      product.image ? product.image : `../../images/no_image-placeholder.png`
+    }"
     alt="ProductImage"
   />
     </a>
@@ -77,7 +76,7 @@ export const createModal = async (product) =>{
         />
       </svg>
     </section>
-    `
+    `;
 
-    modal.appendChild(modalContent)
-}
+  modal.appendChild(modalContent);
+};

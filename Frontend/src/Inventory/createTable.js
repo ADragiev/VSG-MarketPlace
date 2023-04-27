@@ -1,6 +1,4 @@
-import { loadInventoryItems, loadProducts } from "../global/itemsService.js";
-import {  addBtn, showDeletePopup } from "./deleteTooltip.js";
-import { showModal } from "./showEditModal.js";
+import { loadInventoryItems} from "../global/itemsService.js";
 import { createRow } from "./createTableRow.js";
 
 const createTable = async () => {
