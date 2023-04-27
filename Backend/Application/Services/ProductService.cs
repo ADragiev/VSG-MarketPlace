@@ -12,20 +12,13 @@ namespace Application.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository productRepo;
-        private readonly IImageRepository imageRepo;
-        private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;
         private readonly IImageService imageService;
 
         public ProductService(IProductRepository productRepo,
-            IImageRepository imageRepo,
-            ICategoryRepository categoryRepo,
             IMapper mapper,
             IImageService imageService)
         {
-            this.productRepo = productRepo;
-            this.imageRepo = imageRepo;
-            this.categoryRepo = categoryRepo;
             this.mapper = mapper;
             this.imageService = imageService;
         }
