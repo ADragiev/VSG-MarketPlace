@@ -22,12 +22,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductMarketPlaceGetDto>> GetAllIndexProductsAsync()
         {
-            var sql = @"SELECT p.Id, p.Name, p.Description, c.Name AS Category, p.Price, p.SaleQty, i.PublicId AS Image
-                        FROM 
-                        Product AS p 
-                        JOIN Category AS c ON p.CategoryId = c.Id 
-                        LEFT JOIN Image AS i ON i.ProductId = p.Id
-                        WHERE p.SaleQty > 0";
+            var sql = @"SELECT * FROM IndexProducts";
 
             var products = await Connection.QueryAsync<ProductMarketPlaceGetDto>(sql, null, Transaction);
             return products.ToList();
@@ -35,12 +30,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductInventoryGetDto>> GetAllInventoryProductsAsync()
         {
-            var sql = @" SELECT p.Id, p.Code, p.Name, p.Price, p.Description, c.Name AS Category, p.SaleQty, p.CombinedQty, i.PublicId AS Image, l.Name AS Location
-                        FROM
-                        [Product] AS p
-                        JOIN [Category] AS c ON p.CategoryId = c.Id
-                        JOIN [Location] AS l ON p.LocationId = l.Id
-						LEFT JOIN [Image] AS i ON i.ProductId = p.Id";
+            var sql = @"SELECT * FROM InventoryProducts";
 
             var products = await Connection.QueryAsync<ProductInventoryGetDto>(sql, null, Transaction);
 

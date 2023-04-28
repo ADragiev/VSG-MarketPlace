@@ -48,6 +48,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("CORSPolicy");
 app.CreateDatabase();
 app.CreateTables();
+app.CreateViewsAndFunctions();
 
 app.UseHttpsRedirection();
 
