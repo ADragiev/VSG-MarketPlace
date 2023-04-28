@@ -44,7 +44,7 @@ formElement.onsubmit = async (e) => {
   let formData = new FormData(target)
   let image = formData.get('image')  as File
   
-
+  
   let data = Object.fromEntries(formData) ;
   let response = await makeRequest({
     path: "/Product",
