@@ -2,7 +2,6 @@
 using Application.Helpers.Validators;
 using Application.Models.Cache;
 using Application.Models.CategoryModels.Contacts;
-using Application.Models.CategoryModels.Dtos;
 using Application.Models.Cloud;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
@@ -13,10 +12,7 @@ using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using Application.Services;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Reflection;
 
 namespace Application.Helpers.Configurations
 {
@@ -33,7 +29,6 @@ namespace Application.Helpers.Configurations
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<ICloudService, CloudinaryService>();
 
-            services.AddScoped<IValidator<CategoryCreateDto>, CategoryCreateValidator>();
             services.AddScoped<IValidator<OrderCreateDto>, OrderCreateValidator>();
             services.AddScoped<IValidator<ProductCreateDto>, ProductCreateValidator>();
             services.AddScoped<IValidator<ProductUpdateDto>, ProductUpdateValidator>();

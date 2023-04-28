@@ -10,13 +10,5 @@ namespace Application.Models.CategoryModels.Contacts
     public interface ICategoryService
     {
         Task<List<CategoryGetDto>> AllAsync();
-
-        Task<CategoryGetDto> GetByIdAsync(int id);
-
-        Task<CategoryGetDto> CreateAsync(CategoryCreateDto dto);
-
-        Task DeleteAsync(int id);
-
-        Task UpdateAsync(CategoryUpdateDto dto);
     }
 }

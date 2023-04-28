@@ -45,38 +45,5 @@ namespace Application.Services
 
             return categoriesDto;
         }
-
-        public async Task<CategoryGetDto> CreateAsync(CategoryCreateDto dto)
-        {
-            var category = mapper.Map<Category>(dto);
-
-            int id = await categoryRepo.CreateAsync(category);
-            
-            var createdCategory = await categoryRepo.GetByIdAsync(id);
-            return mapper.Map<CategoryGetDto>(createdCategory);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
-
-            await categoryRepo.DeleteAsync(id);
-        }
-
-        public async Task<CategoryGetDto> GetByIdAsync(int id)
-        {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(id, categoryRepo);
-            var category = await categoryRepo.GetByIdAsync(id);
-
-            return mapper.Map<CategoryGetDto>(category);
-        }
-
-        public async Task UpdateAsync(CategoryUpdateDto dto)
-        {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound<Category>(dto.Id, categoryRepo);
-
-            var categoryToUpdate = mapper.Map<Category>(dto);
-            await categoryRepo.UpdateAsync(categoryToUpdate);
-        }
     }
 }

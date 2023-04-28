@@ -13,9 +13,7 @@ namespace Application.Helpers.Profiles
     {
         public CategoryProfile()
         {
-            CreateMap<CategoryCreateDto, Category>();
-            CreateMap<Category, CategoryGetDto>(); ;
-            CreateMap<CategoryUpdateDto, Category>();
+            CreateMap<Category, CategoryGetDto>();
         }
     }
 }
