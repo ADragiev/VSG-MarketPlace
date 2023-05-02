@@ -27,7 +27,7 @@ namespace Infrastructure.Migrations
 
         public override void Down()
         {
-            throw new NotImplementedException();
+            Delete.Table("Order");
         }
     }
 }
