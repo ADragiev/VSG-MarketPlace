@@ -8,16 +8,12 @@ namespace Infrastructure.Repositories.GenericRepository.Context
 {
     public class MarketPlaceContext : IMarketPlaceContext
     {
-        private readonly IConfiguration config;
-        private readonly string connectionString;
         private IDbConnection connection;
         private IDbTransaction transaction;
 
         public MarketPlaceContext(IConfiguration config)
         {
-            this.config = config;
-            connectionString = this.config.GetConnectionString("DefaultConnection");
-            connection = new SqlConnection(connectionString);
+            connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
             connection.Open();
 
             transaction = connection.BeginTransaction();
