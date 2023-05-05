@@ -1,4 +1,5 @@
-﻿using Application.Models.ExceptionModels;
+﻿using Application.Helpers.Constants;
+using Application.Models.ExceptionModels;
 using Application.Models.GenericRepo;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
@@ -6,6 +7,7 @@ using Application.Models.ProductModels.Intefaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -21,14 +23,17 @@ namespace Application.Services
         private readonly IOrderRepository orderRepo;
         private readonly IProductRepository productRepo;
         private readonly IMapper mapper;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
         public OrderService(IOrderRepository orderRepo,
             IProductRepository productRepo,
-            IMapper mapper)
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.orderRepo = orderRepo;
             this.productRepo = productRepo;
             this.mapper = mapper;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public async Task CompleteOrderAsync(int id)
@@ -58,6 +63,7 @@ namespace Application.Services
             order.ProductCode = product.Code;
             order.ProductName = product.Name;
             order.Price = dto.Qty * product.Price;
+            order.OrderedBy = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.claimName).Value;
             var orderId = await orderRepo.CreateAsync(order);
 
             var createdOrder = await orderRepo.GetByIdAsync(orderId);
@@ -71,9 +77,10 @@ namespace Application.Services
             return pendingOrders;
         }
 
-        public async Task<List<OrderGetMineDto>> GetMyOrdersAsync(string email)
+        public async Task<List<OrderGetMineDto>> GetMyOrdersAsync()
         {
-            var myOrders= await orderRepo.GetMyOrdersAsync(email);
+            var user = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.claimName).Value;
+            var myOrders= await orderRepo.GetMyOrdersAsync(user);
             myOrders.ForEach(o => o.Status = ((OrderStatus)int.Parse(o.Status)).ToString());
             myOrders.ForEach(o => o.Date = FormatDate(o.Date));
             return myOrders;

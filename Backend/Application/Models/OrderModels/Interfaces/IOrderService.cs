@@ -12,7 +12,7 @@ namespace Application.Models.OrderModels.Interfaces
         Task<OrderGetDto> CreateAsync(OrderCreateDto dto);
 
         Task<List<OrderPendingDto>> GetAllPendingOrdersAsync();
-        Task<List<OrderGetMineDto>> GetMyOrdersAsync(string email);
+        Task<List<OrderGetMineDto>> GetMyOrdersAsync();
 
         Task CompleteOrderAsync(int id);
 

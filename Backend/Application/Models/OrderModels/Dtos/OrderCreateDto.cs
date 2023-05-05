@@ -10,8 +10,6 @@ namespace Application.Models.OrderModels.Dtos
     {
         public int Qty { get; set; }
 
-        public string OrderedBy { get; set; }
-
         public int ProductId { get; set; }
     }
 }

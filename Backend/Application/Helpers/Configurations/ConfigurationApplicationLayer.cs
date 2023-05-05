@@ -28,6 +28,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<ICloudService, CloudinaryService>();
+            services.AddHttpContextAccessor();
 
             services.AddScoped<IValidator<OrderCreateDto>, OrderCreateValidator>();
             services.AddScoped<IValidator<ProductCreateDto>, ProductCreateValidator>();
