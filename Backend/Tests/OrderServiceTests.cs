@@ -1,4 +1,5 @@
-﻿using Application.Models.ExceptionModels;
+﻿using Application.Helpers.Constants;
+using Application.Models.ExceptionModels;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
@@ -6,11 +7,13 @@ using Application.Services;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -22,6 +25,7 @@ namespace Tests
         private Mock<IOrderRepository> orderRepoMock;
         private Mock<IProductRepository> productRepoMock;
         private Mock<IMapper> mapperMock;
+        private Mock<IHttpContextAccessor> httpContextAccessor;
         private IOrderService orderService;
 
         [SetUp]
@@ -30,7 +34,8 @@ namespace Tests
             orderRepoMock = new Mock<IOrderRepository>();
             productRepoMock = new Mock<IProductRepository>();
             mapperMock = new Mock<IMapper>();
-            orderService = new OrderService(orderRepoMock.Object, productRepoMock.Object, mapperMock.Object);
+            httpContextAccessor = new Mock<IHttpContextAccessor>();
+            orderService = new OrderService(orderRepoMock.Object, productRepoMock.Object, mapperMock.Object, httpContextAccessor.Object);
         }
 
 
@@ -109,7 +114,7 @@ namespace Tests
         public void CreateOrder_MustNotThrow_WhenProductIdIsValid()
         {
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateBaseProduct());
-
+            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
             mapperMock.Setup(m => m.Map<Order>(It.IsAny<OrderCreateDto>())).Returns(CreateBaseOrder());
 
             Assert.DoesNotThrowAsync(async () =>
@@ -117,7 +122,6 @@ namespace Tests
                 await orderService.CreateAsync(new OrderCreateDto()
                 {
                     ProductId = It.IsAny<int>(),
-                    OrderedBy = "User",
                     Qty = 2
                 });
             });
@@ -133,7 +137,6 @@ namespace Tests
                 await orderService.CreateAsync(new OrderCreateDto()
                 {
                     ProductId = It.IsAny<int>(),
-                    OrderedBy = "User",
                     Qty = 2
                 });
             });
@@ -144,7 +147,7 @@ namespace Tests
         public void CreateOrder_MustNotThrow_WhenSaleQtyIsMoreThanOrEqualToOrderQty()
         {
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateBaseProduct());
-
+            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
             mapperMock.Setup(m => m.Map<Order>(It.IsAny<OrderCreateDto>())).Returns(CreateBaseOrder());
 
             Assert.DoesNotThrowAsync(async () =>
@@ -152,7 +155,6 @@ namespace Tests
                 await orderService.CreateAsync(new OrderCreateDto()
                 {
                     ProductId = 1,
-                    OrderedBy = "User",
                     Qty = 2
                 });
             });
@@ -172,7 +174,6 @@ namespace Tests
                 await orderService.CreateAsync(new OrderCreateDto()
                 {
                     ProductId = 1,
-                    OrderedBy = "User",
                     Qty = 500
                 });
             });
@@ -183,14 +184,13 @@ namespace Tests
         {
             var product = CreateBaseProduct();
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(product);
-
+            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
             var order = CreateBaseOrder();
             mapperMock.Setup(m => m.Map<Order>(It.IsAny<OrderCreateDto>())).Returns(order);
 
             await orderService.CreateAsync(new OrderCreateDto()
             {
                 ProductId = It.IsAny<int>(),
-                OrderedBy = "user",
                 Qty = 2
             });
 
@@ -306,8 +306,8 @@ namespace Tests
             List<OrderGetMineDto> myOrdersDto = new List<OrderGetMineDto>() { firstOrder, secondOrder };
 
             orderRepoMock.Setup(o => o.GetMyOrdersAsync(It.IsAny<string>())).ReturnsAsync(myOrdersDto);
-
-            var orders = await orderService.GetMyOrdersAsync("user");
+            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
+            var orders = await orderService.GetMyOrdersAsync();
 
             var isDateFormated = DateTime.TryParseExact(orders.First().Date, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date);
 
@@ -321,10 +321,10 @@ namespace Tests
             var secondOrder = CreateBaseMyOrder();
             secondOrder.Id = 2;
             List<OrderGetMineDto> myOrdersDto = new List<OrderGetMineDto>() { firstOrder, secondOrder };
-
+            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
             orderRepoMock.Setup(o => o.GetMyOrdersAsync(It.IsAny<string>())).ReturnsAsync(myOrdersDto);
 
-            var orders = await orderService.GetMyOrdersAsync("user");
+            var orders = await orderService.GetMyOrdersAsync();
 
             Assert.IsTrue(orders.First().Status == "Pending");
         }
@@ -401,10 +401,20 @@ namespace Tests
                 Id = 1,
                 ProductCode = "Code",
                 Qty = 2,
-                Price = 400,    
+                Price = 400,
                 Date = DateTime.Now.ToString(),
                 OrderedBy = "user"
             };
+        }
+
+        private static ClaimsPrincipal CreateUser()
+        {
+            var identity = new ClaimsIdentity(new[]
+            {
+                new Claim(IdentityConstants.claimName, "User"),
+            });
+
+            return new ClaimsPrincipal(identity);
         }
     }
 }
