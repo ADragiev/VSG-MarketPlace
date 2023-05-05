@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
 {
-    [ApiController]
-    [Route("/[controller]")]
-    public class ImageController : ControllerBase
+    public class ImageController : BaseController
     {
         private readonly IImageService imageService;
         private readonly IValidator<ImageCreateDto> imageValidator;

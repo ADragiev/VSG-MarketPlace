@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class LocationController : ControllerBase
+    public class LocationController : BaseController
     {
         private readonly ILocationService locationService;
 

@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class OrderController : Controller
+    public class OrderController : BaseController
     {
         private readonly IOrderService orderService;
         private readonly IValidator<OrderCreateDto> createValidator;
@@ -26,10 +24,10 @@ namespace MarketPlace.Controllers
             return await orderService.GetAllPendingOrdersAsync();
         }
 
-        [HttpGet("{username}")]
-        public async Task<List<OrderGetMineDto>> GetMyOrders(string username)
+        [HttpGet("/MyOrders")]
+        public async Task<List<OrderGetMineDto>> GetMyOrders()
         {
-            return await orderService.GetMyOrdersAsync(username);
+            return await orderService.GetMyOrdersAsync();
         }
 
 

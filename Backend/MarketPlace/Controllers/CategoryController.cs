@@ -4,14 +4,13 @@ using Application.Models.CategoryModels.Dtos;
 using Application.Models.ExceptionModels;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace MarketPlace.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseController
     {
         private readonly ICategoryService categoryService;
 

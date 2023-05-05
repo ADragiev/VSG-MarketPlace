@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseController
     {
         private readonly IProductService productService;
         private readonly IValidator<ProductUpdateDto> updateValidator;
