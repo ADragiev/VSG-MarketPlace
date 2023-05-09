@@ -15,7 +15,9 @@ builder.Host.ConfigureLogging(logging =>
     logging.ClearProviders();
 }).UseNLog();
 IConfigurationRoot config = new ConfigurationBuilder()
-    .AddJsonFile(path: "appsettings.json").Build();
+    .AddUserSecrets<Program>()
+    .Build();
+
 NLog.Extensions.Logging.ConfigSettingLayoutRenderer.DefaultConfiguration = config;
 
 builder.Services.AddControllers();
