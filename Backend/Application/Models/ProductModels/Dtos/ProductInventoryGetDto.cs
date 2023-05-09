@@ -28,5 +28,6 @@ namespace Application.Models.ProductModels.Dtos
         public string Image { get; set; }
 
         public string Location { get; set; }
+        public int LocationId { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace Infrastructure.Migrations
                                         WHERE p.SaleQty > 0";
 
             var inventoryProductViewSql = @"CREATE OR ALTER VIEW InventoryProducts AS
-                                            SELECT p.Id, p.Code, p.Name, p.Price, p.Description, c.Name AS Category, p.CategoryId, p.SaleQty, p.CombinedQty, i.PublicId AS Image, l.Name AS Location
+                                            SELECT p.Id, p.Code, p.Name, p.Price, p.Description, c.Name AS Category, p.CategoryId, p.SaleQty, p.CombinedQty, i.PublicId AS Image, l.Name AS Location, p.LocationId
                                             FROM
                                             [Product] AS p
                                             JOIN [Category] AS c ON p.CategoryId = c.Id
