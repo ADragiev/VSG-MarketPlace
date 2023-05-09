@@ -34,8 +34,8 @@ builder.Services.AddAuthentication(options =>
 })
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://login.microsoftonline.com/50ae1bf7-d359-4aff-91ac-b084dc52111e/v2.0";//tenantId
-        options.Audience = "86ceffd4-8632-4677-bbb6-e7badafa26ec";//clientId
+        options.Authority = config["AzureSettings:Authority"];
+        options.Audience = config["AzureSettings:Client"];
     });
 builder.Services.AddAuthorization();
 
