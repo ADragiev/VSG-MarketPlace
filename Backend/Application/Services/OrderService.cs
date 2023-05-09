@@ -63,7 +63,7 @@ namespace Application.Services
             order.ProductCode = product.Code;
             order.ProductName = product.Name;
             order.Price = dto.Qty * product.Price;
-            order.OrderedBy = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.claimName).Value;
+            order.OrderedBy = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
             var orderId = await orderRepo.CreateAsync(order);
 
             var createdOrder = await orderRepo.GetByIdAsync(orderId);
@@ -79,7 +79,7 @@ namespace Application.Services
 
         public async Task<List<OrderGetMineDto>> GetMyOrdersAsync()
         {
-            var user = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.claimName).Value;
+            var user = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
             var myOrders= await orderRepo.GetMyOrdersAsync(user);
             myOrders.ForEach(o => o.Status = ((OrderStatus)int.Parse(o.Status)).ToString());
             myOrders.ForEach(o => o.Date = FormatDate(o.Date));

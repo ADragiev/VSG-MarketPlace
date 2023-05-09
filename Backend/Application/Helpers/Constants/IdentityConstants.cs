@@ -8,6 +8,6 @@ namespace Application.Helpers.Constants
 {
     public class IdentityConstants
     {
-        public const string claimName = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name";
+        public const string preferedUsername = "preferred_username";
     }
 }
