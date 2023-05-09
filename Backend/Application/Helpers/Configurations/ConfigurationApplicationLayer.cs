@@ -3,6 +3,7 @@ using Application.Helpers.Validators;
 using Application.Models.Cache;
 using Application.Models.CategoryModels.Contacts;
 using Application.Models.Cloud;
+using Application.Models.EmailModels.Interfaces;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.LocationModels.Interfaces;
@@ -29,6 +30,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<ICacheService, CacheService>();
             services.AddScoped<ICloudService, CloudinaryService>();
             services.AddHttpContextAccessor();
+            services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IValidator<OrderCreateDto>, OrderCreateValidator>();
             services.AddScoped<IValidator<ProductCreateDto>, ProductCreateValidator>();

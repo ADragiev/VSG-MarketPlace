@@ -411,7 +411,7 @@ namespace Tests
         {
             var identity = new ClaimsIdentity(new[]
             {
-                new Claim(IdentityConstants.claimName, "User"),
+                new Claim(IdentityConstants.preferedUsername, "User"),
             });
 
             return new ClaimsPrincipal(identity);
