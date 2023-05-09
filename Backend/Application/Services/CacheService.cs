@@ -11,7 +11,7 @@ namespace Application.Services
 
         public CacheService(IConfiguration config)
         {
-            var redis = ConnectionMultiplexer.Connect(config.GetValue<string>("Redis:Connection"));
+            var redis = ConnectionMultiplexer.Connect(config["Redis:Connection"]);
             redisDb = redis.GetDatabase();
         }
 
