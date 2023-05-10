@@ -8,6 +8,6 @@ namespace Application.Models.EmailModels.Interfaces
 {
     public interface IEmailService
     {
-        Task SendEmail(string email, string subject, string body);
+        Task SendEmailAsync(EmailDto dto);
     }
 }
