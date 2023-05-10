@@ -33,9 +33,9 @@ namespace Application.Helpers.Configurations
             };
             options.AddSecurityDefinition("Bearer", securityScheme);
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        { securityScheme, new[] { "Bearer" } }
-    });
+            {
+                { securityScheme, new[] { "Bearer" } }
+            });
         }
     }
 }
