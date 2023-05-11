@@ -16,9 +16,9 @@ namespace Application.Services
         private readonly Cloudinary cloudinary;
         public CloudinaryService(IConfiguration config)
         {
-            var cloudName = config.GetValue<string>("Cloudinary:CloudName");
-            var APIKey = config.GetValue<string>("Cloudinary:APIKey");
-            var APISecret = config.GetValue<string>("Cloudinary:APISecret");
+            var cloudName = config["Cloudinary:CloudName"];
+            var APIKey = config["Cloudinary:APIKey"];
+            var APISecret = config["Cloudinary:APISecret"];
 
             cloudinary = new Cloudinary(new Account(
                 cloudName,
