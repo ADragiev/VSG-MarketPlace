@@ -121,7 +121,6 @@
 
 ////////////// ITEM DETAILS POPUP////////////
 .modal {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -134,14 +133,14 @@
 .modal-content {
   display: flex;
   flex-direction: column;
-  position: absolute;
   top: 50%;
   left: 50%;
-  width: 40vw;
   height: 60vh;
-  transform: translate(-50%, -50%);
   background-color: $white-color;
   border-radius: 40px;
+  background: url('../../images/modalEllipse.png');
+  background-position: bottom right;
+  background-repeat: no-repeat;
   p {
     @include roboto-font;
     font-size: 16px;
@@ -149,7 +148,6 @@
   }
   .productImage{
     align-self: center;
-    padding: 20px;
   }
   img {
     max-height: 320px;

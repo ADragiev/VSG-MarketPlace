@@ -1,14 +1,11 @@
 @import "../abstracts/mixins";
    
-   #body {
+   .mainContainer {
     background-image: url("../images/vsg_bg 2.jpg");
     background-position: center center;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-  }
-  
-  .mainContainer {
     height: 100vh;
     display: flex; 
     flex-direction: column; 

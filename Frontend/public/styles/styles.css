@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -91,15 +92,21 @@ body {
 }
 
 .menu-item:hover,
-#active {
+.sidebar .active {
   background-color: #ed1c25;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+.menu-item:hover span,
+.sidebar .active span {
+  color: #fff;
 }
 .menu-item:hover a,
-#active a {
+.sidebar .active a {
   color: #fff;
 }
 .menu-item:hover svg path,
-#active svg path {
+.sidebar .active svg path {
   fill: #fff;
 }
 
@@ -110,44 +117,37 @@ body {
   user-select: none;
 }
 
-.popup .popuptext {
+.popuptext {
   display: flex;
   flex-direction: column;
-  visibility: hidden;
-  position: absolute;
   background-color: #fff;
   color: #000;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   font-family: "Roboto";
   text-align: center;
   border-radius: 4px;
-  padding: 8px 0;
-  z-index: 1;
-  bottom: -6em;
-  left: -4vw;
-  margin-left: -40px;
+  padding: 12px;
 }
-.popup .popuptext span {
+.popuptext span {
   text-align: left;
   font-family: "Roboto";
-  padding: 0.5em;
 }
-.popup .popuptext .buttons-container {
+.popuptext .buttons-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
-.popup .popuptext .buttons-container button:first-child {
+.popuptext .buttons-container button:first-child {
   background: #ed1c25;
   color: #fff;
   border: 0;
 }
-.popup .popuptext .buttons-container button:last-child {
+.popuptext .buttons-container button:last-child {
   background: #fff;
   color: #ed1c25;
   border: 1px solid #ed1c25;
 }
-.popup .popuptext .buttons-container button:first-child, .popup .popuptext .buttons-container button:last-child {
+.popuptext .buttons-container button:first-child, .popuptext .buttons-container button:last-child {
   margin: 0.5em;
   border-radius: 4px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
@@ -168,15 +168,12 @@ body {
     opacity: 1;
   }
 }
-#body {
+.mainContainer {
   background-image: url("../images/vsg_bg 2.jpg");
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.mainContainer {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -339,7 +336,6 @@ a {
 }
 
 .modal {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -352,14 +348,14 @@ a {
 .modal-content {
   display: flex;
   flex-direction: column;
-  position: absolute;
   top: 50%;
   left: 50%;
-  width: 40vw;
   height: 60vh;
-  transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 40px;
+  background: url("../../images/modalEllipse.png");
+  background-position: bottom right;
+  background-repeat: no-repeat;
 }
 .modal-content p {
   font-family: "Roboto";
@@ -370,7 +366,6 @@ a {
 }
 .modal-content .productImage {
   align-self: center;
-  padding: 20px;
 }
 .modal-content img {
   max-height: 320px;
@@ -628,49 +623,12 @@ a {
   margin-right: 10px;
 }
 
-.main-table {
-  border-radius: 4px;
-  width: 100%;
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #b3b3b3;
-  border-spacing: 0;
-}
-.main-table tbody td,
-.main-table th {
-  border-color: #b3b3b3;
-  padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid #b3b3b3;
-  border-collapse: collapse;
-  font-family: "Roboto";
-}
-.main-table tbody td svg,
-.main-table th svg {
-  margin-right: 8px;
-}
-.main-table tfoot tr td {
-  border-top: 1px solid #b3b3b3;
-  display: table;
-  width: 100%;
-  margin-top: 200px;
-}
-.main-table .actionButtons {
-  width: 100px;
-  cursor: pointer;
-}
-.main-table .actionButtons svg, .main-table .actionButtons div {
-  display: inline;
+.deleteIcon {
+  margin-left: 8px;
 }
 
 .add-item-modal, .edit-item-modal {
-  display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
 
@@ -731,11 +689,6 @@ a {
 .add-item-form .imgSection img, .edit-item-form .imgSection img {
   max-height: 200px;
 }
-.add-item-form .inputField, .edit-item-form .inputField {
-  margin: 2em 20px 0px 0px;
-  border: 0;
-  border-bottom: 1px solid #9A9A9A;
-}
 .add-item-form #submitFormBtn, .edit-item-form #submitFormBtn {
   display: flex;
   justify-content: center;
@@ -766,7 +719,6 @@ a {
 .add-item-form .img-buttons .upload-button,
 .add-item-form .img-buttons #edit-remove-button, .add-item-form .img-buttons #remove-button, .edit-item-form .img-buttons .upload-button,
 .edit-item-form .img-buttons #edit-remove-button, .edit-item-form .img-buttons #remove-button {
-  width: 120px;
   background: #ED6C02;
   display: flex;
   justify-content: center;
@@ -775,9 +727,11 @@ a {
   line-height: 24px;
   font-weight: 500;
   color: #fff;
-  padding: 8px;
-  border: 0;
+  padding: 8px 18px;
   margin: 10px;
+  font-family: "Roboto";
+  border: 0;
+  font-weight: 500;
   border-radius: 4px;
 }
 .add-item-form .img-buttons .upload-button:hover,
@@ -843,9 +797,6 @@ a {
   }
   .add-item-form .imgSection .img-buttons, .edit-item-form .imgSection .img-buttons {
     flex-direction: row;
-  }
-  .add-item-form .imgSection .img-buttons .upload-button, .add-item-form .imgSection .img-buttons #remove-button, .edit-item-form .imgSection .img-buttons .upload-button, .edit-item-form .imgSection .img-buttons #remove-button {
-    width: 100px;
   }
 }
 .infoDetails {
