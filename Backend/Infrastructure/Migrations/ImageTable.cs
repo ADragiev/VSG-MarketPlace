@@ -19,7 +19,8 @@ namespace Infrastructure.Migrations
 
             Create.ForeignKey()
                 .FromTable("Image").ForeignColumn("ProductId")
-                .ToTable("Product").PrimaryColumn("Id");
+                .ToTable("Product").PrimaryColumn("Id")
+                .OnDelete(System.Data.Rule.Cascade);
         }
 
         public override void Down()
