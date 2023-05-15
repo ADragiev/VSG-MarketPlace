@@ -1,16 +1,17 @@
 import { useRef, useState } from "react";
 import { IProduct } from "../../types";
 import ProductModal from "./productModal";
-import { Box, ClickAwayListener, Popper } from "@mui/material";
+
+
 
 import { createOrder } from "../../services/itemsServices";
+import PopperComponent from "../Popper";
 
 type ProductProps = {
   product: IProduct;
 };
 const Card = ({ product }: ProductProps): JSX.Element => {
-  const [anchorEl, setAnchorEl] = useState();
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const options = [];
   for (let i = 1; i <= product.saleQty; i++) {
@@ -26,6 +27,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
 
   const onBuy = async () => {
     await createOrder(product.id, selectValue.current);
+    setAnchorEl(null)
   };
 
   const handleOnImageClick = () => {
@@ -36,22 +38,11 @@ const Card = ({ product }: ProductProps): JSX.Element => {
     selectValue.current = Number(event.target.value);
   };
 
-  const arrow = {
-    position: "relative",
-    "&::before": {
-      mt: "4px",
-      backgroundColor: "white",
-      content: '""',
-      display: "block",
-      position: "absolute",
-      width: 10,
-      height: 10,
-      top: "-8px",
-      zIndex: 99,
-      transform: "rotate(45deg)",
-      left: "-6px",
-    },
-  };
+
+  const string = `Are you sure you want to buy 
+  ${selectValue.current} item for   
+    ${Number(selectValue.current) * product.price}
+  ?`
 
   return (
     <>
@@ -98,94 +89,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
           </div>
         </div>
       </div>
-
-      <Popper
-        open={open}
-        anchorEl={anchorEl}
-        placement="bottom"
-        disablePortal={false}
-        modifiers={[
-          {
-            name: "flip",
-            enabled: true,
-            options: {
-              altBoundary: true,
-              rootBoundary: "document",
-              padding: 8,
-            },
-          },
-          {
-            name: "preventOverflow",
-            enabled: true,
-            options: {
-              altAxis: true,
-              altBoundary: true,
-              tether: true,
-              rootBoundary: "document",
-              padding: 8,
-            },
-          },
-          {
-            name: "arrow",
-            enabled: true,
-            options: {
-              element: ".arrow",
-            },
-          },
-        ]}
-      >
-        <Box component="span" className="arrow" sx={arrow}></Box>
-        <ClickAwayListener onClickAway={() => setAnchorEl(null)}>
-            <div className="popuptext">
-              <span>
-                Are you sure you want to buy{" "}
-                <strong>{selectValue.current}</strong> item for{" "}
-                <strong>{Number(selectValue.current) * product.price}</strong>?
-              </span>
-              <div className="buttons-container">
-                <button onClick={onBuy} className="btnYesNo">
-                  YES
-                </button>
-                <button onClick={() => setAnchorEl(null)} className="btnYesNo">
-                  NO
-                </button>
-              </div>
-            </div>
-        </ClickAwayListener>
-      </Popper>
-      {/* <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={() => setAnchorEl(null)}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      >
-        
-        <div className="popuptext show">
-          <span>
-            Are you sure you want to buy <strong>{selectValue.current}</strong>{" "}
-            item for{" "}
-            <strong>{Number(selectValue.current) * product.price}</strong>?
-          </span>
-          <div className="buttons-container">
-            <button onClick={onBuy} className="btnYesNo">
-              YES
-            </button>
-            <button onClick={() => setAnchorEl(null)} className="btnYesNo">
-              NO
-            </button>
-          </div>
-        </div>
-      </Popover> */}
-      {/* {isModalOpen && (
-        <ProductModal product={product} onClose={() => setIsModalOpen(false)} />
-      )} */}
+      <PopperComponent str={string} onYes={onBuy} anchor={anchorEl} setAnchor={setAnchorEl}/>
     </>
   );
 };

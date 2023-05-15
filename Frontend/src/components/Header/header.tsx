@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = (): JSX.Element => {
  const user = JSON.parse(sessionStorage.getItem('user')as string).name.split(' ')[0]
+
+ const location = useLocation()
+ const title = location.pathname.slice(1).split('-').map(w =>{
+  const firstLetter = w.charAt(0).toUpperCase();
+  const restOfWord = w.slice(1);
+  return `${firstLetter}${restOfWord}`;
+ } );
+ 
+ 
  
 //  const name = result.user.account.name
  
@@ -13,7 +22,7 @@ const Header = (): JSX.Element => {
           alt="mini-logo"
         />
       </Link>
-      <span>Marketplace</span>
+      <span>{title.join(' ')}</span>
       <div id="greetingContainer" className="user">
         <span> Hi, {user}! </span>
         <img src="../../images/Profile Img.jpg" alt="Profile-pic" />

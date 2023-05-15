@@ -103,29 +103,6 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
     setImageValue("../../images/no_image-placeholder.png");
   };
 
-  // const onFormSubmit = async (e: FormEvent) => {
-  //   e.preventDefault();
-  //   const target = e.target as HTMLFormElement;
-  //   const formData = new FormData(target);
-  //   const image = formData.get("image") as File;
-
-  //   const data = Object.fromEntries(formData);
-  //   const response: IProduct = await makeRequest({
-  //     path: "/Product",
-  //     method: "POST",
-  //     data,
-  //   });
-  //   const productId = response.id;
-  //   if (image.name) {
-  //     const imageFormData = new FormData();
-  //     imageFormData.append("image", image);
-  //     formData.delete("image");
-  //     console.log(imageFormData);
-
-  //     await postImageById(productId, imageFormData);
-  //   }
-  //   setOpen(false);
-  // };
 
   const inputStyle = {
     fontSize: "12px",
@@ -182,7 +159,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 type="text"
                 id="item-name"
                 variant="standard"
-                label="Name"
+                label="Name*"
                 sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.name)}
@@ -204,7 +181,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 <InputLabel focused={false}>Category</InputLabel>
                 <Select
                   value={selectOption}
-                  label="Category"
+                  label="Category*"
                  
                   {...register("categoryId",{
                     required: "Category field is required",
