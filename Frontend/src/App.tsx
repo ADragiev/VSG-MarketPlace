@@ -1,16 +1,22 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/layout";
-import Home from "./pages/Home/home";
-import MarketPlace from "./pages/Marketplace/marketplace";
-import Inventory from "./pages/Inventory/inventory";
-import MyOrders from "./pages/My-Orders/myOrders";
-import PendingOrders from "./pages/Pending-Orders/pendingOrders";
+import { Suspense, lazy } from "react";
 // import './global/hamburger.tsx';
+
+
+const Home = lazy(() => import('./pages/Home/home'));
+const MarketPlace = lazy(() => import('./pages/Marketplace/marketplace'));
+const Inventory = lazy(() => import('./pages/Inventory/inventory'));
+const PendingOrders = lazy(() => import('./pages/Pending-Orders/pendingOrders'));
+const MyOrders = lazy(() => import('./pages/My-Orders/myOrders'));
+
+
 
 function App() {
   return (
 <BrowserRouter>
-<Routes>
+<Suspense fallback={<div>Loading...</div>}>
+        <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="marketplace" element={<Layout><MarketPlace/></Layout>} />
           <Route path="inventory" element={<Layout><Inventory/></Layout>}/>
@@ -18,6 +24,8 @@ function App() {
           <Route path="my-orders" element={<Layout><MyOrders/></Layout>} />
           
       </Routes>
+      </Suspense>
+
 </BrowserRouter>
   );
 }
