@@ -1,4 +1,4 @@
-﻿using Application.Models.EmailModels;
+﻿using Application.Models.EmailModels.Dtos;
 using Application.Models.EmailModels.Interfaces;
 using MailKit.Net.Smtp;
 using MailKit.Security;
