@@ -1,49 +1,66 @@
-import { FormEvent, forwardRef, useEffect, useRef, useState } from "react";
+import {  useEffect,  useState } from "react";
 import { loadCategories, loadLocations } from "../services/itemsServices";
-import { ICategory, IInventoryItem, ILocation, IProduct } from "../types";
-import { postImageById } from "../services/imageServices";
+import { ICategory, IInventoryItem, ILocation } from "../types";
+import { deleteImage, postImageById } from "../services/imageServices";
 import { makeRequest } from "../services/makeRequest";
-import { Dialog, FormControl, IconButton, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { TransitionProps } from "@mui/material/transitions";
-import Slide from "@mui/material/Slide";
+import {
+  
+  FormControl,
+
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { useForm } from "react-hook-form";
+import ModalWrapper from "./modalWrapper";
 
 interface EditItemlProps {
-    product: IInventoryItem;
+  product: IInventoryItem;
   onClose: () => void;
 }
 
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
-const EditItemForm = ({product, onClose }: EditItemlProps): JSX.Element => {
+const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
   const [open, setOpen] = useState(true);
-  const [selectOption, setSelectOption] = useState('')
-  const [locationOption, setLocationOption] = useState('')
-  const imageEl = useRef(null);
+  const [selectOption, setSelectOption] = useState(0);
+  const [locationOption, setLocationOption] = useState(0);
+  const [imageValue, setImageValue] = useState(
+    product.image ? product.image : "../../images/no_image-placeholder.png"
+  );
 
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      code: product.code,
+      name: product.name,
+      description: product.description,
+      categoryId: product.categoryId,
+      locationId: product.locationId,
+      saleQty: product.saleQty,
+      price: product.price,
+      combinedQty: product.combinedQty,
+      image: product.image,
+    },
+  });
 
-const handleRemoveImage = () => {
-  imageEl.current.src = '../../images/no_image-placeholder.png' 
-}
-
+  const handleRemoveImage = () => {
+    setImageValue("../../images/no_image-placeholder.png");
+  };
 
   if (!open) {
     onClose();
   }
-
 
   const [categories, setCategories] = useState<ICategory[]>([]);
   useEffect(() => {
     const resultFunc = async () => {
       const result: ICategory[] = await loadCategories();
       setCategories(result);
-      setSelectOption(product.categoryId)
+      setSelectOption(product.categoryId);
     };
     resultFunc();
   }, []);
@@ -53,71 +70,54 @@ const handleRemoveImage = () => {
     const resultFunc = async () => {
       const locations: ILocation[] = await loadLocations();
       setLocations(locations);
-      setLocationOption(product.locationId)
-
+      setLocationOption(product.locationId);
     };
     resultFunc();
   }, []);
 
-  
-const input = document.querySelector("#fileUpload") as HTMLInputElement;
-const addImagePreview = document.querySelector(
-  "#addCurrentImg"
-) as HTMLImageElement;
-const uploadPicture = () => {
-  input.addEventListener("change", (e) => {
-    const target = e.target as HTMLInputElement;
+  const inputChange = (e) => {
+    const target = e.currentTarget as HTMLInputElement;
     const files = target.files as FileList;
     const image = URL.createObjectURL(files[0]);
-    addImagePreview.src = image;
-  });
-  input.click();
-};
+    setImageValue(image);
+  };
 
-
-  const onFormSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const target = e.target as HTMLFormElement;
-    const formData = new FormData(target);
-    const image = formData.get("image") as File;
-
-    const data = Object.fromEntries(formData);
-    const response: IProduct = await makeRequest({
+  const onSubmit = async (data) => {
+    await makeRequest({
       path: `/Product/${product.id}`,
       method: "PUT",
       data,
     });
-    const productId = response.id;
-    console.log(productId);
-    
-    if (image.name) {
-      const imageFormData = new FormData();
-      imageFormData.append("image", image);
-      formData.delete("image");
-      await postImageById(productId, imageFormData);
+    const image = getValues("image")[0] as unknown as File;
+    const imageFormData = new FormData();
+    imageFormData.append("image", image);
+
+    if (data.image != imageValue) {
+      await postImageById(product.id, imageFormData);
     }
-    setOpen(false)
+    if (imageValue == "../../images/no_image-placeholder.png") {
+      const responseFromDelete = await deleteImage(product.id);
+      console.log(responseFromDelete);
+    }
+    setOpen(false);
   };
 
-    const inputStyle = {
-    fontSize: '12px',
-    '.MuiInputBase-root::after' : {
-      borderBottom: ' #000'
-    }
-  }
+  const inputStyle = {
+    fontSize: "12px",
+    ".MuiInputBase-root::after": {
+      borderBottom: " #000",
+    },
+  };
 
   return (
-    <Dialog
-      open={open}
-      TransitionComponent={Transition}
-      keepMounted
-      onClose={() => setOpen(false)}
-      aria-describedby="alert-dialog-slide-description"
-    >
+    <ModalWrapper open={open} setOpen={setOpen}>
       <div className="add-item-modal">
-        <form className="add-item-modal add-item-form" action="POST" onSubmit={onFormSubmit}>
+        <form
+          className="add-item-modal add-item-form"
+          action="POST"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="row">
-          
             <a className="close-modal-button" onClick={onClose}>
               <svg
                 width={18}
@@ -134,129 +134,135 @@ const uploadPicture = () => {
             </a>
             <div className="left-side">
               <span>Edit item</span>
-               <TextField
-                name="code"
+              <TextField
                 className="inputField"
                 id="standard-basic"
                 label="Code*"
                 variant="standard"
                 sx={inputStyle}
                 defaultValue={product.code}
-                InputLabelProps = {{style:{color: '#9A9A9A' }}}
+                error={Boolean(errors.code)}
+                helperText={errors.code?.message}
+                {...register("code", { required: "Code field is required" })}
+                InputLabelProps={{ style: { color: "#9A9A9A" } }}
               ></TextField>
               <TextField
                 className="inputField"
                 type="text"
                 id="item-name"
-                name="name"
                 variant="standard"
                 label="Name"
                 sx={inputStyle}
-                 defaultValue={product.name}
-                InputLabelProps = {{style:{color: '#9A9A9A' }}}
+                defaultValue={product.name}
+                InputLabelProps={{ style: { color: "#9A9A9A" } }}
+                error={Boolean(errors.name)}
+                helperText={errors.name?.message}
+                {...register("name", { required: "Name field is required" })}
               />
-               <TextField
+              <TextField
                 id="standard-multiline-static"
                 label="Description"
-                name="description"
                 multiline
                 rows={2}
                 className="inputField"
                 variant="standard"
                 sx={inputStyle}
                 defaultValue={product.description}
-               InputLabelProps = {{style:{color: '#9A9A9A' }}}
+                InputLabelProps={{ style: { color: "#9A9A9A" } }}
+                {...register("description")}
               />
-               <FormControl variant="standard" sx={inputStyle}>
+              <FormControl variant="standard" sx={inputStyle}>
                 <InputLabel focused={false}>Category</InputLabel>
                 <Select
-                  value = {selectOption}
-                  onChange={(e)=> setSelectOption(e.target.value as string)}
+                  value={selectOption}
                   label="Category"
-                  name="categoryId"
-                
+                  {...register("categoryId", {
+                    required: "Category field is required",
+                    onChange: (e) => setSelectOption(e.target.value as string),
+                  })}
                 >
                   {categories?.map((c) => (
-                    <MenuItem value={c.id} key={c.id}>{c.name}</MenuItem>
+                    <MenuItem value={c.id} key={c.id}>
+                      {c.name}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
               <FormControl variant="standard" sx={inputStyle}>
                 <InputLabel focused={false}>Location</InputLabel>
                 <Select
-                  value = {locationOption}
-                  onChange={(e)=> setLocationOption(e.target.value as string)}
+                  value={locationOption}
                   label="Category"
-                  name="locationId"
-                
+                  {...register("locationId", {
+                    onChange: (e) =>
+                      setLocationOption(e.target.value as string),
+                  })}
                 >
                   {locations?.map((l) => (
-                    <MenuItem value={l.id} key={l.id}>{l.name}</MenuItem>
+                    <MenuItem value={l.id} key={l.id}>
+                      {l.name}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
-              
-             
+
               <TextField
                 className="inputField"
                 type="number"
                 id="item-name"
-                name="saleQty"
                 variant="standard"
                 label="Qty For Sale"
                 sx={inputStyle}
-                InputLabelProps = {{style:{color: '#9A9A9A' }}}
+                InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 defaultValue={product.saleQty}
-
-
+                {...register("saleQty")}
               />
-                <TextField
+              <TextField
                 className="inputField"
                 type="number"
                 id="sale-price"
-                name="price"
                 variant="standard"
                 label="Sale price"
                 sx={inputStyle}
-                InputLabelProps = {{style:{color: '#9A9A9A' }}}
+                InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 defaultValue={product.price}
-
+                {...register("price")}
               />
-               <TextField
+              <TextField
                 className="inputField"
                 type="number"
                 id="quantity-available"
-                name="combinedQty"
                 variant="standard"
                 label="Qty *"
                 sx={inputStyle}
-                InputLabelProps = {{style:{color: '#9A9A9A' }}}
+                InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 defaultValue={product.combinedQty}
-
+                error={Boolean(errors.combinedQty)}
+                helperText={errors.combinedQty?.message}
+                {...register("combinedQty", {
+                  required: "Qty field is required",
+                })}
               />
             </div>
             <div className="imgSection">
-              <img
-                id="addCurrentImg"
-                src={product.image ? product.image : '../../images/no_image-placeholder.png'}
-                alt="noImgPlaceholder"
-                ref={imageEl}
-              />
+              <img id="addCurrentImg" src={imageValue} alt="noImgPlaceholder" />
               <input
-                name="image"
                 id="fileUpload"
                 type="file"
                 style={{ display: "none" }}
+                {...register("image", {
+                  onChange: (e) => inputChange(e),
+                })}
               />
               <div className="img-buttons">
-                <button
-                  className="upload-button"
-                  type="button"
-                  onClick={uploadPicture}
-                >
+                <label className="upload-button" htmlFor="fileUpload">
                   Upload
-                </button>
-                <button onClick={handleRemoveImage} id="remove-button" type="button">
+                </label>
+                <button
+                  onClick={handleRemoveImage}
+                  id="remove-button"
+                  type="button"
+                >
                   Remove
                 </button>
               </div>
@@ -267,7 +273,7 @@ const uploadPicture = () => {
           </button>
         </form>
       </div>
-    </Dialog>
+    </ModalWrapper>
   );
 };
 export default EditItemForm;

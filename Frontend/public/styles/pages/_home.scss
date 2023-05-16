@@ -25,6 +25,7 @@
   #login{
     @include roboto-font;
     padding: 6px 16px 6px 16px;
+    cursor: pointer;
     color: $white-color;
     border: 0;
     background: $main-color;

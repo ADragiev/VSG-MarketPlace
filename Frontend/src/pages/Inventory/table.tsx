@@ -75,7 +75,7 @@ export default function CustomizedTables({ searchQuery }: TableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredPRoducts
+          { filteredPRoducts
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
               <TableRowComponent product={row} key={row.id} />

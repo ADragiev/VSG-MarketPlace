@@ -15,7 +15,6 @@ function Inventory(): JSX.Element {
     
     const handleAddNewItemBtn = () => {
         setIsAddNewItemFormOpen(true);
-
     }
 
   return (  

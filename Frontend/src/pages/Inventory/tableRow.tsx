@@ -2,25 +2,33 @@ import styled from "@emotion/styled";
 
 import { deleteProduct } from "../../services/itemsServices";
 import EditItemForm from "../../components/editItemForm";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { IInventoryItem } from "../../types";
 import {  TableCell, TableRow, tableCellClasses } from "@mui/material";
 import PopperComponent from "../../components/Popper";
+import DeleteIcon from "./DeleteIcon";
 
 type InventoryItemsProps = {
   product: IInventoryItem;
 };
 
+const StyledTableRow = styled(TableRow)(() => ({
+  // hide last border
+}));
+
+const StyledTableCell = styled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    fontWeight: 600,
+    border: 1,
+    fontSize: 17,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontWeight: 500,
+    fontSize: 16,
+  },
+}));
+
 const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
-
-
-  
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handlePopup = (e) => {
-    e.preventDefault();
-    setAnchorEl(e.currentTarget);
-    
-  };
 
   const [isEditItemFormOpen, setIsEditItemFormOpen] = useState(false);
 
@@ -32,22 +40,6 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
     await deleteProduct(product.id);
   };
 
-  const StyledTableCell = styled(TableCell)(() => ({
-    [`&.${tableCellClasses.head}`]: {
-      fontWeight: 600,
-      border: 1,
-      fontSize: 17,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontWeight: 500,
-      fontSize: 16,
-    },
-  }));
-
-  const StyledTableRow = styled(TableRow)(() => ({
-    // hide last border
-  }));
-
   const str = `Are you sure you want to delete this item?`
 
   return (
@@ -58,17 +50,19 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
           product={product}
         />
       )}
+      
+
       <StyledTableRow key={product.id}>
-        <StyledTableCell component="th" scope="row">
-          {product.code}
-        </StyledTableCell>
-        <StyledTableCell>{product.name}</StyledTableCell>
-        <StyledTableCell>{product.category}</StyledTableCell>
-        <StyledTableCell>{product.saleQty}</StyledTableCell>
-        <StyledTableCell>{product.combinedQty}</StyledTableCell>
-        <StyledTableCell>
-          
-          <a className="edit-icon" onClick={handleEditItemBtn}>
+  <StyledTableCell component="th" scope="row">
+    {product.code}
+  </StyledTableCell>
+  <StyledTableCell>{product.name}</StyledTableCell>
+  <StyledTableCell>{product.category}</StyledTableCell>
+  <StyledTableCell>{product.saleQty}</StyledTableCell>
+  <StyledTableCell>{product.combinedQty}</StyledTableCell>
+  <StyledTableCell>
+    
+  <a className="edit-icon" onClick={handleEditItemBtn}>
             <svg
               width="16"
               height="16"
@@ -82,27 +76,18 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
               />
             </svg>
           </a>
-          <a onClick={handlePopup}  className="deleteIcon">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10.3438 2.65625H12.6562V4H3.34375V2.65625H5.65625L6.34375 2H9.65625L10.3438 2.65625ZM5.34375 6V12.6562H10.6562V6H5.34375ZM4 12.6562V4.65625H12V12.6562C12 13.0104 11.8646 13.3229 11.5938 13.5938C11.3229 13.8646 11.0104 14 10.6562 14H5.34375C4.98958 14 4.67708 13.8646 4.40625 13.5938C4.13542 13.3229 4 13.0104 4 12.6562Z"
-                fill="#ED1C25"
-              />
-            </svg>
-          </a>
-        </StyledTableCell>
-      </StyledTableRow>
 
+    <DeleteIcon  str={str} onYes={onDelete}/>
+  
+    
+  </StyledTableCell>
+</StyledTableRow>
         
-      <PopperComponent str={str} onYes={onDelete} anchor={anchorEl} setAnchor={setAnchorEl}/>
+
+       
     </>
   );
 };
 
 export default TableRowComponent;
+
