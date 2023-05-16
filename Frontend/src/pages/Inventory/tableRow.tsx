@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 
 import { deleteProduct } from "../../services/itemsServices";
 import EditItemForm from "../../components/editItemForm";
-import { useState,useRef } from "react";
+import { useState } from "react";
 import { IInventoryItem } from "../../types";
-import { Box, ClickAwayListener, Popper, TableCell, TableRow, tableCellClasses } from "@mui/material";
+import {  TableCell, TableRow, tableCellClasses } from "@mui/material";
+import PopperComponent from "../../components/Popper";
 
 type InventoryItemsProps = {
   product: IInventoryItem;
@@ -12,25 +13,9 @@ type InventoryItemsProps = {
 
 const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
 
-  const arrow = {
-    position: "relative",
-    "&::before": {
-      mt: "4px",
-      backgroundColor: "white",
-      content: '""',
-      display: "block",
-      position: "absolute",
-      width: 10,
-      height: 10,
-      top: "-8px",
-      zIndex: 99,
-      transform: "rotate(45deg)",
-      left: "-6px",
-    },
-  };
+
   
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const handlePopup = (e) => {
     e.preventDefault();
     setAnchorEl(e.currentTarget);
@@ -62,6 +47,8 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
   const StyledTableRow = styled(TableRow)(() => ({
     // hide last border
   }));
+
+  const str = `Are you sure you want to delete this item?`
 
   return (
     <>
@@ -112,56 +99,8 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
         </StyledTableCell>
       </StyledTableRow>
 
-      <Popper
-        open={open}
-        anchorEl={anchorEl}
-        placement="bottom"
-        disablePortal={false}
-        modifiers={[
-          {
-            name: "flip",
-            enabled: true,
-            options: {
-              altBoundary: true,
-              rootBoundary: "document",
-              padding: 8,
-            },
-          },
-          {
-            name: "preventOverflow",
-            enabled: true,
-            options: {
-              altAxis: true,
-              altBoundary: true,
-              tether: true,
-              rootBoundary: "document",
-              padding: 8,
-            },
-          },
-          {
-            name: "arrow",
-            enabled: true,
-            options: {
-              element: ".arrow",
-            },
-          },
-        ]}
-      >
-        <Box component="span" className="arrow" sx={arrow}></Box>
-        <ClickAwayListener onClickAway={() => setAnchorEl(null)}>
-        <div className="popuptext">
-              <span>Are you sure you want to delete this item?</span>
-              <div className="buttons-container">
-                <button onClick={onDelete} className="btnYesNo">
-                  YES
-                </button>
-                <button onClick={() => setAnchorEl(null)} className="btnYesNo">
-                  NO
-                </button>
-              </div>
-            </div>
-        </ClickAwayListener>
-      </Popper>
+        
+      <PopperComponent str={str} onYes={onDelete} anchor={anchorEl} setAnchor={setAnchorEl}/>
     </>
   );
 };
