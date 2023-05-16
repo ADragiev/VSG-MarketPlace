@@ -1,34 +1,25 @@
-import { FormEvent, forwardRef, useEffect, useRef, useState } from "react";
+import {   useEffect,  useState } from "react";
 import { loadCategories, loadLocations } from "../services/itemsServices";
 import { ICategory, ILocation, IProduct } from "../types";
 import { postImageById } from "../services/imageServices";
 import { makeRequest } from "../services/makeRequest";
 import {
-  Dialog,
+  
   FormControl,
   FormHelperText,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
   TextField,
 } from "@mui/material";
-import { TransitionProps } from "@mui/material/transitions";
-import Slide from "@mui/material/Slide";
+
 import { useForm } from "react-hook-form";
+import ModalWrapper from "./modalWrapper";
 
 interface AddNewItemlProps {
   onClose: () => void;
 }
 
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="right" ref={ref} {...props} />;
-});
 
 const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
   const { register, handleSubmit, getValues, formState: { errors } } = useForm({
@@ -112,14 +103,8 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
   };
 
   return (
-    <Dialog
-      open={open}
-      TransitionComponent={Transition}
-      keepMounted
-      onClose={() => setOpen(false)}
-      aria-describedby="alert-dialog-slide-description"
-      className="add-item-modal"
-    >
+    <ModalWrapper  open={open} setOpen={setOpen}>
+  
       <div className="add-item-modal">
         <form
           className="add-item-modal add-item-form"
@@ -276,7 +261,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
           </button>
         </form>
       </div>
-    </Dialog>
+    </ModalWrapper>
   );
 };
 export default AddNewItemForm;

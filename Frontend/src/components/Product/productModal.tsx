@@ -4,6 +4,7 @@ import * as React from "react";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { useState } from "react";
+import ModalWrapper from "../modalWrapper";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -24,15 +25,18 @@ const ProductModal = ({ product, onClose }: ModalProps): JSX.Element => {
   if (!open) {
     onClose();
   }
+
+ 
   return (
-    <Dialog
+    <ModalWrapper  open={open} setOpen={setOpen}>
+    {/* <Dialog
       PaperProps={{ sx : { borderRadius: "20px" } }}
       open={open}
       TransitionComponent={Transition}
       keepMounted
       onClose={() => setOpen(false)}
       aria-describedby="alert-dialog-slide-description"
-    >
+    > */}
       <div className="modal-content">
         <a className="close-button" onClick={() => setOpen(false)}>
           <svg
@@ -73,7 +77,8 @@ const ProductModal = ({ product, onClose }: ModalProps): JSX.Element => {
          
         </section>
       </div>
-    </Dialog>
+    {/* </Dialog> */}
+    </ModalWrapper>
   );
 };
 export default ProductModal;

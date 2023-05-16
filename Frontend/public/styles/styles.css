@@ -198,6 +198,7 @@ a {
   font-style: normal;
   font-weight: 400;
   padding: 6px 16px 6px 16px;
+  cursor: pointer;
   color: #fff;
   border: 0;
   background: #ed1c25;

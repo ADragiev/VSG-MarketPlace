@@ -1,42 +1,40 @@
 import styled from "@emotion/styled";
 import { Box, ClickAwayListener, Fade, Popper } from "@mui/material";
-import { Dispatch } from "react";
+import { Dispatch, useState } from "react";
 
 type PopperComponentProps = {
   str: string ,
   onYes: ()=> void,
   anchor: HTMLElement | null ,
   setAnchor: Dispatch<React.SetStateAction<null>> | null 
-
 }
-const PopperComponent = ({str, onYes, anchor, setAnchor}: PopperComponentProps ) =>{
+
+const StyledPopper = styled(Popper)(() => ({
+  '&[data-popper-placement*="bottom"] .arrow': {
+    top: -4,
+    left: 0,
+  },
+  '&[data-popper-placement*="top"] .arrow': {
+    bottom: -4,
+    left: 0,
+  },
+}));
+
+const arrow = {
+  position: "absolute",
+  "&::before": {
+    backgroundColor: "white",
+    content: '""',
+    display: "block",
+    width: 14,
+    height: 14,
+    transform: "rotate(45deg)",
+  },
+};
 
 
-
-    const StyledPopper = styled(Popper)(() => ({
-        '&[data-popper-placement*="bottom"] .arrow': {
-          top: -4,
-          left: 0,
-        },
-        '&[data-popper-placement*="top"] .arrow': {
-          bottom: -4,
-          left: 0,
-        },
-      }));
-    
-      const arrow = {
-        position: "absolute",
-        "&::before": {
-          backgroundColor: "white",
-          content: '""',
-          display: "block",
-          width: 14,
-          height: 14,
-          transform: "rotate(45deg)",
-        },
-      };
-
-
+const PopperComponent = ({str, onYes, anchor, setAnchor}: PopperComponentProps ) =>{  
+  
  return(
   <StyledPopper
   open={Boolean(anchor)}
