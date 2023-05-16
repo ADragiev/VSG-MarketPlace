@@ -17,9 +17,9 @@ namespace Application.Models.ProductModels.Dtos
         public int CategoryId { get; set; }
         public int LocationId { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
-        public int SaleQty { get; set; }
+        public int? SaleQty { get; set; }
 
         public int CombinedQty { get; set; }
     }

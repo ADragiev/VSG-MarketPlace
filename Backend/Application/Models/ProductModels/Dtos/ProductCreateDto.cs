@@ -14,9 +14,9 @@ namespace Application.Models.ProductModels.Dtos
 
         public string Name { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
-        public int SaleQty { get; set; }
+        public int? SaleQty { get; set; }
 
         public int CombinedQty { get; set; }
 
