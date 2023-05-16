@@ -65,9 +65,9 @@ namespace Application.Services
             order.Price = dto.Qty * product.Price;
             order.OrderedBy = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
             var orderId = await orderRepo.CreateAsync(order);
-
-            var createdOrder = await orderRepo.GetByIdAsync(orderId);
-            return mapper.Map<OrderGetDto>(createdOrder);
+            order.Id = orderId;
+            
+            return mapper.Map<OrderGetDto>(order);
         }
 
         public async Task<List<OrderPendingDto>> GetAllPendingOrdersAsync()
@@ -111,7 +111,7 @@ namespace Application.Services
         {
             if(DateTime.TryParse(dateString, CultureInfo.InvariantCulture,DateTimeStyles.None, out var date))
             {
-                return date.ToString("yyyy-MM-dd HH:mm");
+                return date.ToString(DateFormatConstants.DefaultDateFormat);
             };
             throw new HttpException("Cannot parse date", HttpStatusCode.BadRequest);
         }

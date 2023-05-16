@@ -1,4 +1,5 @@
-﻿using Application.Models.OrderModels.Dtos;
+﻿using Application.Helpers.Constants;
+using Application.Models.OrderModels.Dtos;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
@@ -15,7 +16,8 @@ namespace Application.Helpers.Profiles
         public OrderProfile()
         {
             CreateMap<OrderCreateDto, Order>();
-            CreateMap<Order, OrderGetDto>();
+            CreateMap<Order, OrderGetDto>()
+                .ForMember(dest=>dest.Date, src=>src.MapFrom(src=> src.Date.ToString(DateFormatConstants.DefaultDateFormat)));
         }
     }
 }
