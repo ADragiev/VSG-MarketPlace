@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IMyOrder } from "../../types";
-import { rejectOrder } from "../../services/itemsServices";
+import { useRejectOrderMutation } from "../../services/ordersService";
 import PopperComponent from "../../components/Popper";
 
 type MyOrderProps = {
@@ -9,6 +9,7 @@ type MyOrderProps = {
 
 function MyOrder({ myOrder }: MyOrderProps) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [rejectOrder] = useRejectOrderMutation()
 
   const handlePopup = (e) => {
     setAnchorEl(e.currentTarget);

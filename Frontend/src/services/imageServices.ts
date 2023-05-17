@@ -1,27 +1,28 @@
+import { baseApi } from "../utils/baseApi";
 
-const user = JSON.parse(sessionStorage.getItem('user')as string)
-export const postImageById = async (id: number, image: FormData) => {
-  console.log(user.token);
-  
 
-  try {
-    return await fetch(`https://localhost:7054/Image/${id}`, {
-      method: "POST",
-      headers: {
-        "Authorization": 'Bearer ' + user.token
-      },
-      body: image
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+const PostImage = "postImage";
+const DeleteImage = "deleteImage"
 
-export const deleteImage = async (id: number) => {
-  return fetch(`https://localhost:7054/Image/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Authorization": 'Bearer ' + user.token
-    },
-  });
-};
+const imageServices = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    [PostImage]: builder.mutation({
+      query: ({id, imageFormData}) => ({
+        method: "POST",
+        url: `/Image/${id}`,
+        body: imageFormData
+      }),
+    }),
+    [DeleteImage]: builder.mutation({
+      query: (id) => ({
+        method: "DELETE",
+        url: `/Image/${id}`,
+      }),
+    }),
+  }),
+});
+
+export const {
+usePostImageMutation,
+useDeleteImageMutation
+} = imageServices;

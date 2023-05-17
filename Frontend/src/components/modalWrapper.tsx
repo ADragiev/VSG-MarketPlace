@@ -25,6 +25,7 @@ const ModalWrapper = ({ children, open, setOpen, }: ModalWrapperProps) => {
     
   return (
     <Dialog
+    
       open={open}
       TransitionComponent={Transition}
       keepMounted

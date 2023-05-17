@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
 
-import { deleteProduct } from "../../services/itemsServices";
+import {  useDeleteProductMutation } from "../../services/productService";
 import EditItemForm from "../../components/editItemForm";
-import { useState, memo } from "react";
+import { useState } from "react";
 import { IInventoryItem } from "../../types";
 import {  TableCell, TableRow, tableCellClasses } from "@mui/material";
-import PopperComponent from "../../components/Popper";
 import DeleteIcon from "./DeleteIcon";
 
 type InventoryItemsProps = {
@@ -31,6 +30,8 @@ const StyledTableCell = styled(TableCell)(() => ({
 const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
 
   const [isEditItemFormOpen, setIsEditItemFormOpen] = useState(false);
+  const [deleteProduct] = useDeleteProductMutation();
+
 
   const handleEditItemBtn = () => {
     setIsEditItemFormOpen(true);

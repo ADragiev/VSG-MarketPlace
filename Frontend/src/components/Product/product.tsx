@@ -4,7 +4,7 @@ import ProductModal from "./productModal";
 
 
 
-import { createOrder } from "../../services/itemsServices";
+import { useCreateOrderMutation } from "../../services/ordersService";
 import PopperComponent from "../Popper";
 
 type ProductProps = {
@@ -12,6 +12,7 @@ type ProductProps = {
 };
 const Card = ({ product }: ProductProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [createOrder] = useCreateOrderMutation();
 
   const options = [];
   for (let i = 1; i <= product.saleQty; i++) {
@@ -25,8 +26,11 @@ const Card = ({ product }: ProductProps): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const selectValue = useRef(1);
 
+
   const onBuy = async () => {
-    await createOrder(product.id, selectValue.current);
+    const productId = product.id
+    const qty =selectValue.current 
+    await createOrder( {productId, qty});
     setAnchorEl(null)
   };
 

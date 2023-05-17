@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Box, ClickAwayListener, Fade, Popper } from "@mui/material";
-import { Dispatch, useState } from "react";
+import { Dispatch } from "react";
 
 type PopperComponentProps = {
   str: string ,

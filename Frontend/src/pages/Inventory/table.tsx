@@ -5,7 +5,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { loadInventoryItems } from "../../services/itemsServices";
+import { loadInventoryItems, useGetInventoryProductsQuery } from "../../services/productService";
 import { TableFooter, TablePagination } from "@mui/material";
 import { IInventoryItem } from "../../types";
 import { useEffect, useState } from "react";
@@ -36,15 +36,15 @@ type TableProps = {
 export default function CustomizedTables({ searchQuery }: TableProps) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const {data} = useGetInventoryProductsQuery('')
+
   const [products, setProducts] = useState<IInventoryItem[]>([]);
 
   useEffect(() => {
-    const resultFunc = async () => {
-      const result: IInventoryItem[] = await loadInventoryItems();
-      setProducts(result);
-    };
-    resultFunc();
-  }, []);
+    if (data) {
+      setProducts(data)
+    }
+  }, [data]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);

@@ -1,12 +1,9 @@
-import {  useEffect,  useState } from "react";
-import { loadCategories, loadLocations } from "../services/itemsServices";
-import { ICategory, IInventoryItem, ILocation } from "../types";
-import { deleteImage, postImageById } from "../services/imageServices";
-import { makeRequest } from "../services/makeRequest";
+import { useEffect, useState } from "react";
+import {  useUpdateProductMutation } from "../services/productService";
+import {  IInventoryItem,  } from "../types";
+import {  useDeleteImageMutation, usePostImageMutation } from "../services/imageServices";
 import {
-  
   FormControl,
-
   InputLabel,
   MenuItem,
   Select,
@@ -14,6 +11,8 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import ModalWrapper from "./modalWrapper";
+import { useGetCategoriesQuery } from "../services/categoryService";
+import { useGetLocationsQuery } from "../services/locationService";
 
 interface EditItemlProps {
   product: IInventoryItem;
@@ -24,6 +23,16 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
   const [open, setOpen] = useState(true);
   const [selectOption, setSelectOption] = useState(0);
   const [locationOption, setLocationOption] = useState(0);
+
+  const { data: categories } = useGetCategoriesQuery("");
+  const { data: locations } = useGetLocationsQuery("");
+  const [updateProduct] = useUpdateProductMutation();
+
+  const [postImage] = usePostImageMutation();
+  const [deleteImage] = useDeleteImageMutation();
+
+
+
   const [imageValue, setImageValue] = useState(
     product.image ? product.image : "../../images/no_image-placeholder.png"
   );
@@ -55,24 +64,12 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
     onClose();
   }
 
-  const [categories, setCategories] = useState<ICategory[]>([]);
   useEffect(() => {
-    const resultFunc = async () => {
-      const result: ICategory[] = await loadCategories();
-      setCategories(result);
-      setSelectOption(product.categoryId);
-    };
-    resultFunc();
+    setSelectOption(product.categoryId);
   }, []);
 
-  const [locations, setLocations] = useState<ILocation[]>([]);
   useEffect(() => {
-    const resultFunc = async () => {
-      const locations: ILocation[] = await loadLocations();
-      setLocations(locations);
-      setLocationOption(product.locationId);
-    };
-    resultFunc();
+    setLocationOption(product.locationId);
   }, []);
 
   const inputChange = (e) => {
@@ -83,21 +80,17 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
   };
 
   const onSubmit = async (data) => {
-    await makeRequest({
-      path: `/Product/${product.id}`,
-      method: "PUT",
-      data,
-    });
+    const id = product.id
+    await updateProduct({id, data});
     const image = getValues("image")[0] as unknown as File;
     const imageFormData = new FormData();
     imageFormData.append("image", image);
 
     if (data.image != imageValue) {
-      await postImageById(product.id, imageFormData);
+      await postImage({id, imageFormData});
     }
     if (imageValue == "../../images/no_image-placeholder.png") {
-      const responseFromDelete = await deleteImage(product.id);
-      console.log(responseFromDelete);
+      await deleteImage(id);
     }
     setOpen(false);
   };

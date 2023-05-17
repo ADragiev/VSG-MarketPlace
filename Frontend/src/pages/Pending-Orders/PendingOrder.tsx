@@ -1,4 +1,4 @@
-import { confirmOrder } from "../../services/itemsServices";
+import { useConfirmOrderMutation } from "../../services/ordersService";
 import { IPendingOrder } from "../../types";
 
 type PendingOrderProps = {
@@ -8,8 +8,12 @@ type PendingOrderProps = {
 
 
 const PendingOrder = ({pendingOrder}: PendingOrderProps) => {
+
+
+  const [completeOrder] = useConfirmOrderMutation();
+
     const onComplete = async () => {
-        await confirmOrder(pendingOrder.id);
+        await completeOrder(pendingOrder.id);
       };
     return (
         <div className="item-row">

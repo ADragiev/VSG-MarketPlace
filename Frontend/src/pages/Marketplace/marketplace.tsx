@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
-import { loadProducts } from "../../services/itemsServices";
+import {  useGetProductsQuery } from "../../services/productService";
 import { IProduct } from "../../types";
 import Card from "../../components/Product/product";
 
 const MarketPlace = (): JSX.Element => {
-  const [products, setProduct] = useState<IProduct[]>([]);
+  const {data: products} = useGetProductsQuery('fasdfsa')
 
- 
-
-
-
-  useEffect(() => {
-    const resultFunc = async () => {
-      const result: IProduct[] = await loadProducts();
-      setProduct(result);
-    };
-    resultFunc();
-  }, []);
   return (
     <>
     <main className="main" id="main-list-wrapper">
-      {products.map((product) => (
+      {products?.map((product: IProduct) => (
           <Card product={product} key= {product.id} />
           ))}
           </main>

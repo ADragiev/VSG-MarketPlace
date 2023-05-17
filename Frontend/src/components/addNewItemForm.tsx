@@ -1,8 +1,6 @@
-import {   useEffect,  useState } from "react";
-import { loadCategories, loadLocations } from "../services/itemsServices";
-import { ICategory, ILocation, IProduct } from "../types";
-import { postImageById } from "../services/imageServices";
-import { makeRequest } from "../services/makeRequest";
+import {   useState } from "react";
+import {  useCreateProductMutation } from "../services/productService";
+import {  usePostImageMutation } from "../services/imageServices";
 import {
   
   FormControl,
@@ -15,6 +13,8 @@ import {
 
 import { useForm } from "react-hook-form";
 import ModalWrapper from "./modalWrapper";
+import { useGetCategoriesQuery } from "../services/categoryService";
+import { useGetLocationsQuery } from "../services/locationService";
 
 interface AddNewItemlProps {
   onClose: () => void;
@@ -22,6 +22,17 @@ interface AddNewItemlProps {
 
 
 const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
+
+  const [open, setOpen] = useState(true);
+
+
+  const {data: categories} = useGetCategoriesQuery('')
+  const {data: locations} = useGetLocationsQuery('')
+  const [createProduct] = useCreateProductMutation();
+  const [postImage] = usePostImageMutation();
+
+
+
   const { register, handleSubmit, getValues, formState: { errors } } = useForm({
     defaultValues: {
       code: "",
@@ -29,8 +40,8 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
       description: "",
       categoryId: "",
       locationId: "",
-      saleQty: "",
-      price: "",
+      saleQty: null,
+      price: null,
       combinedQty: "",
       image: "",
     },
@@ -40,47 +51,24 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
     "../../images/no_image-placeholder.png"
   );
   const onSubmit = async (data) => {
-    const response: IProduct = await makeRequest({
-      path: "/Product",
-      method: "POST",
-      data,
-    });
+    const response = await createProduct(data);
     const image = getValues("image")[0] as unknown as File;
-
     if (imageValue != "../../images/no_image-placeholder.png") {
       const imageFormData = new FormData();
       imageFormData.append("image", image);
-
-      await postImageById(response.id, imageFormData);
+      const id = response.data.id
+      await postImage({id, imageFormData});
     }
+    setOpen(false)
   };
 
   const [selectOption, setSelectOption] = useState("");
   const [locationOption, setLocationOption] = useState("");
 
-  const [open, setOpen] = useState(true);
 
   if (!open) {
     onClose();
   }
-
-  const [categories, setCategories] = useState<ICategory[]>([]);
-  useEffect(() => {
-    const resultFunc = async () => {
-      const result: ICategory[] = await loadCategories();
-      setCategories(result);
-    };
-    resultFunc();
-  }, []);
-
-  const [locations, setLocations] = useState<ILocation[]>([]);
-  useEffect(() => {
-    const resultFunc = async () => {
-      const locations: ILocation[] = await loadLocations();
-      setLocations(locations);
-    };
-    resultFunc();
-  }, []);
 
   const inputChange = (e) => {
     const target = e.target as HTMLInputElement;
