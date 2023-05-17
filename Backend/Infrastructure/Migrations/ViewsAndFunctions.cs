@@ -57,7 +57,15 @@ namespace Infrastructure.Migrations
 		                                FROM [Order]
 		                                WHERE OrderedBy = @email)";
 
-            List<string> viewsAndFunctions = new List<string>() { imageByProductIdFunctionSql, indexProductsViewSql, inventoryProductViewSql, pendingOrdersViewSql, myOrdersFunctionSql };
+            var productPendingOrdersFunctionSql = @"CREATE OR ALTER Function GetProductPendingOrdersCount (@productId INT)
+                                                    RETURNS INT
+                                                    AS
+                                                    BEGIN
+	                                                    RETURN (SELECT COUNT(*) FROM [Order]
+	                                                    WHERE Status = 0 AND ProductId = @productId)
+                                                    END";
+
+            List<string> viewsAndFunctions = new List<string>() { imageByProductIdFunctionSql, indexProductsViewSql, inventoryProductViewSql, pendingOrdersViewSql, myOrdersFunctionSql, productPendingOrdersFunctionSql };
 
             using var connection = new SqlConnection(connectionString);
             foreach (var view in viewsAndFunctions)

@@ -66,7 +66,7 @@ namespace Application.Services
             order.OrderedBy = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
             var orderId = await orderRepo.CreateAsync(order);
             order.Id = orderId;
-            
+
             return mapper.Map<OrderGetDto>(order);
         }
 
@@ -80,7 +80,7 @@ namespace Application.Services
         public async Task<List<OrderGetMineDto>> GetMyOrdersAsync()
         {
             var user = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
-            var myOrders= await orderRepo.GetMyOrdersAsync(user);
+            var myOrders = await orderRepo.GetMyOrdersAsync(user);
             myOrders.ForEach(o => o.Status = ((OrderStatus)int.Parse(o.Status)).ToString());
             myOrders.ForEach(o => o.Date = FormatDate(o.Date));
             return myOrders;
@@ -93,23 +93,20 @@ namespace Application.Services
             var order = await orderRepo.GetByIdAsync(id);
             ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
 
-            if (order.ProductId != null)
-            {
-                var product = await productRepo.GetByIdAsync((int)order.ProductId);
+            var product = await productRepo.GetByIdAsync((int)order.ProductId);
 
-                var newSaleQty = product.SaleQty + order.Qty;
-                await productRepo.SetFieldAsync(product.Id, "SaleQty", newSaleQty);
+            var newSaleQty = product.SaleQty + order.Qty;
+            await productRepo.SetFieldAsync(product.Id, "SaleQty", newSaleQty);
 
-                var newCombinedQty = product.CombinedQty + order.Qty;
-                await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
-            }
+            var newCombinedQty = product.CombinedQty + order.Qty;
+            await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
 
             await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Declined);
         }
 
         private string FormatDate(string dateString)
         {
-            if(DateTime.TryParse(dateString, CultureInfo.InvariantCulture,DateTimeStyles.None, out var date))
+            if (DateTime.TryParse(dateString, CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
             {
                 return date.ToString(DateFormatConstants.DefaultDateFormat);
             };

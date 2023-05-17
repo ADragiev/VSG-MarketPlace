@@ -1,11 +1,13 @@
 ﻿using Application.Helpers.Constants;
 using Application.Models.CategoryModels.Contacts;
+using Application.Models.ExceptionModels;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using AutoMapper;
 using Domain.Entities;
+using System.Net;
 
 namespace Application.Services
 {
@@ -73,6 +75,13 @@ namespace Application.Services
         public async Task DeleteAsync(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
+
+            var productPendingOrdersCount = await productRepo.GetProductPendingOrdersCountAsync(id);
+
+            if(productPendingOrdersCount > 0)
+            {
+                throw new HttpException("The product you want to delete has pending orders and cannot be deleted. Make sure you delete them before deleting product.", HttpStatusCode.BadRequest);
+            }
 
             await imageService.DeleteImageByProductIdAsync(id);
             await productRepo.DeleteAsync(id);
