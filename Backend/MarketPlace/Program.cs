@@ -1,4 +1,5 @@
 using Application.Helpers.Configurations;
+using Application.Helpers.Constants;
 using Application.Helpers.Middlewares;
 using Infrastructure.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -51,6 +52,14 @@ builder.Services.AddCors(options =>
      .AllowAnyOrigin();
      });
  });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(IdentityConstants.AdminRolePolicyName, p =>
+    {
+        p.RequireClaim(IdentityConstants.AdminRoleClaimName, "true");
+    });
+});
 
 var app = builder.Build();
 
