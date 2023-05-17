@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Helpers.Configurations
+namespace MarketPlace.Configurations
 {
     public class ConfigurationSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
