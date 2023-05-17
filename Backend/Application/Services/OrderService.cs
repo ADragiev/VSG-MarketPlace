@@ -93,6 +93,12 @@ namespace Application.Services
             var order = await orderRepo.GetByIdAsync(id);
             ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
 
+            var user = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
+            if (user != order.OrderedBy)
+            {
+                throw new HttpException("You cannot reject this order, because you are not its owner", HttpStatusCode.BadRequest);
+            }
+
             var product = await productRepo.GetByIdAsync((int)order.ProductId);
 
             var newSaleQty = product.SaleQty + order.Qty;
