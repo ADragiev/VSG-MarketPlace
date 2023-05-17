@@ -7,15 +7,9 @@ namespace Application.Helpers.Validators
 {
     public class ProductCreateValidator : AbstractValidator<ProductCreateDto>
     {
-        private readonly ICategoryRepository categoryRepo;
-        private readonly ILocationRepository locationRepo;
-
         public ProductCreateValidator(ICategoryRepository categoryRepo
             , ILocationRepository locationRepo)
         {
-            this.categoryRepo = categoryRepo;
-            this.locationRepo = locationRepo;
-
             RuleFor(p => p.Code)
                 .MaximumLength(50).WithMessage("Product code length cannot be over 50 characters!")
                 .NotNull().WithMessage("Product code is required!")
