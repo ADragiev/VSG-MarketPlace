@@ -214,7 +214,9 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 label="Sale price"
                 sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
-                {...register("price")}
+                error={Boolean(errors.price)}
+                helperText={errors.price?.message}
+                {...register("price", {min: {value: 1, message: 'Price must be a possitive number'}})}
               />
               <TextField
                 className="inputField"
@@ -226,7 +228,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.combinedQty)}
                 helperText={errors.combinedQty?.message}
-                {...register("combinedQty", {required: "Qty field is required"})}
+                {...register("combinedQty", {required: "Qty field is required", min: {value: 1, message: 'Qty must be a possitive number'}})}
               />
             </div>
             <div className="imgSection">
