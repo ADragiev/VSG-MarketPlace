@@ -10,7 +10,7 @@ namespace Application.Models.ImageModels.Interfaces
 {
     public interface IImageService
     {
-        Task UploadImageAsync(int productId, ImageCreateDto images);
+        Task<string> UploadImageAsync(int productId, ImageCreateDto images);
         Task DeleteImageByProductIdAsync(int ProductId);
     }
 }

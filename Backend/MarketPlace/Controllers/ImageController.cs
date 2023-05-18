@@ -17,10 +17,10 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost("{productId}")]
-        public async Task UploadImage(int productId, [FromForm] ImageCreateDto image)
+        public async Task<string> UploadImage(int productId, [FromForm] ImageCreateDto image)
         {
             await imageValidator.ValidateAndThrowAsync(image);
-            await imageService.UploadImageAsync(productId, image);
+            return await imageService.UploadImageAsync(productId, image);
         }
 
         [HttpDelete("{productId}")]
