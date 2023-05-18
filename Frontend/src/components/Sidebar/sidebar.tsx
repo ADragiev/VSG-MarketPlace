@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { handleLogout } from "../../global/auth";
 
-const user = JSON.parse(sessionStorage.getItem('user')as string).name.split(' ')[0]
 
 
 const Sidebar = (): JSX.Element => {
+  const user = JSON.parse(sessionStorage.getItem('user')as string).name.split(' ')[0]
     return (
         <aside className="sidebar">
            <div id="greetingContainer" className="user">

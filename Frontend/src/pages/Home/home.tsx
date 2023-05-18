@@ -21,7 +21,6 @@ function Home() {
     
   };
 
-
   sessionStorage.clear()
   return (
     <main className="mainContainer">
@@ -34,8 +33,7 @@ function Home() {
       </div>
       <div className="divs">
           <a id="login" onClick={handleLogin}>
-            LOGIN
-            
+            LOGIN 
           </a>
       </div>
     </main>
