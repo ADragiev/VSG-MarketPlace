@@ -17,33 +17,23 @@ namespace Application.Services
         private readonly IProductRepository productRepo;
         private readonly IMapper mapper;
         private readonly IImageService imageService;
-        private readonly ICategoryRepository categoryRepo;
-        private readonly ILocationRepository locationRepo;
 
         public ProductService(IProductRepository productRepo,
             IMapper mapper,
-            IImageService imageService,
-            ICategoryRepository categoryRepo,
-            ILocationRepository locationRepo)
+            IImageService imageService)
         {
             this.productRepo= productRepo;
             this.mapper = mapper;
             this.imageService = imageService;
-            this.categoryRepo = categoryRepo;
-            this.locationRepo = locationRepo;
         }
 
-        public async Task<ProductGetDto> CreateAsync(ProductCreateDto dto)
+        public async Task<int> CreateAsync(ProductCreateDto dto)
         {
             var product = mapper.Map<Product>(dto);
             var productId = await productRepo.CreateAsync(product);
             product.Id = productId;
 
-            var createdProduct = mapper.Map<ProductGetDto>(product);
-            createdProduct.Category = (await categoryRepo.GetByIdAsync(dto.CategoryId)).Name;
-            createdProduct.Location = (await locationRepo.GetByIdAsync(dto.LocationId)).Name;
-
-            return createdProduct;
+            return productId;
         }
 
         public async Task<List<ProductMarketPlaceGetDto>> GetAllForIndexAsync()
@@ -73,19 +63,13 @@ namespace Application.Services
         }
 
 
-        public async Task<ProductGetDto> UpdateAsync(int id, ProductUpdateDto dto)
+        public async Task UpdateAsync(int id, ProductUpdateDto dto)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
 
             var productToUpdate = mapper.Map<Product>(dto);
             productToUpdate.Id = id;
             await productRepo.UpdateAsync(productToUpdate);
-
-            var updatedProduct = mapper.Map<ProductGetDto>(productToUpdate);
-            updatedProduct.Category = (await categoryRepo.GetByIdAsync(dto.CategoryId)).Name;
-            updatedProduct.Location = (await locationRepo.GetByIdAsync(dto.LocationId)).Name;
-
-            return updatedProduct;
         }
 
         public async Task DeleteAsync(int id)

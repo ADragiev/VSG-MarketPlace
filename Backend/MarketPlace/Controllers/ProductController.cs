@@ -38,14 +38,14 @@ namespace MarketPlace.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ProductGetDto> UpdateProduct(int id, ProductUpdateDto dto)
+        public async Task UpdateProduct(int id, ProductUpdateDto dto)
         {
             await updateValidator.ValidateAndThrowAsync(dto);
-            return await productService.UpdateAsync(id, dto);
+            await productService.UpdateAsync(id, dto);
         }
 
         [HttpPost]
-        public async Task<ProductGetDto> CreateProduct([FromBody]ProductCreateDto dto)
+        public async Task<int> CreateProduct([FromBody]ProductCreateDto dto)
         {
             await createValidator.ValidateAndThrowAsync(dto);
             return await productService.CreateAsync(dto);

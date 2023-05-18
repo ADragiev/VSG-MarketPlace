@@ -11,9 +11,9 @@ namespace Application.Models.ProductModels.Intefaces
 {
     public interface IProductService
     {
-        Task<ProductGetDto> CreateAsync(ProductCreateDto dto);
+        Task<int> CreateAsync(ProductCreateDto dto);
 
-        Task<ProductGetDto> UpdateAsync(int id, ProductUpdateDto dto);
+        Task UpdateAsync(int id, ProductUpdateDto dto);
 
         Task DeleteAsync(int id); 
 
