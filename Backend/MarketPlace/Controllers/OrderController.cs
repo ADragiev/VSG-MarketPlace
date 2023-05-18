@@ -38,9 +38,9 @@ namespace MarketPlace.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task RejectOrder(int id)
+        public async Task<string> RejectOrder(int id)
         {
-            await orderService.RejectOrderAsync(id);
+            return await orderService.RejectOrderAsync(id);
         }
 
 

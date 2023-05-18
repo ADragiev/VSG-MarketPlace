@@ -16,6 +16,6 @@ namespace Application.Models.OrderModels.Interfaces
 
         Task CompleteOrderAsync(int id);
 
-        Task RejectOrderAsync(int id);
+        Task<string> RejectOrderAsync(int id);
     }
 }

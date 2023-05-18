@@ -86,7 +86,7 @@ namespace Application.Services
             return myOrders;
         }
 
-        public async Task RejectOrderAsync(int id)
+        public async Task<string> RejectOrderAsync(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
 
@@ -108,6 +108,8 @@ namespace Application.Services
             await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
 
             await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Declined);
+
+            return OrderStatus.Declined.ToString();
         }
 
         private string FormatDate(string dateString)
