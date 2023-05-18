@@ -22,7 +22,7 @@ namespace Application.Models.ProductModels.Dtos
 
         public string Description { get; set; }
 
-        public int CategoryId { get; set; }
-        public int LocationId { get; set; }
+        public string Category { get; set; }
+        public string Location { get; set; }
     }
 }
