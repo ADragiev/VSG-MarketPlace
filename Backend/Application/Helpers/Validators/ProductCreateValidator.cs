@@ -27,7 +27,8 @@ namespace Application.Helpers.Validators
                 .GreaterThanOrEqualTo(0).WithMessage("Sale quantity must be positive number");
 
             RuleFor(p => p.CombinedQty)
-                .GreaterThanOrEqualTo(p => p.SaleQty).When(p => p.SaleQty != null).WithMessage("Combined quantity must be greater than or equal to sale quantity");
+                .GreaterThanOrEqualTo(p => p.SaleQty).When(p => p.SaleQty != null).WithMessage("Combined quantity must be greater than or equal to sale quantity")
+                .GreaterThanOrEqualTo(0).WithMessage("Combined quantity must be positive number");
 
             RuleFor(p => p.Description)
                 .MaximumLength(200).WithMessage("Description length cannot be over 200 characters!");
