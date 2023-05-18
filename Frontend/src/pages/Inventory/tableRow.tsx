@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 
-import {  useDeleteProductMutation } from "../../services/productService";
+import { useDeleteProductMutation } from "../../services/productService";
 import EditItemForm from "../../components/editItemForm";
 import { useState } from "react";
 import { IInventoryItem } from "../../types";
-import {  TableCell, TableRow, tableCellClasses } from "@mui/material";
+import { TableCell, TableRow, tableCellClasses } from "@mui/material";
 import DeleteIcon from "./DeleteIcon";
 
 type InventoryItemsProps = {
@@ -28,10 +28,8 @@ const StyledTableCell = styled(TableCell)(() => ({
 }));
 
 const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
-
   const [isEditItemFormOpen, setIsEditItemFormOpen] = useState(false);
   const [deleteProduct] = useDeleteProductMutation();
-
 
   const handleEditItemBtn = () => {
     setIsEditItemFormOpen(true);
@@ -41,7 +39,7 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
     await deleteProduct(product.id);
   };
 
-  const str = `Are you sure you want to delete this item?`
+  const str = `Are you sure you want to delete this item?`;
 
   return (
     <>
@@ -51,19 +49,17 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
           product={product}
         />
       )}
-      
 
       <StyledTableRow key={product.id}>
-  <StyledTableCell component="th" scope="row">
-    {product.code}
-  </StyledTableCell>
-  <StyledTableCell>{product.name}</StyledTableCell>
-  <StyledTableCell>{product.category}</StyledTableCell>
-  <StyledTableCell>{product.saleQty}</StyledTableCell>
-  <StyledTableCell>{product.combinedQty}</StyledTableCell>
-  <StyledTableCell>
-    
-  <a className="edit-icon" onClick={handleEditItemBtn}>
+        <StyledTableCell component="th" scope="row">
+          {product.code}
+        </StyledTableCell>
+        <StyledTableCell>{product.name}</StyledTableCell>
+        <StyledTableCell>{product.category}</StyledTableCell>
+        <StyledTableCell>{product.saleQty}</StyledTableCell>
+        <StyledTableCell>{product.combinedQty}</StyledTableCell>
+        <StyledTableCell>
+          <a className="edit-icon" onClick={handleEditItemBtn}>
             <svg
               width="16"
               height="16"
@@ -78,17 +74,11 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
             </svg>
           </a>
 
-    <DeleteIcon  str={str} onYes={onDelete}/>
-  
-    
-  </StyledTableCell>
-</StyledTableRow>
-        
-
-       
+          <DeleteIcon str={str} onYes={onDelete} />
+        </StyledTableCell>
+      </StyledTableRow>
     </>
   );
 };
 
 export default TableRowComponent;
-

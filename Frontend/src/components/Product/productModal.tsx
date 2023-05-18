@@ -1,9 +1,6 @@
 import { IProduct } from "../../types";
-import * as React from "react";
 import { useState } from "react";
 import ModalWrapper from "../modalWrapper";
-
-
 
 interface ModalProps {
   product: IProduct;
@@ -16,9 +13,8 @@ const ProductModal = ({ product, onClose }: ModalProps): JSX.Element => {
     onClose();
   }
 
- 
   return (
-    <ModalWrapper  open={open} setOpen={setOpen}>
+    <ModalWrapper open={open} setOpen={setOpen}>
       <div className="modal-content">
         <a className="close-button" onClick={() => setOpen(false)}>
           <svg
@@ -56,7 +52,6 @@ const ProductModal = ({ product, onClose }: ModalProps): JSX.Element => {
             </div>
           </div>
           <p>{product.description}</p>
-         
         </section>
       </div>
     </ModalWrapper>

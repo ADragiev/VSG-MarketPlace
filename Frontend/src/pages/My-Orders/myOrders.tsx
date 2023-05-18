@@ -1,5 +1,6 @@
 
 import { useGetMyOrdersQuery } from "../../services/ordersService";
+import { IMyOrder } from "../../types";
 import MyOrder from "./MyOrder";
 import MyOrdersHeader from "./MyOrdersHeader";
 
@@ -11,7 +12,7 @@ const  MyOrders = (): JSX.Element => {
       <main className="main">
          <section className="list-wrapper infoDetails">
           <MyOrdersHeader/>
-        {myOrders?.map((myOrder) => (
+        {myOrders?.map((myOrder: IMyOrder) => (
           <MyOrder myOrder={myOrder} key= {myOrder.id} />
           ))}
           </section>

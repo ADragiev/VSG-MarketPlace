@@ -1,10 +1,8 @@
-import {msalInstance } from "../authConfig.ts";
+import { msalInstance } from "../authConfig.ts";
 
-
-
-  export const handleLogout = async () => {
-    await msalInstance.logoutRedirect({
-      postLogoutRedirectUri: "/",
-    });
-    sessionStorage.clear()
-  }
+export const handleLogout = async () => {
+  await msalInstance.logoutRedirect({
+    postLogoutRedirectUri: "/",
+  });
+  sessionStorage.clear();
+};

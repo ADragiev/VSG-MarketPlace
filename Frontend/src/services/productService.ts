@@ -1,25 +1,18 @@
-
-
 import { baseApi } from "../utils/baseApi";
-
 
 const GetProducts = "getProducts";
 const GetInventoryProducts = "getInventoryProducts";
-const UpdateProduct = "updateProduct"
+const UpdateProduct = "updateProduct";
 const CreateProduct = "createProduct";
-const DeleteProduct = "deleteProduct"
+const DeleteProduct = "deleteProduct";
 
 const productsServices = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     [GetProducts]: builder.query({
-      query: () => ({
-        url: "/Product",
-      }),
+      query: () => "/Product",
     }),
     [GetInventoryProducts]: builder.query({
-      query: () => ({
-        url: "/Product/Inventory",
-      }),
+      query: () => "/Product/Inventory",
     }),
     [CreateProduct]: builder.mutation({
       query: (data) => ({
@@ -35,7 +28,7 @@ const productsServices = baseApi.injectEndpoints({
       }),
     }),
     [UpdateProduct]: builder.mutation({
-      query: ({id, data}) => ({
+      query: ({ id, data }) => ({
         method: "PUT",
         url: `/Product/${id}`,
         body: data,
@@ -50,7 +43,5 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useGetInventoryProductsQuery,
-  useUpdateProductMutation
+  useUpdateProductMutation,
 } = productsServices;
-
-

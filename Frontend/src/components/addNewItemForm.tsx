@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import ModalWrapper from "./modalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
+import { toast } from "react-toastify";
 
 interface AddNewItemlProps {
   onClose: () => void;
@@ -52,13 +53,21 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
   );
   const onSubmit = async (data) => {
     const response = await createProduct(data);
+    
     const image = getValues("image")[0] as unknown as File;
     if (imageValue != "../../images/no_image-placeholder.png") {
       const imageFormData = new FormData();
       imageFormData.append("image", image);
-      const id = response.data.id
+      const id = response.data
       await postImage({id, imageFormData});
     }
+    if (response.error) {
+     toast.error('Something went wrong! Please try again later...')
+    }
+    else{
+     toast.success('Successfully added item!')
+    }
+     
     setOpen(false)
   };
 
@@ -126,7 +135,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 error={Boolean(errors.code)}
                 helperText={errors.code?.message}
                 {...register("code", { required: "Code field is required" })}
-              ></TextField>
+              />
               <TextField
                 className="inputField"
                 type="text"

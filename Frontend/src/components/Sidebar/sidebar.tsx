@@ -1,9 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { handleLogout } from "../../global/auth";
+
+const user = JSON.parse(sessionStorage.getItem('user')as string).name.split(' ')[0]
+
 
 const Sidebar = (): JSX.Element => {
     return (
         <aside className="sidebar">
+           <div id="greetingContainer" className="user">
+        <span> Hi, {user}! </span>
+        <img src="../../images/Profile Img.jpg" alt="Profile-pic" />
+      </div>
         <nav>
           <ul>
             <li className="menu-item">

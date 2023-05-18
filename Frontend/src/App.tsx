@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/layout";
 import { Suspense, lazy } from "react";
 // import './global/hamburger.tsx';
+import { ToastContainer } from 'react-toastify'
+
 
 
 const Home = lazy(() => import('./pages/Home/home'));
@@ -14,6 +16,7 @@ const MyOrders = lazy(() => import('./pages/My-Orders/myOrders'));
 
 function App() {
   return (
+    <>
 <BrowserRouter>
 <Suspense fallback={<div>Loading...</div>}>
         <Routes>
@@ -22,11 +25,10 @@ function App() {
           <Route path="inventory" element={<Layout><Inventory/></Layout>}/>
           <Route path="pending-orders" element={<Layout><PendingOrders/></Layout>} />
           <Route path="my-orders" element={<Layout><MyOrders/></Layout>} />
-          
       </Routes>
       </Suspense>
-
 </BrowserRouter>
+</>
   );
 }
 

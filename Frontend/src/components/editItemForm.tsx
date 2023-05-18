@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {  useUpdateProductMutation } from "../services/productService";
-import {  IInventoryItem,  } from "../types";
+import {  ICategory, IInventoryItem, ILocation,  } from "../types";
 import {  useDeleteImageMutation, usePostImageMutation } from "../services/imageServices";
 import {
   FormControl,
@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import ModalWrapper from "./modalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
+import { toast } from "react-toastify";
 
 interface EditItemlProps {
   product: IInventoryItem;
@@ -81,7 +82,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
 
   const onSubmit = async (data) => {
     const id = product.id
-    await updateProduct({id, data});
+   const response =  await updateProduct({id, data});
     const image = getValues("image")[0] as unknown as File;
     const imageFormData = new FormData();
     imageFormData.append("image", image);
@@ -92,6 +93,16 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
     if (imageValue == "../../images/no_image-placeholder.png") {
       await deleteImage(id);
     }
+
+    if (response.error) {
+      toast.error('Something went wrong! Please try again later...')
+
+    }
+    else{
+     toast.success('Successfully updated item!')
+    }
+
+
     setOpen(false);
   };
 
@@ -174,7 +185,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                     onChange: (e) => setSelectOption(e.target.value as string),
                   })}
                 >
-                  {categories?.map((c) => (
+                  {categories?.map((c: ICategory) => (
                     <MenuItem value={c.id} key={c.id}>
                       {c.name}
                     </MenuItem>
@@ -191,7 +202,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                       setLocationOption(e.target.value as string),
                   })}
                 >
-                  {locations?.map((l) => (
+                  {locations?.map((l: ILocation) => (
                     <MenuItem value={l.id} key={l.id}>
                       {l.name}
                     </MenuItem>

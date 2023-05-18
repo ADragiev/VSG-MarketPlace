@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { Box, ClickAwayListener, Fade, Popper } from "@mui/material";
-import { Dispatch } from "react";
+import { SetStateAction, Dispatch } from "react";
 
 type PopperComponentProps = {
-  str: string ,
-  onYes: ()=> void,
-  anchor: HTMLElement | null ,
-  setAnchor: Dispatch<React.SetStateAction<null>> | null 
-}
+  str: string;
+  onYes: () => void;
+  anchor: HTMLElement | null;
+  setAnchor: Dispatch<SetStateAction<HTMLElement | null>>;
+};
 
 const StyledPopper = styled(Popper)(() => ({
   '&[data-popper-placement*="bottom"] .arrow': {
@@ -32,73 +32,70 @@ const arrow = {
   },
 };
 
-
-const PopperComponent = ({str, onYes, anchor, setAnchor}: PopperComponentProps ) =>{  
-  
- return(
-  <StyledPopper
-  open={Boolean(anchor)}
-  anchorEl={anchor}
-  placement="bottom"
-  disablePortal={false}
-  transition
-  modifiers={[
-    {
-      name: "flip",
-      enabled: true,
-      options: {
-        altBoundary: true,
-        rootBoundary: "document",
-        padding: 8,
-      },
-    },
-    {
-      name: "preventOverflow",
-      enabled: true,
-      options: {
-        altAxis: true,
-        altBoundary: true,
-        tether: true,
-        rootBoundary: "document",
-        padding: 8,
-      },
-    },
-    {
-      name: "arrow",
-      enabled: true,
-      options: {
-        element: ".arrow",
-      },
-    },
-  ]}
->
-  {({ TransitionProps }) => (
-    <ClickAwayListener onClickAway={() => setAnchor(null)}>
-      <Fade {...TransitionProps} timeout={500}>
-        <div>
-          <Box component="span" className="arrow" sx={arrow}></Box>
-          <div className="popuptext">
-            <span>
-             {str}
-            </span>
-            <div className="buttons-container">
-              <button onClick={onYes} className="btnYesNo">
-                YES
-              </button>
-              <button
-                onClick={() => setAnchor(null)}
-                className="btnYesNo"
-              >
-                NO
-              </button>
+const PopperComponent = ({
+  str,
+  onYes,
+  anchor,
+  setAnchor,
+}: PopperComponentProps) => {
+  return (
+    <StyledPopper
+      open={Boolean(anchor)}
+      anchorEl={anchor}
+      placement="bottom"
+      disablePortal={false}
+      transition
+      modifiers={[
+        {
+          name: "flip",
+          enabled: true,
+          options: {
+            altBoundary: true,
+            rootBoundary: "document",
+            padding: 8,
+          },
+        },
+        {
+          name: "preventOverflow",
+          enabled: true,
+          options: {
+            altAxis: true,
+            altBoundary: true,
+            tether: true,
+            rootBoundary: "document",
+            padding: 8,
+          },
+        },
+        {
+          name: "arrow",
+          enabled: true,
+          options: {
+            element: ".arrow",
+          },
+        },
+      ]}
+    >
+      {({ TransitionProps }) => (
+        <ClickAwayListener onClickAway={() => setAnchor(null)}>
+          <Fade {...TransitionProps} timeout={500}>
+            <div>
+              <Box component="span" className="arrow" sx={arrow}></Box>
+              <div className="popuptext">
+                <span>{str}</span>
+                <div className="buttons-container">
+                  <button onClick={onYes} className="btnYesNo">
+                    YES
+                  </button>
+                  <button onClick={() => setAnchor(null)} className="btnYesNo">
+                    NO
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </Fade>
-    </ClickAwayListener>
-  )}
-</StyledPopper>
-
- )
-}
+          </Fade>
+        </ClickAwayListener>
+      )}
+    </StyledPopper>
+  );
+};
 export default PopperComponent;

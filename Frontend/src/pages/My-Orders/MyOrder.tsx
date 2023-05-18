@@ -8,10 +8,10 @@ type MyOrderProps = {
 };
 
 function MyOrder({ myOrder }: MyOrderProps) {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [rejectOrder] = useRejectOrderMutation()
 
-  const handlePopup = (e) => {
+  const handlePopup = (e: React.MouseEvent<HTMLAnchorElement> ) => {
     setAnchorEl(e.currentTarget);
   };
 

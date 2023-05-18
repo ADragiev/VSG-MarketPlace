@@ -5,7 +5,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { loadInventoryItems, useGetInventoryProductsQuery } from "../../services/productService";
+import { useGetInventoryProductsQuery } from "../../services/productService";
 import { TableFooter, TablePagination } from "@mui/material";
 import { IInventoryItem } from "../../types";
 import { useEffect, useState } from "react";
@@ -36,19 +36,15 @@ type TableProps = {
 export default function CustomizedTables({ searchQuery }: TableProps) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const {data} = useGetInventoryProductsQuery('')
+  const { data } = useGetInventoryProductsQuery("");
 
   const [products, setProducts] = useState<IInventoryItem[]>([]);
 
   useEffect(() => {
     if (data) {
-      setProducts(data)
+      setProducts(data);
     }
   }, [data]);
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -75,7 +71,7 @@ export default function CustomizedTables({ searchQuery }: TableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          { filteredPRoducts
+          {filteredPRoducts
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
               <TableRowComponent product={row} key={row.id} />
@@ -88,7 +84,7 @@ export default function CustomizedTables({ searchQuery }: TableProps) {
               count={filteredPRoducts.length}
               rowsPerPage={rowsPerPage}
               page={page}
-              onPageChange={handleChangePage}
+              onPageChange={(e, newPage) => setPage(newPage)}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </StyledTableRow>

@@ -1,35 +1,82 @@
-@import '../abstracts/mixins';
+@import "../abstracts/mixins";
 
 .header {
-    background-color: $white-color;
-    width: 100vw;
-    height: 6vh;
+  background-color: $white-color;
+  width: 100vw;
+  height: 6vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-size: 30px;
+    line-height: 37px;
+    color: $black-color;
+  }
+  img {
+    padding: 10px;
+  }
+  .hamburger-icon-container {
+    display: none;
+  }
+}
+.user {
+  @include flex-center;
+
+  span {
+    @include roboto-font;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+  }
+}
+.onHamburger {
+  .header{
+    .user{
+      display: none;
+     
+    }
+  }
+ 
+  .main {
+    position: fixed;
+    right: -100%;
+  }
+  .user {
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
-    span {
-      font-family: "Montserrat";
-      font-style: normal;
-      font-size: 30px;
-      line-height: 37px;
-      color: $black-color;
+    margin: 1em 1em 0 1em;
+    border-radius: 10px;
+    img{
+      padding-right: 12px;
     }
-    img {
-      padding: 10px;
+  }
+  .sidebar {
+    display: block;
+    width: 90vw;
+    height: 88vh;
+    opacity: 0;
+    transition: 0.5s;
+
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-50px);
     }
-    .hamburger-icon-container{
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+.onClose {
+  .sidebar{
+    .user{
       display: none;
     }
   }
-  .user {
-    @include flex-center;
-  
-    span {
-     @include roboto-font;
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 16px;
-    }
-  }
-
-  
+}

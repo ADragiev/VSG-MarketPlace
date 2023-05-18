@@ -2,10 +2,9 @@ import { useRef, useState } from "react";
 import { IProduct } from "../../types";
 import ProductModal from "./productModal";
 
-
-
 import { useCreateOrderMutation } from "../../services/ordersService";
 import PopperComponent from "../Popper";
+import { toast } from "react-toastify";
 
 type ProductProps = {
   product: IProduct;
@@ -26,12 +25,20 @@ const Card = ({ product }: ProductProps): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const selectValue = useRef(1);
 
-
   const onBuy = async () => {
-    const productId = product.id
-    const qty =selectValue.current 
-    await createOrder( {productId, qty});
-    setAnchorEl(null)
+    const productId = product.id;
+    const qty = selectValue.current;
+    const response =   await createOrder({productId , qty });
+    
+    if (response.error) {
+       toast.error('Something went wrong! Please try again later...')
+
+     }
+     else{
+      toast.success('Successfully placed order!')
+     }
+      
+    setAnchorEl(null);
   };
 
   const handleOnImageClick = () => {
@@ -42,11 +49,10 @@ const Card = ({ product }: ProductProps): JSX.Element => {
     selectValue.current = Number(event.target.value);
   };
 
-
   const string = `Are you sure you want to buy 
   ${selectValue.current} item for   
     ${Number(selectValue.current) * product.price}
-  ?`
+  ?`;
 
   return (
     <>
@@ -93,7 +99,12 @@ const Card = ({ product }: ProductProps): JSX.Element => {
           </div>
         </div>
       </div>
-      <PopperComponent str={string} onYes={onBuy} anchor={anchorEl} setAnchor={setAnchorEl}/>
+      <PopperComponent
+        str={string}
+        onYes={onBuy}
+        anchor={anchorEl}
+        setAnchor={setAnchorEl}
+      />
     </>
   );
 };

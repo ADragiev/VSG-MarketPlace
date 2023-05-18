@@ -1,16 +1,15 @@
 import { baseApi } from "../utils/baseApi";
 
-
 const PostImage = "postImage";
-const DeleteImage = "deleteImage"
+const DeleteImage = "deleteImage";
 
 const imageServices = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     [PostImage]: builder.mutation({
-      query: ({id, imageFormData}) => ({
+      query: ({ id, imageFormData }) => ({
         method: "POST",
         url: `/Image/${id}`,
-        body: imageFormData
+        body: imageFormData,
       }),
     }),
     [DeleteImage]: builder.mutation({
@@ -22,7 +21,4 @@ const imageServices = baseApi.injectEndpoints({
   }),
 });
 
-export const {
-usePostImageMutation,
-useDeleteImageMutation
-} = imageServices;
+export const { usePostImageMutation, useDeleteImageMutation } = imageServices;

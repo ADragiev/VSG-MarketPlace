@@ -1,28 +1,18 @@
-
-
-
 import { baseApi } from "../utils/baseApi";
-
 
 const GetPendingOrders = "getPendingOrders";
 const GetMyOrders = "getMyOrders";
-const ConfirmOrder = "confirmOrder"
-const RejectOrder = "rejectOrder"
-const CreateOrder = "createOrder"
-
-
+const ConfirmOrder = "confirmOrder";
+const RejectOrder = "rejectOrder";
+const CreateOrder = "createOrder";
 
 const ordersServices = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     [GetPendingOrders]: builder.query({
-      query: () => ({
-        url: "/Order",
-      }),
+      query: () => "/Order",
     }),
     [GetMyOrders]: builder.query({
-      query: () => ({
-        url: "/MyOrders",
-      }),
+      query: () => "/MyOrders",
     }),
     [ConfirmOrder]: builder.mutation({
       query: (id) => ({
@@ -31,33 +21,25 @@ const ordersServices = baseApi.injectEndpoints({
       }),
     }),
     [RejectOrder]: builder.mutation({
-        query: (id) => ({
-          method: "DELETE",
-          url: `/Order/${id}`,
-        }),
+      query: (id) => ({
+        method: "DELETE",
+        url: `/Order/${id}`,
       }),
-      [CreateOrder]: builder.mutation({
-        query: (data) => ({
-          method: "POST",
-          url: `/Order`,
-          body: data
-        }),
+    }),
+    [CreateOrder]: builder.mutation({
+      query: (data) => ({
+        method: "POST",
+        url: `/Order`,
+        body: data,
       }),
+    }),
   }),
 });
 
 export const {
-useGetPendingOrdersQuery,
-useGetMyOrdersQuery,
-useConfirmOrderMutation,
-useRejectOrderMutation,
-useCreateOrderMutation
+  useGetPendingOrdersQuery,
+  useGetMyOrdersQuery,
+  useConfirmOrderMutation,
+  useRejectOrderMutation,
+  useCreateOrderMutation,
 } = ordersServices;
-
-
-
-
-
-
-
-

@@ -55,6 +55,46 @@ body {
   line-height: 16px;
 }
 
+.onHamburger .header .user {
+  display: none;
+}
+.onHamburger .main {
+  position: fixed;
+  right: -100%;
+}
+.onHamburger .user {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 1em 1em 0 1em;
+  border-radius: 10px;
+}
+.onHamburger .user img {
+  padding-right: 12px;
+}
+.onHamburger .sidebar {
+  display: block;
+  width: 90vw;
+  height: 88vh;
+  opacity: 0;
+  transition: 0.5s;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.onClose .sidebar .user {
+  display: none;
+}
+
 .sidebar {
   background-color: #fff;
   width: 18vw;

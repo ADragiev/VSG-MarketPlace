@@ -12,20 +12,18 @@ const Transition = forwardRef(function Transition(
 });
 
 type ModalWrapperProps = {
-    children: ReactNode,
-    open: boolean, 
-    setOpen: (arg: boolean)=> void
-}
+  children: ReactNode;
+  open: boolean;
+  setOpen: (arg: boolean) => void;
+};
 
-const ModalWrapper = ({ children, open, setOpen, }: ModalWrapperProps) => {
+const ModalWrapper = ({ children, open, setOpen }: ModalWrapperProps) => {
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleClose = ()=>{
-        setOpen(false)
-    }
-    
   return (
     <Dialog
-    
       open={open}
       TransitionComponent={Transition}
       keepMounted
@@ -37,4 +35,4 @@ const ModalWrapper = ({ children, open, setOpen, }: ModalWrapperProps) => {
   );
 };
 
-export default ModalWrapper
+export default ModalWrapper;
