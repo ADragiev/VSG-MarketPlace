@@ -11,6 +11,7 @@ using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
+using Application.Models.UserModels.Interfaces;
 using Application.Services;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<ICloudService, CloudinaryService>();
             services.AddHttpContextAccessor();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IUserService, HttpUserService>();
 
             services.AddScoped<IValidator<OrderCreateDto>, OrderCreateValidator>();
             services.AddScoped<IValidator<ProductCreateDto>, ProductCreateValidator>();

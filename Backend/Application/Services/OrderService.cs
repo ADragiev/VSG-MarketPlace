@@ -4,6 +4,7 @@ using Application.Models.GenericRepo;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
+using Application.Models.UserModels.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
@@ -23,17 +24,17 @@ namespace Application.Services
         private readonly IOrderRepository orderRepo;
         private readonly IProductRepository productRepo;
         private readonly IMapper mapper;
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IUserService userService;
 
         public OrderService(IOrderRepository orderRepo,
             IProductRepository productRepo,
             IMapper mapper,
-            IHttpContextAccessor httpContextAccessor)
+            IUserService userService)
         {
             this.orderRepo = orderRepo;
             this.productRepo = productRepo;
             this.mapper = mapper;
-            this.httpContextAccessor = httpContextAccessor;
+            this.userService = userService;
         }
 
         public async Task CompleteOrderAsync(int id)
@@ -63,7 +64,7 @@ namespace Application.Services
             order.ProductCode = product.Code;
             order.ProductName = product.Name;
             order.Price = dto.Qty * product.Price;
-            order.OrderedBy = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
+            order.OrderedBy = userService.GetUserEmail();
             var orderId = await orderRepo.CreateAsync(order);
         }
 
@@ -76,7 +77,7 @@ namespace Application.Services
 
         public async Task<List<OrderGetMineDto>> GetMyOrdersAsync()
         {
-            var user = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
+            var user = userService.GetUserEmail();
             var myOrders = await orderRepo.GetMyOrdersAsync(user);
             myOrders.ForEach(o => o.Status = ((OrderStatus)int.Parse(o.Status)).ToString());
             myOrders.ForEach(o => o.Date = FormatDate(o.Date));
@@ -90,7 +91,7 @@ namespace Application.Services
             var order = await orderRepo.GetByIdAsync(id);
             ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
 
-            var user = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
+            var user = userService.GetUserEmail();
             if (user != order.OrderedBy)
             {
                 throw new HttpException("You cannot reject this order, because you are not its owner", HttpStatusCode.BadRequest);
