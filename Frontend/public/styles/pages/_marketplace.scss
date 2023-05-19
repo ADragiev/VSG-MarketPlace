@@ -114,6 +114,7 @@
   }
 }
 .circle {
+  cursor: pointer;
  @include flex-center;
  width: 35px;
  height: 35px;
