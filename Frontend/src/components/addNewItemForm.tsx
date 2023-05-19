@@ -196,12 +196,13 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 </Select>
                 <FormHelperText>{errors.categoryId?.message}</FormHelperText>
               </FormControl>
-              <FormControl variant="standard" sx={inputStyle}>
+              <FormControl variant="standard" sx={inputStyle} error={Boolean(errors.locationId)}>
                 <InputLabel focused={false}>Location</InputLabel>
                 <Select
                   value={locationOption}
                   label="Location"
                   {...register("locationId", {
+                    required: "Location field is required",
                     onChange: (e) =>
                       setLocationOption(e.target.value as string),
                   })}
@@ -212,6 +213,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                     </MenuItem>
                   ))}
                 </Select>
+                <FormHelperText>{errors.locationId?.message}</FormHelperText>
               </FormControl>
 
               <TextField
@@ -254,7 +256,10 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 {...register("combinedQty", {
                   required: "Qty field is required",
                   min: { value: 1, message: "Qty must be a possitive number" },
-                  validate: value => value as unknown as number > Number(getValues('saleQty')) || 'Qty cannot be lower than Qty for sale'
+                  validate: (value) =>
+                    (value as unknown as number) >
+                      Number(getValues("saleQty")) ||
+                    "Qty cannot be lower than Qty for sale",
                 })}
               />
             </div>
