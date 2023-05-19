@@ -16,6 +16,7 @@ namespace Application.Helpers.Validators
             ILocationRepository locationRepo)
         {
             RuleFor(p => p.Code)
+               .MinimumLength(3).WithMessage("Product code length cannot be less than 3 characters!")
                .MaximumLength(50).WithMessage("Product code length cannot be over 50 characters!")
                .NotNull().WithMessage("Product code is required!")
                .NotEmpty().WithMessage("Product code is required!");
@@ -23,6 +24,7 @@ namespace Application.Helpers.Validators
             RuleFor(p => p.Name)
                 .NotNull().WithMessage("Product name is required")
                 .NotEmpty().WithMessage("Product name is required")
+                .MinimumLength(3).WithMessage("Product name length cannot be less than 3 characters!")
                 .MaximumLength(100).WithMessage("Product name length cannot be over 100 characters!");
 
             RuleFor(p => p.Price)
