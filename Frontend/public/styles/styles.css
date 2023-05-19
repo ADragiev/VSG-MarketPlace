@@ -668,6 +668,10 @@ a {
   margin-left: 8px;
 }
 
+.edit-icon, .deleteIcon {
+  cursor: pointer;
+}
+
 .add-item-modal, .edit-item-modal {
   position: fixed;
   z-index: 999;
