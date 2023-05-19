@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import {  useUpdateProductMutation } from "../services/productService";
-import {  ICategory, IInventoryItem, ILocation,  } from "../types";
-import {  useDeleteImageMutation, usePostImageMutation } from "../services/imageServices";
+import { useUpdateProductMutation } from "../services/productService";
+import { ICategory, IInventoryItem, ILocation } from "../types";
+import {
+  useDeleteImageMutation,
+  usePostImageMutation,
+} from "../services/imageServices";
 import {
   FormControl,
   InputLabel,
@@ -31,8 +34,6 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
 
   const [postImage] = usePostImageMutation();
   const [deleteImage] = useDeleteImageMutation();
-
-
 
   const [imageValue, setImageValue] = useState(
     product.image ? product.image : "../../images/no_image-placeholder.png"
@@ -81,27 +82,24 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
   };
 
   const onSubmit = async (data) => {
-    const id = product.id
-   const response =  await updateProduct({id, data});
+    const id = product.id;
+    const response = await updateProduct({ id, data });
     const image = getValues("image")[0] as unknown as File;
     const imageFormData = new FormData();
     imageFormData.append("image", image);
 
     if (data.image != imageValue) {
-      await postImage({id, imageFormData});
+      await postImage({ id, imageFormData });
     }
     if (imageValue == "../../images/no_image-placeholder.png") {
       await deleteImage(id);
     }
 
     if (response.error) {
-      toast.error('Something went wrong! Please try again later...')
-
+      toast.error("Something went wrong! Please try again later...");
+    } else {
+      toast.success("Successfully updated item!");
     }
-    else{
-     toast.success('Successfully updated item!')
-    }
-
 
     setOpen(false);
   };
@@ -147,7 +145,17 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 defaultValue={product.code}
                 error={Boolean(errors.code)}
                 helperText={errors.code?.message}
-                {...register("code", { required: "Code field is required" })}
+                {...register("code", {
+                  required: "Code field is required",
+                  minLength: {
+                    value: 3,
+                    message: "Code must be at least 3 symbols",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "Code name cannot be longer than 50 characters",
+                  },
+                })}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
               ></TextField>
               <TextField
@@ -161,7 +169,17 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.name)}
                 helperText={errors.name?.message}
-                {...register("name", { required: "Name field is required" })}
+                {...register("name", {
+                  required: "Name field is required",
+                  minLength: {
+                    value: 3,
+                    message: "Name must be at least 3 symbols",
+                  },
+                  maxLength: {
+                    value: 100,
+                    message: "Name name cannot be longer than 100 characters",
+                  },
+                })}
               />
               <TextField
                 id="standard-multiline-static"
@@ -245,6 +263,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 helperText={errors.combinedQty?.message}
                 {...register("combinedQty", {
                   required: "Qty field is required",
+                  validate: value => value as unknown as number > Number(getValues('saleQty')) || 'Qty cannot be lower than Qty for sale'
                 })}
               />
             </div>

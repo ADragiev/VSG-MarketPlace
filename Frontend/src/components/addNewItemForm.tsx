@@ -1,8 +1,7 @@
-import {   useState } from "react";
-import {  useCreateProductMutation } from "../services/productService";
-import {  usePostImageMutation } from "../services/imageServices";
+import { useState } from "react";
+import { useCreateProductMutation } from "../services/productService";
+import { usePostImageMutation } from "../services/imageServices";
 import {
-  
   FormControl,
   FormHelperText,
   InputLabel,
@@ -21,20 +20,20 @@ interface AddNewItemlProps {
   onClose: () => void;
 }
 
-
 const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
-
   const [open, setOpen] = useState(true);
 
-
-  const {data: categories} = useGetCategoriesQuery('')
-  const {data: locations} = useGetLocationsQuery('')
+  const { data: categories } = useGetCategoriesQuery("");
+  const { data: locations } = useGetLocationsQuery("");
   const [createProduct] = useCreateProductMutation();
   const [postImage] = usePostImageMutation();
 
-
-
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       code: "",
       name: "",
@@ -53,27 +52,25 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
   );
   const onSubmit = async (data) => {
     const response = await createProduct(data);
-    
+
     const image = getValues("image")[0] as unknown as File;
     if (imageValue != "../../images/no_image-placeholder.png") {
       const imageFormData = new FormData();
       imageFormData.append("image", image);
-      const id = response.data
-      await postImage({id, imageFormData});
+      const id = response.data;
+      await postImage({ id, imageFormData });
     }
     if (response.error) {
-     toast.error('Something went wrong! Please try again later...')
+      toast.error("Something went wrong! Please try again later...");
+    } else {
+      toast.success("Successfully added item!");
     }
-    else{
-     toast.success('Successfully added item!')
-    }
-     
-    setOpen(false)
+
+    setOpen(false);
   };
 
   const [selectOption, setSelectOption] = useState("");
   const [locationOption, setLocationOption] = useState("");
-
 
   if (!open) {
     onClose();
@@ -91,7 +88,6 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
     setImageValue("../../images/no_image-placeholder.png");
   };
 
-
   const inputStyle = {
     fontSize: "12px",
     ".MuiInputBase-root::after": {
@@ -100,8 +96,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
   };
 
   return (
-    <ModalWrapper  open={open} setOpen={setOpen}>
-  
+    <ModalWrapper open={open} setOpen={setOpen}>
       <div className="add-item-modal">
         <form
           className="add-item-modal add-item-form"
@@ -134,7 +129,17 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.code)}
                 helperText={errors.code?.message}
-                {...register("code", { required: "Code field is required" })}
+                {...register("code", {
+                  required: "Code field is required",
+                  minLength: {
+                    value: 3,
+                    message: "Code must be at least 3 symbols",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "Code name cannot be longer than 50 characters",
+                  },
+                })}
               />
               <TextField
                 className="inputField"
@@ -146,7 +151,17 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.name)}
                 helperText={errors.name?.message}
-                {...register("name", { required: "Name field is required" })}
+                {...register("name", {
+                  required: "Name field is required",
+                  minLength: {
+                    value: 3,
+                    message: "Name must be at least 3 symbols",
+                  },
+                  maxLength: {
+                    value: 100,
+                    message: "Name name cannot be longer than 100 characters",
+                  },
+                })}
               />
               <TextField
                 id="standard-multiline-static"
@@ -159,13 +174,16 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 {...register("description")}
               />
-              <FormControl variant="standard" sx={inputStyle}  error={Boolean(errors.categoryId)}>
+              <FormControl
+                variant="standard"
+                sx={inputStyle}
+                error={Boolean(errors.categoryId)}
+              >
                 <InputLabel focused={false}>Category</InputLabel>
                 <Select
                   value={selectOption}
                   label="Category*"
-                 
-                  {...register("categoryId",{
+                  {...register("categoryId", {
                     required: "Category field is required",
                     onChange: (e) => setSelectOption(e.target.value as string),
                   })}
@@ -216,7 +234,12 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.price)}
                 helperText={errors.price?.message}
-                {...register("price", {min: {value: 1, message: 'Price must be a possitive number'}})}
+                {...register("price", {
+                  min: {
+                    value: 1,
+                    message: "Price must be a possitive number",
+                  },
+                })}
               />
               <TextField
                 className="inputField"
@@ -228,7 +251,11 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.combinedQty)}
                 helperText={errors.combinedQty?.message}
-                {...register("combinedQty", {required: "Qty field is required", min: {value: 1, message: 'Qty must be a possitive number'}})}
+                {...register("combinedQty", {
+                  required: "Qty field is required",
+                  min: { value: 1, message: "Qty must be a possitive number" },
+                  validate: value => value as unknown as number > Number(getValues('saleQty')) || 'Qty cannot be lower than Qty for sale'
+                })}
               />
             </div>
             <div className="imgSection">

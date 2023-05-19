@@ -8,7 +8,7 @@ const Transition = forwardRef(function Transition(
   },
   ref: React.Ref<unknown>
 ) {
-  return <Slide direction="right" ref={ref} {...props} />;
+  return <Slide  direction="down" ref={ref} {...props}/>; // reshenie na angel 
 });
 
 type ModalWrapperProps = {
