@@ -216,6 +216,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                   value={locationOption}
                   label="Category"
                   {...register("locationId", {
+                    required: "Location field is required",
                     onChange: (e) =>
                       setLocationOption(e.target.value as string),
                   })}
