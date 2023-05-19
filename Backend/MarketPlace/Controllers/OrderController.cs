@@ -38,17 +38,17 @@ namespace MarketPlace.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<string> RejectOrder(int id)
+        public async Task<OrderStatusGetDto> RejectOrder(int id)
         {
             return await orderService.RejectOrderAsync(id);
         }
 
 
         [HttpPost]
-        public async Task<OrderGetDto> CreateOrder(OrderCreateDto dto)
+        public async Task CreateOrder(OrderCreateDto dto)
         {
             await createValidator.ValidateAndThrowAsync(dto);
-            return await orderService.CreateAsync(dto);
+            await orderService.CreateAsync(dto);
         }
     }
 }

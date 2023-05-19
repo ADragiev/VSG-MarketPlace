@@ -46,7 +46,7 @@ namespace Application.Services
             await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Finished);
         }
 
-        public async Task<OrderGetDto> CreateAsync(OrderCreateDto dto)
+        public async Task CreateAsync(OrderCreateDto dto)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(dto.ProductId, productRepo);
             var product = await productRepo.GetByIdAsync(dto.ProductId);
@@ -65,9 +65,6 @@ namespace Application.Services
             order.Price = dto.Qty * product.Price;
             order.OrderedBy = httpContextAccessor.HttpContext.User.Claims.First(c => c.Type == IdentityConstants.preferedUsername).Value;
             var orderId = await orderRepo.CreateAsync(order);
-            order.Id = orderId;
-
-            return mapper.Map<OrderGetDto>(order);
         }
 
         public async Task<List<OrderPendingDto>> GetAllPendingOrdersAsync()
@@ -86,7 +83,7 @@ namespace Application.Services
             return myOrders;
         }
 
-        public async Task<string> RejectOrderAsync(int id)
+        public async Task<OrderStatusGetDto> RejectOrderAsync(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
 
@@ -109,7 +106,7 @@ namespace Application.Services
 
             await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Declined);
 
-            return OrderStatus.Declined.ToString();
+            return new OrderStatusGetDto() { Status = OrderStatus.Declined.ToString() };
         }
 
         private string FormatDate(string dateString)
