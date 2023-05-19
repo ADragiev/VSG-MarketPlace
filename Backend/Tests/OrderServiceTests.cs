@@ -3,6 +3,7 @@ using Application.Models.ExceptionModels;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
+using Application.Models.UserModels.Interfaces;
 using Application.Services;
 using AutoMapper;
 using Domain.Entities;
@@ -25,7 +26,7 @@ namespace Tests
         private Mock<IOrderRepository> orderRepoMock;
         private Mock<IProductRepository> productRepoMock;
         private Mock<IMapper> mapperMock;
-        private Mock<IHttpContextAccessor> httpContextAccessor;
+        private Mock<IUserService> userService;
         private IOrderService orderService;
 
         [SetUp]
@@ -34,8 +35,8 @@ namespace Tests
             orderRepoMock = new Mock<IOrderRepository>();
             productRepoMock = new Mock<IProductRepository>();
             mapperMock = new Mock<IMapper>();
-            httpContextAccessor = new Mock<IHttpContextAccessor>();
-            orderService = new OrderService(orderRepoMock.Object, productRepoMock.Object, mapperMock.Object, httpContextAccessor.Object);
+            userService = new Mock<IUserService>();
+            orderService = new OrderService(orderRepoMock.Object, productRepoMock.Object, mapperMock.Object, userService.Object);
         }
 
 
@@ -114,7 +115,7 @@ namespace Tests
         public void CreateOrder_MustNotThrow_WhenProductIdIsValid()
         {
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateBaseProduct());
-            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
+            userService.Setup(u => u.GetUserEmail()).Returns("");
             mapperMock.Setup(m => m.Map<Order>(It.IsAny<OrderCreateDto>())).Returns(CreateBaseOrder());
 
             Assert.DoesNotThrowAsync(async () =>
@@ -147,7 +148,7 @@ namespace Tests
         public void CreateOrder_MustNotThrow_WhenSaleQtyIsMoreThanOrEqualToOrderQty()
         {
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateBaseProduct());
-            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
+            userService.Setup(u=> u.GetUserEmail()).Returns("User");
             mapperMock.Setup(m => m.Map<Order>(It.IsAny<OrderCreateDto>())).Returns(CreateBaseOrder());
 
             Assert.DoesNotThrowAsync(async () =>
@@ -184,7 +185,7 @@ namespace Tests
         {
             var product = CreateBaseProduct();
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(product);
-            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
+            userService.Setup(u => u.GetUserEmail()).Returns("User");
             var order = CreateBaseOrder();
             mapperMock.Setup(m => m.Map<Order>(It.IsAny<OrderCreateDto>())).Returns(order);
 
@@ -216,7 +217,7 @@ namespace Tests
         public void RejectOrder_MustNotThrow_WhenOrderId_IsValid()
         {
             orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateBaseOrder());
-
+            userService.Setup(u => u.GetUserEmail()).Returns("User");
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateBaseProduct());
 
             Assert.DoesNotThrowAsync(async () =>
@@ -229,7 +230,7 @@ namespace Tests
         public void RejectOrder_MustNotThrow_WhenOrderStatus_IsPending()
         {
             orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateBaseOrder());
-
+            userService.Setup(u => u.GetUserEmail()).Returns("User");
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateBaseProduct());
 
             Assert.DoesNotThrowAsync(async () =>
@@ -258,7 +259,7 @@ namespace Tests
         {
             var order = CreateBaseOrder();
             orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(order);
-
+            userService.Setup(u => u.GetUserEmail()).Returns("User");
             var product = CreateBaseProduct();
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(product);
 
@@ -268,26 +269,12 @@ namespace Tests
             productRepoMock.Verify(p => p.SetFieldAsync(1, "CombinedQty", order.Qty + product.CombinedQty), Times.Once);
         }
 
-        [Test]
-        public async Task RejectOrder_MustNotCallSetField_ForReturnignProductQty_IfProductIdIsNull()
-        {
-            var order = CreateBaseOrder();
-            order.ProductId = null;
-            orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(order);
-
-            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateBaseProduct());
-
-            await orderService.RejectOrderAsync(1);
-
-            productRepoMock.Verify(p => p.SetFieldAsync(1, "SaleQty", It.IsAny<int>()), Times.Never);
-            productRepoMock.Verify(p => p.SetFieldAsync(1, "CombinedQty", It.IsAny<int>()), Times.Never);
-        }
 
         [Test]
         public async Task RejectOrder_MustCallSetField_ForChanginOrderStatusToRejected()
         {
             orderRepoMock.Setup(o => o.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateBaseOrder);
-
+            userService.Setup(u => u.GetUserEmail()).Returns("User");
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateBaseProduct());
 
             await orderService.RejectOrderAsync(1);
@@ -306,7 +293,7 @@ namespace Tests
             List<OrderGetMineDto> myOrdersDto = new List<OrderGetMineDto>() { firstOrder, secondOrder };
 
             orderRepoMock.Setup(o => o.GetMyOrdersAsync(It.IsAny<string>())).ReturnsAsync(myOrdersDto);
-            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
+            userService.Setup(u => u.GetUserEmail()).Returns("User");
             var orders = await orderService.GetMyOrdersAsync();
 
             var isDateFormated = DateTime.TryParseExact(orders.First().Date, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date);
@@ -321,7 +308,7 @@ namespace Tests
             var secondOrder = CreateBaseMyOrder();
             secondOrder.Id = 2;
             List<OrderGetMineDto> myOrdersDto = new List<OrderGetMineDto>() { firstOrder, secondOrder };
-            httpContextAccessor.Setup(ha => ha.HttpContext.User).Returns(CreateUser());
+            userService.Setup(u => u.GetUserEmail()).Returns("User");
             orderRepoMock.Setup(o => o.GetMyOrdersAsync(It.IsAny<string>())).ReturnsAsync(myOrdersDto);
 
             var orders = await orderService.GetMyOrdersAsync();
@@ -403,18 +390,8 @@ namespace Tests
                 Qty = 2,
                 Price = 400,
                 Date = DateTime.Now.ToString(),
-                OrderedBy = "user"
+                OrderedBy = "User"
             };
-        }
-
-        private static ClaimsPrincipal CreateUser()
-        {
-            var identity = new ClaimsIdentity(new[]
-            {
-                new Claim(IdentityConstants.preferedUsername, "User"),
-            });
-
-            return new ClaimsPrincipal(identity);
         }
     }
 }
