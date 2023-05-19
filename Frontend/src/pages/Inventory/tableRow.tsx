@@ -6,6 +6,7 @@ import { useState } from "react";
 import { IInventoryItem } from "../../types";
 import { TableCell, TableRow, tableCellClasses } from "@mui/material";
 import DeleteIcon from "./DeleteIcon";
+import { toast } from "react-toastify";
 
 type InventoryItemsProps = {
   product: IInventoryItem;
@@ -36,7 +37,13 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
   };
 
   const onDelete = async () => {
-    await deleteProduct(product.id);
+  const response =  await deleteProduct(product.id);
+  if (response.error) {    
+    toast.error(response.error.data[0].title)
+   }
+   else{
+    toast.success('Successfully deleted item!')
+   }
   };
 
   const str = `Are you sure you want to delete this item?`;

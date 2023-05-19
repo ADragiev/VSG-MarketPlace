@@ -29,6 +29,11 @@ const ModalWrapper = ({ children, open, setOpen }: ModalWrapperProps) => {
       keepMounted
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
+      PaperProps={{
+        style: {
+        borderRadius: '20px'
+        },
+      }}
     >
       {children}
     </Dialog>
