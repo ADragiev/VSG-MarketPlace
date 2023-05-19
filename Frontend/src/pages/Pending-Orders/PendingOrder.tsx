@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { useConfirmOrderMutation } from "../../services/ordersService";
 import { IPendingOrder } from "../../types";
 
@@ -13,7 +14,15 @@ const PendingOrder = ({pendingOrder}: PendingOrderProps) => {
   const [completeOrder] = useConfirmOrderMutation();
 
     const onComplete = async () => {
-        await completeOrder(pendingOrder.id);
+       const response =  await completeOrder(pendingOrder.id);
+     if (response.error) {
+      toast.error('Something went wrong')
+     }
+     else{
+      toast.success('Successfully completed order')
+
+     }
+       
       };
     return (
         <div className="item-row">

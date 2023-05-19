@@ -2,6 +2,7 @@ import { useState } from "react";
 import { IMyOrder } from "../../types";
 import { useRejectOrderMutation } from "../../services/ordersService";
 import PopperComponent from "../../components/Popper";
+import { toast } from "react-toastify";
 
 type MyOrderProps = {
   myOrder: IMyOrder;
@@ -9,14 +10,19 @@ type MyOrderProps = {
 
 function MyOrder({ myOrder }: MyOrderProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [rejectOrder] = useRejectOrderMutation()
+  const [rejectOrder] = useRejectOrderMutation();
 
-  const handlePopup = (e: React.MouseEvent<HTMLAnchorElement> ) => {
+  const handlePopup = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setAnchorEl(e.currentTarget);
   };
 
   const onReject = async () => {
-    await rejectOrder(myOrder.id);
+    const response = await rejectOrder(myOrder.id);
+    if (response.error) {
+      toast.error("Something went wrong! Please try again later");
+    } else {
+      toast.success("Successfully rejected order");
+    }
     setAnchorEl(null);
   };
 
