@@ -25,10 +25,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(() => ({
-  // hide last border
-}));
-
 type TableProps = {
   searchQuery: string;
 };
@@ -78,7 +74,7 @@ export default function CustomizedTables({ searchQuery }: TableProps) {
             ))}
         </TableBody>
         <TableFooter>
-          <StyledTableRow>
+          <TableRow>
             <TablePagination
               rowsPerPageOptions={[10]}
               count={filteredPRoducts.length}
@@ -87,7 +83,7 @@ export default function CustomizedTables({ searchQuery }: TableProps) {
               onPageChange={(e, newPage) => setPage(newPage)}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-          </StyledTableRow>
+          </TableRow>
         </TableFooter>
       </Table>
     </TableContainer>

@@ -25,7 +25,7 @@ interface EditItemlProps {
 
 const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
   const [open, setOpen] = useState(true);
-  const [selectOption, setSelectOption] = useState(0);
+  const [categoryOption, setCategoryOption] = useState(0);
   const [locationOption, setLocationOption] = useState(0);
 
   const { data: categories } = useGetCategoriesQuery("");
@@ -67,7 +67,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
   }
 
   useEffect(() => {
-    setSelectOption(product.categoryId);
+    setCategoryOption(product.categoryId);
   }, []);
 
   useEffect(() => {
@@ -104,12 +104,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
     setOpen(false);
   };
 
-  const inputStyle = {
-    fontSize: "12px",
-    ".MuiInputBase-root::after": {
-      borderBottom: " #000",
-    },
-  };
+  
 
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
@@ -141,7 +136,6 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 id="standard-basic"
                 label="Code*"
                 variant="standard"
-                sx={inputStyle}
                 defaultValue={product.code}
                 error={Boolean(errors.code)}
                 helperText={errors.code?.message}
@@ -164,7 +158,6 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 id="item-name"
                 variant="standard"
                 label="Name"
-                sx={inputStyle}
                 defaultValue={product.name}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.name)}
@@ -188,19 +181,18 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 rows={2}
                 className="inputField"
                 variant="standard"
-                sx={inputStyle}
                 defaultValue={product.description}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 {...register("description")}
               />
-              <FormControl variant="standard" sx={inputStyle}>
+              <FormControl variant="standard" className="inputField" >
                 <InputLabel focused={false}>Category</InputLabel>
                 <Select
-                  value={selectOption}
+                  value={categoryOption}
                   label="Category"
                   {...register("categoryId", {
                     required: "Category field is required",
-                    onChange: (e) => setSelectOption(e.target.value as string),
+                    onChange: (e) => setCategoryOption(e.target.value as string),
                   })}
                 >
                   {categories?.map((c: ICategory) => (
@@ -210,13 +202,13 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                   ))}
                 </Select>
               </FormControl>
-              <FormControl variant="standard" sx={inputStyle}>
+              <FormControl variant="standard" className="inputField" >
                 <InputLabel focused={false}>Location</InputLabel>
                 <Select
                   value={locationOption}
                   label="Category"
                   {...register("locationId", {
-                    required: "Location field is required",
+                    required: "Category field is required",
                     onChange: (e) =>
                       setLocationOption(e.target.value as string),
                   })}
@@ -235,7 +227,6 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 id="item-name"
                 variant="standard"
                 label="Qty For Sale"
-                sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 defaultValue={product.saleQty}
                 {...register("saleQty")}
@@ -246,7 +237,6 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 id="sale-price"
                 variant="standard"
                 label="Sale price"
-                sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 defaultValue={product.price}
                 {...register("price")}
@@ -257,14 +247,16 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 id="quantity-available"
                 variant="standard"
                 label="Qty *"
-                sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 defaultValue={product.combinedQty}
                 error={Boolean(errors.combinedQty)}
                 helperText={errors.combinedQty?.message}
                 {...register("combinedQty", {
                   required: "Qty field is required",
-                  validate: value => value as unknown as number > Number(getValues('saleQty')) || 'Qty cannot be lower than Qty for sale'
+                  validate: (value) =>
+                    (value as unknown as number) >=
+                      Number(getValues("saleQty")) ||
+                    "Qty cannot be lower than Qty for sale",
                 })}
               />
             </div>
