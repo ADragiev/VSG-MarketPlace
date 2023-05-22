@@ -12,6 +12,8 @@ namespace Application.Helpers.Constants
 
         public const string AdminRolePolicyName = "Admin";
 
-        public const string AdminRoleClaimName = "admin";
+        public const string AdminRoleClaimName = "groups";
+
+        public const string AdminRoleClaimValue = "f2123818-3d51-4fe4-990b-b072a80da143";
     }
 }

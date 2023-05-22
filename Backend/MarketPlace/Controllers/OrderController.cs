@@ -1,7 +1,9 @@
-﻿using Application.Models.OrderModels.Dtos;
+﻿using Application.Helpers.Constants;
+using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
@@ -19,6 +21,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task<List<OrderPendingDto>> GetPendingOrders()
         {
             return await orderService.GetAllPendingOrdersAsync();
@@ -32,6 +35,7 @@ namespace MarketPlace.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task CompleteOrder(int id)
         {
             await orderService.CompleteOrderAsync(id);

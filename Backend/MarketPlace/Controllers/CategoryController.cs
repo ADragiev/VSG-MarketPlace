@@ -1,4 +1,5 @@
-﻿using Application.Helpers.Validators;
+﻿using Application.Helpers.Constants;
+using Application.Helpers.Validators;
 using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
 using Application.Models.ExceptionModels;
@@ -20,6 +21,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task<List<CategoryGetDto>> GetAll()
         {
             return await categoryService.AllAsync();

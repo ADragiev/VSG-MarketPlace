@@ -1,5 +1,7 @@
-﻿using Application.Models.LocationModels.Dtos;
+﻿using Application.Helpers.Constants;
+using Application.Models.LocationModels.Dtos;
 using Application.Models.LocationModels.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
@@ -14,6 +16,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task<List<LocationGetDto>> GetAll()
         {
             return await locationService.AllAsync();

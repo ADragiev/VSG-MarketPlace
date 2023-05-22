@@ -1,6 +1,8 @@
-﻿using Application.Models.ImageModels.Dtos;
+﻿using Application.Helpers.Constants;
+using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
@@ -17,6 +19,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost("{productId}")]
+        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task<string> UploadImage(int productId, [FromForm] ImageCreateDto image)
         {
             await imageValidator.ValidateAndThrowAsync(image);
@@ -24,6 +27,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpDelete("{productId}")]
+        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task DeleteImage(int productId)
         {
             await imageService.DeleteImageByProductIdAsync(productId);
