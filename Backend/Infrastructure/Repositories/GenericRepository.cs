@@ -8,34 +8,33 @@ namespace Infrastructure.Repositories
 {
     public abstract class GenericRepository<T> : IGenericRepository<T>
     {
-        private readonly IMarketPlaceContext marketPlaceContext;
+        protected readonly IDbConnection connection;
+        protected readonly IDbTransaction transaction;
+
         public GenericRepository(IMarketPlaceContext marketPlaceContext)
         {
-            this.marketPlaceContext = marketPlaceContext;
+            connection = marketPlaceContext.Connection;
+            transaction = marketPlaceContext.Transaction;
         }
-
-        public IDbConnection Connection => marketPlaceContext.Connection;
-        public IDbTransaction Transaction => marketPlaceContext.Transaction;
 
         public async Task<int> CreateAsync(T entity)
         {
-            return (int)await Connection.InsertAsync<T>(entity, Transaction);
-            //Is it good to cast like this
+            return (int)await connection.InsertAsync<T>(entity, transaction);
         }
 
         public async Task DeleteAsync(int id)
         {
-            await Connection.DeleteAsync<T>(id, Transaction);
+            await connection.DeleteAsync<T>(id, transaction);
         }
 
         public async Task<List<T>> AllAsync()
         {
-            return (await Connection.GetListAsync<T>(null, null, Transaction)).ToList();
+            return (await connection.GetListAsync<T>(null, null, transaction)).ToList();
         }
 
         public async Task<T> GetByIdAsync(int CategoryId)
         {
-            return await Connection.GetAsync<T>(CategoryId, Transaction);
+            return await connection.GetAsync<T>(CategoryId, transaction);
         }
 
         public async Task SetFieldAsync(int id, string fieldName, object value)
@@ -46,12 +45,12 @@ namespace Infrastructure.Repositories
                       SET {fieldName} = @value
                         WHERE Id = @id";
 
-            await Connection.ExecuteAsync(sql, new { value, id }, Transaction);
+            await connection.ExecuteAsync(sql, new { value, id }, transaction);
         }
 
         public async Task UpdateAsync(T entity)
         {
-            await Connection.UpdateAsync<T>(entity, Transaction);
+            await connection.UpdateAsync<T>(entity, transaction);
         }
     }
 }

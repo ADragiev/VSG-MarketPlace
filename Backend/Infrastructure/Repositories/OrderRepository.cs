@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories
         {
             var sql = @"SELECT * FROM PendingOrders";
 
-            var pendingOrders = await Connection.QueryAsync<OrderPendingDto>(sql, null, Transaction);
+            var pendingOrders = await connection.QueryAsync<OrderPendingDto>(sql, null, transaction);
             return pendingOrders.ToList();
         }
 
@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories
         {
             var sql = @"SELECT * FROM GetMyOrdersViewSql(@email)";
 
-            var orders = await Connection.QueryAsync<OrderGetMineDto>(sql, new { email }, Transaction);
+            var orders = await connection.QueryAsync<OrderGetMineDto>(sql, new { email }, transaction);
             return orders.ToList();
         }
     }

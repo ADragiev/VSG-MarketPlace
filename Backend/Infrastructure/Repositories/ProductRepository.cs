@@ -24,7 +24,7 @@ namespace Infrastructure.Repositories
         {
             var sql = @"SELECT * FROM IndexProducts";
 
-            var products = await Connection.QueryAsync<ProductMarketPlaceGetDto>(sql, null, Transaction);
+            var products = await connection.QueryAsync<ProductMarketPlaceGetDto>(sql, null, transaction);
             return products.ToList();
         }
 
@@ -32,7 +32,7 @@ namespace Infrastructure.Repositories
         {
             var sql = @"SELECT * FROM InventoryProducts";
 
-            var products = await Connection.QueryAsync<ProductInventoryGetDto>(sql, null, Transaction);
+            var products = await connection.QueryAsync<ProductInventoryGetDto>(sql, null, transaction);
 
             return products.ToList();
         }
@@ -41,7 +41,7 @@ namespace Infrastructure.Repositories
         {
             var sql = "SELECT dbo.GetProductPendingOrdersCount(@productId)";
 
-            var count = await Connection.QueryFirstOrDefaultAsync<int>(sql, new { productId }, Transaction);
+            var count = await connection.QueryFirstOrDefaultAsync<int>(sql, new { productId }, transaction);
 
             return count;
         }

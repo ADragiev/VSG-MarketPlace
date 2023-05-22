@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories
         {
             var sql = @"SELECT * FROM GetImageByProductId(@productId)";
 
-            return await Connection.QueryFirstOrDefaultAsync<ImageGetDto>(sql, new { productId }, Transaction);
+            return await connection.QueryFirstOrDefaultAsync<ImageGetDto>(sql, new { productId }, transaction);
         }
     }
 }
