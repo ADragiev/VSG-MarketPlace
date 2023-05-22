@@ -12,9 +12,6 @@ type InventoryItemsProps = {
   product: IInventoryItem;
 };
 
-const StyledTableRow = styled(TableRow)(() => ({
-  // hide last border
-}));
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -57,7 +54,7 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
         />
       )}
 
-      <StyledTableRow key={product.id}>
+      <TableRow key={product.id}>
         <StyledTableCell component="th" scope="row">
           {product.code}
         </StyledTableCell>
@@ -83,7 +80,7 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
 
           <DeleteIcon str={str} onYes={onDelete} />
         </StyledTableCell>
-      </StyledTableRow>
+      </TableRow>
     </>
   );
 };

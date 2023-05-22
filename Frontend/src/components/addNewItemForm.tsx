@@ -81,19 +81,12 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
     const files = target.files as FileList;
     const image = URL.createObjectURL(files[0]);
     setImageValue(image);
-    console.log(imageValue);
   };
 
   const handleRemoveImage = () => {
     setImageValue("../../images/no_image-placeholder.png");
   };
 
-  const inputStyle = {
-    fontSize: "12px",
-    ".MuiInputBase-root::after": {
-      borderBottom: " #000",
-    },
-  };
 
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
@@ -125,7 +118,6 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 id="standard-basic"
                 label="Code*"
                 variant="standard"
-                sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.code)}
                 helperText={errors.code?.message}
@@ -147,7 +139,6 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 id="item-name"
                 variant="standard"
                 label="Name*"
-                sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.name)}
                 helperText={errors.name?.message}
@@ -170,13 +161,12 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 rows={2}
                 className="inputField"
                 variant="standard"
-                sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 {...register("description")}
               />
               <FormControl
                 variant="standard"
-                sx={inputStyle}
+                className="inputField"
                 error={Boolean(errors.categoryId)}
               >
                 <InputLabel focused={false}>Category</InputLabel>
@@ -196,7 +186,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 </Select>
                 <FormHelperText>{errors.categoryId?.message}</FormHelperText>
               </FormControl>
-              <FormControl variant="standard" sx={inputStyle} error={Boolean(errors.locationId)}>
+              <FormControl className="inputField"  variant="standard" error={Boolean(errors.locationId)}>
                 <InputLabel focused={false}>Location</InputLabel>
                 <Select
                   value={locationOption}
@@ -222,7 +212,6 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 id="item-name"
                 variant="standard"
                 label="Qty For Sale"
-                sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 {...register("saleQty")}
               />
@@ -232,7 +221,6 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 id="sale-price"
                 variant="standard"
                 label="Sale price"
-                sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.price)}
                 helperText={errors.price?.message}
@@ -249,7 +237,6 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                 id="quantity-available"
                 variant="standard"
                 label="Qty *"
-                sx={inputStyle}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.combinedQty)}
                 helperText={errors.combinedQty?.message}
@@ -257,7 +244,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
                   required: "Qty field is required",
                   min: { value: 1, message: "Qty must be a possitive number" },
                   validate: (value) =>
-                    (value as unknown as number) >
+                    (value as unknown as number) >=
                       Number(getValues("saleQty")) ||
                     "Qty cannot be lower than Qty for sale",
                 })}

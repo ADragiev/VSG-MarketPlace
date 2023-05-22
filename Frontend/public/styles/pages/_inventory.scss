@@ -1,6 +1,6 @@
 @import "../abstracts/mixins";
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 //////////////MAIN/////////////
 .container {
@@ -38,7 +38,7 @@
   .input-div {
     border-bottom: 1px solid $black-color;
     margin-right: 20px;
-    display: flex
+    display: flex;
   }
 }
 #addNewItemBtn {
@@ -67,7 +67,6 @@
 //   border-spacing: 0;
 //   tbody td,
 
-
 //   tfoot tr td {
 //     border-top: 1px solid $table-border-color;
 //     display: table;
@@ -81,20 +80,23 @@
 //       display: inline ;
 //     }
 //   }
-  .deleteIcon{
-    margin-left: 8px;
-  }
+.deleteIcon {
+  margin-left: 8px;
+}
 
-.edit-icon, .deleteIcon{
+.edit-icon,
+.deleteIcon {
   cursor: pointer;
 }
 //////ADD NEW ITEM MODAL/////////
-.add-item-modal, .edit-item-modal {
+.add-item-modal,
+.edit-item-modal {
   position: fixed;
   z-index: 999;
 }
 
-.add-item-form, .edit-item-form  {
+.add-item-form,
+.edit-item-form {
   display: flex;
   justify-content: center;
   position: absolute;
@@ -118,7 +120,7 @@
     flex-direction: column;
     justify-content: flex-start;
     width: 40%;
-    #item-description{
+    #item-description {
       resize: none;
     }
     select:required:invalid {
@@ -130,7 +132,7 @@
   }
   span {
     justify-content: flex-start;
-   @include inter-font;
+    @include inter-font;
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;
@@ -142,15 +144,16 @@
     flex-direction: column;
     margin-top: 120px;
     width: 55%;
-    img{
-     max-height: 200px;
+    img {
+      max-height: 200px;
     }
   }
-  // .inputField {
-  //   margin: .5em 20px 0px 0px;
-  //   border: 0;
-  //   border-bottom: 1px solid $small-details-color;
-  // }
+  .inputField {
+    font-size: 12px;
+    .MuiInputBase-root::after {
+      border-bottom: #000;
+    }
+  }
   #submitFormBtn {
     @include flex-center;
     font-size: 18px;
@@ -166,7 +169,7 @@
     border-radius: 4px;
     padding: 8px 30px 8px 30px;
     margin: 10px 0 20px 0;
-    &:hover{
+    &:hover {
       cursor: pointer;
     }
   }
@@ -178,9 +181,10 @@
     border-radius: 4px;
 
     .upload-button,
-    #edit-remove-button, #remove-button{
+    #edit-remove-button,
+    #remove-button {
       background: $upload-button-color;
-    @include flex-center;
+      @include flex-center;
       font-size: 1em;
       line-height: 24px;
       font-weight: 500;
@@ -191,11 +195,12 @@
       border: 0;
       font-weight: 500;
       border-radius: 4px;
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
     }
-    #edit-remove-button, #remove-button {
+    #edit-remove-button,
+    #remove-button {
       background: $main-color;
     }
   }
@@ -212,50 +217,50 @@
   cursor: pointer;
 }
 
-
 ////////////RESPONSIVE////////
 
 @media screen and (max-width: 768px) {
-  .main{
+  .main {
     height: 88vh;
     width: 90vw;
     justify-content: center;
     display: flex;
   }
-  #inventoryMain{
+  #inventoryMain {
     display: block;
-    #search-container{
+    #search-container {
       justify-content: space-around;
-      .input-div{
+      .input-div {
         width: 40%;
       }
     }
   }
-  .table-wrapper{
+  .table-wrapper {
     width: 100%;
     justify-content: center;
     flex-wrap: nowrap;
     flex-direction: column;
   }
-.add-item-form, .edit-item-form{
-  height: 85vh;
-  width: 80vw;
-  .row {
-    max-height: 100%;
-    @include flex-center;
-    flex-direction: column;
-    margin: 20px;
-  }
-  .left-side {
-    position: relative;
-    width: 95%;
-  }
-  .imgSection {
-    margin-top: 10px;
-    width: 100%;
-    .img-buttons{
-      flex-direction: row;
+  .add-item-form,
+  .edit-item-form {
+    height: 85vh;
+    width: 80vw;
+    .row {
+      max-height: 100%;
+      @include flex-center;
+      flex-direction: column;
+      margin: 20px;
+    }
+    .left-side {
+      position: relative;
+      width: 95%;
+    }
+    .imgSection {
+      margin-top: 10px;
+      width: 100%;
+      .img-buttons {
+        flex-direction: row;
+      }
     }
   }
-}
 }

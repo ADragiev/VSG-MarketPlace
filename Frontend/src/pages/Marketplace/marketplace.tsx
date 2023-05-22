@@ -3,7 +3,7 @@ import { IProduct } from "../../types";
 import Card from "../../components/Product/product";
 
 const MarketPlace = (): JSX.Element => {
-  const {data: products} = useGetProductsQuery('fasdfsa')
+  const {data: products} = useGetProductsQuery('')
 
   return (
     <>
