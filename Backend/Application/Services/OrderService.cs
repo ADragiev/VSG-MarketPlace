@@ -68,7 +68,7 @@ namespace Application.Services
             order.ProductName = product.Name;
             order.Price = dto.Qty * product.Price;
             order.OrderedBy = userService.GetUserEmail();
-            var orderId = await orderRepo.CreateAsync(order);
+            await orderRepo.CreateAsync(order);
         }
 
         public async Task<List<OrderPendingDto>> GetAllPendingOrdersAsync()
