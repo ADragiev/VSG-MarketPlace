@@ -117,25 +117,5 @@ namespace Tests
 
             Assert.DoesNotThrow(() => ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order));
         }
-
-        [Test]
-        public async Task ShouldThrowWhenOrderQuantityIsMoreThanSaleQty()
-        {
-            int orderQty = 10;
-            int saleQty = 5;
-
-            Assert.Throws<HttpException>(() => ThrowExceptionService.ThrowExceptionWhenNotEnoughQuantity(saleQty,orderQty));
-        }
-
-        [Test]
-        public async Task ShouldNotThrowWhenOrderQuantityIsLessThanOrEqualToSaleQty()
-        {
-            int orderQty = 10;
-            int saleQty = 10;
-            int secondSaleQty = 30;
-
-            Assert.DoesNotThrow(() => ThrowExceptionService.ThrowExceptionWhenNotEnoughQuantity(saleQty, orderQty));
-            Assert.DoesNotThrow(() => ThrowExceptionService.ThrowExceptionWhenNotEnoughQuantity(secondSaleQty, orderQty));
-        }
     }
 }

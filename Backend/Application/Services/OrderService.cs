@@ -52,7 +52,10 @@ namespace Application.Services
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(dto.ProductId, productRepo);
             var product = await productRepo.GetByIdAsync(dto.ProductId);
 
-            ThrowExceptionService.ThrowExceptionWhenNotEnoughQuantity(product.SaleQty, dto.Qty);
+            if (dto.Qty > product.SaleQty)
+            {
+                throw new HttpException("Not enough quantity for sale!", HttpStatusCode.BadRequest);
+            }
 
             var newSaleQty = product.SaleQty - dto.Qty;
             await productRepo.SetFieldAsync(product.Id, "SaleQty", newSaleQty);
