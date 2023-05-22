@@ -51,8 +51,8 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
       description: product.description,
       categoryId: product.categoryId,
       locationId: product.locationId,
-      saleQty: product.saleQty,
-      price: product.price,
+      saleQty: product.saleQty || null ,
+      price: product.price || null,
       combinedQty: product.combinedQty,
       image: product.image,
     },
@@ -82,6 +82,9 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
   };
 
   const onSubmit = async (data) => {
+    data.price = data.price || null;
+    data.saleQty = data.saleQty || null;
+
     const id = product.id;
     const response = await updateProduct({ id, data });
     const image = getValues("image")[0] as unknown as File;
@@ -103,8 +106,6 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
 
     setOpen(false);
   };
-
-  
 
   return (
     <ModalWrapper open={open} setOpen={setOpen}>
@@ -185,14 +186,15 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 {...register("description")}
               />
-              <FormControl variant="standard" className="inputField" >
+              <FormControl variant="standard" className="inputField">
                 <InputLabel focused={false}>Category</InputLabel>
                 <Select
                   value={categoryOption}
                   label="Category"
                   {...register("categoryId", {
                     required: "Category field is required",
-                    onChange: (e) => setCategoryOption(e.target.value as string),
+                    onChange: (e) =>
+                      setCategoryOption(e.target.value as string),
                   })}
                 >
                   {categories?.map((c: ICategory) => (
@@ -202,7 +204,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                   ))}
                 </Select>
               </FormControl>
-              <FormControl variant="standard" className="inputField" >
+              <FormControl variant="standard" className="inputField">
                 <InputLabel focused={false}>Location</InputLabel>
                 <Select
                   value={locationOption}
