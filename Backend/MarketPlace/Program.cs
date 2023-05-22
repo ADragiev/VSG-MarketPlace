@@ -15,8 +15,7 @@ builder.Host.ConfigureLogging(logging =>
     logging.ClearProviders();
 }).UseNLog();
 IConfigurationRoot config = new ConfigurationBuilder()
-    .AddUserSecrets<Program>()
-    .Build();
+    .AddJsonFile(path: "appsettings.json").Build();
 
 NLog.Extensions.Logging.ConfigSettingLayoutRenderer.DefaultConfiguration = config;
 
@@ -29,11 +28,8 @@ builder.Services.AddConfigurationMigration();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseCors("CORSPolicy");
 app.CreateDatabase();
 app.CreateTables();
