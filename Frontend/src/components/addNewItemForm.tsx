@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import { useForm } from "react-hook-form";
-import ModalWrapper from "./modalWrapper";
+import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
 import { toast } from "react-toastify";
@@ -60,12 +60,9 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
       const id = response.data;
       await postImage({ id, imageFormData });
     }
-    if (response.error) {
-      toast.error("Something went wrong! Please try again later...");
-    } else {
+    if (!response.error) {
       toast.success("Successfully added item!");
-    }
-
+    } 
     setOpen(false);
   };
 

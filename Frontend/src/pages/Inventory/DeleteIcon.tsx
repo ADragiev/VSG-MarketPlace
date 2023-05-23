@@ -30,7 +30,6 @@ const DeleteIcon = ({ str, onYes }: DeleteProps) => {
           />
         </svg>
       </a>
-
       {!!anchorEl && (
         <PopperComponent
           str={str}

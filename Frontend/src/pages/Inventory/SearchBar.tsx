@@ -24,7 +24,6 @@ const SearchBar = ({ children, onSearchInputChange }: Props) => {
             />
           </svg>
         </a>
-        
         <input
           onInput={onSearchInputChange}
           type="search"

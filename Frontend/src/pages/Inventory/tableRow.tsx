@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 import { useDeleteProductMutation } from "../../services/productService";
-import EditItemForm from "../../components/editItemForm";
+import EditItemForm from "../../components/EditItemForm";
 import { useState } from "react";
 import { IInventoryItem } from "../../types";
 import { TableCell, TableRow, tableCellClasses } from "@mui/material";
@@ -35,10 +35,7 @@ const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
 
   const onDelete = async () => {
   const response =  await deleteProduct(product.id);
-  if (response.error) {    
-    toast.error(response.error.data[0].title)
-   }
-   else{
+  if (!response.error) {    
     toast.success('Successfully deleted item!')
    }
   };

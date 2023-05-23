@@ -1,6 +1,6 @@
 import { useState } from "react";
-import AddNewItemForm from "../../components/addNewItemForm";
-import CustomizedTables from "./table";
+import AddNewItemForm from "../../components/AddNewItemForm";
+import CustomizedTables from "./Table";
 import SearchBar from "./SearchBar";
 
 function Inventory(): JSX.Element {

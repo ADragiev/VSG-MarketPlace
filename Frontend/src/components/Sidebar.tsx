@@ -1,14 +1,17 @@
 import { NavLink } from "react-router-dom";
-import { handleLogout } from "../../global/auth";
+import { handleLogout } from "../auth/logout";
 
 
 
 const Sidebar = (): JSX.Element => {
-  const user = JSON.parse(sessionStorage.getItem('user')as string).name.split(' ')[0]
+  const user = JSON.parse(sessionStorage.getItem('user')as string)
+ const name =  user.name.split(' ')[0]
+  const isAdmin = user.memberType === 'Admin' 
+  
     return (
         <aside className="sidebar">
            <div id="greetingContainer" className="user">
-        <span> Hi, {user}! </span>
+        <span> Hi, {name}! </span>
         <img src="../../images/Profile Img.jpg" alt="Profile-pic" />
       </div>
         <nav>
@@ -32,7 +35,7 @@ const Sidebar = (): JSX.Element => {
                 <span> Marketplace </span>
               </NavLink>
             </li>
-            <li className="menu-item">
+            {isAdmin &&   <li className="menu-item">
               <NavLink to="/inventory"  className={({ isActive }) =>
                 isActive ? "active" : ""}>
                 <svg
@@ -49,8 +52,8 @@ const Sidebar = (): JSX.Element => {
                 </svg>
                 <span> Inventory </span>
               </NavLink>
-            </li>
-            <li className="menu-item">
+            </li>}
+          {isAdmin &&  <li className="menu-item">
               <NavLink to="/pending-orders" className={({ isActive }) =>
                 isActive ? "active" : ""}>
                 <svg
@@ -67,7 +70,8 @@ const Sidebar = (): JSX.Element => {
                 </svg>
                 <span> Pending Orders </span>
               </NavLink>
-            </li>
+            </li> }
+           
             <li className="menu-item">
               <NavLink to="/my-orders" className={({ isActive }) =>
                 isActive ? "active" : ""}>
