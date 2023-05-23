@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { Suspense, lazy } from "react";
 import ProtectedRoute from "./protectedRoute";
+import AdminRoute from "./adminRoute";
 
 const Home = lazy(() => import("./pages/Home/home"));
 const MarketPlace = lazy(() => import("./pages/Marketplace/marketplace"));
@@ -28,22 +29,6 @@ function App() {
                 }
               />
               <Route
-                path="inventory"
-                element={
-                  <Layout>
-                    <Inventory />
-                  </Layout>
-                }
-              />
-              <Route
-                path="pending-orders"
-                element={
-                  <Layout>
-                    <PendingOrders />
-                  </Layout>
-                }
-              />
-              <Route
                 path="my-orders"
                 element={
                   <Layout>
@@ -52,6 +37,27 @@ function App() {
                 }
               />
             </Route>
+
+            <Route element={<AdminRoute />}>
+              <Route
+                path="inventory"
+                element={
+                  <Layout>
+                    <Inventory />
+                  </Layout>
+                }
+              />
+             
+               <Route
+                path="pending-orders"
+                element={
+                  <Layout>
+                    <PendingOrders />
+                  </Layout>
+                }
+              />
+            </Route>
+
           </Routes>
         </Suspense>
       </BrowserRouter>

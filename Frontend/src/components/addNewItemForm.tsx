@@ -52,12 +52,12 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
   );
   const onSubmit = async (data) => {
     const response = await createProduct(data);
-
+    
     const image = getValues("image")[0] as unknown as File;
     if (imageValue != "../../images/no_image-placeholder.png") {
       const imageFormData = new FormData();
       imageFormData.append("image", image);
-      const id = response.data;
+      const id = response.data.returnedValue;
       await postImage({ id, imageFormData });
     }
     if (!response.error) {
