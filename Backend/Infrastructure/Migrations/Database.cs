@@ -21,9 +21,7 @@ namespace Infrastructure.Migrations
         {
             var query = $"SELECT * FROM sys.databases WHERE name = @databaseName";
 
-            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(masterConnectionString);
-            connectionStringBuilder.TrustServerCertificate = true;
-            using (var connection = new SqlConnection(connectionStringBuilder.ConnectionString))
+            using (var connection = new SqlConnection(masterConnectionString))
             {
                 var records = connection.Query(query, new { databaseName });
                 if (!records.Any())

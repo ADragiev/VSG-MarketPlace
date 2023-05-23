@@ -22,7 +22,7 @@ NLog.Extensions.Logging.ConfigSettingLayoutRenderer.DefaultConfiguration = confi
 builder.Services.AddConfigurationApiLayer(config);
 builder.Services.AddConfigurationApplicationLayer();
 builder.Services.AddConfigurationInfrastructureLayer();
-builder.Services.AddConfigurationMigration(config);
+builder.Services.AddConfigurationMigration();
 
 
 var app = builder.Build();

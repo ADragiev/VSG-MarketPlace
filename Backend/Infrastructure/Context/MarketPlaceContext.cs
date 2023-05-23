@@ -13,9 +13,7 @@ namespace Infrastructure.Repositories.GenericRepository.Context
 
         public MarketPlaceContext(IConfiguration config)
         {
-            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(config.GetConnectionString("DefaultConnection"));
-            connectionStringBuilder.TrustServerCertificate = true;
-            connection = new SqlConnection(connectionStringBuilder.ConnectionString);
+            connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
             connection.Open();
 
             transaction = connection.BeginTransaction();

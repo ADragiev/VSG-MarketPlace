@@ -62,9 +62,7 @@ namespace Infrastructure.Migrations
 
             List<string> viewsAndFunctions = new List<string>() { imageByProductIdFunctionSql, indexProductsViewSql, inventoryProductViewSql, pendingOrdersViewSql, myOrdersFunctionSql, productPendingOrdersFunctionSql };
 
-            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
-            connectionStringBuilder.TrustServerCertificate = true;
-            using var connection = new SqlConnection(connectionStringBuilder.ConnectionString);
+            using var connection = new SqlConnection(connectionString);
             foreach (var view in viewsAndFunctions)
             {
                 connection.Execute(view);

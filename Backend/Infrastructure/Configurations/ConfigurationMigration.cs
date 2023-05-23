@@ -16,16 +16,13 @@ namespace Infrastructure.Configurations
 {
     public static class ConfigurationMigration
     {
-        public static IServiceCollection AddConfigurationMigration(this IServiceCollection serviceCollection, IConfiguration config)
+        public static IServiceCollection AddConfigurationMigration(this IServiceCollection serviceCollection)
         {
-            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(config.GetConnectionString("DefaultConnection"));
-            connectionStringBuilder.TrustServerCertificate = true;
-
             serviceCollection
             .AddFluentMigratorCore()
             .ConfigureRunner(rb => rb
                 .AddSqlServer()
-                .WithGlobalConnectionString(connectionStringBuilder.ConnectionString)
+                .WithGlobalConnectionString("DefaultConnection")
                 .ScanIn(typeof(CategoryTable).Assembly).For.Migrations());
 
             serviceCollection.AddSingleton<Database>();
