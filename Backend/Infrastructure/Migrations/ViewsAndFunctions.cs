@@ -1,11 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Migrations
 {
@@ -67,7 +62,9 @@ namespace Infrastructure.Migrations
 
             List<string> viewsAndFunctions = new List<string>() { imageByProductIdFunctionSql, indexProductsViewSql, inventoryProductViewSql, pendingOrdersViewSql, myOrdersFunctionSql, productPendingOrdersFunctionSql };
 
-            using var connection = new SqlConnection(connectionString);
+            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
+            connectionStringBuilder.TrustServerCertificate = true;
+            using var connection = new SqlConnection(connectionStringBuilder.ConnectionString);
             foreach (var view in viewsAndFunctions)
             {
                 connection.Execute(view);

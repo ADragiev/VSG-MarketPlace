@@ -2,6 +2,8 @@
 using FluentMigrator.Runner;
 using Infrastructure.Migrations;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -14,13 +16,16 @@ namespace Infrastructure.Configurations
 {
     public static class ConfigurationMigration
     {
-        public static IServiceCollection AddConfigurationMigration(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddConfigurationMigration(this IServiceCollection serviceCollection, IConfiguration config)
         {
+            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(config.GetConnectionString("DefaultConnection"));
+            connectionStringBuilder.TrustServerCertificate = true;
+
             serviceCollection
             .AddFluentMigratorCore()
             .ConfigureRunner(rb => rb
                 .AddSqlServer()
-                .WithGlobalConnectionString("DefaultConnection")
+                .WithGlobalConnectionString(connectionStringBuilder.ConnectionString)
                 .ScanIn(typeof(CategoryTable).Assembly).For.Migrations());
 
             serviceCollection.AddSingleton<Database>();

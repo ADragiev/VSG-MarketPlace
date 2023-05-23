@@ -1,7 +1,7 @@
 ﻿using Application.Models.GenericRepo;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Runtime.CompilerServices;
 
 namespace Infrastructure.Repositories.GenericRepository.Context
@@ -13,7 +13,9 @@ namespace Infrastructure.Repositories.GenericRepository.Context
 
         public MarketPlaceContext(IConfiguration config)
         {
-            connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
+            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(config.GetConnectionString("DefaultConnection"));
+            connectionStringBuilder.TrustServerCertificate = true;
+            connection = new SqlConnection(connectionStringBuilder.ConnectionString);
             connection.Open();
 
             transaction = connection.BeginTransaction();

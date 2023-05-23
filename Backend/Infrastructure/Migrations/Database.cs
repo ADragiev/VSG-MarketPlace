@@ -1,11 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Migrations
 {
@@ -25,7 +21,9 @@ namespace Infrastructure.Migrations
         {
             var query = $"SELECT * FROM sys.databases WHERE name = @databaseName";
 
-            using (var connection = new SqlConnection(masterConnectionString))
+            SqlConnectionStringBuilder connectionStringBuilder = new SqlConnectionStringBuilder(masterConnectionString);
+            connectionStringBuilder.TrustServerCertificate = true;
+            using (var connection = new SqlConnection(connectionStringBuilder.ConnectionString))
             {
                 var records = connection.Query(query, new { databaseName });
                 if (!records.Any())
