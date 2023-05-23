@@ -1,4 +1,5 @@
-﻿using Application.Helpers.Constants;
+﻿using Application.Helpers.Attributes;
+using Application.Helpers.Constants;
 using Application.Helpers.Validators;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
@@ -26,6 +27,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
+        [NonAdmin]
         public async Task<List<ProductMarketPlaceGetDto>> GetAllProductsForIndexPage()
         {
             return await productService.GetAllForIndexAsync();
@@ -33,7 +35,6 @@ namespace MarketPlace.Controllers
 
         [HttpGet]
         [Route("Inventory")]
-        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task<List<ProductInventoryGetDto>> GetAllProductsForInventoryPage()
         {
             return await productService.GetAllForInventoryAsync();
@@ -41,7 +42,6 @@ namespace MarketPlace.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task UpdateProduct(int id, ProductUpdateDto dto)
         {
             await updateValidator.ValidateAndThrowAsync(dto);
@@ -49,7 +49,6 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task<int> CreateProduct([FromBody]ProductCreateDto dto)
         {
             await createValidator.ValidateAndThrowAsync(dto);
@@ -57,7 +56,6 @@ namespace MarketPlace.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task DeleteProduct(int id)
         {
             await productService.DeleteAsync(id);

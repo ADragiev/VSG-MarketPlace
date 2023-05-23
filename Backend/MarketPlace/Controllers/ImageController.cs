@@ -19,7 +19,6 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost("{productId}")]
-        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task<string> UploadImage(int productId, [FromForm] ImageCreateDto image)
         {
             await imageValidator.ValidateAndThrowAsync(image);
@@ -27,7 +26,6 @@ namespace MarketPlace.Controllers
         }
 
         [HttpDelete("{productId}")]
-        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task DeleteImage(int productId)
         {
             await imageService.DeleteImageByProductIdAsync(productId);

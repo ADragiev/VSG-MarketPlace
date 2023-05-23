@@ -1,9 +1,7 @@
-﻿using Application.Helpers.Constants;
+﻿using Application.Helpers.Attributes;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketPlace.Controllers
@@ -21,13 +19,13 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task<List<OrderPendingDto>> GetPendingOrders()
         {
             return await orderService.GetAllPendingOrdersAsync();
         }
 
         [HttpGet("/MyOrders")]
+        [NonAdmin]
         public async Task<List<OrderGetMineDto>> GetMyOrders()
         {
             return await orderService.GetMyOrdersAsync();
@@ -35,13 +33,13 @@ namespace MarketPlace.Controllers
 
 
         [HttpPut("{id}")]
-        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task CompleteOrder(int id)
         {
             await orderService.CompleteOrderAsync(id);
         }
 
         [HttpDelete("{id}")]
+        [NonAdmin]
         public async Task<OrderStatusGetDto> RejectOrder(int id)
         {
             return await orderService.RejectOrderAsync(id);
@@ -49,6 +47,7 @@ namespace MarketPlace.Controllers
 
 
         [HttpPost]
+        [NonAdmin]
         public async Task CreateOrder(OrderCreateDto dto)
         {
             await createValidator.ValidateAndThrowAsync(dto);

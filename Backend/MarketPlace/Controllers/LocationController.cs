@@ -16,7 +16,6 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = IdentityConstants.AdminRolePolicyName)]
         public async Task<List<LocationGetDto>> GetAll()
         {
             return await locationService.AllAsync();

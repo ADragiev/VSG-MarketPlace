@@ -37,13 +37,7 @@ namespace MarketPlace.Configurations
                 });
             });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(IdentityConstants.AdminRolePolicyName, p =>
-                {
-                    p.RequireClaim(IdentityConstants.AdminRoleClaimName, "true");
-                });
-            });
+            services.AddAuthorization();
 
             return services;
         }
