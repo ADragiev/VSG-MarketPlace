@@ -1,5 +1,6 @@
 ﻿using Application.Helpers.Constants;
 using Application.Models.Cloud;
+using Application.Models.GenericModels.Dtos;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
@@ -39,14 +40,14 @@ namespace Application.Services
             }
         }
 
-        public async Task<string> UploadImageAsync(int productId, ImageCreateDto image)
+        public async Task<GenericSimpleValueGetDto<string>> UploadImageAsync(int productId, ImageCreateDto image)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
 
             var publicId = await cloudService.UploadAsync(image.Image);
 
             await SaveImageInDatabase(productId, publicId);
-            return CloudinaryConstants.baseUrl + publicId;
+            return new GenericSimpleValueGetDto<string>(CloudinaryConstants.baseUrl + publicId);
         }
 
         private async Task SaveImageInDatabase(int productId, string publicId)

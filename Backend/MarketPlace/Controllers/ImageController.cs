@@ -1,4 +1,5 @@
 ﻿using Application.Helpers.Constants;
+using Application.Models.GenericModels.Dtos;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
 using FluentValidation;
@@ -19,7 +20,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost("{productId}")]
-        public async Task<string> UploadImage(int productId, [FromForm] ImageCreateDto image)
+        public async Task<GenericSimpleValueGetDto<string>> UploadImage(int productId, [FromForm] ImageCreateDto image)
         {
             await imageValidator.ValidateAndThrowAsync(image);
             return await imageService.UploadImageAsync(productId, image);

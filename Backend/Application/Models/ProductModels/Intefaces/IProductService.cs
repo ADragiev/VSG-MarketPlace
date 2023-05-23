@@ -1,4 +1,5 @@
-﻿using Application.Models.GenericRepo;
+﻿using Application.Models.GenericModels.Dtos;
+using Application.Models.GenericRepo;
 using Application.Models.ProductModels.Dtos;
 using Domain.Entities;
 using System;
@@ -11,7 +12,7 @@ namespace Application.Models.ProductModels.Intefaces
 {
     public interface IProductService
     {
-        Task<int> CreateAsync(ProductCreateDto dto);
+        Task<GenericSimpleValueGetDto<int>> CreateAsync(ProductCreateDto dto);
 
         Task UpdateAsync(int id, ProductUpdateDto dto);
 

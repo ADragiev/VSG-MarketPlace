@@ -1,6 +1,7 @@
 ﻿using Application.Helpers.Attributes;
 using Application.Helpers.Constants;
 using Application.Helpers.Validators;
+using Application.Models.GenericModels.Dtos;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using Application.Services;
@@ -49,7 +50,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost]
-        public async Task<int> CreateProduct([FromBody]ProductCreateDto dto)
+        public async Task<GenericSimpleValueGetDto<int>> CreateProduct([FromBody]ProductCreateDto dto)
         {
             await createValidator.ValidateAndThrowAsync(dto);
             return await productService.CreateAsync(dto);

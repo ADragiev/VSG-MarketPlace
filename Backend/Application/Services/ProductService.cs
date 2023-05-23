@@ -1,6 +1,7 @@
 ﻿using Application.Helpers.Constants;
 using Application.Models.CategoryModels.Contacts;
 using Application.Models.ExceptionModels;
+using Application.Models.GenericModels.Dtos;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.LocationModels.Interfaces;
@@ -27,13 +28,13 @@ namespace Application.Services
             this.imageService = imageService;
         }
 
-        public async Task<int> CreateAsync(ProductCreateDto dto)
+        public async Task<GenericSimpleValueGetDto<int>> CreateAsync(ProductCreateDto dto)
         {
             var product = mapper.Map<Product>(dto);
             var productId = await productRepo.CreateAsync(product);
             product.Id = productId;
 
-            return productId;
+            return new GenericSimpleValueGetDto<int>(productId);
         }
 
         public async Task<List<ProductMarketPlaceGetDto>> GetAllForIndexAsync()

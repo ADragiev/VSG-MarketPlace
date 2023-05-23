@@ -1,4 +1,5 @@
 ﻿using Application.Helpers.Attributes;
+using Application.Models.GenericModels.Dtos;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
 using FluentValidation;
@@ -40,7 +41,7 @@ namespace MarketPlace.Controllers
 
         [HttpDelete("{id}")]
         [NonAdmin]
-        public async Task<OrderStatusGetDto> RejectOrder(int id)
+        public async Task<GenericSimpleValueGetDto<string>> RejectOrder(int id)
         {
             return await orderService.RejectOrderAsync(id);
         }

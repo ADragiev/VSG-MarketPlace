@@ -1,4 +1,5 @@
-﻿using Application.Models.OrderModels.Dtos;
+﻿using Application.Models.GenericModels.Dtos;
+using Application.Models.OrderModels.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,6 @@ namespace Application.Models.OrderModels.Interfaces
 
         Task CompleteOrderAsync(int id);
 
-        Task<OrderStatusGetDto> RejectOrderAsync(int id);
+        Task<GenericSimpleValueGetDto<string>> RejectOrderAsync(int id);
     }
 }

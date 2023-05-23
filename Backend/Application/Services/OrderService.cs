@@ -1,5 +1,6 @@
 ﻿using Application.Helpers.Constants;
 using Application.Models.ExceptionModels;
+using Application.Models.GenericModels.Dtos;
 using Application.Models.GenericRepo;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
@@ -87,7 +88,7 @@ namespace Application.Services
             return myOrders;
         }
 
-        public async Task<OrderStatusGetDto> RejectOrderAsync(int id)
+        public async Task<GenericSimpleValueGetDto<string>> RejectOrderAsync(int id)
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
 
@@ -110,7 +111,7 @@ namespace Application.Services
 
             await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Declined);
 
-            return new OrderStatusGetDto() { Status = OrderStatus.Declined.ToString() };
+            return new GenericSimpleValueGetDto<string>(OrderStatus.Declined.ToString());
         }
 
         private string FormatDate(string dateString)
