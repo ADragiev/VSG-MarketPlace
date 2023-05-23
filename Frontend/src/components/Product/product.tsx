@@ -28,7 +28,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
   const onBuy = async () => {
     const productId = product.id;
     const qty = selectValue.current;
-    const response =   await createOrder({productId , qty });
+    const response = await createOrder({productId , qty });
     
     if (!response.error) {
       toast.success('Successfully placed order!')

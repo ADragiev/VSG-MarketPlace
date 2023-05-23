@@ -4,9 +4,9 @@ import { Suspense, lazy } from "react";
 import ProtectedRoute from "./protectedRoute";
 import AdminRoute from "./adminRoute";
 
-const Home = lazy(() => import("./pages/Home/home"));
-const MarketPlace = lazy(() => import("./pages/Marketplace/marketplace"));
-const Inventory = lazy(() => import("./pages/Inventory/inventory"));
+const Home = lazy(() => import("./pages/Home/Home"));
+const MarketPlace = lazy(() => import("./pages/Marketplace/Marketplace"));
+const Inventory = lazy(() => import("./pages/Inventory/Inventory"));
 const PendingOrders = lazy(
   () => import("./pages/Pending-Orders/PendingOrdersGrid")
 );
