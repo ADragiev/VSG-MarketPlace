@@ -9,7 +9,7 @@ import { useGetInventoryProductsQuery } from "../../services/productService";
 import { TableFooter, TablePagination } from "@mui/material";
 import { IInventoryItem } from "../../types";
 import { useEffect, useState } from "react";
-import TableRowComponent from "./tableRow";
+import TableRowComponent from "./TableRow";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {

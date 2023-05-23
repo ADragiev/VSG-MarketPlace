@@ -1,25 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { AuthenticationResult } from "@azure/msal-browser";
-import { loginRequest, msalInstance } from "../../authConfig";
 
-
-
+import Login from "../../auth/Login";
 
 function Home() {
-
-
-  const navigate = useNavigate()
-
-   const handleLogin = async () => {
-    const result: AuthenticationResult = await msalInstance.loginPopup(
-      loginRequest
-    );
-    const name = result.account?.name;
-    const token = result.accessToken;
-    sessionStorage.setItem("user", JSON.stringify({ name, token }));
-    navigate('/marketplace')
-    
-  };
 
   sessionStorage.clear()
   return (
@@ -32,9 +14,7 @@ function Home() {
         />
       </div>
       <div className="divs">
-          <a id="login" onClick={handleLogin}>
-            LOGIN 
-          </a>
+          <Login/>
       </div>
     </main>
   );

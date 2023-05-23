@@ -13,7 +13,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import ModalWrapper from "./modalWrapper";
+import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
 import { toast } from "react-toastify";
@@ -98,12 +98,9 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
       await deleteImage(id);
     }
 
-    if (response.error) {
-      toast.error("Something went wrong! Please try again later...");
-    } else {
+    if (!response.error) {
       toast.success("Successfully updated item!");
-    }
-
+    } 
     setOpen(false);
   };
 
@@ -171,7 +168,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                   },
                   maxLength: {
                     value: 100,
-                    message: "Name name cannot be longer than 100 characters",
+                    message: "Name cannot be longer than 100 characters",
                   },
                 })}
               />

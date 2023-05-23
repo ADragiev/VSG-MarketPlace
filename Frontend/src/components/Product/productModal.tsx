@@ -1,6 +1,6 @@
 import { IProduct } from "../../types";
 import { useState } from "react";
-import ModalWrapper from "../modalWrapper";
+import ModalWrapper from "../ModalWrapper";
 
 interface ModalProps {
   product: IProduct;

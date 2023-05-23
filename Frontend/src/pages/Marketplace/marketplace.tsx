@@ -1,6 +1,6 @@
 import {  useGetProductsQuery } from "../../services/productService";
 import { IProduct } from "../../types";
-import Card from "../../components/Product/product";
+import Card from "../../components/Product/Product";
 
 const MarketPlace = (): JSX.Element => {
   const {data: products} = useGetProductsQuery('')

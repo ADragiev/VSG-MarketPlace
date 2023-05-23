@@ -1,4 +1,4 @@
-import { msalInstance } from "../authConfig.ts";
+import {  msalInstance } from "../authConfig.ts";
 
 export const handleLogout = async () => {
   await msalInstance.logoutRedirect({
@@ -6,3 +6,4 @@ export const handleLogout = async () => {
   });
   sessionStorage.clear();
 };
+

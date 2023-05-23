@@ -15,14 +15,9 @@ const PendingOrder = ({pendingOrder}: PendingOrderProps) => {
 
     const onComplete = async () => {
        const response =  await completeOrder(pendingOrder.id);
-     if (response.error) {
-      toast.error('Something went wrong')
+     if (!response.error) {
+       toast.success('Successfully completed order')
      }
-     else{
-      toast.success('Successfully completed order')
-
-     }
-       
       };
     return (
         <div className="item-row">

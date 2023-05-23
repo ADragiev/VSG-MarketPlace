@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { IProduct } from "../../types";
-import ProductModal from "./productModal";
+import ProductModal from "./ProductModal";
 
 import { useCreateOrderMutation } from "../../services/ordersService";
 import PopperComponent from "../Popper";
@@ -30,14 +30,9 @@ const Card = ({ product }: ProductProps): JSX.Element => {
     const qty = selectValue.current;
     const response =   await createOrder({productId , qty });
     
-    if (response.error) {
-       toast.error('Something went wrong! Please try again later...')
-
-     }
-     else{
+    if (!response.error) {
       toast.success('Successfully placed order!')
      }
-      
     setAnchorEl(null);
   };
 

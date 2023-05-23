@@ -1,7 +1,7 @@
 
 import { useGetMyOrdersQuery } from "../../services/ordersService";
 import { IMyOrder } from "../../types";
-import MyOrder from "./MyOrder";
+import MyOrder from "./MyOrderRow";
 import MyOrdersHeader from "./MyOrdersHeader";
 
 const  MyOrders = (): JSX.Element => {
