@@ -14,7 +14,7 @@ namespace Application.Services
 {
     public class CategoryService : ICategoryService
     {
-        private const string categoriesKey = "categories";
+        private const string categoriesKey = "categories-angel";
 
         private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;

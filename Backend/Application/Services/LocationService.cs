@@ -12,7 +12,7 @@ namespace Application.Services
 {
     public class LocationService : ILocationService
     {
-        private const string locationsKey = "locations";
+        private const string locationsKey = "locations-angel";
 
         private readonly ILocationRepository locationRepo;
         private readonly IMapper mapper;
