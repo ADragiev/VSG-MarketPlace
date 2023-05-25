@@ -25,7 +25,7 @@ namespace MarketPlace.Controllers
             return await orderService.GetAllPendingOrdersAsync();
         }
 
-        [HttpGet("/MyOrders")]
+        [HttpGet("My-Orders")]
         [NonAdmin]
         public async Task<List<OrderGetMineDto>> GetMyOrders()
         {
@@ -33,13 +33,13 @@ namespace MarketPlace.Controllers
         }
 
 
-        [HttpPut("{id}")]
+        [HttpPut("Complete/{id}")]
         public async Task CompleteOrder(int id)
         {
             await orderService.CompleteOrderAsync(id);
         }
 
-        [HttpDelete("{id}")]
+        [HttpPut("Reject/{id}")]
         [NonAdmin]
         public async Task<GenericSimpleValueGetDto<string>> RejectOrder(int id)
         {

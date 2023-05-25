@@ -19,14 +19,14 @@ namespace MarketPlace.Controllers
             this.imageValidator = imageValidator;
         }
 
-        [HttpPost("{productId}")]
+        [HttpPost("{product-id}")]
         public async Task<GenericSimpleValueGetDto<string>> UploadImage(int productId, [FromForm] ImageCreateDto image)
         {
             await imageValidator.ValidateAndThrowAsync(image);
             return await imageService.UploadImageAsync(productId, image);
         }
 
-        [HttpDelete("{productId}")]
+        [HttpDelete("{product-id}")]
         public async Task DeleteImage(int productId)
         {
             await imageService.DeleteImageByProductIdAsync(productId);
