@@ -34,7 +34,7 @@ namespace Tests
         [Test]
         public async Task AllAsync_ShouldReturnCachedLocations_IfTheyAreCached()
         {
-            cacheServiceMock.Setup(c => c.GetData<List<LocationGetDto>>("locations")).ReturnsAsync(() => new List<LocationGetDto>() {
+            cacheServiceMock.Setup(c => c.GetData<List<LocationGetDto>>("locations-angel")).ReturnsAsync(() => new List<LocationGetDto>() {
                 new LocationGetDto()
                 {
                     Id = 1,

@@ -34,7 +34,7 @@ namespace Tests
         [Test]
         public async Task AllAsync_ShouldReturnCachedCategories_IfTheyAreCached()
         {
-            cacheServiceMock.Setup(c => c.GetData<List<CategoryGetDto>>("categories")).ReturnsAsync(() => new List<CategoryGetDto>()
+            cacheServiceMock.Setup(c => c.GetData<List<CategoryGetDto>>("categories-angel")).ReturnsAsync(() => new List<CategoryGetDto>()
             {
                 new CategoryGetDto()
                 {
