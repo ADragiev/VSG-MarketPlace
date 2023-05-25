@@ -20,14 +20,14 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost("{product-id}")]
-        public async Task<GenericSimpleValueGetDto<string>> UploadImage(int productId, [FromForm] ImageCreateDto image)
+        public async Task<GenericSimpleValueGetDto<string>> UploadImage([FromRoute(Name = "product-id")] int productId, [FromForm] ImageCreateDto image)
         {
             await imageValidator.ValidateAndThrowAsync(image);
             return await imageService.UploadImageAsync(productId, image);
         }
 
         [HttpDelete("{product-id}")]
-        public async Task DeleteImage(int productId)
+        public async Task DeleteImage([FromRoute(Name = "product-id")] int productId)
         {
             await imageService.DeleteImageByProductIdAsync(productId);
         }
