@@ -5,10 +5,12 @@ using Application.Models.GenericModels.Dtos;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.LocationModels.Interfaces;
+using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enums;
 using System.Net;
 
 namespace Application.Services
@@ -18,14 +20,17 @@ namespace Application.Services
         private readonly IProductRepository productRepo;
         private readonly IMapper mapper;
         private readonly IImageService imageService;
+        private readonly IOrderRepository orderRepository;
 
         public ProductService(IProductRepository productRepo,
             IMapper mapper,
-            IImageService imageService)
+            IImageService imageService,
+            IOrderRepository orderRepository)
         {
             this.productRepo= productRepo;
             this.mapper = mapper;
             this.imageService = imageService;
+            this.orderRepository = orderRepository;
         }
 
         public async Task<GenericSimpleValueGetDto<int>> CreateAsync(ProductCreateDto dto)
@@ -77,9 +82,8 @@ namespace Application.Services
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
 
-            var productPendingOrdersCount = await productRepo.GetProductPendingOrdersCountAsync(id);
-
-            if(productPendingOrdersCount > 0)
+            var productPendingOrdersCount = (await orderRepository.AllAsync()).Where(o => o.ProductId == id && o.Status == OrderStatus.Pending).Count();
+            if (productPendingOrdersCount > 0)
             {
                 throw new HttpException("The product you want to delete has pending orders and cannot be deleted. Make sure you delete them before deleting product.", HttpStatusCode.BadRequest);
             }

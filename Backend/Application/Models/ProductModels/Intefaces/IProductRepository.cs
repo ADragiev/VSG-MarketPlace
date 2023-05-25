@@ -14,7 +14,5 @@ namespace Application.Models.ProductModels.Intefaces
         Task<List<ProductMarketPlaceGetDto>> GetAllIndexProductsAsync();
 
         Task<List<ProductInventoryGetDto>> GetAllInventoryProductsAsync();
-
-        Task<int> GetProductPendingOrdersCountAsync(int productId);
     }
 }

@@ -46,15 +46,5 @@ namespace Infrastructure.Repositories
 
             return products.ToList();
         }
-
-        public async Task<int> GetProductPendingOrdersCountAsync(int productId)
-        {
-            var sql = @"SELECT COUNT(*) FROM [Order]
-                        WHERE Status = 0 AND ProductId = @productId";
-
-            var count = await connection.QueryFirstOrDefaultAsync<int>(sql, new { productId }, transaction);
-
-            return count;
-        }
     }
 }
