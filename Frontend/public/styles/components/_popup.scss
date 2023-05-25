@@ -5,7 +5,6 @@
     -ms-user-select: none;
     user-select: none;
   }
-  
    .popuptext {
     display: flex;
     flex-direction: column;
@@ -49,18 +48,7 @@
      
     }
   }
-  
-  // .popup .popuptext::after {
-  //   content: "";
-  //   position: absolute;
-  //   top: bottom100%;
-  //   left: 50%;
-  //   margin-left: -5px;
-  //   border-width: 5px;
-  //   border-style: solid;
-  //   border-color: $white-color transparent transparent transparent;
-  // }
-  
+
   .popup .show {
     visibility: visible;
     -webkit-animation: fadeInAnimation 1s;

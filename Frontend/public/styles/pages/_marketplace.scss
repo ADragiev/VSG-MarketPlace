@@ -1,11 +1,5 @@
 @import "../abstracts/mixins";
 
-//////////////MAIN/////////////
-/// 
-/// 
-
-
-
 .container {
   display: flex;
   justify-content: space-evenly;
@@ -123,7 +117,6 @@
   border-radius: 25px;
   background: $main-color;
 }
-////////////POPUP////////
 
 ////////////// ITEM DETAILS POPUP////////////
 .modal {
@@ -252,7 +245,6 @@
     }
   }
  
-  
   .menu-item{
     span{
     @include roboto-font;
@@ -330,7 +322,6 @@
   .sidebar{
     display: none;
   }
-
 
   .details-section{
     flex-direction: column;
