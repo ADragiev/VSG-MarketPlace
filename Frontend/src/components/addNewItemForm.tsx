@@ -15,18 +15,23 @@ import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
 import { toast } from "react-toastify";
+import { ICategory, IInventoryItem } from "../types";
 
 interface AddNewItemlProps {
   onClose: () => void;
+  setProducts: (p)=> void
 }
 
-const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
+const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element => {
   const [open, setOpen] = useState(true);
+  const [selectOption, setSelectOption] = useState("");
+  const [locationOption, setLocationOption] = useState("");
 
   const { data: categories } = useGetCategoriesQuery("");
   const { data: locations } = useGetLocationsQuery("");
-  const [createProduct] = useCreateProductMutation();
-  const [postImage] = usePostImageMutation();
+  const [createProduct, {isLoading: fetchingProduct}] = useCreateProductMutation();
+  
+  const [postImage, {isLoading: fetchingImage}] = usePostImageMutation();
 
   const {
     register,
@@ -52,22 +57,27 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
   );
   const onSubmit = async (data) => {
     const response = await createProduct(data);
+    const selectedCategory = categories?.filter((c: ICategory)=> c.id == data.categoryId)[0]
+    const id = response.data.returnedValue;
     
     const image = getValues("image")[0] as unknown as File;
     if (imageValue != "../../images/no_image-placeholder.png") {
       const imageFormData = new FormData();
       imageFormData.append("image", image);
-      const id = response.data.returnedValue;
-      await postImage({ id, imageFormData });
+      const imageUrl = await postImage({ id, imageFormData });
+      const newProduct = {...data,id, image: imageUrl.data.returnedValue, category: selectedCategory.name}
+      setProducts((oldProducts: IInventoryItem[]) => [...oldProducts, newProduct])
+    }
+    else{
+      const newProduct = {...data,id, category: selectedCategory.name}
+      setProducts((oldProducts: IInventoryItem[]) => [...oldProducts, newProduct])
     }
     if (!response.error) {
+      
       toast.success("Successfully added item!");
     } 
     setOpen(false);
   };
-
-  const [selectOption, setSelectOption] = useState("");
-  const [locationOption, setLocationOption] = useState("");
 
   if (!open) {
     onClose();
@@ -271,7 +281,7 @@ const AddNewItemForm = ({ onClose }: AddNewItemlProps): JSX.Element => {
               </div>
             </div>
           </div>
-          <button id="submitFormBtn" type="submit">
+          <button id="submitFormBtn" type="submit" disabled={fetchingProduct|| fetchingImage}>
             Add
           </button>
         </form>

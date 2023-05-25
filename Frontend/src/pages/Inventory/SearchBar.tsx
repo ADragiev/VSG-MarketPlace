@@ -1,6 +1,5 @@
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { ReactNode, useState } from "react";
-import { useGetLocationsQuery } from "../../services/locationService";
+import {  TextField } from "@mui/material";
+import { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;

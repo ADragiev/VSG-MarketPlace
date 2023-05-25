@@ -4,11 +4,14 @@ import CustomizedTables from "./Table";
 import SearchBar from "./SearchBar";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useGetLocationsQuery } from "../../services/locationService";
+import { IInventoryItem, ILocation } from "../../types";
 
 function Inventory(): JSX.Element {
   const [isAddNewItemFormOpen, setIsAddNewItemFormOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { data: locations } = useGetLocationsQuery("");
+  const [products, setProducts] = useState<IInventoryItem[]>([]);
+
 
   const [locationValue, setLocationValue] = useState(0);
 
@@ -28,25 +31,23 @@ function Inventory(): JSX.Element {
   return (
     <main className="main">
       {isAddNewItemFormOpen && (
-        <AddNewItemForm onClose={() => setIsAddNewItemFormOpen(false)} />
+        <AddNewItemForm setProducts={setProducts} onClose={() => setIsAddNewItemFormOpen(false)} />
       )}
       <div className="table-wrapper">
         <SearchBar onSearchInputChange={handleSearchInputChange} searchQuery={searchQuery} >
-          <FormControl variant="standard" sx={{ ml: 3, mr: 3, minWidth: 160 }}>
-            <InputLabel id="demo-simple-select-standard-label" >
+          <FormControl className="inputField" variant="standard" sx={{ ml: 3, mr: 3, minWidth: 160,}}>
+            <InputLabel focused={false} >
               Show items from
             </InputLabel>
             <Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
               label="location"
               onChange={handleLocationChange}
-              
+              value={locationValue}
             >
               <MenuItem key={0} value={0}>
                 All
               </MenuItem>
-              {locations?.map((l) => (
+              {locations?.map((l: ILocation) => (
                 <MenuItem value={l.id} key={l.id}>
                   {l.name}
                 </MenuItem>
@@ -75,6 +76,8 @@ function Inventory(): JSX.Element {
         <CustomizedTables
           searchQuery={searchQuery}
           locationValue={locationValue}
+          products= {products}
+          setProducts = {setProducts}
         />
       </div>
     </main>

@@ -38,6 +38,7 @@ const PopperComponent = ({
   anchor,
   setAnchor,
 }: PopperComponentProps) => {
+  
   return (
     <StyledPopper
       open={Boolean(anchor)}
@@ -83,7 +84,7 @@ const PopperComponent = ({
               <div className="popuptext">
                 <span>{str}</span>
                 <div className="buttons-container">
-                  <button onClick={onYes} className="btnYesNo">
+                  <button onClick={onYes} className="btnYesNo" >
                     YES
                   </button>
                   <button onClick={() => setAnchor(null)} className="btnYesNo">

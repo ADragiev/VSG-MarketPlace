@@ -11,7 +11,7 @@ type ProductProps = {
 };
 const Card = ({ product }: ProductProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [createOrder] = useCreateOrderMutation();
+  const [createOrder, ] = useCreateOrderMutation();
 
   const options = [];
   for (let i = 1; i <= product.saleQty; i++) {

@@ -135,7 +135,9 @@
     .MuiInputBase-root::after {
       border-bottom: #000;
     }
+   
   }
+  
   #submitFormBtn {
     @include flex-center;
     font-size: 18px;
@@ -213,6 +215,7 @@
     display: block;
     #search-container {
       justify-content: space-around;
+      
       .input-div {
         width: 40%;
       }

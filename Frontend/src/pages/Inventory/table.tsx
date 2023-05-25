@@ -27,15 +27,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 type TableProps = {
   searchQuery: string;
-  locationValue: number
+  locationValue: number,
+  products: IInventoryItem[],
+  setProducts: (p)=> void
+  
 };
 
-export default function CustomizedTables({ searchQuery, locationValue }: TableProps) {
+export default function CustomizedTables({ searchQuery, locationValue, products, setProducts }: TableProps) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { data } = useGetInventoryProductsQuery("");
 
-  const [products, setProducts] = useState<IInventoryItem[]>([]);
   let filteredPRoducts = []
 
   useEffect(() => {
@@ -81,7 +83,7 @@ export default function CustomizedTables({ searchQuery, locationValue }: TablePr
           {filteredPRoducts
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row) => (
-              <TableRowComponent product={row} key={row.id} />
+              <TableRowComponent products={products} setProducts={setProducts} product={row} key={row.id} />
             ))}
         </TableBody>
         <TableFooter>

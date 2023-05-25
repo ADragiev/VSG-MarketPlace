@@ -10,8 +10,9 @@ import { toast } from "react-toastify";
 
 type InventoryItemsProps = {
   product: IInventoryItem;
+  products: IInventoryItem[];
+  setProducts: (p) => void;
 };
-
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -25,22 +26,27 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-const TableRowComponent = ({ product }: InventoryItemsProps): JSX.Element => {
+const TableRowComponent = ({
+  product,
+  setProducts,
+}: InventoryItemsProps): JSX.Element => {
   const [isEditItemFormOpen, setIsEditItemFormOpen] = useState(false);
   const [deleteProduct] = useDeleteProductMutation();
+  const str = `Are you sure you want to delete this item?`;
 
   const handleEditItemBtn = () => {
     setIsEditItemFormOpen(true);
   };
 
   const onDelete = async () => {
-  const response =  await deleteProduct(product.id);
-  if (!response.error) {    
-    toast.success('Successfully deleted item!')
-   }
+    const response = await deleteProduct(product.id);
+    if (!response.error) {
+      toast.success("Successfully deleted item!");
+      setProducts((oldProducts: IInventoryItem[]) =>
+        oldProducts.filter((p) => p !== product)
+      );
+    }
   };
-
-  const str = `Are you sure you want to delete this item?`;
 
   return (
     <>
