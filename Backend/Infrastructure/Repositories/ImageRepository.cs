@@ -18,5 +18,14 @@ namespace Infrastructure.Repositories
             : base(marketPlaceContext)
         {
         }
+
+        public async Task<Image> GetImageByProductIdAsync(int productId)
+        {
+            var sql = @"SELECT Id, PublicId
+                          FROM Image
+                          WHERE ProductId = @productId";
+
+            return await connection.QueryFirstOrDefaultAsync<Image>(sql, new { productId }, transaction);
+        }
     }
 }

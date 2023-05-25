@@ -31,7 +31,7 @@ namespace Application.Services
         {
             await ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
 
-            var image = (await imageRepo.AllAsync()).FirstOrDefault(i => i.ProductId == productId);
+            var image = await imageRepo.GetImageByProductIdAsync(productId);
 
             if (image!=null)
             {
@@ -52,8 +52,8 @@ namespace Application.Services
 
         private async Task SaveImageInDatabase(int productId, string publicId)
         {
-            var image = (await imageRepo.AllAsync()).FirstOrDefault(i => i.ProductId == productId);
-            if(image == null)
+            var image = await imageRepo.GetImageByProductIdAsync(productId);
+            if (image == null)
             {
                 Image newImage = new Image()
                 {
