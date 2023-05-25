@@ -33,6 +33,7 @@
   }
   #searchIconAnchor{
     align-self: end;
+    margin-right: 4px;
   }
   input {
     height: 80%;
@@ -209,6 +210,7 @@
     height: 88vh;
     width: 90vw;
     justify-content: center;
+    align-items: start;
     display: flex;
   }
   #inventoryMain {

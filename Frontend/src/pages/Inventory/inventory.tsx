@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useGetLocationsQuery } from "../../services/locationService";
 import { IInventoryItem, ILocation } from "../../types";
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
 function Inventory(): JSX.Element {
   const [isAddNewItemFormOpen, setIsAddNewItemFormOpen] = useState(false);
@@ -35,7 +36,8 @@ function Inventory(): JSX.Element {
       )}
       <div className="table-wrapper">
         <SearchBar onSearchInputChange={handleSearchInputChange} searchQuery={searchQuery} >
-          <FormControl className="inputField" variant="standard" sx={{ ml: 3, mr: 3, minWidth: 160,}}>
+        <LocationOnOutlinedIcon sx={{ ml: 3, mr:0.2}}/>
+          <FormControl className="inputField" variant="standard" sx={{ mr: 3, minWidth: 140,}}>
             <InputLabel focused={false} >
               Show items from
             </InputLabel>

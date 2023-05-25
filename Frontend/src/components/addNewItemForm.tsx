@@ -9,7 +9,6 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-
 import { useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";

@@ -51,7 +51,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
       description: product.description,
       categoryId: product.categoryId,
       locationId: product.locationId,
-      saleQty: product.saleQty || null ,
+      saleQty: product.saleQty || null,
       price: product.price || null,
       combinedQty: product.combinedQty,
       image: product.image,
@@ -87,20 +87,19 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
 
     const id = product.id;
     const response = await updateProduct({ id, data });
-    const image = getValues("image")[0] as unknown as File;
-    const imageFormData = new FormData();
-    imageFormData.append("image", image);
 
-    if (data.image != imageValue) {
-      await postImage({ id, imageFormData });
-    }
     if (imageValue == "../../images/no_image-placeholder.png") {
       await deleteImage(id);
+    } else if (data.image != imageValue) {
+      const image = getValues("image")[0] as unknown as File;
+      const imageFormData = new FormData();
+      imageFormData.append("image", image);
+      await postImage({ id, imageFormData });
     }
 
     if (!response.error) {
       toast.success("Successfully updated item!");
-    } 
+    }
     setOpen(false);
   };
 
