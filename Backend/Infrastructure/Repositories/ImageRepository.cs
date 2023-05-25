@@ -21,7 +21,10 @@ namespace Infrastructure.Repositories
 
         public async Task<ImageGetDto> GetImageByProductIdAsync(int productId)
         {
-            var sql = @"SELECT * FROM GetImageByProductId(@productId)";
+            var sql = @"SELECT i.Id, i.PublicId
+                        FROM Product AS p 
+                        JOIN Image AS i on p.Id = i.ProductId
+                        WHERE p.Id= @productId";
 
             return await connection.QueryFirstOrDefaultAsync<ImageGetDto>(sql, new { productId }, transaction);
         }

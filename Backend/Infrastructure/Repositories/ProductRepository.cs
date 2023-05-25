@@ -22,7 +22,12 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductMarketPlaceGetDto>> GetAllIndexProductsAsync()
         {
-            var sql = @"SELECT * FROM IndexProducts";
+            var sql = @" SELECT p.Id, p.Name, p.Description, c.Name AS Category, p.Price, p.SaleQty, i.PublicId AS Image
+                                        FROM 
+                                        Product AS p 
+                                        JOIN Category AS c ON p.CategoryId = c.Id 
+                                        LEFT JOIN Image AS i ON i.ProductId = p.Id
+                                        WHERE p.SaleQty > 0";
 
             var products = await connection.QueryAsync<ProductMarketPlaceGetDto>(sql, null, transaction);
             return products.ToList();
@@ -30,7 +35,12 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductInventoryGetDto>> GetAllInventoryProductsAsync()
         {
-            var sql = @"SELECT * FROM InventoryProducts";
+            var sql = @"SELECT p.Id, p.Code, p.Name, p.Price, p.Description, c.Name AS Category, p.CategoryId, p.SaleQty, p.CombinedQty, i.PublicId AS Image, l.Name AS Location, p.LocationId
+                                            FROM
+                                            [Product] AS p
+                                            JOIN [Category] AS c ON p.CategoryId = c.Id
+                                            JOIN [Location] AS l ON p.LocationId = l.Id
+                                            LEFT JOIN [Image] AS i ON i.ProductId = p.Id";
 
             var products = await connection.QueryAsync<ProductInventoryGetDto>(sql, null, transaction);
 
@@ -39,7 +49,8 @@ namespace Infrastructure.Repositories
 
         public async Task<int> GetProductPendingOrdersCountAsync(int productId)
         {
-            var sql = "SELECT dbo.GetProductPendingOrdersCount(@productId)";
+            var sql = @"SELECT COUNT(*) FROM [Order]
+                        WHERE Status = 0 AND ProductId = @productId";
 
             var count = await connection.QueryFirstOrDefaultAsync<int>(sql, new { productId }, transaction);
 

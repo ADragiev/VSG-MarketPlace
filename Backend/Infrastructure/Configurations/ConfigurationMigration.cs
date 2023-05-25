@@ -26,7 +26,6 @@ namespace Infrastructure.Configurations
                 .ScanIn(typeof(CategoryTable).Assembly).For.Migrations());
 
             serviceCollection.AddSingleton<Database>();
-            serviceCollection.AddSingleton<ViewsAndFunctions>();
 
             return serviceCollection;
         }
@@ -44,13 +43,6 @@ namespace Infrastructure.Configurations
             using var scope = app.ApplicationServices.CreateScope();
             var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
             runner.MigrateUp();
-        }
-
-        public static void CreateViewsAndFunctions(this IApplicationBuilder app)
-        {
-            using var scope = app.ApplicationServices.CreateScope();
-            var views = scope.ServiceProvider.GetRequiredService<ViewsAndFunctions>();
-            views.CreateViewsAndFunctions();
         }
     }
 }
