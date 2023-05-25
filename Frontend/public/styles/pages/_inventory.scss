@@ -16,7 +16,6 @@
 .table-wrapper {
   flex-wrap: wrap;
   display: flex;
-  justify-content: flex-end;
   flex-direction: row;
   height: auto;
   border-radius: 20px;
@@ -25,9 +24,15 @@
 ///////SEARCH////////////
 #search-container {
   margin: 20px 0px 40px 0px;
-  @include flex-center;
+  display: flex;
+    justify-content: flex-end;
+    align-items: end;
+    width: 90vw;
   #searchIcon {
     margin-right: 5px;
+  }
+  #searchIconAnchor{
+    align-self: end;
   }
   input {
     height: 80%;
@@ -36,11 +41,10 @@
     border: 0;
   }
   .input-div {
-    border-bottom: 1px solid $black-color;
-    margin-right: 20px;
     display: flex;
   }
 }
+
 #addNewItemBtn {
   @include flex-center;
   @include roboto-font;

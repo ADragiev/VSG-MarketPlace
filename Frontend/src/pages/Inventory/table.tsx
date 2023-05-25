@@ -27,14 +27,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 type TableProps = {
   searchQuery: string;
+  locationValue: number
 };
 
-export default function CustomizedTables({ searchQuery }: TableProps) {
+export default function CustomizedTables({ searchQuery, locationValue }: TableProps) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { data } = useGetInventoryProductsQuery("");
 
   const [products, setProducts] = useState<IInventoryItem[]>([]);
+  let filteredPRoducts = []
 
   useEffect(() => {
     if (data) {
@@ -48,10 +50,19 @@ export default function CustomizedTables({ searchQuery }: TableProps) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  const filteredPRoducts = products.filter((p) =>
+  if (locationValue === 0) {
+     filteredPRoducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchQuery)
   );
+  }
+  else{
+    filteredPRoducts = products.filter((p) =>
+   p.locationId == locationValue
+  ).filter((p) =>
+  p.name.toLowerCase().includes(searchQuery)
+);
+  }
+ 
 
   return (
     <TableContainer sx={{ border: "1px solid #B3B3B3", borderRadius: "4px" }}>

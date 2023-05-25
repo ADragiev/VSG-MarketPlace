@@ -1,19 +1,23 @@
-import { ReactNode } from "react";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { ReactNode, useState } from "react";
+import { useGetLocationsQuery } from "../../services/locationService";
 
 type Props = {
   children: ReactNode;
   onSearchInputChange: (e: React.FormEvent) => void;
+  searchQuery: string
 };
 
-const SearchBar = ({ children, onSearchInputChange }: Props) => {
+const SearchBar = ({ children, onSearchInputChange, searchQuery }: Props) => {
+
   return (
     <div id="search-container">
       <div className="input-div">
-        <a>
+        <a id="searchIconAnchor">
           <svg
             id="searchIcon"
-            width={14}
-            height={14}
+            width={20}
+            height={20}
             viewBox="0 0 14 14"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -24,11 +28,15 @@ const SearchBar = ({ children, onSearchInputChange }: Props) => {
             />
           </svg>
         </a>
-        <input
-          onInput={onSearchInputChange}
-          type="search"
-          placeholder="Search..."
-        />
+        <TextField
+                id="search"
+                label="Search..."
+                className="inputField"
+                variant="standard"
+                value={searchQuery}
+                InputLabelProps={{ style: { color: "#9A9A9A" } }}
+                onInput={onSearchInputChange}
+              />
       </div>
       {children}
     </div>

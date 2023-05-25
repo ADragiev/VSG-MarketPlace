@@ -12,18 +12,18 @@ const ordersServices = baseApi.injectEndpoints({
       query: () => "/Order",
     }),
     [GetMyOrders]: builder.query({
-      query: () => "/MyOrders",
+      query: () => "Order/My-Orders",
     }),
     [ConfirmOrder]: builder.mutation({
       query: (id) => ({
         method: "PUT",
-        url: `/Order/${id}`,
+        url: `/Order/Complete/${id}`,
       }),
     }),
     [RejectOrder]: builder.mutation({
       query: (id) => ({
-        method: "DELETE",
-        url: `/Order/${id}`,
+        method: "PUT",
+        url: `/Order/Reject/${id}`,
       }),
     }),
     [CreateOrder]: builder.mutation({

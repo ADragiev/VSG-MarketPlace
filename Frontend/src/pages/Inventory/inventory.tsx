@@ -2,10 +2,20 @@ import { useState } from "react";
 import AddNewItemForm from "../../components/AddNewItemForm";
 import CustomizedTables from "./Table";
 import SearchBar from "./SearchBar";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { useGetLocationsQuery } from "../../services/locationService";
 
 function Inventory(): JSX.Element {
   const [isAddNewItemFormOpen, setIsAddNewItemFormOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const { data: locations } = useGetLocationsQuery("");
+
+  const [locationValue, setLocationValue] = useState(0);
+
+  const handleLocationChange = (event) => {
+    setLocationValue(event.target.value);
+    setSearchQuery("");
+  };
 
   const handleSearchInputChange = (event: React.FormEvent<Element>) => {
     setSearchQuery((event.target as HTMLInputElement).value);
@@ -21,7 +31,29 @@ function Inventory(): JSX.Element {
         <AddNewItemForm onClose={() => setIsAddNewItemFormOpen(false)} />
       )}
       <div className="table-wrapper">
-        <SearchBar onSearchInputChange={handleSearchInputChange}>
+        <SearchBar onSearchInputChange={handleSearchInputChange} searchQuery={searchQuery} >
+          <FormControl variant="standard" sx={{ ml: 3, mr: 3, minWidth: 160 }}>
+            <InputLabel id="demo-simple-select-standard-label" >
+              Show items from
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="location"
+              onChange={handleLocationChange}
+              
+            >
+              <MenuItem key={0} value={0}>
+                All
+              </MenuItem>
+              {locations?.map((l) => (
+                <MenuItem value={l.id} key={l.id}>
+                  {l.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <button
             id="addNewItemBtn"
             type="button"
@@ -40,7 +72,10 @@ function Inventory(): JSX.Element {
             <span>Add new</span>
           </button>
         </SearchBar>
-        <CustomizedTables searchQuery={searchQuery} />
+        <CustomizedTables
+          searchQuery={searchQuery}
+          locationValue={locationValue}
+        />
       </div>
     </main>
   );
