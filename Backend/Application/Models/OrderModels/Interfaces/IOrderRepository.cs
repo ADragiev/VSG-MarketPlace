@@ -11,7 +11,5 @@ namespace Application.Models.OrderModels.Interfaces
 {
     public interface IOrderRepository : IGenericRepository<Order>
     {
-        Task<List<OrderPendingDto>> GetAllPendingOrdersAsync();
-        Task<List<OrderGetMineDto>> GetMyOrdersAsync(string email);
     }
 }

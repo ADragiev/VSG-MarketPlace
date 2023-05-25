@@ -74,18 +74,15 @@ namespace Application.Services
 
         public async Task<List<OrderPendingDto>> GetAllPendingOrdersAsync()
         {
-            var pendingOrders = await orderRepo.GetAllPendingOrdersAsync();
-            pendingOrders.ForEach(o => o.Date = FormatDate(o.Date));
-            return pendingOrders;
+            var pendingOrders = (await orderRepo.AllAsync()).Where(o=>o.Status == OrderStatus.Pending);
+            return mapper.Map<List<OrderPendingDto>>(pendingOrders);
         }
 
         public async Task<List<OrderGetMineDto>> GetMyOrdersAsync()
         {
             var user = userService.GetUserEmail();
-            var myOrders = await orderRepo.GetMyOrdersAsync(user);
-            myOrders.ForEach(o => o.Status = ((OrderStatus)int.Parse(o.Status)).ToString());
-            myOrders.ForEach(o => o.Date = FormatDate(o.Date));
-            return myOrders;
+            var myOrders = (await orderRepo.AllAsync()).Where(o => o.OrderedBy == user);
+            return mapper.Map<List<OrderGetMineDto>>(myOrders);
         }
 
         public async Task<GenericSimpleValueGetDto<string>> RejectOrderAsync(int id)
@@ -112,15 +109,6 @@ namespace Application.Services
             await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Declined);
 
             return new GenericSimpleValueGetDto<string>(OrderStatus.Declined.ToString());
-        }
-
-        private string FormatDate(string dateString)
-        {
-            if (DateTime.TryParse(dateString, CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
-            {
-                return date.ToString(DateFormatConstants.DefaultDateFormat);
-            };
-            throw new HttpException("Cannot parse date", HttpStatusCode.BadRequest);
         }
     }
 }

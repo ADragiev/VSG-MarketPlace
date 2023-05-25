@@ -16,6 +16,14 @@ namespace Application.Helpers.Profiles
         public OrderProfile()
         {
             CreateMap<OrderCreateDto, Order>();
+
+            CreateMap<Order, OrderPendingDto>()
+                .ForMember(dest => dest.Date, src => src.MapFrom(src => src.Date.ToString(DateFormatConstants.DefaultDateFormat)));
+
+            CreateMap<Order, OrderGetMineDto>()
+                .ForMember(dest => dest.Date, src => src.MapFrom(src => src.Date.ToString(DateFormatConstants.DefaultDateFormat)))
+                .ForMember(dest => dest.Status, src => src.MapFrom(src => src.Status.ToString()));
+
         }
     }
 }
