@@ -74,14 +74,14 @@ namespace Application.Services
 
         public async Task<List<OrderPendingDto>> GetAllPendingOrdersAsync()
         {
-            var pendingOrders = (await orderRepo.AllAsync()).Where(o=>o.Status == OrderStatus.Pending);
+            var pendingOrders = await orderRepo.GetAllPendingOrdersAsync();
             return mapper.Map<List<OrderPendingDto>>(pendingOrders);
         }
 
         public async Task<List<OrderGetMineDto>> GetMyOrdersAsync()
         {
             var user = userService.GetUserEmail();
-            var myOrders = (await orderRepo.AllAsync()).Where(o => o.OrderedBy == user);
+            var myOrders = await orderRepo.GetMyOrdersAsync(user);
             return mapper.Map<List<OrderGetMineDto>>(myOrders);
         }
 

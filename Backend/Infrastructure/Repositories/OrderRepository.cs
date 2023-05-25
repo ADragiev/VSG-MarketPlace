@@ -18,5 +18,23 @@ namespace Infrastructure.Repositories
             : base(marketPlaceContext)
         {
         }
+
+        public async Task<List<Order>> GetAllPendingOrdersAsync()
+        {
+            var sql = @"SELECT * FROM [Order]
+                        WHERE Status = 0";
+
+            var pendingOrders = await connection.QueryAsync<Order>(sql, null, transaction);
+            return pendingOrders.ToList();
+        }
+
+        public async Task<List<Order>> GetMyOrdersAsync(string user)
+        {
+            var sql = @"SELECT * FROM [Order]
+                        WHERE OrderedBy = @user";
+
+            var orders = await connection.QueryAsync<Order>(sql, new { user }, transaction);
+            return orders.ToList();
+        }
     }
 }
