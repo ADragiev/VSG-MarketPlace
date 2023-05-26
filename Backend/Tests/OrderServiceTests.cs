@@ -283,58 +283,6 @@ namespace Tests
         }
         //RejectOrder
 
-        //MyOrders
-        //[Test]
-        //public async Task MyOrders_ShouldReturnOrders_WithFormatedDate()
-        //{
-        //    var firstOrder = CreateBaseMyOrder();
-        //    var secondOrder = CreateBaseMyOrder();
-        //    secondOrder.Id = 2;
-        //    List<OrderGetMineDto> myOrdersDto = new List<OrderGetMineDto>() { firstOrder, secondOrder };
-
-        //    orderRepoMock.Setup(o => o.GetMyOrdersAsync(It.IsAny<string>())).ReturnsAsync(myOrdersDto);
-        //    userService.Setup(u => u.GetUserEmail()).Returns("User");
-        //    var orders = await orderService.GetMyOrdersAsync();
-
-        //    var isDateFormated = DateTime.TryParseExact(orders.First().Date, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date);
-
-        //    Assert.IsTrue(isDateFormated);
-        //}
-
-        //[Test]
-        //public async Task MyOrders_ShouldReturnOrders_WithFormatedEnum()
-        //{
-        //    var firstOrder = CreateBaseMyOrder();
-        //    var secondOrder = CreateBaseMyOrder();
-        //    secondOrder.Id = 2;
-        //    List<OrderGetMineDto> myOrdersDto = new List<OrderGetMineDto>() { firstOrder, secondOrder };
-        //    userService.Setup(u => u.GetUserEmail()).Returns("User");
-        //    orderRepoMock.Setup(o => o.GetMyOrdersAsync(It.IsAny<string>())).ReturnsAsync(myOrdersDto);
-
-        //    var orders = await orderService.GetMyOrdersAsync();
-
-        //    Assert.IsTrue(orders.First().Status == "Pending");
-        //}
-        //MyOrders
-
-        //PendingOrders
-        //[Test]
-        //public async Task PendingOrders_ShouldReturnOrders_WithFormatedDate()
-        //{
-        //    var firstOrder = CreateBasePendingOrder();
-        //    var secondOrder = CreateBasePendingOrder();
-        //    secondOrder.Id = 2;
-        //    List<OrderPendingDto> myOrdersDto = new List<OrderPendingDto>() { firstOrder, secondOrder };
-
-        //    orderRepoMock.Setup(o => o.GetAllPendingOrdersAsync()).ReturnsAsync(myOrdersDto);
-
-        //    var orders = await orderService.GetAllPendingOrdersAsync();
-
-        //    var isDateFormated = DateTime.TryParseExact(orders.First().Date, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date);
-
-        //    Assert.IsTrue(isDateFormated);
-        //}
-        ////PendingOrders
 
         private static Product CreateBaseProduct()
         {

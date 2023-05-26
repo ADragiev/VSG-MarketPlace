@@ -1,6 +1,7 @@
 ﻿using Application.Helpers.Constants;
 using Application.Models.ExceptionModels;
 using Application.Models.ImageModels.Interfaces;
+using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
 using Application.Services;
@@ -21,17 +22,19 @@ namespace Tests
         private Mock<IProductRepository> productRepoMock;
         private Mock<IMapper> mapperMock;
         private Mock<IImageService> imageServiceMock;
+        private Mock<IOrderRepository> orderRepoMock;
         private IProductService productService;
 
-        //[SetUp]
-        //public void SetUp()
-        //{
-        //    productRepoMock = new Mock<IProductRepository>();
-        //    mapperMock = new Mock<IMapper>();
-        //    imageServiceMock = new Mock<IImageService>();
+        [SetUp]
+        public void SetUp()
+        {
+            productRepoMock = new Mock<IProductRepository>();
+            mapperMock = new Mock<IMapper>();
+            imageServiceMock = new Mock<IImageService>();
+            orderRepoMock = new Mock<IOrderRepository>();
 
-        //    productService = new ProductService(productRepoMock.Object, mapperMock.Object, imageServiceMock.Object);
-        //}
+            productService = new ProductService(productRepoMock.Object, mapperMock.Object, imageServiceMock.Object, orderRepoMock.Object);
+        }
 
         [Test]
         public async Task GetAllForIndexAsync_MustAddBaseUrlToImage_Before_ItReturns()
@@ -97,8 +100,32 @@ namespace Tests
         public void DeleteAsync_MustNotThrow_IfIdIsValid()
         {
             productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct());
+            orderRepoMock.Setup(o => o.GetAllPendingOrdersAsync()).ReturnsAsync(() =>new  List<Order>());
 
             Assert.DoesNotThrowAsync(() => productService.DeleteAsync(1));
+        }
+
+        [Test]
+        public void DeleteAsync_MustThrow_IfProductIsInPendingOrder()
+        {
+            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => CreateProduct());
+            orderRepoMock.Setup(o => o.GetAllPendingOrdersAsync()).ReturnsAsync(() => new List<Order>()
+            {
+                new Order()
+                {
+                    Id = 1,
+                    Price=200,
+                    OrderedBy="User",
+                    ProductCode="asd",
+                    Date = DateTime.Now,
+                    ProductId=1,
+                    ProductName="ad",
+                    Status=0,
+                    Qty=2,
+                }
+            });
+
+            Assert.ThrowsAsync<HttpException>(() => productService.DeleteAsync(1));
         }
 
 
