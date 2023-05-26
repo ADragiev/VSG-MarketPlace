@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.InitialMigrations
 {
     [Migration(202304181021)]
-    public class LogTable : Migration
+    public class CreateLogTable : Migration
     {
         public override void Up()
         {

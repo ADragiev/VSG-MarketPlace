@@ -32,7 +32,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors("CORSPolicy");
 app.CreateDatabase();
-app.CreateTables();
+app.MigrateDatabase();
 
 app.UseHttpsRedirection();
 

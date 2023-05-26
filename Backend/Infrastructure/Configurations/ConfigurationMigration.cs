@@ -1,6 +1,6 @@
 ﻿using CloudinaryDotNet;
 using FluentMigrator.Runner;
-using Infrastructure.Migrations;
+using Infrastructure.Migrations.InitialMigrations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -23,9 +23,9 @@ namespace Infrastructure.Configurations
             .ConfigureRunner(rb => rb
                 .AddSqlServer()
                 .WithGlobalConnectionString("DefaultConnection")
-                .ScanIn(typeof(CategoryTable).Assembly).For.Migrations());
+                .ScanIn(typeof(CreateCategoryTable).Assembly).For.Migrations());
 
-            serviceCollection.AddSingleton<Database>();
+            serviceCollection.AddSingleton<CreateDatabase>();
 
             return serviceCollection;
         }
@@ -34,11 +34,11 @@ namespace Infrastructure.Configurations
         {
             using var scope = app.ApplicationServices.CreateScope();
 
-            var database = scope.ServiceProvider.GetRequiredService<Database>();
-            database.CreateDatabase();
+            var database = scope.ServiceProvider.GetRequiredService<CreateDatabase>();
+            database.Create();
         }
 
-        public static void CreateTables(this IApplicationBuilder app)
+        public static void MigrateDatabase(this IApplicationBuilder app)
         {
             using var scope = app.ApplicationServices.CreateScope();
             var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();

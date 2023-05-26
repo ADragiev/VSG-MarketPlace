@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.InitialMigrations
 {
     [Migration(202304131700)]
-    public class ProductTable : Migration
+    public class CreateProductTable : Migration
     {
         public override void Up()
         {

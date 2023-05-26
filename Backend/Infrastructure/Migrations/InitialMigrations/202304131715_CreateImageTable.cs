@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.InitialMigrations
 {
     [Migration(202304131715)]
-    public class ImageTable : Migration
+    public class CreateImageTable : Migration
     {
         public override void Up()
         {

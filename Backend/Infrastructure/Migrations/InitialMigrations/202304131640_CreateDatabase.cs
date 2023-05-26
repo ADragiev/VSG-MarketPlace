@@ -3,21 +3,21 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.InitialMigrations
 {
-    public class Database
+    public class CreateDatabase
     {
         private readonly string masterConnectionString;
         private readonly string databaseName;
 
-        public Database(IConfiguration config)
+        public CreateDatabase(IConfiguration config)
         {
             masterConnectionString = config.GetConnectionString("MasterConnection");
 
             var csb = new SqlConnectionStringBuilder(config.GetConnectionString("DefaultConnection"));
-            this.databaseName = csb.InitialCatalog;
+            databaseName = csb.InitialCatalog;
         }
-        public void CreateDatabase()
+        public void Create()
         {
             var query = $"SELECT * FROM sys.databases WHERE name = @databaseName";
 
