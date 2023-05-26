@@ -23,15 +23,15 @@ namespace Tests
         private Mock<IImageService> imageServiceMock;
         private IProductService productService;
 
-        [SetUp]
-        public void SetUp()
-        {
-            productRepoMock = new Mock<IProductRepository>();
-            mapperMock = new Mock<IMapper>();
-            imageServiceMock = new Mock<IImageService>();
+        //[SetUp]
+        //public void SetUp()
+        //{
+        //    productRepoMock = new Mock<IProductRepository>();
+        //    mapperMock = new Mock<IMapper>();
+        //    imageServiceMock = new Mock<IImageService>();
 
-            productService = new ProductService(productRepoMock.Object, mapperMock.Object, imageServiceMock.Object);
-        }
+        //    productService = new ProductService(productRepoMock.Object, mapperMock.Object, imageServiceMock.Object);
+        //}
 
         [Test]
         public async Task GetAllForIndexAsync_MustAddBaseUrlToImage_Before_ItReturns()

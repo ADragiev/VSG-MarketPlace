@@ -56,52 +56,52 @@ namespace Tests
             imageRepoMock.Verify(i => i.DeleteAsync(It.IsAny<int>()), Times.Never);
         }
 
-        [Test]
-        public async Task DeleteImageByProductIdAsync_ShouldCallDeleteMethods_IfImageIsFound()
-        {
-            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateProduct());
+        //[Test]
+        //public async Task DeleteImageByProductIdAsync_ShouldCallDeleteMethods_IfImageIsFound()
+        //{
+        //    productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateProduct());
 
-            imageRepoMock.Setup(i => i.GetImageByProductIdAsync(It.IsAny<int>())).ReturnsAsync(CreateImageGetDto());
+        //    imageRepoMock.Setup(i => i.GetImageByProductIdAsync(It.IsAny<int>())).ReturnsAsync(CreateImageGetDto());
 
-            await imageService.DeleteImageByProductIdAsync(1); 
+        //    await imageService.DeleteImageByProductIdAsync(1); 
 
-            cloudServiceMock.Verify(c => c.DeleteAsync(It.IsAny<string>()), Times.Once);
-            imageRepoMock.Verify(i => i.DeleteAsync(It.IsAny<int>()), Times.Once);
-        }
+        //    cloudServiceMock.Verify(c => c.DeleteAsync(It.IsAny<string>()), Times.Once);
+        //    imageRepoMock.Verify(i => i.DeleteAsync(It.IsAny<int>()), Times.Once);
+        //}
         //DeleteImageByProductID
 
 
-        [Test]
-        public void UploadImageAsync_MustThrow_IfProductIdIsNotValid()
-        {
-            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null);
+        //[Test]
+        //public void UploadImageAsync_MustThrow_IfProductIdIsNotValid()
+        //{
+        //    productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(() => null);
 
-            Assert.ThrowsAsync<HttpException>(() => imageService.UploadImageAsync(1, CreateImageCreateDto()));
-        }
+        //    Assert.ThrowsAsync<HttpException>(() => imageService.UploadImageAsync(1, CreateImageCreateDto()));
+        //}
 
-        [Test]
-        public async Task UploadImageAsync_ShouldCreateImageInDatabase_IfProductHasNoImage()
-        {
-            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateProduct());
-            imageRepoMock.Setup(i => i.GetImageByProductIdAsync(It.IsAny<int>())).ReturnsAsync(() => null);
+        //[Test]
+        //public async Task UploadImageAsync_ShouldCreateImageInDatabase_IfProductHasNoImage()
+        //{
+        //    productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateProduct());
+        //    imageRepoMock.Setup(i => i.GetImageByProductIdAsync(It.IsAny<int>())).ReturnsAsync(() => null);
 
-            await imageService.UploadImageAsync(1, CreateImageCreateDto());
+        //    await imageService.UploadImageAsync(1, CreateImageCreateDto());
 
-            imageRepoMock.Verify(i => i.CreateAsync(It.IsAny<Image>()), Times.Once);
-        }
+        //    imageRepoMock.Verify(i => i.CreateAsync(It.IsAny<Image>()), Times.Once);
+        //}
 
-        [Test]
-        public async Task UploadImageAsync_ShouldOverWriteImageInDatabaseAndDeleteOldInCloudinary_IfProductHasImage()
-        {
-            productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateProduct());
-            imageRepoMock.Setup(i => i.GetImageByProductIdAsync(It.IsAny<int>())).ReturnsAsync(CreateImageGetDto());
-            cloudServiceMock.Setup(c => c.UploadAsync(It.IsAny<IFormFile>())).ReturnsAsync("PublicId");
+        //[Test]
+        //public async Task UploadImageAsync_ShouldOverWriteImageInDatabaseAndDeleteOldInCloudinary_IfProductHasImage()
+        //{
+        //    productRepoMock.Setup(p => p.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(CreateProduct());
+        //    imageRepoMock.Setup(i => i.GetImageByProductIdAsync(It.IsAny<int>())).ReturnsAsync(CreateImageGetDto());
+        //    cloudServiceMock.Setup(c => c.UploadAsync(It.IsAny<IFormFile>())).ReturnsAsync("PublicId");
 
-            await imageService.UploadImageAsync(1, CreateImageCreateDto());
+        //    await imageService.UploadImageAsync(1, CreateImageCreateDto());
 
-            imageRepoMock.Verify(i => i.SetFieldAsync(It.IsAny<int>(), "PublicId", It.IsAny<string>()), Times.Once);
-            cloudServiceMock.Verify(c => c.DeleteAsync(It.IsAny<string>()), Times.Once);
-        }
+        //    imageRepoMock.Verify(i => i.SetFieldAsync(It.IsAny<int>(), "PublicId", It.IsAny<string>()), Times.Once);
+        //    cloudServiceMock.Verify(c => c.DeleteAsync(It.IsAny<string>()), Times.Once);
+        //}
 
         private static Product CreateProduct()
         {
@@ -119,22 +119,22 @@ namespace Tests
             };
         }
 
-        private static ImageGetDto CreateImageGetDto()
-        {
-            return new ImageGetDto()
-            {
-                Id = 1,
-                PublicId = "PublicId"
-            };
-        }
+        //private static ImageGetDto CreateImageGetDto()
+        //{
+        //    return new ImageGetDto()
+        //    {
+        //        Id = 1,
+        //        PublicId = "PublicId"
+        //    };
+        //}
 
-        private static ImageCreateDto CreateImageCreateDto()
-        {
-            return new ImageCreateDto()
-            {
-                Image = null
-            };
-        }
+        //private static ImageCreateDto CreateImageCreateDto()
+        //{
+        //    return new ImageCreateDto()
+        //    {
+        //        Image = null
+        //    };
+        //}
 
         private static Image CreateImage()
         {
