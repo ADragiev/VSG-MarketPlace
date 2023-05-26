@@ -40,18 +40,29 @@ namespace Application.Services
 
         public async Task CompleteOrderAsync(int id)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
-
             var order = await orderRepo.GetByIdAsync(id);
-            ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
+
+            if(order == null)
+            {
+                throw new HttpException($"Order Id not found!", HttpStatusCode.NotFound);
+            }
+
+            if (order.Status != OrderStatus.Pending)
+            {
+                throw new HttpException("Only pending orders can be completed or declined!", HttpStatusCode.BadRequest);
+            }
 
             await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Finished);
         }
 
         public async Task CreateAsync(OrderCreateDto dto)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(dto.ProductId, productRepo);
             var product = await productRepo.GetByIdAsync(dto.ProductId);
+
+            if (product == null)
+            {
+                throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
+            }
 
             if (dto.Qty > product.SaleQty)
             {
@@ -87,10 +98,17 @@ namespace Application.Services
 
         public async Task<GenericSimpleValueGetDto<string>> RejectOrderAsync(int id)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, orderRepo);
-
             var order = await orderRepo.GetByIdAsync(id);
-            ThrowExceptionService.ThrowExceptionWhenOrderIsNotPending(order);
+
+            if(order == null)
+            {
+                throw new HttpException($"Order Id not found!", HttpStatusCode.NotFound);
+            }
+
+            if (order.Status != OrderStatus.Pending)
+            {
+                throw new HttpException("Only pending orders can be completed or declined!", HttpStatusCode.BadRequest);
+            }
 
             var user = userService.GetUserEmail();
             if (user != order.OrderedBy)

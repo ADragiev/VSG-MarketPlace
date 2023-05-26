@@ -71,7 +71,12 @@ namespace Application.Services
 
         public async Task UpdateAsync(int id, ProductUpdateDto dto)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
+            var product = await productRepo.GetByIdAsync(id);
+
+            if (product == null)
+            {
+                throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
+            }
 
             var productToUpdate = mapper.Map<Product>(dto);
             productToUpdate.Id = id;
@@ -80,7 +85,12 @@ namespace Application.Services
 
         public async Task DeleteAsync(int id)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(id, productRepo);
+            var product = await productRepo.GetByIdAsync(id);
+
+            if (product == null)
+            {
+                throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
+            }
 
             var productPendingOrdersCount = (await orderRepository.GetAllPendingOrdersAsync()).Where(o => o.ProductId == id).Count();
             if (productPendingOrdersCount > 0)

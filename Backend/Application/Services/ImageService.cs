@@ -1,5 +1,6 @@
 ﻿using Application.Helpers.Constants;
 using Application.Models.Cloud;
+using Application.Models.ExceptionModels;
 using Application.Models.GenericModels.Dtos;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Dtos;
@@ -9,6 +10,7 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Domain.Entities;
 using Microsoft.Extensions.Configuration;
+using System.Net;
 
 namespace Application.Services
 {
@@ -29,7 +31,12 @@ namespace Application.Services
 
         public async Task DeleteImageByProductIdAsync(int productId)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
+            var product = await productRepo.GetByIdAsync(productId);
+
+            if(product == null)
+            {
+                throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
+            }
 
             var image = await imageRepo.GetImageByProductIdAsync(productId);
 
@@ -42,7 +49,12 @@ namespace Application.Services
 
         public async Task<GenericSimpleValueGetDto<string>> UploadImageAsync(int productId, ImageCreateDto image)
         {
-            await ThrowExceptionService.ThrowExceptionWhenIdNotFound(productId, productRepo);
+            var product = await productRepo.GetByIdAsync(productId);
+
+            if (product == null)
+            {
+                throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
+            }
 
             var publicId = await cloudService.UploadAsync(image.Image);
 
