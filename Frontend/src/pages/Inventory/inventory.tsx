@@ -36,7 +36,8 @@ function Inventory(): JSX.Element {
       )}
       <div className="table-wrapper">
         <SearchBar onSearchInputChange={handleSearchInputChange} searchQuery={searchQuery} >
-        <LocationOnOutlinedIcon sx={{ ml: 3, mr:0.2}}/>
+          <div className="locationFilter">
+          <LocationOnOutlinedIcon className="locationIcon" sx={{ ml: 3, mr:0.2}}/>
           <FormControl className="inputField" variant="standard" sx={{ mr: 3, minWidth: 140,}}>
             <InputLabel focused={false} >
               Show items from
@@ -56,6 +57,8 @@ function Inventory(): JSX.Element {
               ))}
             </Select>
           </FormControl>
+          </div>
+        
 
           <button
             id="addNewItemBtn"

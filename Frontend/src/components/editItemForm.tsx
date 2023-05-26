@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useUpdateProductMutation } from "../services/productService";
-import { ICategory, IInventoryItem, ILocation } from "../types";
+import { ICategory, IInventoryItem, ILocation, IProduct } from "../types";
 import {
   useDeleteImageMutation,
   usePostImageMutation,
@@ -21,9 +21,10 @@ import { toast } from "react-toastify";
 interface EditItemlProps {
   product: IInventoryItem;
   onClose: () => void;
+  setProducts: (p) => void
 }
 
-const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
+const EditItemForm = ({ product, onClose, setProducts }: EditItemlProps): JSX.Element => {
   const [open, setOpen] = useState(true);
   const [categoryOption, setCategoryOption] = useState(0);
   const [locationOption, setLocationOption] = useState(0);
@@ -88,13 +89,24 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
     const id = product.id;
     const response = await updateProduct({ id, data });
 
+    const selectedCategory = categories.filter((c: ICategory) => c.id === data.categoryId )[0] as ICategory
+    const selectedLocation = locations.filter((l: ILocation) => l.id === data.locationId )[0] as ILocation
+
+    const newData = {...data, category: selectedCategory.name, location: selectedLocation.name, id}
+    
     if (imageValue == "../../images/no_image-placeholder.png") {
       await deleteImage(id);
+      setProducts((oldProducts: IProduct[]) => oldProducts.map((p: IProduct) => p.id !== newData.id ? p : {...newData, image: imageValue}))
+
     } else if (data.image != imageValue) {
       const image = getValues("image")[0] as unknown as File;
       const imageFormData = new FormData();
       imageFormData.append("image", image);
-      await postImage({ id, imageFormData });
+      const imgUrl =  await postImage({ id, imageFormData });
+      setProducts((oldProducts: IProduct[]) => oldProducts.map((p: IProduct) => p.id !== newData.id ? p : {...newData, image: imgUrl.data.returnedValue}))
+    }
+    else{
+      setProducts((oldProducts: IProduct[]) => oldProducts.map((p: IProduct) => p.id !== newData.id ? p : newData))
     }
 
     if (!response.error) {
@@ -190,7 +202,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                   {...register("categoryId", {
                     required: "Category field is required",
                     onChange: (e) =>
-                      setCategoryOption(e.target.value as string),
+                      setCategoryOption(e.target.value as number),
                   })}
                 >
                   {categories?.map((c: ICategory) => (
@@ -208,7 +220,7 @@ const EditItemForm = ({ product, onClose }: EditItemlProps): JSX.Element => {
                   {...register("locationId", {
                     required: "Category field is required",
                     onChange: (e) =>
-                      setLocationOption(e.target.value as string),
+                      setLocationOption(e.target.value as number),
                   })}
                 >
                   {locations?.map((l: ILocation) => (
