@@ -54,6 +54,7 @@ const TableRowComponent = ({
         <EditItemForm
           onClose={() => setIsEditItemFormOpen(false)}
           product={product}
+          setProducts={setProducts}
         />
       )}
 

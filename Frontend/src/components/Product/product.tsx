@@ -5,6 +5,7 @@ import ProductModal from "./ProductModal";
 import { useCreateOrderMutation } from "../../services/ordersService";
 import PopperComponent from "../Popper";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 type ProductProps = {
   product: IProduct;
@@ -12,6 +13,8 @@ type ProductProps = {
 const Card = ({ product }: ProductProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [createOrder, ] = useCreateOrderMutation();
+  const navigate = useNavigate();
+
 
   const options = [];
   for (let i = 1; i <= product.saleQty; i++) {
@@ -32,6 +35,8 @@ const Card = ({ product }: ProductProps): JSX.Element => {
     
     if (!response.error) {
       toast.success('Successfully placed order!')
+      navigate('/my-orders')
+      
      }
     setAnchorEl(null);
   };

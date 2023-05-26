@@ -72,7 +72,6 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
       setProducts((oldProducts: IInventoryItem[]) => [...oldProducts, newProduct])
     }
     if (!response.error) {
-      
       toast.success("Successfully added item!");
     } 
     setOpen(false);

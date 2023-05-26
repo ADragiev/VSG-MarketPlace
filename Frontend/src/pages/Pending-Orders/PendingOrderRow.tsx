@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { useConfirmOrderMutation } from "../../services/ordersService";
 import { IPendingOrder } from "../../types";
+import { useRef } from "react";
 
 type PendingOrderProps = {
     pendingOrder: IPendingOrder
@@ -12,15 +13,17 @@ const PendingOrderRow = ({pendingOrder}: PendingOrderProps) => {
 
 
   const [completeOrder] = useConfirmOrderMutation();
+  const orderRef = useRef<HTMLDivElement>(null)
 
     const onComplete = async () => {
        const response =  await completeOrder(pendingOrder.id);
      if (!response.error) {
+      orderRef.current?.remove()
        toast.success('Successfully completed order')
      }
       };
     return (
-        <div className="item-row">
+        <div ref={orderRef} className="item-row">
         <div className="div-wrapper">
           <span className="codeColumn">
             {pendingOrder.productCode}
