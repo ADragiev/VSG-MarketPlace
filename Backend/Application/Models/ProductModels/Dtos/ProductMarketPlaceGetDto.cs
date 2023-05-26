@@ -12,6 +12,8 @@ namespace Application.Models.ProductModels.Dtos
 
         public string Category { get; set; }
 
+        public string Location { get; set; }
+
         public string Name { get; set; }
 
         public decimal Price { get; set; }
