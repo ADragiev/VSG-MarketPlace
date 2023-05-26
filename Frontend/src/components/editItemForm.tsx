@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useUpdateProductMutation } from "../services/productService";
-import { ICategory, IInventoryItem, ILocation, IProduct } from "../types";
+import { ICategory, IFormInputs, IInventoryItem, ILocation, IReturnedValue } from "../types";
 import {
   useDeleteImageMutation,
   usePostImageMutation,
@@ -21,7 +21,7 @@ import { toast } from "react-toastify";
 interface EditItemlProps {
   product: IInventoryItem;
   onClose: () => void;
-  setProducts: (p) => void
+  setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>
 }
 
 const EditItemForm = ({ product, onClose, setProducts }: EditItemlProps): JSX.Element => {
@@ -45,7 +45,7 @@ const EditItemForm = ({ product, onClose, setProducts }: EditItemlProps): JSX.El
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm({
+  } = useForm<IFormInputs>({
     defaultValues: {
       code: product.code,
       name: product.name,
@@ -75,41 +75,41 @@ const EditItemForm = ({ product, onClose, setProducts }: EditItemlProps): JSX.El
     setLocationOption(product.locationId);
   }, []);
 
-  const inputChange = (e) => {
-    const target = e.currentTarget as HTMLInputElement;
+  const inputChange = (e :React.MouseEvent<HTMLAnchorElement>) => {
+    const target = e.target as HTMLInputElement;
     const files = target.files as FileList;
     const image = URL.createObjectURL(files[0]);
     setImageValue(image);
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: IFormInputs) : Promise<void> => {
     data.price = data.price || null;
     data.saleQty = data.saleQty || null;
 
     const id = product.id;
     const response = await updateProduct({ id, data });
 
-    const selectedCategory = categories.filter((c: ICategory) => c.id === data.categoryId )[0] as ICategory
-    const selectedLocation = locations.filter((l: ILocation) => l.id === data.locationId )[0] as ILocation
+    const selectedCategory = categories.filter((c: ICategory) => c.id === Number(data.categoryId ))[0] as ICategory
+    const selectedLocation = locations.filter((l: ILocation) => l.id === Number(data.locationId ))[0] as ILocation
 
-    const newData = {...data, category: selectedCategory.name, location: selectedLocation.name, id}
+    const newData = {...data, category: selectedCategory.name, location: selectedLocation.name, id} as IInventoryItem
     
     if (imageValue == "../../images/no_image-placeholder.png") {
       await deleteImage(id);
-      setProducts((oldProducts: IProduct[]) => oldProducts.map((p: IProduct) => p.id !== newData.id ? p : {...newData, image: imageValue}))
+      setProducts((oldProducts) => oldProducts.map((p: IInventoryItem) => p.id !== newData.id ? p : {...newData, image: imageValue}))
 
-    } else if (data.image != imageValue) {
-      const image = getValues("image")[0] as unknown as File;
+    } else if (data.image !== imageValue) {
+      const image  = data.image[0] as unknown as File;
       const imageFormData = new FormData();
       imageFormData.append("image", image);
-      const imgUrl =  await postImage({ id, imageFormData });
-      setProducts((oldProducts: IProduct[]) => oldProducts.map((p: IProduct) => p.id !== newData.id ? p : {...newData, image: imgUrl.data.returnedValue}))
+      const imgUrl =  await postImage({ id, imageFormData }) as {data: IReturnedValue};
+      setProducts((oldProducts) => oldProducts.map((p: IInventoryItem) => p.id !== newData.id ? p : {...newData, image: imgUrl.data.returnedValue}as IInventoryItem))
     }
     else{
-      setProducts((oldProducts: IProduct[]) => oldProducts.map((p: IProduct) => p.id !== newData.id ? p : newData))
+      setProducts((oldProducts) => oldProducts.map((p: IInventoryItem) => p.id !== newData.id ? p : newData))
     }
 
-    if (!response.error) {
+    if (!('error' in response)) {
       toast.success("Successfully updated item!");
     }
     setOpen(false);

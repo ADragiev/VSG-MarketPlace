@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 type InventoryItemsProps = {
   product: IInventoryItem;
   products: IInventoryItem[];
-  setProducts: (p) => void;
+  setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>
 };
 
 const StyledTableCell = styled(TableCell)(() => ({
@@ -40,9 +40,9 @@ const TableRowComponent = ({
 
   const onDelete = async () => {
     const response = await deleteProduct(product.id);
-    if (!response.error) {
+    if (!('error' in response)) {
       toast.success("Successfully deleted item!");
-      setProducts((oldProducts: IInventoryItem[]) =>
+      setProducts((oldProducts) =>
         oldProducts.filter((p) => p !== product)
       );
     }

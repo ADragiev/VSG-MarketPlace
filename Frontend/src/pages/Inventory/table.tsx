@@ -29,7 +29,7 @@ type TableProps = {
   searchQuery: string;
   locationValue: number,
   products: IInventoryItem[],
-  setProducts: (p)=> void
+  setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>
   
 };
 
@@ -67,9 +67,9 @@ export default function CustomizedTables({ searchQuery, locationValue, products,
  
 
   return (
-    <TableContainer sx={{ border: "1px solid #B3B3B3", borderRadius: "4px" }}>
+    <TableContainer className="tableContainer">
       <Table aria-label="customized table">
-        <TableHead sx={{ borderBottom: "1px solid #B3B3B3" }}>
+        <TableHead className="tableHead">
           <TableRow>
             <StyledTableCell>Code</StyledTableCell>
             <StyledTableCell>Name</StyledTableCell>
@@ -85,6 +85,7 @@ export default function CustomizedTables({ searchQuery, locationValue, products,
             .map((row) => (
               <TableRowComponent products={products} setProducts={setProducts} product={row} key={row.id} />
             ))}
+            {filteredPRoducts.length === 0 && <div className="noProductsDiv">No products found</div>}
         </TableBody>
         <TableFooter>
           <TableRow>

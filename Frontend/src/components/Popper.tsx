@@ -6,7 +6,7 @@ type PopperComponentProps = {
   str: string;
   onYes: () => void;
   anchor: HTMLElement | null;
-  setAnchor: Dispatch<SetStateAction<HTMLElement | null>>;
+  setAnchor: Dispatch<SetStateAction<null>>;
 };
 
 const StyledPopper = styled(Popper)(() => ({

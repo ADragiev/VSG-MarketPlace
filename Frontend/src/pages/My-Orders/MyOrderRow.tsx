@@ -20,7 +20,7 @@ function MyOrder({ myOrder }: MyOrderProps) {
 
   const onReject = async () => {
     const response = await rejectOrder(myOrder.id);
-    if (!response.error) {
+    if (!('error' in response)) {
       setCurrentStatus('Declined')
       toast.success("Successfully rejected order");
     } 

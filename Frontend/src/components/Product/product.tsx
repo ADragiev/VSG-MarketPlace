@@ -16,12 +16,9 @@ const Card = ({ product }: ProductProps): JSX.Element => {
   const navigate = useNavigate();
 
 
-  const options = [];
-  for (let i = 1; i <= product.saleQty; i++) {
-    options.push({ value: i });
-  }
 
-  const handlePopup = (e) => {
+
+  const handlePopup = (e: any ) => {
     setAnchorEl(e.currentTarget);
   };
 
@@ -33,7 +30,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
     const qty = selectValue.current;
     const response = await createOrder({productId , qty });
     
-    if (!response.error) {
+    if (!('error' in response)) {
       toast.success('Successfully placed order!')
       navigate('/my-orders')
       
@@ -83,9 +80,9 @@ const Card = ({ product }: ProductProps): JSX.Element => {
                 className="selectQty"
                 onChange={handleSelectChange}
               >
-                {options.map((o) => (
-                  <option value={o.value} key={o.value}>
-                    {o.value}
+                {Array(product.saleQty).fill(1).map((n,i) => n+i).map((o) =>(
+                  <option value={o} key={o}>
+                    {o}
                   </option>
                 ))}
               </select>
@@ -93,7 +90,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
 
             <div className="icon popup">
               <a className="circle" id="firstBtn" onClick={handlePopup}>
-                <img src="../../images/dollar.svg" alt="DollarImage" />
+                <img src="../../images/dollar.svg" alt="DollarImage"/>
               </a>
             </div>
           </div>
