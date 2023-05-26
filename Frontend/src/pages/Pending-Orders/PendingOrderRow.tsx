@@ -8,7 +8,7 @@ type PendingOrderProps = {
 
 
 
-const PendingOrder = ({pendingOrder}: PendingOrderProps) => {
+const PendingOrderRow = ({pendingOrder}: PendingOrderProps) => {
 
 
   const [completeOrder] = useConfirmOrderMutation();
@@ -44,4 +44,4 @@ const PendingOrder = ({pendingOrder}: PendingOrderProps) => {
     );
   }
   
-  export default PendingOrder;
+  export default PendingOrderRow;

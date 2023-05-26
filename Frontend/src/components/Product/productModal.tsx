@@ -44,7 +44,8 @@ const ProductModal = ({ product, onClose }: ModalProps): JSX.Element => {
           <div className="details-section">
             <div className="name-details">
               <span>{product.name}</span>
-              <small>{product.category}</small>
+              <small>{`Category: ${product.category}`}</small>
+              <small>{`Location: ${product.location}`}</small>
             </div>
             <div className="other-details">
               <span>{product.price} BGN</span>

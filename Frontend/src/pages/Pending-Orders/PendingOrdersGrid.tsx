@@ -1,6 +1,6 @@
 import {  useGetPendingOrdersQuery } from "../../services/ordersService";
 import { IPendingOrder } from "../../types";
-import PendingOrder from "./PendingOrderRow";
+import PendingOrderRow from "./PendingOrderRow";
 import PendingOrdersHeader from "./PendingOrdersHeader";
 
 const PendingOrders = (): JSX.Element => {
@@ -12,7 +12,7 @@ const PendingOrders = (): JSX.Element => {
       <section className="list-wrapper infoDetails">
       <PendingOrdersHeader />
         {pendingOrders?.map((pendingOrder: IPendingOrder) => (
-          <PendingOrder pendingOrder={pendingOrder} key={pendingOrder.id} />
+          <PendingOrderRow pendingOrder={pendingOrder} key={pendingOrder.id} />
         ))}
       </section>
     </main>

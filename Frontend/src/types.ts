@@ -7,6 +7,7 @@ export interface IProduct {
     saleQty: number
     image: string
     description: string
+    location: string
 }
 export interface IInventoryItem {
     id: number
