@@ -28,7 +28,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ILocationService, LocationService>();
-            services.AddScoped<ICacheService, CacheService>();
+            services.AddSingleton<ICacheService, CacheService>();
             services.AddScoped<ICloudService, CloudinaryService>();
             services.AddHttpContextAccessor();
             services.AddScoped<IEmailService, EmailService>();
