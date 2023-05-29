@@ -14,7 +14,7 @@ namespace Infrastructure.Migrations.InitialMigrations
         {
             Create.Table("Product")
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity().NotNullable()
-                .WithColumn("Code").AsString(50).NotNullable()
+                .WithColumn("Code").AsString(50).Unique().NotNullable()
                 .WithColumn("Name").AsString(100).NotNullable()
                 .WithColumn("Price").AsDecimal(19, 2).NotNullable()
                 .WithColumn("SaleQty").AsInt64().NotNullable()

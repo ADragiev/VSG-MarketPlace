@@ -27,7 +27,7 @@ namespace Application.Services
             IImageService imageService,
             IOrderRepository orderRepository)
         {
-            this.productRepo= productRepo;
+            this.productRepo = productRepo;
             this.mapper = mapper;
             this.imageService = imageService;
             this.orderRepository = orderRepository;
@@ -35,6 +35,12 @@ namespace Application.Services
 
         public async Task<GenericSimpleValueGetDto<int>> CreateAsync(ProductCreateDto dto)
         {
+            var productWithThatCode = await productRepo.GetByCodeAsync(dto.Code);
+            if (productWithThatCode != null)
+            {
+                throw new HttpException("Product with that code already exists!", HttpStatusCode.BadRequest);
+            }
+
             var product = mapper.Map<Product>(dto);
             var productId = await productRepo.CreateAsync(product);
             product.Id = productId;
@@ -48,7 +54,7 @@ namespace Application.Services
             products.ForEach(p =>
             {
                 if (p.Image != null)
-                {   
+                {
                     p.Image = CloudinaryConstants.baseUrl + p.Image;
                 }
             });
@@ -76,6 +82,12 @@ namespace Application.Services
             if (product == null)
             {
                 throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
+            }
+
+            var productWithThatCode = await productRepo.GetByCodeAsync(dto.Code);
+            if (productWithThatCode != null && productWithThatCode.Id != id)
+            {
+                throw new HttpException("Product with that code already exists!", HttpStatusCode.BadRequest);
             }
 
             var productToUpdate = mapper.Map<Product>(dto);

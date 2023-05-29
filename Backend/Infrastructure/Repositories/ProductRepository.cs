@@ -47,5 +47,15 @@ namespace Infrastructure.Repositories
 
             return products.ToList();
         }
+
+        public async Task<Product> GetByCodeAsync(string code)
+        {
+            var sql = @"SELECT * FROM Product
+                        WHERE Code = @code";
+
+            var product = await connection.QueryFirstOrDefaultAsync<Product>(sql, new { code }, transaction);
+
+            return product;
+        }
     }
 }
