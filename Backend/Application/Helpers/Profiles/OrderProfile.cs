@@ -18,10 +18,10 @@ namespace Application.Helpers.Profiles
             CreateMap<OrderCreateDto, Order>();
 
             CreateMap<Order, OrderPendingDto>()
-                .ForMember(dest => dest.Date, src => src.MapFrom(src => src.Date.ToString(DateFormatConstants.DefaultDateFormat)));
+                .ForMember(dest => dest.Date, src => src.MapFrom(src => TimeZoneInfo.ConvertTime(src.Date, TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat)));
 
             CreateMap<Order, OrderGetMineDto>()
-                .ForMember(dest => dest.Date, src => src.MapFrom(src => src.Date.ToString(DateFormatConstants.DefaultDateFormat)))
+                .ForMember(dest => dest.Date, src => src.MapFrom(src => TimeZoneInfo.ConvertTime(src.Date, TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat)))
                 .ForMember(dest => dest.Status, src => src.MapFrom(src => src.Status.ToString()));
 
         }

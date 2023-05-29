@@ -9,5 +9,7 @@ namespace Application.Helpers.Constants
     public static class DateFormatConstants
     {
         public const string DefaultDateFormat = "yyyy-MM-dd HH:mm";
+
+        public const string EasternEuropeTimeZone = "E. Europe Standard Time";
     }
 }
