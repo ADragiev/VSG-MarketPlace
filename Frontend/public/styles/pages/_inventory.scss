@@ -50,6 +50,7 @@
     margin-right: 10px;
     outline: none;
     border: 0;
+   
   }
   .input-div {
     display: flex;
@@ -63,6 +64,7 @@
     margin-right: 6px;
     align-self: flex-end;
   }
+
 }
 
 #addNewItemBtn {
@@ -155,6 +157,7 @@
     font-size: 12px;
     .MuiInputBase-root::after {
       border-bottom: #000;
+      width: 140px
     }
    
   }
@@ -242,7 +245,6 @@
       align-items: flex-start;
       flex-direction: column-reverse;
       .input-div {
-        width: 40%;
         margin: 12px;
       }
       .locationIcon{

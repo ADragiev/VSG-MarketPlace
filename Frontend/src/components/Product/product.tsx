@@ -24,7 +24,6 @@ const Card = ({ product }: ProductProps): JSX.Element => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const selectValue = useRef(1);
-
   const onBuy = async () => {
     const productId = product.id;
     const qty = selectValue.current;

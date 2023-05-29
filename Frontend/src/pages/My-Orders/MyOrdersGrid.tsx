@@ -15,6 +15,8 @@ const  MyOrders = (): JSX.Element => {
            {myOrders?.map((myOrder: IMyOrder) => (
           <MyOrder myOrder={myOrder} key= {myOrder.id} />
           ))}
+        {!myOrders || myOrders.length === 0 && <div className="item-row extend">No Pending orders</div>}
+
           </section>
       </main>
     );

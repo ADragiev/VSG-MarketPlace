@@ -21,6 +21,7 @@ const SearchBar = ({ children, onSearchInputChange, searchQuery }: Props) => {
                 variant="standard"
                 value={searchQuery}
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
+                sx={{width:140}}
                 onInput={onSearchInputChange}
               />
       </div>
