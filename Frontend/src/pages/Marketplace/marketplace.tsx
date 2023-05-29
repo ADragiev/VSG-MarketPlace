@@ -3,7 +3,7 @@ import { IProduct } from "../../types";
 import Card from "../../components/Product/Product";
 
 const MarketPlace = (): JSX.Element => {
-  const { data: products } = useGetProductsQuery("");
+  const { data: products, isLoading } = useGetProductsQuery("");
 
   return (
     <>
@@ -11,6 +11,7 @@ const MarketPlace = (): JSX.Element => {
         {products?.map((product: IProduct) => (
           <Card product={product} key={product.id} />
         ))}
+        {isLoading && <div>Loading...</div>}
       </main>
     </>
   );

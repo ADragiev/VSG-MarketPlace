@@ -2,7 +2,7 @@ import { useState } from "react";
 import AddNewItemForm from "../../components/AddNewItemForm";
 import CustomizedTables from "./Table";
 import SearchBar from "./SearchBar";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useGetLocationsQuery } from "../../services/locationService";
 import { IInventoryItem, ILocation } from "../../types";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -16,7 +16,7 @@ function Inventory(): JSX.Element {
 
   const [locationValue, setLocationValue] = useState(0);
 
-  const handleLocationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleLocationChange = (event: SelectChangeEvent<number>) => {
     setLocationValue(Number(event.target.value));
     setSearchQuery("");
   };
