@@ -104,8 +104,8 @@ namespace Application.Services
                 throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
             }
 
-            var productPendingOrdersCount = (await orderRepository.GetAllPendingOrdersAsync()).Where(o => o.ProductId == id).Count();
-            if (productPendingOrdersCount > 0)
+            var productPendingOrdersCount = await orderRepository.GetAllPendingOrdersAsync();
+            if (productPendingOrdersCount.Any(o => o.ProductId == id))
             {
                 throw new HttpException("The product you want to delete has pending orders and cannot be deleted. Make sure you delete them before deleting product.", HttpStatusCode.BadRequest);
             }
