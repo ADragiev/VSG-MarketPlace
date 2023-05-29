@@ -14,6 +14,7 @@ const PendingOrders = (): JSX.Element => {
         {pendingOrders?.map((pendingOrder: IPendingOrder) => (
           <PendingOrderRow pendingOrder={pendingOrder} key={pendingOrder.id} />
         ))}
+        {/* {!pendingOrders && <div>No Pending orders</div>} */}
       </section>
     </main>
   );

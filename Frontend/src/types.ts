@@ -23,7 +23,20 @@ export interface IInventoryItem {
     location: string
     locationId: number
 }
-
+export interface IReturnedValue{
+    returnedValue: number | string
+}
+export interface IFormInputs{
+    code: string
+    categoryId: number | null
+    locationId:  number | null
+    name: string
+    price: number | null
+    combinedQty: number | null
+    saleQty: number | null
+    image: string
+    description: string
+}
 export interface IOrder {
     id: number
     productCode: string

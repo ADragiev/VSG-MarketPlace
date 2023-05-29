@@ -17,6 +17,19 @@
   height: auto;
   border-radius: 20px;
   padding: 20px;
+  .noProductsDiv{
+    display: flex;
+   font-size: 18px;
+   font-family: 'Roboto';
+   margin: 10px
+  }
+  .tableContainer{
+    border: 1px solid #B3B3B3;
+    border-radius: 4px;
+    .tableHead{
+      border-bottom: 1px solid #B3B3B3;
+    }
+  }
 }
 ///////SEARCH////////////
 #search-container {
@@ -43,9 +56,12 @@
   }
   .locationFilter{
     display: flex;
-    .locationIcon{
-      align-self: flex-end;
-    }
+    
+  }
+  .locationIcon{
+    margin-left: 24px;
+    margin-right: 6px;
+    align-self: flex-end;
   }
 }
 
@@ -60,6 +76,7 @@
   font-size: 14px;
   line-height: 24px;
   padding: 6px 10px;
+  cursor: pointer;
   svg {
     margin-right: 10px;
   }

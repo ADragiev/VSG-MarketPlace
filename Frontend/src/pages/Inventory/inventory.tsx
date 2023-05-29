@@ -16,8 +16,8 @@ function Inventory(): JSX.Element {
 
   const [locationValue, setLocationValue] = useState(0);
 
-  const handleLocationChange = (event) => {
-    setLocationValue(event.target.value);
+  const handleLocationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocationValue(Number(event.target.value));
     setSearchQuery("");
   };
 
@@ -37,7 +37,7 @@ function Inventory(): JSX.Element {
       <div className="table-wrapper">
         <SearchBar onSearchInputChange={handleSearchInputChange} searchQuery={searchQuery} >
           <div className="locationFilter">
-          <LocationOnOutlinedIcon className="locationIcon" sx={{ ml: 3, mr:0.2}}/>
+          <LocationOnOutlinedIcon className="locationIcon"/>
           <FormControl className="inputField" variant="standard" sx={{ mr: 3, minWidth: 140,}}>
             <InputLabel focused={false} >
               Show items from

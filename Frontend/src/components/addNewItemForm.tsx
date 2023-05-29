@@ -14,11 +14,11 @@ import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
 import { toast } from "react-toastify";
-import { ICategory, IInventoryItem } from "../types";
+import { ICategory, IFormInputs, IInventoryItem, ILocation, IReturnedValue } from "../types";
 
 interface AddNewItemlProps {
   onClose: () => void;
-  setProducts: (p)=> void
+  setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>
 }
 
 const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element => {
@@ -37,16 +37,16 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm({
+  } = useForm<IFormInputs>({
     defaultValues: {
       code: "",
       name: "",
       description: "",
-      categoryId: "",
-      locationId: "",
+      categoryId: null,
+      locationId: null,
       saleQty: null,
       price: null,
-      combinedQty: "",
+      combinedQty: null,
       image: "",
     },
   });
@@ -54,24 +54,25 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
   const [imageValue, setImageValue] = useState(
     "../../images/no_image-placeholder.png"
   );
-  const onSubmit = async (data) => {
-    const response = await createProduct(data);
-    const selectedCategory = categories?.filter((c: ICategory)=> c.id == data.categoryId)[0]
-    const id = response.data.returnedValue;
+  const onSubmit = async (data: IFormInputs): Promise<void> => {
+    const response = await createProduct(data) as {data: IReturnedValue};
+    const selectedCategory = categories?.filter((c: ICategory)=> c.id == Number(data.categoryId))[0] as ICategory
+    const responseData = response.data
+    const id = responseData.returnedValue as number;
     
     const image = getValues("image")[0] as unknown as File;
     if (imageValue != "../../images/no_image-placeholder.png") {
       const imageFormData = new FormData();
       imageFormData.append("image", image);
-      const imageUrl = await postImage({ id, imageFormData });
-      const newProduct = {...data,id, image: imageUrl.data.returnedValue, category: selectedCategory.name}
-      setProducts((oldProducts: IInventoryItem[]) => [...oldProducts, newProduct])
+      const imageUrl = await postImage({ id, imageFormData }) as {data: IReturnedValue}; 
+      const newProduct = {...data,id, image: imageUrl.data.returnedValue , category: selectedCategory.name} as IInventoryItem
+      setProducts((oldProducts) => [...oldProducts, newProduct])
     }
     else{
-      const newProduct = {...data,id, category: selectedCategory.name}
-      setProducts((oldProducts: IInventoryItem[]) => [...oldProducts, newProduct])
+      const newProduct = {...data,id, category: selectedCategory.name} as IInventoryItem
+      setProducts((oldProducts) => [...oldProducts, newProduct])
     }
-    if (!response.error) {
+    if (!('error' in response)) {
       toast.success("Successfully added item!");
     } 
     setOpen(false);
@@ -81,7 +82,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
     onClose();
   }
 
-  const inputChange = (e) => {
+  const inputChange = (e :React.MouseEvent<HTMLAnchorElement>) => {
     const target = e.target as HTMLInputElement;
     const files = target.files as FileList;
     const image = URL.createObjectURL(files[0]);
@@ -183,7 +184,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                     onChange: (e) => setSelectOption(e.target.value as string),
                   })}
                 >
-                  {categories?.map((c) => (
+                  {categories?.map((c: ICategory) => (
                     <MenuItem value={c.id} key={c.id}>
                       {c.name}
                     </MenuItem>
@@ -202,7 +203,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                       setLocationOption(e.target.value as string),
                   })}
                 >
-                  {locations?.map((l) => (
+                  {locations?.map((l: ILocation) => (
                     <MenuItem value={l.id} key={l.id}>
                       {l.name}
                     </MenuItem>

@@ -17,7 +17,7 @@ const PendingOrderRow = ({pendingOrder}: PendingOrderProps) => {
 
     const onComplete = async () => {
        const response =  await completeOrder(pendingOrder.id);
-     if (!response.error) {
+     if (!('error' in response)) {
       orderRef.current?.remove()
        toast.success('Successfully completed order')
      }
