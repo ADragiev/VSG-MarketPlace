@@ -38,7 +38,7 @@ function Inventory(): JSX.Element {
         <SearchBar onSearchInputChange={handleSearchInputChange} searchQuery={searchQuery} >
           <div className="locationFilter">
           <LocationOnOutlinedIcon className="locationIcon"/>
-          <FormControl className="inputField" variant="standard" sx={{ mr: 3, minWidth: 140,}}>
+          <FormControl className="inputField" variant="standard" sx={{ mr: 3, width: 140,}}>
             <InputLabel focused={false} >
               Show items from
             </InputLabel>
