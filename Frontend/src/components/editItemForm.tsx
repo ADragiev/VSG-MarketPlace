@@ -94,24 +94,26 @@ const EditItemForm = ({ product, onClose, setProducts }: EditItemlProps): JSX.El
 
     const newData = {...data, category: selectedCategory.name, location: selectedLocation.name, id} as IInventoryItem
     
-    if (imageValue == "../../images/no_image-placeholder.png") {
+    if (imageValue == "../../images/no_image-placeholder.png" && !('error' in response)) {
       await deleteImage(id);
       setProducts((oldProducts) => oldProducts.map((p: IInventoryItem) => p.id !== newData.id ? p : {...newData, image: imageValue}))
+      toast.success("Successfully updated item!");
 
-    } else if (data.image !== imageValue) {
+
+    } else if (data.image !== imageValue && !('error' in response)) {
       const image  = data.image[0] as unknown as File;
       const imageFormData = new FormData();
       imageFormData.append("image", image);
       const imgUrl =  await postImage({ id, imageFormData }) as {data: IReturnedValue};
       setProducts((oldProducts) => oldProducts.map((p: IInventoryItem) => p.id !== newData.id ? p : {...newData, image: imgUrl.data.returnedValue}as IInventoryItem))
-    }
-    else{
-      setProducts((oldProducts) => oldProducts.map((p: IInventoryItem) => p.id !== newData.id ? p : newData))
-    }
+      toast.success("Successfully updated item!");
 
-    if (!('error' in response)) {
+    }
+    else if(!('error' in response)){
+      setProducts((oldProducts) => oldProducts.map((p: IInventoryItem) => p.id !== newData.id ? p : newData))
       toast.success("Successfully updated item!");
     }
+    
     setOpen(false);
   };
 

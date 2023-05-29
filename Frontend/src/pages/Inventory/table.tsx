@@ -46,6 +46,12 @@ export default function CustomizedTables({ searchQuery, locationValue, products,
     }
   }, [data]);
 
+  const handleOnPageChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) =>{
+    console.log(e);
+    setPage(newPage)
+  }
+
+
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -94,7 +100,7 @@ export default function CustomizedTables({ searchQuery, locationValue, products,
               count={filteredPRoducts.length}
               rowsPerPage={rowsPerPage}
               page={page}
-              onPageChange={(e, newPage) => setPage(newPage)}
+              onPageChange={handleOnPageChange}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </TableRow>

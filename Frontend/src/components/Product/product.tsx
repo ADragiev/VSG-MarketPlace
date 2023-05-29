@@ -11,7 +11,7 @@ type ProductProps = {
   product: IProduct;
 };
 const Card = ({ product }: ProductProps): JSX.Element => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement| null>(null);
   const [createOrder, ] = useCreateOrderMutation();
   const navigate = useNavigate();
 
