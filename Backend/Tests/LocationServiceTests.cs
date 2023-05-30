@@ -1,10 +1,12 @@
-﻿using Application.Models.CacheModels.Interfaces;
-using Application.Models.LocationModels.Dtos;
+﻿using Application.Models.LocationModels.Dtos;
 using Application.Models.LocationModels.Interfaces;
 using Application.Services;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.Extensions.Caching.Distributed;
 using Moq;
+using System.Text;
+using System.Text.Json;
 
 namespace Tests
 {
@@ -12,7 +14,7 @@ namespace Tests
     {
         private Mock<ILocationRepository> locationRepoMock;
         private Mock<IMapper> mapperMock;
-        private Mock<ICacheService> cacheServiceMock;
+        private Mock<IDistributedCache> cacheServiceMock;
 
         private ILocationService locationService;
 
@@ -21,7 +23,7 @@ namespace Tests
         {
             locationRepoMock = new Mock<ILocationRepository>();
             mapperMock = new Mock<IMapper>();
-            cacheServiceMock = new Mock<ICacheService>();
+            cacheServiceMock = new Mock<IDistributedCache>();
 
             locationService = new LocationService(locationRepoMock.Object, mapperMock.Object, cacheServiceMock.Object);
         }
@@ -29,13 +31,13 @@ namespace Tests
         [Test]
         public async Task AllAsync_ShouldReturnCachedLocations_IfTheyAreCached()
         {
-            cacheServiceMock.Setup(c => c.GetDataAsync<List<LocationGetDto>>("locations-angel")).ReturnsAsync(() => new List<LocationGetDto>() {
+            cacheServiceMock.Setup(c => c.GetAsync("locations-angel", default)).ReturnsAsync(() => Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new List<LocationGetDto>() {
                 new LocationGetDto()
                 {
                     Id = 1,
                     Name = "Test"
                 }
-            });
+            })));
             var locations = await locationService.AllAsync();
             Assert.That(locations[0].Id, Is.EqualTo(1));
             Assert.That(locations[0].Name, Is.EqualTo("Test"));
@@ -44,7 +46,7 @@ namespace Tests
         [Test]
         public async Task AllAsync_ShouldReturnLocationsFromDatabase_IfTheyAreNotCached()
         {
-            cacheServiceMock.Setup(c => c.GetDataAsync<List<LocationGetDto>>("locations")).ReturnsAsync(()=>null);
+            cacheServiceMock.Setup(c => c.GetAsync("locations-angel", default)).ReturnsAsync(() => null);
             locationRepoMock.Setup(l => l.AllAsync()).ReturnsAsync(() => new List<Location>() {
                 new Location()
                 {
