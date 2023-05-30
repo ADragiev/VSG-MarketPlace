@@ -1,12 +1,8 @@
-﻿using Application.Models.Cache;
-using Application.Models.LocationModels.Dtos;
+﻿using Application.Models.LocationModels.Dtos;
 using Application.Models.LocationModels.Interfaces;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace Application.Services
 {
@@ -16,11 +12,11 @@ namespace Application.Services
 
         private readonly ILocationRepository locationRepo;
         private readonly IMapper mapper;
-        private readonly ICacheService cacheService;
+        private readonly IDistributedCache cacheService;
 
         public LocationService(ILocationRepository locationRepo,
             IMapper mapper,
-            ICacheService cacheService)
+            IDistributedCache cacheService)
         {
             this.locationRepo = locationRepo;
             this.mapper = mapper;
@@ -29,17 +25,18 @@ namespace Application.Services
 
         public async Task<List<LocationGetDto>> AllAsync()
         {
-            var cachedLocations = await cacheService.GetData<List<LocationGetDto>>(locationsKey);
+            var cachedLocations = await cacheService.GetStringAsync(locationsKey);
 
             if (cachedLocations != null)
             {
-                return cachedLocations;
+                return JsonSerializer.Deserialize<List<LocationGetDto>>(cachedLocations);
             }
 
             var locations = await locationRepo.AllAsync();
             var locationsDto = mapper.Map<List<LocationGetDto>>(locations);
 
-            await cacheService.SetData(locationsKey, locationsDto, DateTimeOffset.Now.AddMinutes(30));
+            await cacheService.SetStringAsync(locationsKey, JsonSerializer.Serialize(locationsDto),
+                                               new DistributedCacheEntryOptions() { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) });
 
             return locationsDto;
         }

@@ -1,14 +1,8 @@
-﻿using Application.Models.Cache;
-using Application.Models.CategoryModels.Contacts;
+﻿using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
-using Application.Models.GenericRepo;
 using AutoMapper;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace Application.Services
 {
@@ -18,11 +12,11 @@ namespace Application.Services
 
         private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;
-        private readonly ICacheService cacheService;
+        private readonly IDistributedCache cacheService;
 
         public CategoryService(ICategoryRepository categoryRepo,
             IMapper mapper,
-            ICacheService cacheService)
+            IDistributedCache cacheService)
         {
             this.categoryRepo = categoryRepo;
             this.mapper = mapper;
@@ -31,17 +25,18 @@ namespace Application.Services
 
         public async Task<List<CategoryGetDto>> AllAsync()
         {
-            var cachedCategories = await cacheService.GetData<List<CategoryGetDto>>(categoriesKey);
+            var cachedCategories = await cacheService.GetStringAsync(categoriesKey);
 
             if (cachedCategories != null)
             {
-                return cachedCategories;
+                return JsonSerializer.Deserialize<List<CategoryGetDto>>(cachedCategories);
             }
 
             var categories = await categoryRepo.AllAsync();
             var categoriesDto =  mapper.Map<List<CategoryGetDto>>(categories);
 
-            await cacheService.SetData(categoriesKey, categoriesDto, DateTimeOffset.Now.AddMinutes(30));
+            await cacheService.SetStringAsync(categoriesKey, JsonSerializer.Serialize(categoriesDto),
+                                                new DistributedCacheEntryOptions() { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) });
 
             return categoriesDto;
         }

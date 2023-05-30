@@ -20,7 +20,7 @@ IConfigurationRoot config = new ConfigurationBuilder()
 NLog.Extensions.Logging.ConfigSettingLayoutRenderer.DefaultConfiguration = config;
 
 builder.Services.AddConfigurationApiLayer(config);
-builder.Services.AddConfigurationApplicationLayer();
+builder.Services.AddConfigurationApplicationLayer(config);
 builder.Services.AddConfigurationInfrastructureLayer();
 builder.Services.AddConfigurationMigration();
 

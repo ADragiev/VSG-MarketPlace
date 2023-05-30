@@ -1,6 +1,5 @@
 ﻿using Application.Helpers.Profiles;
 using Application.Helpers.Validators;
-using Application.Models.Cache;
 using Application.Models.CategoryModels.Contacts;
 using Application.Models.Cloud;
 using Application.Models.EmailModels.Interfaces;
@@ -14,13 +13,15 @@ using Application.Models.ProductModels.Intefaces;
 using Application.Models.UserModels.Interfaces;
 using Application.Services;
 using FluentValidation;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace Application.Helpers.Configurations
 {
     public static class ConfigurationApplicationLayer
     {
-        public static IServiceCollection AddConfigurationApplicationLayer(this IServiceCollection services)
+        public static IServiceCollection AddConfigurationApplicationLayer(this IServiceCollection services, IConfiguration config)
         {
             services.AddAutoMapper(typeof(CategoryProfile).Assembly);
             services.AddScoped<ICategoryService, CategoryService>();
@@ -28,7 +29,13 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ILocationService, LocationService>();
-            services.AddSingleton<ICacheService, CacheService>();
+
+            services.AddStackExchangeRedisCache(options => options.ConfigurationOptions = new ConfigurationOptions
+            {
+                EndPoints = { config["Redis:Connection"] },
+                Ssl = false
+            });
+
             services.AddScoped<ICloudService, CloudinaryService>();
             services.AddHttpContextAccessor();
             services.AddScoped<IEmailService, EmailService>();
