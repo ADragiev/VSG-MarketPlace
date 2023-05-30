@@ -10,6 +10,7 @@ export const baseApiMiddleware = () => (next: Dispatch<AnyAction>) => (action: A
     }
     if (action.payload.status === 401) {
       window.location.replace('/')
+      toast.error('Session expired. Please login again');
     }
   }
   

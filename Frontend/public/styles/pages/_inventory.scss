@@ -54,6 +54,9 @@
   }
   .input-div {
     display: flex;
+    #search{
+      width: 140px;
+    }
   }
   .locationFilter{
     display: flex;
@@ -113,6 +116,7 @@
   background-color: $white-color;
   border-radius: 20px;
   overflow: hidden;
+  overflow-y: auto;
   padding: 40px 0px 40px 0px;
   .row {
     max-height: 100%;
@@ -181,6 +185,10 @@
       cursor: pointer;
     }
   }
+  .spinning-loader{
+    align-self: center;
+    color: $main-color;
+  }
 
   .img-buttons {
     display: flex;
@@ -224,6 +232,9 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+body .css-zw3mfo-MuiModal-root-MuiDialog-root {
+  z-index: 0;
 }
 
 ////////////RESPONSIVE////////

@@ -36,7 +36,7 @@ const Header = (): JSX.Element => {
   //  const name = result.user.account.name
 
   return (
-    <header className="header">
+    <header className="header" role='header'>
       <Link to="/">
         <img
           src="../../images/vsg_marketplace-mini-logo 1.jpg"

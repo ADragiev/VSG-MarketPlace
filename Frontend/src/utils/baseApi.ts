@@ -10,8 +10,7 @@ export const baseURL =
       baseUrl: baseURL,
       prepareHeaders: (headers) => {
       const user = JSON.parse(sessionStorage.getItem("user") as string);
-      const token = user.token;
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set("Authorization", `Bearer ${user?.token}`);
       return headers;
     },
   }),

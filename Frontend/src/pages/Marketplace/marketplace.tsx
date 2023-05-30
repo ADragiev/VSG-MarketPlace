@@ -7,7 +7,7 @@ const MarketPlace = (): JSX.Element => {
 
   return (
     <>
-      <main className="main" id="main-list-wrapper">
+      <main className="main" id="main-list-wrapper" role='main'>
         {products?.map((product: IProduct) => (
           <Card product={product} key={product.id} />
         ))}

@@ -88,7 +88,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
             </div>
 
             <div className="icon popup">
-              <a className="circle" id="firstBtn" onClick={handlePopup}>
+              <a role="button" className="circle" id="firstBtn" onClick={handlePopup}>
                 <img src="../../images/dollar.svg" alt="DollarImage"/>
               </a>
             </div>

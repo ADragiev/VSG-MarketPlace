@@ -34,8 +34,8 @@ type TableProps = {
 };
 
 export default function CustomizedTables({ searchQuery, locationValue, products, setProducts }: TableProps) {
+  const rowsPerPage = 10;
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const { data } = useGetInventoryProductsQuery("");
 
   let filteredPRoducts = []
@@ -47,17 +47,11 @@ export default function CustomizedTables({ searchQuery, locationValue, products,
   }, [data]);
 
   const handleOnPageChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) =>{
-    console.log(e);
+    console.log(e);  
     setPage(newPage)
   }
 
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
   if (locationValue === 0) {
      filteredPRoducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchQuery)
@@ -101,7 +95,6 @@ export default function CustomizedTables({ searchQuery, locationValue, products,
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleOnPageChange}
-              onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </TableRow>
         </TableFooter>
