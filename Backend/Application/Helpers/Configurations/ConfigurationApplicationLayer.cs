@@ -30,11 +30,18 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ILocationService, LocationService>();
 
-            services.AddStackExchangeRedisCache(options => options.ConfigurationOptions = new ConfigurationOptions
+            if (config["Redis:Enabled"] == "true")
             {
-                EndPoints = { config["Redis:Connection"] },
-                Ssl = false
-            });
+                services.AddStackExchangeRedisCache(options => options.ConfigurationOptions = new ConfigurationOptions
+                {
+                    EndPoints = { config["Redis:Connection"] },
+                    Ssl = false,
+                });
+            }
+            else
+            {
+                services.AddDistributedMemoryCache();
+            }
 
             services.AddScoped<ICloudService, CloudinaryService>();
             services.AddHttpContextAccessor();
