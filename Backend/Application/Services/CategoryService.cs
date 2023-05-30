@@ -1,4 +1,5 @@
-﻿using Application.Models.CategoryModels.Contacts;
+﻿using Application.Models.CacheModels.Interfaces;
+using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
 using AutoMapper;
 using Microsoft.Extensions.Caching.Distributed;
@@ -12,11 +13,11 @@ namespace Application.Services
 
         private readonly ICategoryRepository categoryRepo;
         private readonly IMapper mapper;
-        private readonly IDistributedCache cacheService;
+        private readonly ICacheService cacheService;
 
         public CategoryService(ICategoryRepository categoryRepo,
             IMapper mapper,
-            IDistributedCache cacheService)
+            ICacheService cacheService)
         {
             this.categoryRepo = categoryRepo;
             this.mapper = mapper;
@@ -25,18 +26,17 @@ namespace Application.Services
 
         public async Task<List<CategoryGetDto>> AllAsync()
         {
-            var cachedCategories = await cacheService.GetStringAsync(categoriesKey);
+            var cachedCategories = await cacheService.GetDataAsync<List<CategoryGetDto>>(categoriesKey);
 
             if (cachedCategories != null)
             {
-                return JsonSerializer.Deserialize<List<CategoryGetDto>>(cachedCategories);
+                return cachedCategories;
             }
 
             var categories = await categoryRepo.AllAsync();
             var categoriesDto =  mapper.Map<List<CategoryGetDto>>(categories);
 
-            await cacheService.SetStringAsync(categoriesKey, JsonSerializer.Serialize(categoriesDto),
-                                                new DistributedCacheEntryOptions() { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30) });
+            await cacheService.SetDataAsync(categoriesKey, categoriesDto, TimeSpan.FromMinutes(30));
 
             return categoriesDto;
         }

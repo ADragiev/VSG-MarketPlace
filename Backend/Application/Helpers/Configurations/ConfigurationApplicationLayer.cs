@@ -1,5 +1,6 @@
 ﻿using Application.Helpers.Profiles;
 using Application.Helpers.Validators;
+using Application.Models.CacheModels.Interfaces;
 using Application.Models.CategoryModels.Contacts;
 using Application.Models.Cloud;
 using Application.Models.EmailModels.Interfaces;
@@ -42,6 +43,8 @@ namespace Application.Helpers.Configurations
             {
                 services.AddDistributedMemoryCache();
             }
+
+            services.AddSingleton<ICacheService, CacheService>();
 
             services.AddScoped<ICloudService, CloudinaryService>();
             services.AddHttpContextAccessor();

@@ -1,15 +1,10 @@
-﻿using Application.Models.Cache;
+﻿using Application.Models.CacheModels.Interfaces;
 using Application.Models.CategoryModels.Contacts;
 using Application.Models.CategoryModels.Dtos;
 using Application.Services;
 using AutoMapper;
 using Domain.Entities;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests
 {
@@ -34,7 +29,7 @@ namespace Tests
         [Test]
         public async Task AllAsync_ShouldReturnCachedCategories_IfTheyAreCached()
         {
-            cacheServiceMock.Setup(c => c.GetData<List<CategoryGetDto>>("categories-angel")).ReturnsAsync(() => new List<CategoryGetDto>()
+            cacheServiceMock.Setup(c => c.GetDataAsync<List<CategoryGetDto>>("categories-angel")).ReturnsAsync(() => new List<CategoryGetDto>()
             {
                 new CategoryGetDto()
                 {
@@ -52,7 +47,7 @@ namespace Tests
         [Test]
         public async Task AllAsync_ShouldReturnCategoriesFromDatabase_IfTheyAreNotCached()
         {
-            cacheServiceMock.Setup(c => c.GetData<List<CategoryGetDto>>("categories")).ReturnsAsync(() => null);
+            cacheServiceMock.Setup(c => c.GetDataAsync<List<CategoryGetDto>>("categories")).ReturnsAsync(() => null);
 
             categoryRepoMock.Setup(c => c.AllAsync()).ReturnsAsync(() => new List<Category>()
             {

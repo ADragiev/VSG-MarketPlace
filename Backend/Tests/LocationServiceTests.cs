@@ -1,15 +1,10 @@
-﻿using Application.Models.Cache;
+﻿using Application.Models.CacheModels.Interfaces;
 using Application.Models.LocationModels.Dtos;
 using Application.Models.LocationModels.Interfaces;
 using Application.Services;
 using AutoMapper;
 using Domain.Entities;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests
 {
@@ -34,7 +29,7 @@ namespace Tests
         [Test]
         public async Task AllAsync_ShouldReturnCachedLocations_IfTheyAreCached()
         {
-            cacheServiceMock.Setup(c => c.GetData<List<LocationGetDto>>("locations-angel")).ReturnsAsync(() => new List<LocationGetDto>() {
+            cacheServiceMock.Setup(c => c.GetDataAsync<List<LocationGetDto>>("locations-angel")).ReturnsAsync(() => new List<LocationGetDto>() {
                 new LocationGetDto()
                 {
                     Id = 1,
@@ -49,7 +44,7 @@ namespace Tests
         [Test]
         public async Task AllAsync_ShouldReturnLocationsFromDatabase_IfTheyAreNotCached()
         {
-            cacheServiceMock.Setup(c => c.GetData<List<LocationGetDto>>("locations")).ReturnsAsync(()=>null);
+            cacheServiceMock.Setup(c => c.GetDataAsync<List<LocationGetDto>>("locations")).ReturnsAsync(()=>null);
             locationRepoMock.Setup(l => l.AllAsync()).ReturnsAsync(() => new List<Location>() {
                 new Location()
                 {
