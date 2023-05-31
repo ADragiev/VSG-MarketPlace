@@ -15,6 +15,6 @@ namespace Application.Models.ProductModels.Intefaces
 
         Task<List<ProductInventoryGetDto>> GetAllInventoryProductsAsync();
 
-        Task<Product> GetByCodeAsync(string code);
+        Task<Product> GetByCodeAndLocationAsync(string code, int locationId);
     }
 }

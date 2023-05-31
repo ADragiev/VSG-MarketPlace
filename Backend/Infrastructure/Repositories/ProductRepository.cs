@@ -48,12 +48,12 @@ namespace Infrastructure.Repositories
             return products.ToList();
         }
 
-        public async Task<Product> GetByCodeAsync(string code)
+        public async Task<Product> GetByCodeAndLocationAsync(string code, int locationId)
         {
             var sql = @"SELECT * FROM Product
-                        WHERE Code = @code";
+                        WHERE Code = @code AND LocationId = @locationId";
 
-            var product = await connection.QueryFirstOrDefaultAsync<Product>(sql, new { code }, transaction);
+            var product = await connection.QueryFirstOrDefaultAsync<Product>(sql, new { code, locationId }, transaction);
 
             return product;
         }

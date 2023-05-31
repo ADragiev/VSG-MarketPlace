@@ -35,8 +35,8 @@ namespace Application.Services
 
         public async Task<GenericSimpleValueGetDto<int>> CreateAsync(ProductCreateDto dto)
         {
-            var productWithThatCode = await productRepo.GetByCodeAsync(dto.Code);
-            if (productWithThatCode != null)
+            var productWithThatCodeAndLocation = await productRepo.GetByCodeAndLocationAsync(dto.Code, dto.LocationId);
+            if (productWithThatCodeAndLocation != null)
             {
                 throw new HttpException("Product with that code already exists!", HttpStatusCode.BadRequest);
             }
@@ -84,8 +84,8 @@ namespace Application.Services
                 throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
             }
 
-            var productWithThatCode = await productRepo.GetByCodeAsync(dto.Code);
-            if (productWithThatCode != null && productWithThatCode.Id != id)
+            var productWithThatCodeAndLocation = await productRepo.GetByCodeAndLocationAsync(dto.Code, dto.LocationId);
+            if (productWithThatCodeAndLocation != null && productWithThatCodeAndLocation.Id != id)
             {
                 throw new HttpException("Product with that code already exists!", HttpStatusCode.BadRequest);
             }

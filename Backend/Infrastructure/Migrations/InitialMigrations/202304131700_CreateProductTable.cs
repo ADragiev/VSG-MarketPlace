@@ -14,7 +14,7 @@ namespace Infrastructure.Migrations.InitialMigrations
         {
             Create.Table("Product")
                 .WithColumn("Id").AsInt64().PrimaryKey().Identity().NotNullable()
-                .WithColumn("Code").AsString(50).Unique().NotNullable()
+                .WithColumn("Code").AsString(50).NotNullable()
                 .WithColumn("Name").AsString(100).NotNullable()
                 .WithColumn("Price").AsDecimal(19, 2).NotNullable()
                 .WithColumn("SaleQty").AsInt64().NotNullable()
@@ -22,6 +22,10 @@ namespace Infrastructure.Migrations.InitialMigrations
                 .WithColumn("Description").AsString(200).Nullable()
                 .WithColumn("CategoryId").AsInt64().NotNullable()
                 .WithColumn("LocationId").AsInt64().NotNullable();
+
+            Create.UniqueConstraint("CodeAndLocation")
+                  .OnTable("Product")
+                  .Columns("Code", "LocationId");
 
             Create.ForeignKey()
                 .FromTable("Product").ForeignColumn("CategoryId")
