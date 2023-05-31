@@ -38,7 +38,7 @@ namespace Application.Services
             var productWithThatCodeAndLocation = await productRepo.GetByCodeAndLocationAsync(dto.Code, dto.LocationId);
             if (productWithThatCodeAndLocation != null)
             {
-                throw new HttpException("Product with that code already exists!", HttpStatusCode.BadRequest);
+                throw new HttpException("Product with that code and location already exists!", HttpStatusCode.BadRequest);
             }
 
             var product = mapper.Map<Product>(dto);
@@ -87,7 +87,7 @@ namespace Application.Services
             var productWithThatCodeAndLocation = await productRepo.GetByCodeAndLocationAsync(dto.Code, dto.LocationId);
             if (productWithThatCodeAndLocation != null && productWithThatCodeAndLocation.Id != id)
             {
-                throw new HttpException("Product with that code already exists!", HttpStatusCode.BadRequest);
+                throw new HttpException("Product with that code and location already exists!", HttpStatusCode.BadRequest);
             }
 
             var productToUpdate = mapper.Map<Product>(dto);
