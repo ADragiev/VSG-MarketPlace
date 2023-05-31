@@ -4,6 +4,13 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "esModuleInterop": true,
+
+    "baseUrl": "src",
+    "paths": {
+      "test-utils": ["./utils/test-utils"],
+      "mock-server": ["./mocks/mock-server"],
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useCreateProductMutation } from "../services/productService";
 import { usePostImageMutation } from "../services/imageServices";
 import {
+  CircularProgress,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -28,15 +29,15 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
 
   const { data: categories } = useGetCategoriesQuery("");
   const { data: locations } = useGetLocationsQuery("");
-  const [createProduct, {isLoading: fetchingProduct}] = useCreateProductMutation();
+  const [createProduct] = useCreateProductMutation();
   
-  const [postImage, {isLoading: fetchingImage}] = usePostImageMutation();
+  const [postImage] = usePostImageMutation();
 
   const {
     register,
     handleSubmit,
     getValues,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<IFormInputs>({
     defaultValues: {
       code: "",
@@ -280,9 +281,10 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
               </div>
             </div>
           </div>
-          <button id="submitFormBtn" type="submit" disabled={fetchingProduct|| fetchingImage}>
+          {isSubmitting ? <CircularProgress className="spinning-loader" /> : <button id="submitFormBtn" type="submit">
             Add
-          </button>
+          </button> }
+         
         </form>
       </div>
     </ModalWrapper>

@@ -111,7 +111,6 @@ const Sidebar = (): JSX.Element => {
           </ul>
         </nav>
       </aside>
-      
     );
   };
   export default Sidebar;

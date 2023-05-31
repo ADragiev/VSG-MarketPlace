@@ -1,0 +1,30 @@
+[
+  {
+    "code": "fasdff",
+    "id": 46,
+    "category": "Chairs",
+    "name": "fsdaffasfds",
+    "price": 250,
+    "combinedQty": 5,
+    "saleQty": 5,
+    "image": "",
+    "description": "descriptiondfsdadfsa",
+    "location": "Plovdiv",
+    "locationId": 1,
+    "categoryId": 1
+  },
+  {
+    "code": "fasdff",
+    "id": 52,
+    "category": "Laptops",
+    "name": "fsdaffasfds",
+    "price": 250,
+    "combinedQty": 5,
+    "saleQty": 5,
+    "image": "",
+    "description": "descriptiondfsdadfsa",
+    "location": "Plovdiv",
+    "locationId": 1,
+    "categoryId": 1
+  }
+]
