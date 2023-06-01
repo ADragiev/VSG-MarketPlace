@@ -29,7 +29,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
 
   const { data: categories } = useGetCategoriesQuery("");
   const { data: locations } = useGetLocationsQuery("");
-  const [createProduct] = useCreateProductMutation();
+  const [createProduct, {isError}] = useCreateProductMutation();
   
   const [postImage] = usePostImageMutation();
 
@@ -38,13 +38,15 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
     handleSubmit,
     getValues,
     formState: { errors, isSubmitting },
+    watch
+    
   } = useForm<IFormInputs>({
     defaultValues: {
       code: "",
       name: "",
       description: "",
-      categoryId: null,
-      locationId: null,
+      categoryId: '',
+      locationId: '',
       saleQty: null,
       price: null,
       combinedQty: null,
@@ -104,7 +106,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="row">
-            <a className="close-modal-button" onClick={onClose}>
+            <a role="button" className="close-modal-button" onClick={onClose}>
               <svg
                 width={18}
                 height={18}
@@ -191,7 +193,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                     </MenuItem>
                   ))}
                 </Select>
-                <FormHelperText>{errors.categoryId?.message}</FormHelperText>
+                <FormHelperText>{watch('categoryId') === '' && errors.categoryId?.message ? errors.categoryId?.message : '' }</FormHelperText>
               </FormControl>
               <FormControl className="inputField"  variant="standard" error={Boolean(errors.locationId)}>
                 <InputLabel focused={false}>Location</InputLabel>
@@ -210,7 +212,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                     </MenuItem>
                   ))}
                 </Select>
-                <FormHelperText>{errors.locationId?.message}</FormHelperText>
+                <FormHelperText>{watch('locationId') === '' && errors.locationId?.message ? errors.locationId?.message : '' }</FormHelperText>
               </FormControl>
 
               <TextField
@@ -220,7 +222,14 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                 variant="standard"
                 label="Qty For Sale"
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
-                {...register("saleQty")}
+                error={Boolean(errors.saleQty)}
+                helperText={errors.saleQty?.message}
+                {...register("saleQty" , {
+                  min: {
+                    value: 0,
+                    message: "Qty for sale must be a possitive number",
+                  }
+                  })}
               />
               <TextField
                 className="inputField"
@@ -233,7 +242,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                 helperText={errors.price?.message}
                 {...register("price", {
                   min: {
-                    value: 1,
+                    value: 0,
                     message: "Price must be a possitive number",
                   },
                 })}
@@ -281,7 +290,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
               </div>
             </div>
           </div>
-          {isSubmitting ? <CircularProgress className="spinning-loader" /> : <button id="submitFormBtn" type="submit">
+          {isSubmitting && !isError ? <CircularProgress className="spinning-loader" /> : <button role="button" id="submitFormBtn" type="submit">
             Add
           </button> }
          

@@ -144,7 +144,6 @@
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;
-
     color: $black-color;
   }
   .imgSection {
@@ -160,10 +159,16 @@
   .inputField {
     font-size: 12px;
     .MuiInputBase-root::after {
-      border-bottom: #000;
+      border-bottom: #B3B3B3;
       width: 140px
     }
-   
+    .MuiInputBase-root::before {
+      border-bottom: 1px solid #B3B3B3;
+    }
+     label{
+      color: #B3B3B3
+
+    }
   }
   
   #submitFormBtn {

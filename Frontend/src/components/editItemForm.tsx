@@ -79,6 +79,7 @@ const EditItemForm = ({
 
   const handleRemoveImage = () => {
     setImageValue("../../images/no_image-placeholder.png");
+    setAnchorEl(null)
   };
 
   if (!open) {
@@ -171,7 +172,7 @@ const EditItemForm = ({
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="row">
-              <a className="close-modal-button" onClick={onClose}>
+              <a  className="close-modal-button" onClick={onClose}>
                 <svg
                   width={18}
                   height={18}
