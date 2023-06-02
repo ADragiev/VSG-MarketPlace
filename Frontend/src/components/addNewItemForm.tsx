@@ -60,6 +60,8 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
   const onSubmit = async (data: IFormInputs): Promise<void> => {
     const response = await createProduct(data) as {data: IReturnedValue};
     const selectedCategory = categories?.filter((c: ICategory)=> c.id == Number(data.categoryId))[0] as ICategory
+    const selectedLocation = locations?.filter((l: ILocation)=> l.id == Number(data.locationId))[0] as ILocation
+
     const responseData = response.data
     const id = responseData.returnedValue as number;
     
@@ -68,7 +70,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
       const imageFormData = new FormData();
       imageFormData.append("image", image);
       const imageUrl = await postImage({ id, imageFormData }) as {data: IReturnedValue}; 
-      const newProduct = {...data,id, image: imageUrl.data.returnedValue , category: selectedCategory.name} as IInventoryItem
+      const newProduct = {...data,id, image: imageUrl.data.returnedValue , category: selectedCategory.name, location: selectedLocation.name } as IInventoryItem
       setProducts((oldProducts) => [...oldProducts, newProduct])
     }
     else{

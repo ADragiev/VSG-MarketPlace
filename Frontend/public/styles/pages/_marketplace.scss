@@ -11,6 +11,10 @@
   width: 78vw;
   height: 85vh;
   overflow-y: auto;
+  .marketplace-loader{
+    color: $main-color;
+   align-self: center;
+  }
 }
 .display-main-container{
  display: flex;

@@ -79,7 +79,6 @@ const EditItemForm = ({
 
   const handleRemoveImage = () => {
     setImageValue("../../images/no_image-placeholder.png");
-    setAnchorEl(null)
   };
 
   if (!open) {
@@ -337,7 +336,7 @@ const EditItemForm = ({
                     Upload
                   </label>
                   <button
-                    onClick={handlePopup}
+                    onClick={handleRemoveImage}
                     id="remove-button"
                     type="button"
                   >
@@ -356,12 +355,12 @@ const EditItemForm = ({
           </form>
         </div>
       </ModalWrapper>
-      <PopperComponent
+      {/* <PopperComponent
         str={string}
         onYes={handleRemoveImage}
         anchor={anchorEl}
         setAnchor={setAnchorEl}
-      />
+      /> */}
     </>
   );
 };
