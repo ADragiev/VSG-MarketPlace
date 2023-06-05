@@ -5,7 +5,6 @@ import SearchBar from "./SearchBar";
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useGetLocationsQuery } from "../../services/locationService";
 import { IInventoryItem, ILocation } from "../../types";
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
 function Inventory(): JSX.Element {
   const [isAddNewItemFormOpen, setIsAddNewItemFormOpen] = useState(false);

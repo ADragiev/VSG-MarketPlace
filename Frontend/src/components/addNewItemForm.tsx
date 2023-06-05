@@ -48,6 +48,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
       categoryId: '',
       locationId: '',
       saleQty: null,
+      lendQty: null,
       price: null,
       combinedQty: null,
       image: "",
@@ -220,7 +221,6 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
               <TextField
                 className="inputField"
                 type="number"
-                id="item-name"
                 variant="standard"
                 label="Qty For Sale"
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
@@ -229,7 +229,22 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                 {...register("saleQty" , {
                   min: {
                     value: 0,
-                    message: "Qty for sale must be a possitive number",
+                    message: "Qty for sale must be a positive number",
+                  }
+                  })}
+              />
+               <TextField
+                className="inputField"
+                type="number"
+                variant="standard"
+                label="Qty For Lend"
+                InputLabelProps={{ style: { color: "#9A9A9A" } }}
+                error={Boolean(errors.lendQty)}
+                helperText={errors.lendQty?.message}
+                {...register("lendQty" , {
+                  min: {
+                    value: 0,
+                    message: "Qty for lend must be a positive number",
                   }
                   })}
               />
@@ -245,7 +260,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                 {...register("price", {
                   min: {
                     value: 0,
-                    message: "Price must be a possitive number",
+                    message: "Price must be a positive number",
                   },
                 })}
               />
@@ -260,7 +275,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                 helperText={errors.combinedQty?.message}
                 {...register("combinedQty", {
                   required: "Qty field is required",
-                  min: { value: 1, message: "Qty must be a possitive number" },
+                  min: { value: 1, message: "Qty must be a positive number" },
                   validate: (value) =>
                     (value as unknown as number) >=
                       Number(getValues("saleQty")) ||
