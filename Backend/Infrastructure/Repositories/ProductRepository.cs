@@ -28,7 +28,7 @@ namespace Infrastructure.Repositories
                         JOIN [Category] AS c ON p.CategoryId = c.Id
                         JOIN [Location] AS l ON p.LocationId = l.Id
                         LEFT JOIN Image AS i ON i.ProductId = p.Id
-                        WHERE p.SaleQty > 0";
+                        WHERE p.SaleQty > 0 AND p.IsDeleted = 0";
 
             var products = await connection.QueryAsync<ProductMarketPlaceGetDto>(sql, null, transaction);
             return products.ToList();
@@ -36,12 +36,13 @@ namespace Infrastructure.Repositories
 
         public async Task<List<ProductInventoryGetDto>> GetAllInventoryProductsAsync()
         {
-            var sql = @"SELECT p.Id, p.Code, p.Name, p.Price, p.Description, c.Name AS Category, p.CategoryId, p.SaleQty, p.CombinedQty, i.PublicId AS Image, l.Name AS Location, p.LocationId
+            var sql = @"SELECT p.Id, p.Code, p.Name, p.Price, p.Description, c.Name AS Category, p.CategoryId, p.SaleQty, p.LendQty, p.CombinedQty, i.PublicId AS Image, l.Name AS Location, p.LocationId
                         FROM
                         [Product] AS p
                         JOIN [Category] AS c ON p.CategoryId = c.Id
                         JOIN [Location] AS l ON p.LocationId = l.Id
-                        LEFT JOIN [Image] AS i ON i.ProductId = p.Id";
+                        LEFT JOIN [Image] AS i ON i.ProductId = p.Id
+                        WHERE p.IsDeleted = 0";
 
             var products = await connection.QueryAsync<ProductInventoryGetDto>(sql, null, transaction);
 
@@ -51,7 +52,7 @@ namespace Infrastructure.Repositories
         public async Task<Product> GetByCodeAndLocationAsync(string code, int locationId)
         {
             var sql = @"SELECT * FROM Product
-                        WHERE Code = @code AND LocationId = @locationId";
+                        WHERE Code = @code AND LocationId = @locationId AND IsDeleted = 0";
 
             var product = await connection.QueryFirstOrDefaultAsync<Product>(sql, new { code, locationId }, transaction);
 

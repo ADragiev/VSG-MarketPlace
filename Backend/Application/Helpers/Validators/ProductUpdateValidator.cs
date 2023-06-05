@@ -34,7 +34,7 @@ namespace Application.Helpers.Validators
                 .GreaterThanOrEqualTo(0).WithMessage("Sale quantity must be positive number");
 
             RuleFor(p => p.CombinedQty)
-                .GreaterThanOrEqualTo(p => p.SaleQty).When(p => p.SaleQty != null).WithMessage("Combined quantity must be greater than or equal to sale quantity")
+                .GreaterThanOrEqualTo(p => (p.LendQty != null ? p.LendQty : 0) + (p.SaleQty != null ? p.SaleQty : 0)).WithMessage("Combined quantity must be greater than or equal to sum of sale and lend quantity")
                 .GreaterThanOrEqualTo(0).WithMessage("Combined quantity must be positive number");
 
             RuleFor(p => p.Description)

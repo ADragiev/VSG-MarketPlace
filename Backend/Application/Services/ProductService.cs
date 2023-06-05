@@ -84,6 +84,11 @@ namespace Application.Services
                 throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
             }
 
+            if (product.IsDeleted == true)
+            {
+                throw new HttpException($"Product has been deleted!", HttpStatusCode.BadRequest);
+            }
+
             var productWithThatCodeAndLocation = await productRepo.GetByCodeAndLocationAsync(dto.Code, dto.LocationId);
             if (productWithThatCodeAndLocation != null && productWithThatCodeAndLocation.Id != id)
             {
@@ -104,14 +109,20 @@ namespace Application.Services
                 throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
             }
 
+            if (product.IsDeleted == true)
+            {
+                throw new HttpException($"Product has been already deleted!", HttpStatusCode.BadRequest);
+            }
+
             var productPendingOrdersCount = await orderRepository.GetAllPendingOrdersAsync();
             if (productPendingOrdersCount.Any(o => o.ProductId == id))
             {
                 throw new HttpException("The product you want to delete has pending orders and cannot be deleted. Make sure you delete them before deleting product.", HttpStatusCode.BadRequest);
             }
+            //TODO: GetAllLendedItems
 
             await imageService.DeleteImageByProductIdAsync(id);
-            await productRepo.DeleteAsync(id);
+            await productRepo.SetFieldAsync(id, "IsDeleted", true);
         }
     }
 }

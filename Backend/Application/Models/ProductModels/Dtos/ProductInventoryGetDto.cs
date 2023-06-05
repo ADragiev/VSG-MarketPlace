@@ -22,6 +22,7 @@ namespace Application.Models.ProductModels.Dtos
         public int CategoryId { get; set; }
 
         public int SaleQty { get; set; }
+        public int LendQty { get; set; }
 
         public int CombinedQty { get; set; }
 

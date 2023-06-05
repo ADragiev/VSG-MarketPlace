@@ -23,10 +23,6 @@ namespace Infrastructure.Migrations.InitialMigrations
                 .WithColumn("CategoryId").AsInt64().NotNullable()
                 .WithColumn("LocationId").AsInt64().NotNullable();
 
-            Create.UniqueConstraint("CodeAndLocation")
-                  .OnTable("Product")
-                  .Columns("Code", "LocationId");
-
             Create.ForeignKey()
                 .FromTable("Product").ForeignColumn("CategoryId")
                 .ToTable("Category").PrimaryColumn("Id");
