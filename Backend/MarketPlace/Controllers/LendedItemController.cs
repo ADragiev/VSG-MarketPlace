@@ -17,7 +17,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        public async Task<Dictionary<string, List<LendedItemGetDto>>> AllLendedItems()
+        public async Task<Dictionary<string, List<LendedItemForGroupGetDto>>> AllLendedItems()
         {
             return await lendedItemService.GetAllLendedItemsGroupedByLenderAsync();
         }

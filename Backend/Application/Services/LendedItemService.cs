@@ -54,12 +54,12 @@ namespace Application.Services
             await lendedItemRepo.CreateAsync(lendedItem);
         }
 
-        public async Task<Dictionary<string, List<LendedItemGetDto>>> GetAllLendedItemsGroupedByLenderAsync()
+        public async Task<Dictionary<string, List<LendedItemForGroupGetDto>>> GetAllLendedItemsGroupedByLenderAsync()
         {
             var lendedItems = await lendedItemRepo.GetAllLendedItemsAsync();
 
             return lendedItems.GroupBy(l => l.LendedBy)
-                .ToDictionary(g => g.Key, g => g.ToList());
+                .ToDictionary(g => g.Key, g => mapper.Map<List<LendedItemForGroupGetDto>>(g.ToList()));
         }
 
         public async Task ReturnItemAsync(int id)
@@ -85,7 +85,7 @@ namespace Application.Services
             var newCombinedQty = product.CombinedQty + lendedItem.Qty;
             await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
 
-            await lendedItemRepo.SetFieldAsync(id, "EndDate", DateTime.UtcNow);
+            await lendedItemRepo.SetFieldAsync(id, "EndDate", DateTime.Now);
 
         }
     }
