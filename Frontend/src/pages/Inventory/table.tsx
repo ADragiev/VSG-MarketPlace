@@ -1,44 +1,26 @@
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import { useGetInventoryProductsQuery } from "../../services/productService";
-import { TableFooter, TablePagination } from "@mui/material";
 import { IInventoryItem } from "../../types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import TableRowComponent from "./TableRow";
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontWeight: 600,
-    border: 1,
-    fontSize: 17,
-    backgroundColor: theme.palette.common.white,
-    color: theme.palette.common.black,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontWeight: 500,
-    fontSize: 16,
-  },
-}));
+import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import { CircularProgress } from "@mui/material";
 
 type TableProps = {
   searchQuery: string;
-  locationValue: number,
-  products: IInventoryItem[],
-  setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>
-  
+  products: IInventoryItem[];
+  setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
 };
 
-export default function CustomizedTables({ searchQuery, locationValue, products, setProducts }: TableProps) {
-  const rowsPerPage = 10;
-  const [page, setPage] = useState(0);
-  const { data } = useGetInventoryProductsQuery("");
-
+export default function CustomizedTables({
+  searchQuery,
+  products,
+  setProducts,
+}: TableProps) {
+  const { data, isLoading } = useGetInventoryProductsQuery("");
   let filteredPRoducts = []
+
+  filteredPRoducts = products.filter((p) =>
+  p.name.toLowerCase().includes(searchQuery))
 
   useEffect(() => {
     if (data) {
@@ -46,59 +28,50 @@ export default function CustomizedTables({ searchQuery, locationValue, products,
     }
   }, [data]);
 
-  const handleOnPageChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) =>{
-    console.log(e);  
-    setPage(newPage)
-  }
-
-
-  if (locationValue === 0) {
-     filteredPRoducts = products.filter((p) =>
-    p.name.toLowerCase().includes(searchQuery)
-  );
-  }
-  else{
-    filteredPRoducts = products.filter((p) =>
-   p.locationId == locationValue
-  ).filter((p) =>
-  p.name.toLowerCase().includes(searchQuery)
-);
-  }
- 
+  const rows: GridRowsProp = filteredPRoducts.map((item) => ({
+    id: item.id,
+    code: item.code,
+    name: item.name,
+    category: item.category,
+    forSale: item.saleQty,
+    qty: item.combinedQty,
+    location: item.location,
+    actions: item,
+  }));
+  const columns: GridColDef[] = [
+    { field: "code", headerName: "Code", flex: 1 },
+    { field: "name", headerName: "Name", flex: 1 },
+    { field: "category", headerName: "Category", flex: 1 },
+    { field: "forSale", headerName: "For sale", flex: 1 },
+    { field: "qty", headerName: "QTY", flex: 1 },
+    { field: "location", headerName: "Location", flex: 1 },
+    {
+      field: "actions",
+      headerName: "Action",
+      flex: 1,
+      renderCell: (params) => {
+        const product = params.value as IInventoryItem;
+        return (
+          <TableRowComponent setProducts={setProducts} product={product} />
+        );
+      },
+    },
+  ];
 
   return (
-    <TableContainer className="tableContainer">
-      <Table aria-label="customized table">
-        <TableHead className="tableHead">
-          <TableRow>
-            <StyledTableCell>Code</StyledTableCell>
-            <StyledTableCell>Name</StyledTableCell>
-            <StyledTableCell>Category</StyledTableCell>
-            <StyledTableCell>For Sale</StyledTableCell>
-            <StyledTableCell>QTY</StyledTableCell>
-            <StyledTableCell>Actions</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {filteredPRoducts
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row) => (
-              <TableRowComponent products={products} setProducts={setProducts} product={row} key={row.id} />
-            ))}
-            {filteredPRoducts.length === 0 && <div className="noProductsDiv">No products found</div>}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[10]}
-              count={filteredPRoducts.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleOnPageChange}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+    <div style={{ height: "70vh", width: "100%" }}>
+
+      {isLoading ? <CircularProgress className="spinning-loader" /> : 
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 10, page: 0 },
+          },
+        }}
+      />
+}
+    </div>
   );
 }

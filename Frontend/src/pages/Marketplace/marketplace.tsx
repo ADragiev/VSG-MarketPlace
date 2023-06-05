@@ -1,6 +1,7 @@
 import { useGetProductsQuery } from "../../services/productService";
 import { IProduct } from "../../types";
 import Card from "../../components/Product/Product";
+import { CircularProgress } from "@mui/material";
 
 const MarketPlace = (): JSX.Element => {
   const { data: products, isLoading } = useGetProductsQuery("");
@@ -8,10 +9,11 @@ const MarketPlace = (): JSX.Element => {
   return (
     <>
       <main className="main" id="main-list-wrapper" role='main'>
-        {products?.map((product: IProduct) => (
+        {isLoading ? <CircularProgress className="marketplace-loader"/>: products?.map((product: IProduct) => (
           <Card product={product} key={product.id} />
         ))}
-        {isLoading && <div>Loading...</div>}
+        
+
       </main>
     </>
   );

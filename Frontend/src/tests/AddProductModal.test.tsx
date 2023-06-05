@@ -18,4 +18,17 @@ describe("Inventory", () => {
 
     expect(screen.getAllByRole("presentation")[0]).toBeInTheDocument();
   });
+  it("should close AddProductModal when submitted ", async () => {
+    render(<Inventory />);
+
+    const user = userEvent.setup();
+    const addProductBtn = screen.getByText('Add new');
+    await user.click(addProductBtn);
+    const closeButton = await screen.findAllByRole('button');
+    await user.click(closeButton[0]);
+    const addModal  = await screen.findByRole("presentation")
+    expect(addModal).not.toBeInTheDocument();
+    
+
+  });
 });

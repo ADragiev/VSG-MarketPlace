@@ -28,11 +28,4 @@ describe("buyPopup", () => {
     await user.click(buyPopup);
     expect(screen.getAllByRole("tooltip")[0]).toBeInTheDocument();
   });
-  // it("should close buyPopup", async () => {
-  //   render(<BrowserRouter> <Card product={product} /></BrowserRouter>);
-  //   const user = userEvent.setup();
-  //   const buyPopup = screen.getByRole("button");
-  //   await user.click(buyPopup);
-  //   expect(screen.getAllByRole("tooltip")[0]).toBeInTheDocument();
-  // });
 });

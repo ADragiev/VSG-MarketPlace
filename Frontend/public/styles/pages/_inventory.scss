@@ -17,11 +17,19 @@
   height: auto;
   border-radius: 20px;
   padding: 20px;
+  .css-t89xny-MuiDataGrid-columnHeaderTitle{
+    font-weight: 600;
+  }
   .noProductsDiv{
     display: flex;
    font-size: 18px;
    font-family: 'Roboto';
    margin: 10px
+  }
+  .inventory-loader{
+    align-self: center;
+    margin: 20px;
+    color: $main-color;
   }
   .tableContainer{
     border: 1px solid #B3B3B3;
@@ -54,6 +62,7 @@
   }
   .input-div {
     display: flex;
+    margin-right: 20px;
     #search{
       width: 140px;
     }
@@ -144,7 +153,6 @@
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;
-
     color: $black-color;
   }
   .imgSection {
@@ -160,10 +168,16 @@
   .inputField {
     font-size: 12px;
     .MuiInputBase-root::after {
-      border-bottom: #000;
+      border-bottom: #B3B3B3;
       width: 140px
     }
-   
+    .MuiInputBase-root::before {
+      border-bottom: 1px solid #B3B3B3;
+    }
+     label{
+      color: #B3B3B3
+
+    }
   }
   
   #submitFormBtn {
@@ -189,7 +203,7 @@
     align-self: center;
     color: $main-color;
   }
-
+  
   .img-buttons {
     display: flex;
     flex-direction: column;
@@ -236,6 +250,11 @@
 body .css-zw3mfo-MuiModal-root-MuiDialog-root {
   z-index: 0;
 }
+.css-1t5wrdm-MuiDataGrid-filterForm{
+  display: flex;
+  flex-direction: column;
+}
+
 
 ////////////RESPONSIVE////////
 

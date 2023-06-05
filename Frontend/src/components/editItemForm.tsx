@@ -171,7 +171,7 @@ const EditItemForm = ({
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="row">
-              <a className="close-modal-button" onClick={onClose}>
+              <a  className="close-modal-button" onClick={onClose}>
                 <svg
                   width={18}
                   height={18}
@@ -336,7 +336,7 @@ const EditItemForm = ({
                     Upload
                   </label>
                   <button
-                    onClick={handlePopup}
+                    onClick={handleRemoveImage}
                     id="remove-button"
                     type="button"
                   >
@@ -355,12 +355,12 @@ const EditItemForm = ({
           </form>
         </div>
       </ModalWrapper>
-      <PopperComponent
+      {/* <PopperComponent
         str={string}
         onYes={handleRemoveImage}
         anchor={anchorEl}
         setAnchor={setAnchorEl}
-      />
+      /> */}
     </>
   );
 };

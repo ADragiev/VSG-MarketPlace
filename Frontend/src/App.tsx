@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import { Suspense, lazy } from "react";
 import ProtectedRoute from "./protectedRoute";
 import AdminRoute from "./adminRoute";
+import { CircularProgress } from "@mui/material";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const MarketPlace = lazy(() => import("./pages/Marketplace/Marketplace"));
@@ -16,7 +17,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={ <CircularProgress className="global-loader" />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route element={<ProtectedRoute />}>

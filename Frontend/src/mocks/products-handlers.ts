@@ -4,7 +4,7 @@ import products from './products-mock.json';
 
 const productHandlers = [
 
-  rest.get(`url`, (_, res, ctx) => {
+  rest.get(`https://auto.loanvantage360.com/internship/EvaluationSystemAngel/Product/Inventory`, (_, res, ctx) => {
     return res(ctx.json(products));
   }),
 ];

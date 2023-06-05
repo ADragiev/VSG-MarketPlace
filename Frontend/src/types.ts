@@ -28,8 +28,8 @@ export interface IReturnedValue{
 }
 export interface IFormInputs{
     code: string
-    categoryId: number | null
-    locationId:  number | null
+    categoryId: number | string
+    locationId:  number | string
     name: string
     price: number | null
     combinedQty: number | null

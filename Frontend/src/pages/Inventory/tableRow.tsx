@@ -1,30 +1,16 @@
-import styled from "@emotion/styled";
 
 import { useDeleteProductMutation } from "../../services/productService";
 import EditItemForm from "../../components/EditItemForm";
 import { useState } from "react";
 import { IInventoryItem } from "../../types";
-import { TableCell, TableRow, tableCellClasses } from "@mui/material";
 import DeleteIcon from "./DeleteIcon";
 import { toast } from "react-toastify";
 
 type InventoryItemsProps = {
   product: IInventoryItem;
-  products: IInventoryItem[];
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>
 };
 
-const StyledTableCell = styled(TableCell)(() => ({
-  [`&.${tableCellClasses.head}`]: {
-    fontWeight: 600,
-    border: 1,
-    fontSize: 17,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontWeight: 500,
-    fontSize: 16,
-  },
-}));
 
 const TableRowComponent = ({
   product,
@@ -57,16 +43,6 @@ const TableRowComponent = ({
           setProducts={setProducts}
         />
       )}
-
-      <TableRow key={product.id}>
-        <StyledTableCell component="th" scope="row">
-          {product.code}
-        </StyledTableCell>
-        <StyledTableCell>{product.name}</StyledTableCell>
-        <StyledTableCell>{product.category}</StyledTableCell>
-        <StyledTableCell>{product.saleQty}</StyledTableCell>
-        <StyledTableCell>{product.combinedQty}</StyledTableCell>
-        <StyledTableCell>
           <a className="edit-icon" onClick={handleEditItemBtn}>
             <svg
               width="16"
@@ -83,8 +59,7 @@ const TableRowComponent = ({
           </a>
 
           <DeleteIcon str={str} onYes={onDelete} />
-        </StyledTableCell>
-      </TableRow>
+       
     </>
   );
 };
