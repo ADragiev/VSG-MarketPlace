@@ -21,7 +21,11 @@ interface LendForHomeFormProps {
 const LendForHomeForm = ({ onClose, product }: LendForHomeFormProps) => {
   const [open, setOpen] = useState(true);
   const [email, setEmail] = useState("");
+  const [availableQty, setAvailableQty] = useState(0);
   const [lendItem] = usePostLentItemMutation()
+
+  console.log(email, availableQty); // remove
+  
 
   const onSubmit = async (data: ILendItemsFormInputs): Promise<void> => {
     const newData = {...data, productId: product.id}

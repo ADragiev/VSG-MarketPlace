@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { handleLogout } from "../auth/logout";
-import StorageRoundedIcon from "@mui/icons-material/StorageRounded";
-import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
+// import StorageRoundedIcon from "@mui/icons-material/StorageRounded";
+// import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 
 const Sidebar = (): JSX.Element => {
   const user = JSON.parse(sessionStorage.getItem("user") as string);

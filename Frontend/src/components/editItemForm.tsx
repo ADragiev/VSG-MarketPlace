@@ -24,7 +24,6 @@ import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
 import { toast } from "react-toastify";
-import PopperComponent from "./Popper";
 
 interface EditItemlProps {
   product: IInventoryItem;
@@ -41,8 +40,8 @@ const EditItemForm = ({
   const [open, setOpen] = useState(true);
   const [categoryOption, setCategoryOption] = useState(0);
   const [locationOption, setLocationOption] = useState(0);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const string = `Are you sure you want to remove this image?`;
+  // const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  // const string = `Are you sure you want to remove this image?`;
 
   const { data: categories } = useGetCategoriesQuery("");
   const { data: locations } = useGetLocationsQuery("");
@@ -54,9 +53,9 @@ const EditItemForm = ({
   const [imageValue, setImageValue] = useState(
     product.image ? product.image : "../../images/no_image-placeholder.png"
   );
-  const handlePopup = (e: any) => {
-    setAnchorEl(e.currentTarget);
-  };
+  // const handlePopup = (e: any) => {
+  //   setAnchorEl(e.currentTarget);
+  // };
 
   const {
     register,
