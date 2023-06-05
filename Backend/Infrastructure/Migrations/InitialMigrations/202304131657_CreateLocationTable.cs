@@ -18,7 +18,6 @@ namespace Infrastructure.Migrations.InitialMigrations
 
             Insert.IntoTable("Location").Row(new { Name = "Plovdiv" });
             Insert.IntoTable("Location").Row(new { Name = "Tarnovo" });
-            Insert.IntoTable("Location").Row(new { Name = "Home Office" });
         }
 
         public override void Down()
