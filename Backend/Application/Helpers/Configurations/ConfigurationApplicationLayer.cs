@@ -31,7 +31,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ILocationService, LocationService>();
-            services.AddScoped<ILentItemService, LentItemModelsService>();
+            services.AddScoped<ILentItemService, LentItemService>();
 
             if (config["Redis:Enabled"] == "true")
             {

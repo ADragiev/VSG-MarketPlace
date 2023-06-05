@@ -18,15 +18,15 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class LentItemModelsService : ILentItemService
+    public class LentItemService : ILentItemService
     {
         private readonly ILentItemRepository lentItemRepo;
         private readonly IProductRepository productRepo;
         private readonly IMapper mapper;
         private readonly IUserService userService;
 
-        public LentItemModelsService(ILentItemRepository lentItemRepo,
-            IProductRepository productRepo, 
+        public LentItemService(ILentItemRepository lentItemRepo,
+            IProductRepository productRepo,
             IMapper mapper,
             IUserService userService)
         {
@@ -59,12 +59,16 @@ namespace Application.Services
             await lentItemRepo.CreateAsync(lendedItem);
         }
 
-        public async Task<Dictionary<string, List<LentItemForGroupGetDto>>> GetAllLentItemsGroupedByLenderAsync()
+        public async Task<List<LentItemsByEmailDto>> GetAllLentItemsGroupedByLenderAsync()
         {
             var lendedItems = await lentItemRepo.GetAllLentItemsAsync();
 
             return lendedItems.GroupBy(l => l.LentBy)
-                .ToDictionary(g => g.Key, g => mapper.Map<List<LentItemForGroupGetDto>>(g.ToList()));
+                .Select(g => new LentItemsByEmailDto()
+                {
+                    Email = g.Key,
+                    LentItems = mapper.Map<List<LentItemForGroupGetDto>>(g.ToList())
+                }).ToList();
         }
 
         public async Task<List<LentItemGetMineDto>> GetMyLentItemsAsync()

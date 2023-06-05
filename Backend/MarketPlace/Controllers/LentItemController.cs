@@ -23,7 +23,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        public async Task<Dictionary<string, List<LentItemForGroupGetDto>>> AllLendedItems()
+        public async Task<List<LentItemsByEmailDto>> AllLendedItems()
         {
             return await lentItemService.GetAllLentItemsGroupedByLenderAsync();
         }
