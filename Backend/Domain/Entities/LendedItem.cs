@@ -17,8 +17,6 @@ namespace Domain.Entities
 
         public DateTime? EndDate { get; set; } = null;
 
-        public LendedItemStatus Status { get; set; } = LendedItemStatus.InUse;
-
         public int ProductId { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<LendedItemGetDto>> GetAllLendedItemsAsync()
         {
-            var sql = @"SELECT li.Id, li.Qty, li.LendedBy, li.StartDate, li.EndDate, li.Status, p.Name AS ProductName, p.Code AS ProductCode
+            var sql = @"SELECT li.Id, li.Qty, li.LendedBy, li.StartDate, li.EndDate, p.Name AS ProductName, p.Code AS ProductCode
                         FROM
                         LendedItem AS li
                         JOIN Product AS p ON li.ProductId = p.Id";
@@ -34,7 +34,7 @@ namespace Infrastructure.Repositories
         {
             var sql = @"SELECT * FROM
                         LendedItem
-                        WHERE ProductId = @productId AND Status = 0";
+                        WHERE ProductId = @productId AND EndDate IS NULL";
 
             var inUseLendedItems = await connection.QueryAsync<LendedItem>(sql, new { productId }, transaction);
             return inUseLendedItems.ToList();

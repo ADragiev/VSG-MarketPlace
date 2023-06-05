@@ -62,7 +62,7 @@ namespace Application.Services
                 .ToDictionary(g => g.Key, g => g.ToList());
         }
 
-        public async Task<GenericSimpleValueGetDto<string>> ReturnItemAsync(int id)
+        public async Task ReturnItemAsync(int id)
         {
             var lendedItem = await lendedItemRepo.GetByIdAsync(id);
 
@@ -72,9 +72,9 @@ namespace Application.Services
                 throw new HttpException($"Lended item Id not found!", HttpStatusCode.NotFound);
             }
 
-            if (lendedItem.Status != LendedItemStatus.InUse)
+            if (lendedItem.EndDate != null)
             {
-                throw new HttpException("Only in use lended items can be returnded!", HttpStatusCode.BadRequest);
+                throw new HttpException("Only lended items without end date can be returnded!", HttpStatusCode.BadRequest);
             }
 
             var product = await productRepo.GetByIdAsync(lendedItem.ProductId);
@@ -85,9 +85,8 @@ namespace Application.Services
             var newCombinedQty = product.CombinedQty + lendedItem.Qty;
             await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
 
-            await lendedItemRepo.SetFieldAsync(id, "Status", LendedItemStatus.Returned);
+            await lendedItemRepo.SetFieldAsync(id, "EndDate", DateTime.UtcNow);
 
-            return new GenericSimpleValueGetDto<string>(LendedItemStatus.Returned.ToString());
         }
     }
 }

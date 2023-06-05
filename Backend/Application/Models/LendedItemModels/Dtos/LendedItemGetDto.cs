@@ -19,8 +19,6 @@ namespace Application.Models.LendedItemModels.Dtos
 
         public DateTime? EndDate { get; set; } = null;
 
-        public LendedItemStatus Status { get; set; }
-
         public string ProductName { get; set; }
 
         public string ProductCode { get; set; }

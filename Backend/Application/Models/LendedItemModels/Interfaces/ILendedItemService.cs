@@ -13,7 +13,7 @@ namespace Application.Models.LendedItemModels.Interfaces
     {
         Task CreateAsync(LendedItemCreateDto dto);
 
-        Task<GenericSimpleValueGetDto<string>> ReturnItemAsync(int id);
+        Task ReturnItemAsync(int id);
 
         Task<Dictionary<string, List<LendedItemGetDto>>> GetAllLendedItemsGroupedByLenderAsync();
     }

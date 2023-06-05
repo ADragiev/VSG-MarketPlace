@@ -23,7 +23,6 @@ namespace Infrastructure.Migrations.JuneMigrations
               .WithColumn("LendedBy").AsString(50).NotNullable()
               .WithColumn("StartDate").AsDateTime().NotNullable()
               .WithColumn("EndDate").AsDateTime().Nullable().WithDefaultValue(null)
-              .WithColumn("Status").AsInt64().NotNullable()
               .WithColumn("ProductId").AsInt64().NotNullable();
 
             Create.ForeignKey()

@@ -30,9 +30,9 @@ namespace MarketPlace.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<GenericSimpleValueGetDto<string>> RejectOrder(int id)
+        public async Task RejectOrder(int id)
         {
-            return await lendedItemService.ReturnItemAsync(id);
+            await lendedItemService.ReturnItemAsync(id);
         }
     }
 }
