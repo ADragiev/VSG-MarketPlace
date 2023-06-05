@@ -5,7 +5,8 @@ using Application.Models.Cloud;
 using Application.Models.EmailModels.Interfaces;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
-using Application.Models.LendedItemModels.Interfaces;
+using Application.Models.LentItemModels.Dtos;
+using Application.Models.LentItemModels.Interfaces;
 using Application.Models.LocationModels.Interfaces;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
@@ -30,7 +31,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ILocationService, LocationService>();
-            services.AddScoped<ILendedItemService, LendedItemService>();
+            services.AddScoped<ILentItemService, LentItemModelsService>();
 
             if (config["Redis:Enabled"] == "true")
             {
@@ -54,6 +55,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IValidator<ProductCreateDto>, ProductCreateValidator>();
             services.AddScoped<IValidator<ProductUpdateDto>, ProductUpdateValidator>();
             services.AddScoped<IValidator<ImageCreateDto>, ImageCreateValidator>();
+            services.AddScoped<IValidator<LentItemCreateDto>, LentItemCreateValidator>();
             return services;
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Application.Models.CategoryModels.Contacts;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
-using Application.Models.LendedItemModels.Interfaces;
+using Application.Models.LentItemModels.Interfaces;
 using Application.Models.LocationModels.Interfaces;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
@@ -21,7 +21,7 @@ namespace Infrastructure.Configurations
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
-            services.AddScoped<ILendedItemRepository, LendedItemRepository>();
+            services.AddScoped<ILentItemRepository, LentItemRepository>();
 
             return services;
         }

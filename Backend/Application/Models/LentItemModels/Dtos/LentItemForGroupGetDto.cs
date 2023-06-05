@@ -1,23 +1,20 @@
-﻿using Domain.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Models.LendedItemModels.Dtos
+namespace Application.Models.LentItemModels.Dtos
 {
-    public class LendedItemGetDto
+    public class LentItemForGroupGetDto
     {
         public int Id { get; set; }
 
         public int Qty { get; set; }
 
-        public string LendedBy { get; set; }
+        public string StartDate { get; set; }
 
-        public DateTime StartDate { get; set; }
-
-        public DateTime? EndDate { get; set; } = null;
+        public string? EndDate { get; set; } = null;
 
         public string ProductName { get; set; }
 

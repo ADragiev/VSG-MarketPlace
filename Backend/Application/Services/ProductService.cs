@@ -4,7 +4,7 @@ using Application.Models.ExceptionModels;
 using Application.Models.GenericModels.Dtos;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
-using Application.Models.LendedItemModels.Interfaces;
+using Application.Models.LentItemModels.Interfaces;
 using Application.Models.LocationModels.Interfaces;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
@@ -22,13 +22,13 @@ namespace Application.Services
         private readonly IMapper mapper;
         private readonly IImageService imageService;
         private readonly IOrderRepository orderRepository;
-        private readonly ILendedItemRepository lendedItemRepo;
+        private readonly ILentItemRepository lendedItemRepo;
 
         public ProductService(IProductRepository productRepo,
             IMapper mapper,
             IImageService imageService,
             IOrderRepository orderRepository,
-            ILendedItemRepository lendedItemRepo)
+            ILentItemRepository lendedItemRepo)
         {
             this.productRepo = productRepo;
             this.mapper = mapper;

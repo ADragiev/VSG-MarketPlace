@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Models.LendedItemModels.Dtos
+namespace Application.Models.LentItemModels.Dtos
 {
-    public class LendedItemCreateDto
+    public class LentItemCreateDto
     {
         public int Qty { get; set; }
 
         public int ProductId { get; set; }
-        public string LendedBy { get; set; }
+        public string LentBy { get; set; }
     }
 }

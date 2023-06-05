@@ -1,5 +1,5 @@
 ﻿using Application.Helpers.Constants;
-using Application.Models.LendedItemModels.Dtos;
+using Application.Models.LentItemModels.Dtos;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace Application.Helpers.Profiles
 {
-    public class LendedItemProfile : Profile
+    public class LentItemProfile : Profile
     {
-        public LendedItemProfile()
+        public LentItemProfile()
         {
-            CreateMap<LendedItemCreateDto, LendedItem>();
+            CreateMap<LentItemCreateDto, LentItem>();
 
-            CreateMap<LendedItemGetDto, LendedItemForGroupGetDto>()
+            CreateMap<LentItemGetDto, LentItemForGroupGetDto>()
                 .ForMember(dest => dest.StartDate, src => src.MapFrom(src => TimeZoneInfo.ConvertTime(src.StartDate, TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat)))
                 .ForMember(dest => dest.EndDate, src => src.MapFrom(src => src.EndDate != null ? TimeZoneInfo.ConvertTime(src.EndDate.GetValueOrDefault(), TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat) : null));
 

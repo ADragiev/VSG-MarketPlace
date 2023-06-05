@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class LendedItem : BaseEntity
+    public class LentItem : BaseEntity
     {
         public int Qty { get; set; }
 
-        public string LendedBy { get; set; }
+        public string LentBy { get; set; }
 
         public DateTime StartDate { get; set; } = DateTime.Now;
 
