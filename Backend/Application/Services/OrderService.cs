@@ -59,7 +59,7 @@ namespace Application.Services
         {
             var product = await productRepo.GetByIdAsync(dto.ProductId);
 
-            if (product == null)
+            if (product == null || product.IsDeleted == true)
             {
                 throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
             }

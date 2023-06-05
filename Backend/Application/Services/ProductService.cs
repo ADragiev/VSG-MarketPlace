@@ -79,14 +79,9 @@ namespace Application.Services
         {
             var product = await productRepo.GetByIdAsync(id);
 
-            if (product == null)
+            if (product == null || product.IsDeleted == true)
             {
                 throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
-            }
-
-            if (product.IsDeleted == true)
-            {
-                throw new HttpException($"Product has been deleted!", HttpStatusCode.BadRequest);
             }
 
             var productWithThatCodeAndLocation = await productRepo.GetByCodeAndLocationAsync(dto.Code, dto.LocationId);
@@ -104,14 +99,9 @@ namespace Application.Services
         {
             var product = await productRepo.GetByIdAsync(id);
 
-            if (product == null)
+            if (product == null || product.IsDeleted == true)
             {
                 throw new HttpException($"Product Id not found!", HttpStatusCode.NotFound);
-            }
-
-            if (product.IsDeleted == true)
-            {
-                throw new HttpException($"Product has been already deleted!", HttpStatusCode.BadRequest);
             }
 
             var productPendingOrdersCount = await orderRepository.GetAllPendingOrdersAsync();

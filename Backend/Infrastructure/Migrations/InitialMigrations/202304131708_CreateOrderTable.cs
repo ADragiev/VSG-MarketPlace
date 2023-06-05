@@ -17,12 +17,11 @@ namespace Infrastructure.Migrations.InitialMigrations
               .WithColumn("OrderedBy").AsString(50).NotNullable()
               .WithColumn("Date").AsDateTime().NotNullable()
               .WithColumn("Status").AsInt64().NotNullable()
-              .WithColumn("ProductId").AsInt64().Nullable();
+              .WithColumn("ProductId").AsInt64().NotNullable();
 
             Create.ForeignKey()
                 .FromTable("Order").ForeignColumn("ProductId")
-                .ToTable("Product").PrimaryColumn("Id")
-                .OnDelete(System.Data.Rule.SetNull);
+                .ToTable("Product").PrimaryColumn("Id");
         }
 
         public override void Down()
