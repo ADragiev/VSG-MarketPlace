@@ -15,6 +15,8 @@ namespace Application.Models.LentItemModels.Interfaces
 
         Task ReturnItemAsync(int id);
 
-        Task<Dictionary<string, List<LentItemForGroupGetDto>>> GetAllLendedItemsGroupedByLenderAsync();
+        Task<Dictionary<string, List<LentItemForGroupGetDto>>> GetAllLentItemsGroupedByLenderAsync();
+
+        Task<List<LentItemGetMineDto>> GetMyLentItemsAsync();
     }
 }

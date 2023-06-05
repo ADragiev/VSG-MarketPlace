@@ -114,7 +114,7 @@ namespace Application.Services
                 throw new HttpException("The product you want to delete has pending orders and cannot be deleted. Make sure you complete or reject them before deleting product.", HttpStatusCode.BadRequest);
             }
 
-            var productLendedItems = await lendedItemRepo.GetProductLendedItemsInUse(id);
+            var productLendedItems = await lendedItemRepo.GetProductLentItemsInUse(id);
             if (productLendedItems.Count() > 0)
             {
                 throw new HttpException("The product you want to delete has lended items and cannot be deleted. Make sure you return them before deleting product.", HttpStatusCode.BadRequest);

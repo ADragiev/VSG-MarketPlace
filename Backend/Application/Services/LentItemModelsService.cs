@@ -2,7 +2,9 @@
 using Application.Models.GenericModels.Dtos;
 using Application.Models.LentItemModels.Dtos;
 using Application.Models.LentItemModels.Interfaces;
+using Application.Models.OrderModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
+using Application.Models.UserModels.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
@@ -18,17 +20,20 @@ namespace Application.Services
 {
     public class LentItemModelsService : ILentItemService
     {
-        private readonly ILentItemRepository lendedItemRepo;
+        private readonly ILentItemRepository lentItemRepo;
         private readonly IProductRepository productRepo;
         private readonly IMapper mapper;
+        private readonly IUserService userService;
 
-        public LentItemModelsService(ILentItemRepository lendedItemRepo,
+        public LentItemModelsService(ILentItemRepository lentItemRepo,
             IProductRepository productRepo, 
-            IMapper mapper)
+            IMapper mapper,
+            IUserService userService)
         {
-            this.lendedItemRepo = lendedItemRepo;
+            this.lentItemRepo = lentItemRepo;
             this.productRepo = productRepo;
             this.mapper = mapper;
+            this.userService = userService;
         }
         public async Task CreateAsync(LentItemCreateDto dto)
         {
@@ -51,20 +56,27 @@ namespace Application.Services
             await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
 
             var lendedItem = mapper.Map<LentItem>(dto);
-            await lendedItemRepo.CreateAsync(lendedItem);
+            await lentItemRepo.CreateAsync(lendedItem);
         }
 
-        public async Task<Dictionary<string, List<LentItemForGroupGetDto>>> GetAllLendedItemsGroupedByLenderAsync()
+        public async Task<Dictionary<string, List<LentItemForGroupGetDto>>> GetAllLentItemsGroupedByLenderAsync()
         {
-            var lendedItems = await lendedItemRepo.GetAllLendedItemsAsync();
+            var lendedItems = await lentItemRepo.GetAllLentItemsAsync();
 
             return lendedItems.GroupBy(l => l.LentBy)
                 .ToDictionary(g => g.Key, g => mapper.Map<List<LentItemForGroupGetDto>>(g.ToList()));
         }
 
+        public async Task<List<LentItemGetMineDto>> GetMyLentItemsAsync()
+        {
+            var user = userService.GetUserEmail();
+            var myLentItems = await lentItemRepo.GetMyLentItemsAsync(user);
+            return mapper.Map<List<LentItemGetMineDto>>(myLentItems);
+        }
+
         public async Task ReturnItemAsync(int id)
         {
-            var lendedItem = await lendedItemRepo.GetByIdAsync(id);
+            var lendedItem = await lentItemRepo.GetByIdAsync(id);
 
 
             if (lendedItem == null)
@@ -85,7 +97,7 @@ namespace Application.Services
             var newCombinedQty = product.CombinedQty + lendedItem.Qty;
             await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
 
-            await lendedItemRepo.SetFieldAsync(id, "EndDate", DateTime.Now);
+            await lentItemRepo.SetFieldAsync(id, "EndDate", DateTime.Now);
 
         }
     }

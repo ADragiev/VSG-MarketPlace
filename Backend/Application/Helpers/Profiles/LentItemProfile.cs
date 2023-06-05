@@ -20,6 +20,10 @@ namespace Application.Helpers.Profiles
                 .ForMember(dest => dest.StartDate, src => src.MapFrom(src => TimeZoneInfo.ConvertTime(src.StartDate, TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat)))
                 .ForMember(dest => dest.EndDate, src => src.MapFrom(src => src.EndDate != null ? TimeZoneInfo.ConvertTime(src.EndDate.GetValueOrDefault(), TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat) : null));
 
+            CreateMap<LentItemGetDto, LentItemGetMineDto>()
+               .ForMember(dest => dest.StartDate, src => src.MapFrom(src => TimeZoneInfo.ConvertTime(src.StartDate, TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat)))
+               .ForMember(dest => dest.EndDate, src => src.MapFrom(src => src.EndDate != null ? TimeZoneInfo.ConvertTime(src.EndDate.GetValueOrDefault(), TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat) : null));
+
 
         }
     }

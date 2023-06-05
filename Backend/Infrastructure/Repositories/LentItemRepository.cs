@@ -19,7 +19,7 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public async Task<List<LentItemGetDto>> GetAllLendedItemsAsync()
+        public async Task<List<LentItemGetDto>> GetAllLentItemsAsync()
         {
             var sql = @"SELECT li.Id, li.Qty, li.LentBy, li.StartDate, li.EndDate, p.Name AS ProductName, p.Code AS ProductCode
                         FROM
@@ -30,7 +30,19 @@ namespace Infrastructure.Repositories
             return lendedItems.ToList();
         }
 
-        public async Task<List<LentItem>> GetProductLendedItemsInUse(int productId)
+        public async Task<List<LentItemGetDto>> GetMyLentItemsAsync(string user)
+        {
+            var sql = @"SELECT li.Id, li.Qty, li.LentBy, li.StartDate, li.EndDate, p.Name AS ProductName, p.Code AS ProductCode
+                        FROM
+                        LentItem AS li
+                        JOIN Product AS p ON li.ProductId = p.Id
+                        WHERE LentBy = @user";
+
+            var myLentItems = await connection.QueryAsync<LentItemGetDto>(sql, new { user }, transaction);
+            return myLentItems.ToList();
+        }
+
+        public async Task<List<LentItem>> GetProductLentItemsInUse(int productId)
         {
             var sql = @"SELECT * FROM
                         LentItem

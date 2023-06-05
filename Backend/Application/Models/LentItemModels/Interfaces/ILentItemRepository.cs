@@ -11,8 +11,10 @@ namespace Application.Models.LentItemModels.Interfaces
 {
     public interface ILentItemRepository : IGenericRepository<LentItem>
     {
-        Task<List<LentItemGetDto>> GetAllLendedItemsAsync();
+        Task<List<LentItemGetDto>> GetAllLentItemsAsync();
 
-        Task<List<LentItem>> GetProductLendedItemsInUse(int productId);
+        Task<List<LentItemGetDto>> GetMyLentItemsAsync(string user);
+
+        Task<List<LentItem>> GetProductLentItemsInUse(int productId);
     }
 }
