@@ -5,6 +5,7 @@ using Application.Models.Cloud;
 using Application.Models.EmailModels.Interfaces;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
+using Application.Models.LendedItemModels.Interfaces;
 using Application.Models.LocationModels.Interfaces;
 using Application.Models.OrderModels.Dtos;
 using Application.Models.OrderModels.Interfaces;
@@ -29,6 +30,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<ILendedItemService, LendedItemService>();
 
             if (config["Redis:Enabled"] == "true")
             {
