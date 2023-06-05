@@ -29,5 +29,15 @@ namespace Infrastructure.Repositories
             var lendedItems = await connection.QueryAsync<LendedItemGetDto>(sql, null, transaction);
             return lendedItems.ToList();
         }
+
+        public async Task<List<LendedItem>> GetProductLendedItemsInUse(int productId)
+        {
+            var sql = @"SELECT * FROM
+                        LendedItem
+                        WHERE ProductId = @productId AND Status = 0";
+
+            var inUseLendedItems = await connection.QueryAsync<LendedItem>(sql, new { productId }, transaction);
+            return inUseLendedItems.ToList();
+        }
     }
 }

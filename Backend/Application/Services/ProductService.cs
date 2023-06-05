@@ -4,6 +4,7 @@ using Application.Models.ExceptionModels;
 using Application.Models.GenericModels.Dtos;
 using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Interfaces;
+using Application.Models.LendedItemModels.Interfaces;
 using Application.Models.LocationModels.Interfaces;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
@@ -21,16 +22,19 @@ namespace Application.Services
         private readonly IMapper mapper;
         private readonly IImageService imageService;
         private readonly IOrderRepository orderRepository;
+        private readonly ILendedItemRepository lendedItemRepo;
 
         public ProductService(IProductRepository productRepo,
             IMapper mapper,
             IImageService imageService,
-            IOrderRepository orderRepository)
+            IOrderRepository orderRepository,
+            ILendedItemRepository lendedItemRepo)
         {
             this.productRepo = productRepo;
             this.mapper = mapper;
             this.imageService = imageService;
             this.orderRepository = orderRepository;
+            this.lendedItemRepo = lendedItemRepo;
         }
 
         public async Task<GenericSimpleValueGetDto<int>> CreateAsync(ProductCreateDto dto)
@@ -107,9 +111,14 @@ namespace Application.Services
             var productPendingOrdersCount = await orderRepository.GetAllPendingOrdersAsync();
             if (productPendingOrdersCount.Any(o => o.ProductId == id))
             {
-                throw new HttpException("The product you want to delete has pending orders and cannot be deleted. Make sure you delete them before deleting product.", HttpStatusCode.BadRequest);
+                throw new HttpException("The product you want to delete has pending orders and cannot be deleted. Make sure you complete or reject them before deleting product.", HttpStatusCode.BadRequest);
             }
-            //TODO: GetAllLendedItems
+
+            var productLendedItems = await lendedItemRepo.GetProductLendedItemsInUse(id);
+            if (productLendedItems.Count() > 0)
+            {
+                throw new HttpException("The product you want to delete has lended items and cannot be deleted. Make sure you return them before deleting product.", HttpStatusCode.BadRequest);
+            }
 
             await imageService.DeleteImageByProductIdAsync(id);
             await productRepo.SetFieldAsync(id, "IsDeleted", true);

@@ -12,5 +12,7 @@ namespace Application.Models.LendedItemModels.Interfaces
     public interface ILendedItemRepository : IGenericRepository<LendedItem>
     {
         Task<List<LendedItemGetDto>> GetAllLendedItemsAsync();
+
+        Task<List<LendedItem>> GetProductLendedItemsInUse(int productId);
     }
 }
