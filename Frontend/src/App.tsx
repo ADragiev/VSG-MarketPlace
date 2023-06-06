@@ -4,6 +4,8 @@ import { Suspense, lazy } from "react";
 import ProtectedRoute from "./protectedRoute";
 import AdminRoute from "./adminRoute";
 import { CircularProgress } from "@mui/material";
+import LentItems from "./pages/Lent-Items/LentItems";
+import MyItems from "./pages/My-Items/MyItems";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const MarketPlace = lazy(() => import("./pages/Marketplace/Marketplace"));
@@ -37,6 +39,15 @@ function App() {
                   </Layout>
                 }
               />
+               <Route
+                path="my-items"
+                element={
+                  <Layout>
+                    <MyItems />
+                  </Layout>
+                }
+              />
+               
             </Route>
 
             <Route element={<AdminRoute />}>
@@ -54,6 +65,14 @@ function App() {
                 element={
                   <Layout>
                     <PendingOrders />
+                  </Layout>
+                }
+              />
+               <Route
+                path="lent-items"
+                element={
+                  <Layout>
+                    <LentItems />
                   </Layout>
                 }
               />

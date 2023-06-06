@@ -18,10 +18,31 @@ export interface IInventoryItem {
     category: string
     categoryId: number
     saleQty: number
+    lendQty: number
     combinedQty: number
     image?: string
     location: string
     locationId: number
+}
+
+export interface IUserLendItem{
+  email: string
+  lentItems: ILentItem[]
+}
+export interface ILentItem{
+    id: number
+    qty: number
+    startDate: string
+    endDate: string | null
+    productName: string
+    productCode: string
+}
+export interface IMyLentItem{
+    qty: number
+    startDate: string
+    endDate: string | null
+    productName: string
+    productCode: string
 }
 export interface IReturnedValue{
     returnedValue: number | string
@@ -34,8 +55,14 @@ export interface IFormInputs{
     price: number | null
     combinedQty: number | null
     saleQty: number | null
+    lendQty: number | null
     image: string
     description: string
+}
+export interface ILendItemsFormInputs{
+   qty: number, 
+   productId: number, 
+   lentBy: string
 }
 export interface IOrder {
     id: number

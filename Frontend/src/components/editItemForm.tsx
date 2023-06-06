@@ -24,7 +24,6 @@ import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
 import { toast } from "react-toastify";
-import PopperComponent from "./Popper";
 
 interface EditItemlProps {
   product: IInventoryItem;
@@ -41,8 +40,8 @@ const EditItemForm = ({
   const [open, setOpen] = useState(true);
   const [categoryOption, setCategoryOption] = useState(0);
   const [locationOption, setLocationOption] = useState(0);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const string = `Are you sure you want to remove this image?`;
+  // const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  // const string = `Are you sure you want to remove this image?`;
 
   const { data: categories } = useGetCategoriesQuery("");
   const { data: locations } = useGetLocationsQuery("");
@@ -54,9 +53,9 @@ const EditItemForm = ({
   const [imageValue, setImageValue] = useState(
     product.image ? product.image : "../../images/no_image-placeholder.png"
   );
-  const handlePopup = (e: any) => {
-    setAnchorEl(e.currentTarget);
-  };
+  // const handlePopup = (e: any) => {
+  //   setAnchorEl(e.currentTarget);
+  // };
 
   const {
     register,
@@ -70,6 +69,7 @@ const EditItemForm = ({
       description: product.description,
       categoryId: product.categoryId,
       locationId: product.locationId,
+      lendQty: product.lendQty || null,
       saleQty: product.saleQty || null,
       price: product.price || null,
       combinedQty: product.combinedQty,
@@ -103,6 +103,8 @@ const EditItemForm = ({
   const onSubmit = async (data: IFormInputs): Promise<void> => {
     data.price = data.price || null;
     data.saleQty = data.saleQty || null;
+    data.lendQty = data.lendQty || null;
+
 
     const id = product.id;
     const response = await updateProduct({ id, data });
@@ -120,6 +122,7 @@ const EditItemForm = ({
       location: selectedLocation.name,
       id,
     } as IInventoryItem;
+console.log(newData);
 
     if (
       imageValue == "../../images/no_image-placeholder.png" &&
@@ -288,6 +291,22 @@ const EditItemForm = ({
                   defaultValue={product.saleQty}
                   {...register("saleQty")}
                 />
+                 <TextField
+                className="inputField"
+                type="number"
+                variant="standard"
+                label="Qty For Lend"
+                InputLabelProps={{ style: { color: "#9A9A9A" } }}
+                defaultValue={product.lendQty}
+                error={Boolean(errors.lendQty)}
+                helperText={errors.lendQty?.message}
+                {...register("lendQty" , {
+                  min: {
+                    value: 0,
+                    message: "Qty for lend must be a positive number",
+                  }
+                  })}
+              />
                 <TextField
                   className="inputField"
                   type="number"

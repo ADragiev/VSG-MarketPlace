@@ -35,6 +35,7 @@ export default function CustomizedTables({
     category: item.category,
     forSale: item.saleQty,
     qty: item.combinedQty,
+    lendQty: item.lendQty,
     location: item.location,
     actions: item,
   }));
@@ -44,6 +45,7 @@ export default function CustomizedTables({
     { field: "category", headerName: "Category", flex: 1 },
     { field: "forSale", headerName: "For sale", flex: 1 },
     { field: "qty", headerName: "QTY", flex: 1 },
+    { field: "lendQty", headerName: "Lend QTY", flex: 1 },
     { field: "location", headerName: "Location", flex: 1 },
     {
       field: "actions",

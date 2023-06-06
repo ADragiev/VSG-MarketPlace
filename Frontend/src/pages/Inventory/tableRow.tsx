@@ -5,6 +5,8 @@ import { useState } from "react";
 import { IInventoryItem } from "../../types";
 import DeleteIcon from "./DeleteIcon";
 import { toast } from "react-toastify";
+import AddHomeWorkOutlinedIcon from '@mui/icons-material/AddHomeWorkOutlined';
+import LendForHomeForm from "../../components/LendForHomeForm";
 
 type InventoryItemsProps = {
   product: IInventoryItem;
@@ -17,11 +19,17 @@ const TableRowComponent = ({
   setProducts,
 }: InventoryItemsProps): JSX.Element => {
   const [isEditItemFormOpen, setIsEditItemFormOpen] = useState(false);
+  const [isLendForHomeForm, setIsLendForHomeForm] = useState(false);
+
   const [deleteProduct] = useDeleteProductMutation();
   const str = `Are you sure you want to delete this item?`;
 
   const handleEditItemBtn = () => {
     setIsEditItemFormOpen(true);
+  };
+
+  const handleLendForHomeIcon = () => {
+    setIsLendForHomeForm(true);
   };
 
   const onDelete = async () => {
@@ -43,6 +51,12 @@ const TableRowComponent = ({
           setProducts={setProducts}
         />
       )}
+       {isLendForHomeForm && (
+        <LendForHomeForm
+        onClose={()=> setIsLendForHomeForm(false)}
+        product={product}
+        />
+      )}
           <a className="edit-icon" onClick={handleEditItemBtn}>
             <svg
               width="16"
@@ -56,6 +70,9 @@ const TableRowComponent = ({
                 fill="#ED6C02"
               />
             </svg>
+          </a>
+          <a onClick={handleLendForHomeIcon} className="lendHomeIcon">
+          <AddHomeWorkOutlinedIcon sx={{color: '#ed1c25', fontSize: '18px'}}/>
           </a>
 
           <DeleteIcon str={str} onYes={onDelete} />

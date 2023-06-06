@@ -96,9 +96,12 @@
   }
 }
 
-.deleteIcon {
-  margin-left: 8px;
+.lendHomeIcon, .deleteIcon {
+  margin-left: 6px;
+  cursor: pointer;
+
 }
+
 
 .edit-icon,
 .deleteIcon {
@@ -111,8 +114,36 @@
   z-index: 999;
 }
 
+.lend-item-form{
+  display: flex;
+  top: 50%;
+  left: 50%;
+  height: 40vh;
+  border-radius: 20px;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: auto;
+  align-items: center;
+  .lendTitle{
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000;
+  margin: 20px;
+
+  }
+}
+
+.lend-item-form .css-1nrlq1o-MuiFormControl-root{
+  margin: 20px;
+  width: 60%;
+}
+
 .add-item-form,
-.edit-item-form {
+.edit-item-form{
   display: flex;
   justify-content: center;
   position: absolute;
@@ -125,7 +156,6 @@
   background-color: $white-color;
   border-radius: 20px;
   overflow: hidden;
-  overflow-y: auto;
   padding: 40px 0px 40px 0px;
   .row {
     max-height: 100%;
@@ -180,7 +210,7 @@
     }
   }
   
-  #submitFormBtn {
+  #submitFormBtn{
     @include flex-center;
     font-size: 18px;
     line-height: 22px;
@@ -236,6 +266,40 @@
     }
   }
 }
+#lendItemBtn{
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    width: 150px;
+    height: 36px;
+    color: $white-color;
+    background: $green-button-color;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    border: 0;
+    border-radius: 4px;
+    padding: 8px 30px 8px 30px;
+    margin: 20px 0 20px 0;
+    &:hover {
+      cursor: pointer;
+    }
+}
+.lendFormWrapper{
+  justify-content: space-evenly;
+  display: flex;
+  .lendFormFields{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+  .lendFormImage{
+    width: 46%;
+    align-self: center;
+    margin-right: 20px;
+    img{
+      max-width: 100%;
+    }
+  }
+}
 
 .close-modal-button {
   position: absolute;
@@ -247,9 +311,9 @@
   border-radius: 5px;
   cursor: pointer;
 }
-body .css-zw3mfo-MuiModal-root-MuiDialog-root {
-  z-index: 0;
-}
+// body .css-zw3mfo-MuiModal-root-MuiDialog-root {
+//   z-index: 0;
+// }
 .css-1t5wrdm-MuiDataGrid-filterForm{
   display: flex;
   flex-direction: column;

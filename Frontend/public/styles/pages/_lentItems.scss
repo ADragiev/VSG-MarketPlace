@@ -1,0 +1,64 @@
+.LentProductCode{
+    width: 20%;
+}
+.LentProductName{
+    width: 20%;
+}
+.LentProductQty{
+    width: 10%;
+}
+.LentProductStartDate{
+    width: 20%;
+}
+.LentProductEndDate{
+    width: 20%;
+}
+@media screen and (max-width: 768px) {
+    .LentProductCode,
+    .LentProductName,
+    .LentProductQty,
+    .LentProductStartDate,
+    .LentProductEndDate {
+      padding: 6px;
+      text-align: center;
+      width: 100%;
+      &::before {
+        font-weight: 600;
+      }
+    }
+   
+    .LentProductCode,
+    .LentProductName,
+    .LentProductQty,
+    .LentProductStartDate {
+      border-bottom: 1px solid $table-border-color;
+    }
+    
+   
+  
+    // .ProductNameColumn,
+    // .ProductQtyColumn,
+    // .ProductPriceColumn,
+    // .ProductDateColumn,
+    // .ProductStatus {
+    //   &::before {
+    //     font-weight: 600;
+    //   }
+    // }
+  
+    .LentProductEndDate::before {
+      content: "End date: ";
+    }
+    .LentProductStartDate::before {
+      content: "Start date: ";
+    }
+    .LentProductCode::before {
+      content: "Code: ";
+    }
+    .LentProductQty::before {
+      content: "Qty: ";
+    }
+    .LentProductName::before {
+      content: "Name    : ";
+    }
+  }

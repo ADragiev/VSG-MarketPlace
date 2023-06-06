@@ -2,24 +2,22 @@ import { useState } from "react";
 import AddNewItemForm from "../../components/AddNewItemForm";
 import CustomizedTables from "./Table";
 import SearchBar from "./SearchBar";
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useGetLocationsQuery } from "../../services/locationService";
-import { IInventoryItem, ILocation } from "../../types";
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+
+import { IInventoryItem } from "../../types";
 
 function Inventory(): JSX.Element {
   const [isAddNewItemFormOpen, setIsAddNewItemFormOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { data: locations } = useGetLocationsQuery("");
+  // const { data: locations } = useGetLocationsQuery("");
   const [products, setProducts] = useState<IInventoryItem[]>([]);
 
 
-  const [locationValue, setLocationValue] = useState(0);
+  // const [locationValue, setLocationValue] = useState(0);
 
-  const handleLocationChange = (event: SelectChangeEvent<number>) => {
-    setLocationValue(Number(event.target.value));
-    setSearchQuery("");
-  };
+  // const handleLocationChange = (event: SelectChangeEvent<number>) => {
+  //   setLocationValue(Number(event.target.value));
+  //   setSearchQuery("");
+  // };
 
   const handleSearchInputChange = (event: React.FormEvent<Element>) => {
     setSearchQuery((event.target as HTMLInputElement).value);
