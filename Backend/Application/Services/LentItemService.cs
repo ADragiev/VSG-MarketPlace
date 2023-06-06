@@ -60,15 +60,15 @@ namespace Application.Services
             await lentItemRepo.CreateAsync(lendedItem);
         }
 
-        public async Task<List<LentItemsByEmailDto>> GetAllLentItemsGroupedByUserAsync()
+        public async Task<List<LentItemsByUserEmailDto>> GetAllLentItemsGroupedByUserAsync()
         {
             var lendedItems = await lentItemRepo.GetAllLentItemsAsync();
 
             return lendedItems.GroupBy(l => l.LentBy)
-                .Select(g => new LentItemsByEmailDto()
+                .Select(g => new LentItemsByUserEmailDto()
                 {
                     Email = g.Key,
-                    LentItems = mapper.Map<List<LentItemForGroupGetDto>>(g.ToList())
+                    LentItems = mapper.Map<List<LentItemWithoutUserGetDto>>(g.ToList())
                 }).ToList();
         }
 

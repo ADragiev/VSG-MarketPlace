@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.Models.LentItemModels.Dtos
 {
-    public class LentItemForGroupGetDto
+    public class LentItemWithoutUserGetDto
     {
         public int Id { get; set; }
 

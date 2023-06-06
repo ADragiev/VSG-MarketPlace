@@ -23,7 +23,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        public async Task<List<LentItemsByEmailDto>> AllLendedItems()
+        public async Task<List<LentItemsByUserEmailDto>> AllLendedItems()
         {
             return await lentItemService.GetAllLentItemsGroupedByUserAsync();
         }
