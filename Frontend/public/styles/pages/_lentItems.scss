@@ -1,17 +1,33 @@
 .LentProductCode{
-    width: 20%;
+    width: 25%;
 }
 .LentProductName{
-    width: 20%;
+    width: 18%;
 }
 .LentProductQty{
-    width: 10%;
+    width: 15%;
 }
 .LentProductStartDate{
-    width: 20%;
+    width: 25%;
 }
 .LentProductEndDate{
     width: 20%;
+}
+.profilePicAccordion{
+    margin-right: 10px;
+    align-self: top;
+}
+ main .css-ahj2mt-MuiTypography-root{
+    align-self: end;
+}
+.lent-items-header{
+    display: flex;
+    background: $table-header-color;
+   @include roboto-font;
+    font-weight: 700;
+    font-size: 16px;
+    justify-content: flex-start;
+    padding: 10px;
 }
 @media screen and (max-width: 768px) {
     .LentProductCode,
@@ -25,6 +41,9 @@
       &::before {
         font-weight: 600;
       }
+    }
+    .lent-items-header{
+        display: none;
     }
    
     .LentProductCode,

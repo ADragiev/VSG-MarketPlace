@@ -30,34 +30,10 @@ function Inventory(): JSX.Element {
   return (
     <main className="main">
       
-      {isAddNewItemFormOpen && (
-        <AddNewItemForm setProducts={setProducts} onClose={() => setIsAddNewItemFormOpen(false)} />
-      )}
+        <AddNewItemForm isAddNewItemFormOpen={isAddNewItemFormOpen} setIsAddNewItemFormOpen={setIsAddNewItemFormOpen} setProducts={setProducts} onClose={() => setIsAddNewItemFormOpen(false)} />
       
       <div className="table-wrapper">
         <SearchBar onSearchInputChange={handleSearchInputChange} searchQuery={searchQuery} >
-          {/* <div className="locationFilter">
-          <LocationOnOutlinedIcon className="locationIcon"/>
-          <FormControl className="inputField" variant="standard" sx={{ mr: 3, width: 140,}}>
-            <InputLabel focused={false} >
-              Show items from
-            </InputLabel>
-            <Select
-              label="location"
-              onChange={handleLocationChange}
-              value={locationValue}
-            >
-              <MenuItem key={0} value={0}>
-                All
-              </MenuItem>
-              {locations?.map((l: ILocation) => (
-                <MenuItem value={l.id} key={l.id}>
-                  {l.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          </div> */}
           <button
             id="addNewItemBtn"
             type="button"

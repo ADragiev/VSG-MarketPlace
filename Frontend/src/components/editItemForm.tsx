@@ -25,19 +25,21 @@ import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
 import { toast } from "react-toastify";
 
-interface EditItemlProps {
+interface EditItemProps {
   product: IInventoryItem;
-  onClose: () => void;
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
+  isEditItemFormOpen: boolean,
+  setIsEditItemFormOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const EditItemForm = ({
   product,
-  onClose,
   setProducts,
-}: EditItemlProps): JSX.Element => {
+  isEditItemFormOpen,
+  setIsEditItemFormOpen
+}: EditItemProps): JSX.Element => {
 
-  const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
   const [categoryOption, setCategoryOption] = useState(0);
   const [locationOption, setLocationOption] = useState(0);
   // const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -53,9 +55,7 @@ const EditItemForm = ({
   const [imageValue, setImageValue] = useState(
     product.image ? product.image : "../../images/no_image-placeholder.png"
   );
-  // const handlePopup = (e: any) => {
-  //   setAnchorEl(e.currentTarget);
-  // };
+
 
   const {
     register,
@@ -81,9 +81,7 @@ const EditItemForm = ({
     setImageValue("../../images/no_image-placeholder.png");
   };
 
-  if (!open) {
-    onClose();
-  }
+
 
   useEffect(() => {
     setCategoryOption(product.categoryId);
@@ -122,7 +120,6 @@ const EditItemForm = ({
       location: selectedLocation.name,
       id,
     } as IInventoryItem;
-console.log(newData);
 
     if (
       imageValue == "../../images/no_image-placeholder.png" &&
@@ -153,6 +150,7 @@ console.log(newData);
         )
       );
       toast.success("Successfully updated item!");
+      
     } else if (!("error" in response)) {
       setProducts((oldProducts) =>
         oldProducts.map((p: IInventoryItem) =>
@@ -161,12 +159,12 @@ console.log(newData);
       );
       toast.success("Successfully updated item!");
     }
-    setOpen(false);
+    setIsEditItemFormOpen(false)
   };
 
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+      <ModalWrapper open={isEditItemFormOpen} setOpen={setIsEditItemFormOpen}>
         <div className="add-item-modal">
           <form
             className="add-item-modal add-item-form"
@@ -174,7 +172,7 @@ console.log(newData);
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="row">
-              <a  className="close-modal-button" onClick={onClose}>
+              <a  className="close-modal-button" onClick={()=>setIsEditItemFormOpen(false)}>
                 <svg
                   width={18}
                   height={18}

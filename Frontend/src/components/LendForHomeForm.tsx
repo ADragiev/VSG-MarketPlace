@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ModalWrapper from "./ModalWrapper";
 import {
   FormControl,
@@ -6,66 +5,75 @@ import {
   Select,
   CircularProgress,
   FormHelperText,
-  MenuItem
+  MenuItem,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { IInventoryItem, ILendItemsFormInputs } from "types";
 import { usePostLentItemMutation } from "../services/lentItemsService";
 
 interface LendForHomeFormProps {
-  onClose: () => void;
   product: IInventoryItem;
+  setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
+  isLendForHomeForm: boolean;
+  setIsLendForHomeForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const LendForHomeForm = ({ onClose, product }: LendForHomeFormProps) => {
-  const [open, setOpen] = useState(true);
-  const [email, setEmail] = useState("");
-  const [availableQty, setAvailableQty] = useState(0);
-  const [lendItem] = usePostLentItemMutation()
+const LendForHomeForm = ({
+  product,
+  setProducts,
+  isLendForHomeForm,
+  setIsLendForHomeForm
+}: LendForHomeFormProps) => {
+  // const [open, setOpen] = useState(true);
+  const [lendItem] = usePostLentItemMutation();
 
-  console.log(email, availableQty); // remove
-  
 
   const onSubmit = async (data: ILendItemsFormInputs): Promise<void> => {
-    const newData = {...data, productId: product.id}
-    console.log(newData);
-    
-    const response = await lendItem(newData)
+    const newData = { ...data, productId: product.id };
 
-    console.log(response);
-    
-    if (!('error' in response)) {
-        toast.success("Successfully..!");
-      } 
-    setOpen(false);
+    const response = await lendItem(newData);
+
+
+    if (!("error" in response)) {
+      const newProduct = {
+        ...product,
+        lendQty: product.lendQty -  (newData.qty as number),
+        combinedQty: product.combinedQty -  (newData.qty as number),
+
+      } as IInventoryItem;
+      
+      
+      setProducts((oldProducts) =>
+        oldProducts.map((p: IInventoryItem) =>
+          p.id !== newProduct.id ? p : { ...newProduct }
+        )
+      );
+      toast.success("Successfully..!");
+    }
+    setIsLendForHomeForm(false);
   };
 
   const {
-    register,
     handleSubmit,
-    formState: {errors, isSubmitting },
-    watch
+    formState: { errors, isSubmitting },
+    control,
   } = useForm<ILendItemsFormInputs>({
     defaultValues: {
-       lentBy: "",
-       qty: 0,
+      lentBy: "",
+      qty: null ,
     },
   });
 
-  if (!open) {
-    onClose();
-  }
-
   return (
-    <ModalWrapper open={open} setOpen={setOpen}>
+    <ModalWrapper open={isLendForHomeForm} setOpen={setIsLendForHomeForm}>
       <div className="lend-item-modal">
         <form
           className=" lend-item-form"
           action="POST"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <a className="close-modal-button" onClick={onClose}>
+          <a className="close-modal-button" onClick={()=> setIsLendForHomeForm(false) }>
             <svg
               width={18}
               height={18}
@@ -83,58 +91,88 @@ const LendForHomeForm = ({ onClose, product }: LendForHomeFormProps) => {
           <span className="lendTitle">Lend item</span>
           <div className="lendFormWrapper">
             <div className="lendFormFields">
-              <FormControl variant="standard" className="lendItemField">
-                <InputLabel focused={false}>Lent By</InputLabel>
-                <Select
-                  label="Lent By"
-                  {...register("lentBy", {
-                    required: "Lent By field is required",
-                    onChange: (e) => setEmail(e.target.value as string),
-                  })}
-                >
-                    <MenuItem value={'SStoyanov@vsgbg.com'} key={1}>
-                         SStoyanov@vsgbg.com
-                     </MenuItem>
-                     {/* <MenuItem value={'SStoyanov@vsgbg.com'} key={1}>
+              <Controller
+                control={control}
+                name="lentBy"
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Lend by field is required",
+                  },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <FormControl
+                    variant="standard"
+                    className="lendItemField"
+                    error={Boolean(errors.lentBy)}
+                  >
+                    <InputLabel focused={false}>Lent By</InputLabel>
+                    <Select value={value} onChange={onChange} >
+                      <MenuItem value={"SStoyanov@vsgbg.com"} key={1}>
+                        SStoyanov@vsgbg.com
+                      </MenuItem>
+                      {/* <MenuItem value={'SStoyanov@vsgbg.com'} key={1}>
                          Gosho@vsgbg.com
                      </MenuItem> */}
-                  {/* {categories?.map((c: ICategory) => (
+                      {/* {categories?.map((c: ICategory) => (
                       <MenuItem value={c.id} key={c.id}>
                         {c.name}
                       </MenuItem>
                     ))} */}
-                </Select>
-                <FormHelperText>{watch('lentBy') === '' && errors.lentBy?.message ? errors.lentBy?.message : '' }</FormHelperText>
-              </FormControl>
-              <FormControl variant="standard" className="lendItemField">
-                <InputLabel focused={false}>Available QTY</InputLabel>
-                <Select
-                  label="qty"
-                  {...register("qty", {
-                    required: "Available QTY field is required",
-                    onChange: (e) => setAvailableQty(e.target.value as number),
-                  })}
-                >
-                     {Array(product.lendQty).fill(1).map((n,i) => n+i).map((o) =>(
-                  <MenuItem value={o} key={o}>
-                  {o}
-                </MenuItem>
-                 
-                ))}
-                  {/* {categories?.map((c: ICategory) => (
+                    </Select>
+                    <FormHelperText>
+                      {errors.lentBy && errors.lentBy.message}
+                    </FormHelperText>
+                  </FormControl>
+                )}
+              />
+              <Controller
+                control={control}
+                name="qty"
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Available QTY field is required",
+                  },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <FormControl
+                    variant="standard"
+                    className="lendItemField"
+                    error={Boolean(errors.qty)}
+                  >
+                    <InputLabel focused={false}>Available QTY</InputLabel>
+                    <Select value={value || ''} onChange={onChange}>
+                      {Array(product.lendQty)
+                        .fill(1)
+                        .map((n, i) => n + i)
+                        .map((o) => (
+                          <MenuItem value={o} key={o}>
+                            {o}
+                          </MenuItem>
+                        ))}
+                      {/* {categories?.map((c: ICategory) => (
                       <MenuItem value={c.id} key={c.id}>
                         {c.name}
                       </MenuItem>
                     ))} */}
-                </Select>
-                <FormHelperText>{watch('qty') === 0 && errors.qty?.message ? errors.qty?.message : '' }</FormHelperText>
-              </FormControl>
+                    </Select>
+                    <FormHelperText>
+                      {errors.qty && errors.qty.message}
+                    </FormHelperText>
+                  </FormControl>
+                )}
+              />
             </div>
 
             <div className="lendFormImage">
               <img
                 id="addCurrentImg"
-                src={ product.image ? product.image : "../../images/no_image-placeholder.png" }
+                src={
+                  product.image
+                    ? product.image
+                    : "../../images/no_image-placeholder.png"
+                }
                 alt="noImgPlaceholder"
               />
             </div>

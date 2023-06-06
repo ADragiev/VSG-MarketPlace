@@ -18,7 +18,7 @@ export interface IInventoryItem {
     category: string
     categoryId: number
     saleQty: number
-    lendQty: number
+    lendQty: number 
     combinedQty: number
     image?: string
     location: string
@@ -60,8 +60,7 @@ export interface IFormInputs{
     description: string
 }
 export interface ILendItemsFormInputs{
-   qty: number, 
-   productId: number, 
+   qty: number | null, 
    lentBy: string
 }
 export interface IOrder {

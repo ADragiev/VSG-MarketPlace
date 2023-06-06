@@ -10,22 +10,23 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
 import { toast } from "react-toastify";
 import { ICategory, IFormInputs, IInventoryItem, ILocation, IReturnedValue } from "../types";
 
-interface AddNewItemlProps {
+interface AddNewItemProps {
   onClose: () => void;
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>
+  isAddNewItemFormOpen: boolean
+  setIsAddNewItemFormOpen: React.Dispatch<React.SetStateAction<boolean>>
+
 }
 
-const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element => {
-  const [open, setOpen] = useState(true);
-  const [selectOption, setSelectOption] = useState("");
-  const [locationOption, setLocationOption] = useState("");
+const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNewItemFormOpen }: AddNewItemProps): JSX.Element => {
+
 
   const { data: categories } = useGetCategoriesQuery("");
   const { data: locations } = useGetLocationsQuery("");
@@ -38,7 +39,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
     handleSubmit,
     getValues,
     formState: { errors, isSubmitting },
-    watch
+    control
     
   } = useForm<IFormInputs>({
     defaultValues: {
@@ -72,21 +73,20 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
       imageFormData.append("image", image);
       const imageUrl = await postImage({ id, imageFormData }) as {data: IReturnedValue}; 
       const newProduct = {...data,id, image: imageUrl.data.returnedValue , category: selectedCategory.name, location: selectedLocation.name } as IInventoryItem
+      
       setProducts((oldProducts) => [...oldProducts, newProduct])
     }
     else{
-      const newProduct = {...data,id, category: selectedCategory.name} as IInventoryItem
+      const newProduct = {...data,id, category: selectedCategory.name, location: selectedLocation.name } as IInventoryItem
       setProducts((oldProducts) => [...oldProducts, newProduct])
     }
     if (!('error' in response)) {
       toast.success("Successfully added item!");
     } 
-    setOpen(false);
+    setIsAddNewItemFormOpen(false);
   };
 
-  if (!open) {
-    onClose();
-  }
+ 
 
   const inputChange = (e :React.MouseEvent<HTMLAnchorElement>) => {
     const target = e.target as HTMLInputElement;
@@ -101,7 +101,7 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
 
 
   return (
-    <ModalWrapper open={open} setOpen={setOpen}>
+    <ModalWrapper open={isAddNewItemFormOpen} setOpen={setIsAddNewItemFormOpen}>
       <div className="add-item-modal">
         <form
           className="add-item-modal add-item-form"
@@ -176,47 +176,79 @@ const AddNewItemForm = ({ onClose, setProducts }: AddNewItemlProps): JSX.Element
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 {...register("description")}
               />
+              <Controller
+              control = {control}
+              name = 'categoryId'
+              rules={{required: {
+                value: true, 
+                message: "Category field is required"
+              }
+            }}
+            render={({
+             field: {onChange, value}
+            })=> (
               <FormControl
-                variant="standard"
-                className="inputField"
-                error={Boolean(errors.categoryId)}
+              variant="standard"
+              className="inputField"
+              error={Boolean(errors.categoryId)}
+            >
+              <InputLabel focused={false}>Category</InputLabel>
+              <Select
+                value={value}
+                label="Category*"
+                onChange={onChange}
+
               >
-                <InputLabel focused={false}>Category</InputLabel>
-                <Select
-                  value={selectOption}
-                  label="Category*"
-                  {...register("categoryId", {
-                    required: "Category field is required",
-                    onChange: (e) => setSelectOption(e.target.value as string),
-                  })}
-                >
-                  {categories?.map((c: ICategory) => (
-                    <MenuItem value={c.id} key={c.id}>
-                      {c.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText>{watch('categoryId') === '' && errors.categoryId?.message ? errors.categoryId?.message : '' }</FormHelperText>
-              </FormControl>
+                {categories?.map((c: ICategory) => (
+                  <MenuItem value={c.id} key={c.id}>
+                    {c.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>{errors.categoryId && errors.categoryId.message}</FormHelperText>
+            </FormControl>
+              )}  
+              />
+<Controller
+              control = {control}
+              name = 'locationId'
+              rules={{required: {
+                value: true, 
+                message: "Location field is required"
+              }
+            }}
+            render={({
+             field: {onChange, value}
+            })=> (
               <FormControl className="inputField"  variant="standard" error={Boolean(errors.locationId)}>
-                <InputLabel focused={false}>Location</InputLabel>
-                <Select
-                  value={locationOption}
-                  label="Location"
-                  {...register("locationId", {
-                    required: "Location field is required",
-                    onChange: (e) =>
-                      setLocationOption(e.target.value as string),
-                  })}
-                >
-                  {locations?.map((l: ILocation) => (
-                    <MenuItem value={l.id} key={l.id}>
-                      {l.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText>{watch('locationId') === '' && errors.locationId?.message ? errors.locationId?.message : '' }</FormHelperText>
-              </FormControl>
+              <InputLabel focused={false}>Location</InputLabel>
+              <Select
+                label="Location"
+                value={value}        
+                onChange={onChange}
+              >
+                {locations?.map((l: ILocation) => (
+                  <MenuItem value={l.id} key={l.id}>
+                    {l.name}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>{errors.locationId && errors.locationId.message}</FormHelperText>
+            </FormControl>
+              )}  
+              />
+
+
+
+
+
+
+
+
+
+
+
+            
 
               <TextField
                 className="inputField"
