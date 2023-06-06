@@ -23,9 +23,9 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        public async Task<List<LentItemsByEmailDto>> AllLendedItems()
+        public async Task<List<LentItemsByUserEmailDto>> AllLendedItems()
         {
-            return await lentItemService.GetAllLentItemsGroupedByLenderAsync();
+            return await lentItemService.GetAllLentItemsGroupedByUserAsync();
         }
 
         [HttpPost]
@@ -37,9 +37,9 @@ namespace MarketPlace.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task RejectOrder(int id)
+        public async Task<GenericSimpleValueGetDto<string>> ReturnItem(int id)
         {
-            await lentItemService.ReturnItemAsync(id);
+            return await lentItemService.ReturnItemAsync(id);
         }
 
         [HttpGet("My-Lent-Items")]

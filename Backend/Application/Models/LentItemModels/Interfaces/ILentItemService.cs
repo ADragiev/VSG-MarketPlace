@@ -13,9 +13,9 @@ namespace Application.Models.LentItemModels.Interfaces
     {
         Task CreateAsync(LentItemCreateDto dto);
 
-        Task ReturnItemAsync(int id);
+        Task<GenericSimpleValueGetDto<string>> ReturnItemAsync(int id);
 
-        Task<List<LentItemsByEmailDto>> GetAllLentItemsGroupedByLenderAsync();
+        Task<List<LentItemsByUserEmailDto>> GetAllLentItemsGroupedByUserAsync();
 
         Task<List<LentItemGetMineDto>> GetMyLentItemsAsync();
     }

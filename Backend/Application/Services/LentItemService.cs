@@ -1,4 +1,5 @@
-﻿using Application.Models.ExceptionModels;
+﻿using Application.Helpers.Constants;
+using Application.Models.ExceptionModels;
 using Application.Models.GenericModels.Dtos;
 using Application.Models.LentItemModels.Dtos;
 using Application.Models.LentItemModels.Interfaces;
@@ -59,15 +60,15 @@ namespace Application.Services
             await lentItemRepo.CreateAsync(lendedItem);
         }
 
-        public async Task<List<LentItemsByEmailDto>> GetAllLentItemsGroupedByLenderAsync()
+        public async Task<List<LentItemsByUserEmailDto>> GetAllLentItemsGroupedByUserAsync()
         {
             var lendedItems = await lentItemRepo.GetAllLentItemsAsync();
 
             return lendedItems.GroupBy(l => l.LentBy)
-                .Select(g => new LentItemsByEmailDto()
+                .Select(g => new LentItemsByUserEmailDto()
                 {
                     Email = g.Key,
-                    LentItems = mapper.Map<List<LentItemForGroupGetDto>>(g.ToList())
+                    LentItems = mapper.Map<List<LentItemWithoutUserGetDto>>(g.ToList())
                 }).ToList();
         }
 
@@ -78,7 +79,7 @@ namespace Application.Services
             return mapper.Map<List<LentItemGetMineDto>>(myLentItems);
         }
 
-        public async Task ReturnItemAsync(int id)
+        public async Task<GenericSimpleValueGetDto<string>> ReturnItemAsync(int id)
         {
             var lendedItem = await lentItemRepo.GetByIdAsync(id);
 
@@ -101,8 +102,10 @@ namespace Application.Services
             var newCombinedQty = product.CombinedQty + lendedItem.Qty;
             await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
 
-            await lentItemRepo.SetFieldAsync(id, "EndDate", DateTime.Now);
+            var endDate = DateTime.Now;
+            await lentItemRepo.SetFieldAsync(id, "EndDate", endDate);
 
+            return new GenericSimpleValueGetDto<string>(TimeZoneInfo.ConvertTime(endDate, TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Application.Helpers.Profiles
         {
             CreateMap<LentItemCreateDto, LentItem>();
 
-            CreateMap<LentItemGetDto, LentItemForGroupGetDto>()
+            CreateMap<LentItemGetDto, LentItemWithoutUserGetDto>()
                 .ForMember(dest => dest.StartDate, src => src.MapFrom(src => TimeZoneInfo.ConvertTime(src.StartDate, TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat)))
                 .ForMember(dest => dest.EndDate, src => src.MapFrom(src => src.EndDate != null ? TimeZoneInfo.ConvertTime(src.EndDate.GetValueOrDefault(), TimeZoneInfo.FindSystemTimeZoneById(DateFormatConstants.EasternEuropeTimeZone)).ToString(DateFormatConstants.DefaultDateFormat) : null));
 

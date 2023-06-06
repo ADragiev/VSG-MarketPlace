@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Application.Models.LentItemModels.Dtos
 {
-    public class LentItemsByEmailDto
+    public class LentItemsByUserEmailDto
     {
         public string Email { get; set; }
 
-        public List<LentItemForGroupGetDto> LentItems { get; set; }
+        public List<LentItemWithoutUserGetDto> LentItems { get; set; }
     }
 }
