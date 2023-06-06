@@ -49,7 +49,6 @@ const TableRowComponent = ({
         />
       
         <LendForHomeForm
-          // onClose={() => setIsLendForHomeForm(false)}
           isLendForHomeForm={isLendForHomeForm}
           setIsLendForHomeForm={setIsLendForHomeForm}
           product={product}

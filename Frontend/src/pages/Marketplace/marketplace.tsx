@@ -8,12 +8,14 @@ const MarketPlace = (): JSX.Element => {
 
   return (
     <>
-      <main className="main" id="main-list-wrapper" role='main'>
-        {isLoading ? <CircularProgress className="marketplace-loader"/>: products?.map((product: IProduct) => (
-          <Card product={product} key={product.id} />
-        ))}
-        
-
+      <main className="main" id="main-list-wrapper" role="main">
+        {isLoading ? (
+          <CircularProgress className="marketplace-loader" />
+        ) : (
+          products?.map((product: IProduct) => (
+            <Card product={product} key={product.id} />
+          ))
+        )}
       </main>
     </>
   );

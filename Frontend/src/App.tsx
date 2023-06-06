@@ -19,7 +19,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Suspense fallback={ <CircularProgress className="global-loader" />}>
+        <Suspense fallback={<CircularProgress className="global-loader" />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route element={<ProtectedRoute />}>
@@ -39,7 +39,7 @@ function App() {
                   </Layout>
                 }
               />
-               <Route
+              <Route
                 path="my-items"
                 element={
                   <Layout>
@@ -47,7 +47,6 @@ function App() {
                   </Layout>
                 }
               />
-               
             </Route>
 
             <Route element={<AdminRoute />}>
@@ -59,8 +58,8 @@ function App() {
                   </Layout>
                 }
               />
-             
-               <Route
+
+              <Route
                 path="pending-orders"
                 element={
                   <Layout>
@@ -68,7 +67,7 @@ function App() {
                   </Layout>
                 }
               />
-               <Route
+              <Route
                 path="lent-items"
                 element={
                   <Layout>
@@ -77,7 +76,6 @@ function App() {
                 }
               />
             </Route>
-
           </Routes>
         </Suspense>
       </BrowserRouter>

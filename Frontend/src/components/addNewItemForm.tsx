@@ -22,7 +22,6 @@ interface AddNewItemProps {
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>
   isAddNewItemFormOpen: boolean
   setIsAddNewItemFormOpen: React.Dispatch<React.SetStateAction<boolean>>
-
 }
 
 const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNewItemFormOpen }: AddNewItemProps): JSX.Element => {
@@ -237,19 +236,6 @@ const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNe
             </FormControl>
               )}  
               />
-
-
-
-
-
-
-
-
-
-
-
-            
-
               <TextField
                 className="inputField"
                 type="number"

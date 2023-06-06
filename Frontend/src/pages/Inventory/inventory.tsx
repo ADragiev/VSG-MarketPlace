@@ -8,16 +8,7 @@ import { IInventoryItem } from "../../types";
 function Inventory(): JSX.Element {
   const [isAddNewItemFormOpen, setIsAddNewItemFormOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  // const { data: locations } = useGetLocationsQuery("");
   const [products, setProducts] = useState<IInventoryItem[]>([]);
-
-
-  // const [locationValue, setLocationValue] = useState(0);
-
-  // const handleLocationChange = (event: SelectChangeEvent<number>) => {
-  //   setLocationValue(Number(event.target.value));
-  //   setSearchQuery("");
-  // };
 
   const handleSearchInputChange = (event: React.FormEvent<Element>) => {
     setSearchQuery((event.target as HTMLInputElement).value);

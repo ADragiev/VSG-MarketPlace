@@ -80,9 +80,6 @@ const EditItemForm = ({
   const handleRemoveImage = () => {
     setImageValue("../../images/no_image-placeholder.png");
   };
-
-
-
   useEffect(() => {
     setCategoryOption(product.categoryId);
   }, []);

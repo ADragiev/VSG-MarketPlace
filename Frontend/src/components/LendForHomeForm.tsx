@@ -16,40 +16,35 @@ interface LendForHomeFormProps {
   product: IInventoryItem;
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
   isLendForHomeForm: boolean;
-  setIsLendForHomeForm: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLendForHomeForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LendForHomeForm = ({
   product,
   setProducts,
   isLendForHomeForm,
-  setIsLendForHomeForm
+  setIsLendForHomeForm,
 }: LendForHomeFormProps) => {
-  // const [open, setOpen] = useState(true);
   const [lendItem] = usePostLentItemMutation();
-
 
   const onSubmit = async (data: ILendItemsFormInputs): Promise<void> => {
     const newData = { ...data, productId: product.id };
 
     const response = await lendItem(newData);
 
-
     if (!("error" in response)) {
       const newProduct = {
         ...product,
-        lendQty: product.lendQty -  (newData.qty as number),
-        combinedQty: product.combinedQty -  (newData.qty as number),
-
+        lendQty: product.lendQty - (newData.qty as number),
+        combinedQty: product.combinedQty - (newData.qty as number),
       } as IInventoryItem;
-      
-      
+
       setProducts((oldProducts) =>
         oldProducts.map((p: IInventoryItem) =>
           p.id !== newProduct.id ? p : { ...newProduct }
         )
       );
-      toast.success("Successfully..!");
+      toast.success("Successfully lent item!");
     }
     setIsLendForHomeForm(false);
   };
@@ -61,7 +56,7 @@ const LendForHomeForm = ({
   } = useForm<ILendItemsFormInputs>({
     defaultValues: {
       lentBy: "",
-      qty: null ,
+      qty: null,
     },
   });
 
@@ -73,7 +68,10 @@ const LendForHomeForm = ({
           action="POST"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <a className="close-modal-button" onClick={()=> setIsLendForHomeForm(false) }>
+          <a
+            className="close-modal-button"
+            onClick={() => setIsLendForHomeForm(false)}
+          >
             <svg
               width={18}
               height={18}
@@ -107,7 +105,7 @@ const LendForHomeForm = ({
                     error={Boolean(errors.lentBy)}
                   >
                     <InputLabel focused={false}>Lent By</InputLabel>
-                    <Select value={value} onChange={onChange} >
+                    <Select value={value} onChange={onChange}>
                       <MenuItem value={"SStoyanov@vsgbg.com"} key={1}>
                         SStoyanov@vsgbg.com
                       </MenuItem>
@@ -142,7 +140,7 @@ const LendForHomeForm = ({
                     error={Boolean(errors.qty)}
                   >
                     <InputLabel focused={false}>Available QTY</InputLabel>
-                    <Select value={value || ''} onChange={onChange}>
+                    <Select value={value || ""} onChange={onChange}>
                       {Array(product.lendQty)
                         .fill(1)
                         .map((n, i) => n + i)

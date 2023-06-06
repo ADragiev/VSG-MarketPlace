@@ -14,7 +14,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
   const [createOrder] = useCreateOrderMutation();
   const navigate = useNavigate();
 
-  const handlePopup = (e: any) => {
+  const handlePopup = (e :React.MouseEvent<HTMLAnchorElement>) => {
     setAnchorEl(e.currentTarget);
   };
 

@@ -11,8 +11,7 @@ type MyOrderProps = {
 function MyOrder({ myOrder }: MyOrderProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [rejectOrder] = useRejectOrderMutation();
-  const [currentStatus, setCurrentStatus] = useState(myOrder.status)
-  
+  const [currentStatus, setCurrentStatus] = useState(myOrder.status);
 
   const handlePopup = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setAnchorEl(e.currentTarget);
@@ -20,12 +19,11 @@ function MyOrder({ myOrder }: MyOrderProps) {
 
   const onReject = async () => {
     const response = await rejectOrder(myOrder.id);
-    if (!('error' in response)) {
-      setCurrentStatus('Declined')
+    if (!("error" in response)) {
+      setCurrentStatus("Declined");
       toast.success("Successfully rejected order");
-    } 
+    }
     setAnchorEl(null);
-
   };
 
   const str = `Are you sure you want to reject this order?`;

@@ -35,19 +35,6 @@ width: 22%;
     .lentProductName {
       border-bottom: 1px solid $table-border-color;
     }
-    
-   
-  
-    // .ProductNameColumn,
-    // .ProductQtyColumn,
-    // .ProductPriceColumn,
-    // .ProductDateColumn,
-    // .ProductStatus {
-    //   &::before {
-    //     font-weight: 600;
-    //   }
-    // }
-  
     .lentProductEndDate::before {
       content: "End date: ";
     }
