@@ -1,22 +1,18 @@
 import { IProduct } from "../../types";
-import { useState } from "react";
 import ModalWrapper from "../ModalWrapper";
 
 interface ModalProps {
   product: IProduct;
-  onClose: () => void;
+  isModalOpen: boolean,
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ProductModal = ({ product, onClose }: ModalProps): JSX.Element => {
-  const [open, setOpen] = useState(true);
-  if (!open) {
-    onClose();
-  }
+const ProductModal = ({ product, isModalOpen, setIsModalOpen }: ModalProps): JSX.Element => {
 
   return (
-    <ModalWrapper open={open} setOpen={setOpen}>
+    <ModalWrapper open={isModalOpen} setOpen={setIsModalOpen}>
       <div className="modal-content">
-        <a className="close-button" onClick={() => setOpen(false)}>
+        <a className="close-button" onClick={() => setIsModalOpen(false)}>
           <svg
             width={18}
             height={18}
