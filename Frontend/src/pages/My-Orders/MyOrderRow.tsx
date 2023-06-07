@@ -34,8 +34,8 @@ function MyOrder({ myOrder }: MyOrderProps) {
       <span className="ProductPriceColumn">{myOrder.price} BGN</span>
       <span className="ProductDateColumn">{myOrder.date}</span>
       <span className="status">{currentStatus}</span>
+      <a className="deleteIcon" onClick={handlePopup}>
       {currentStatus == "Pending" && (
-        <a className="deleteIcon" onClick={handlePopup}>
           <svg
             width={12}
             height={12}
@@ -48,8 +48,8 @@ function MyOrder({ myOrder }: MyOrderProps) {
               fill="#ED1C25"
             />
           </svg>
-        </a>
       )}
+      </a>
 
       <PopperComponent
         str={str}

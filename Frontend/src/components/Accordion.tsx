@@ -12,7 +12,7 @@ interface AccordionProps {
 const AccordionComponent = ({i}: AccordionProps) => {
 
     const [completeOrder] = useReturnLentItemMutation();
-  const [currentEndDate, setCurrentEndDate] = useState(i.endDate)
+    const [currentEndDate, setCurrentEndDate] = useState(i.endDate)
   
     const handleCompleteOrder = async ( id: number) => {
         const response = await completeOrder(id)
@@ -32,7 +32,6 @@ const AccordionComponent = ({i}: AccordionProps) => {
           <span className="LentProductQty">{i.qty}</span>
           <span className="LentProductStartDate">{i.startDate}</span>
           <span className="LentProductEndDate">{currentEndDate? currentEndDate :  <button className="btnColumn completeBtn" onClick= {()=> handleCompleteOrder( i.id)}>Complete</button>}</span>
-         
         </div>
       
      </>

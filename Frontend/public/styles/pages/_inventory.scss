@@ -289,6 +289,7 @@
     width: 50%;
     display: flex;
     flex-direction: column;
+   
   }
   .lendFormImage{
     width: 46%;
@@ -298,16 +299,19 @@
       max-width: 100%;
     }
   }
+  .lendItemField .css-13sljp9{
+    margin: 20px;
+  }
 }
 
 .close-modal-button {
   position: absolute;
   top: 15px;
   right: 15px;
-  padding: 5px 10px;
   background-color: transparent;
   border: none;
   border-radius: 5px;
+  z-index: 900;
   cursor: pointer;
 }
 // body .css-zw3mfo-MuiModal-root-MuiDialog-root {
@@ -357,6 +361,9 @@
     justify-content: center;
     flex-wrap: nowrap;
     flex-direction: column;
+    .css-12u49z-MuiDataGrid-root{
+      width: 700px;
+    }
   }
   .add-item-form .img-buttons {
     width: auto;

@@ -1,4 +1,4 @@
-import { render, screen } from "test-utils";
+import { render, screen, waitFor } from "test-utils";
 import Inventory from "../pages/Inventory/Inventory";
 import userEvent from '@testing-library/user-event';
 import mockServer from "../mocks/mock-server";
@@ -18,17 +18,17 @@ describe("Inventory", () => {
 
     expect(screen.getAllByRole("presentation")[0]).toBeInTheDocument();
   });
-  it("should close AddProductModal when submitted ", async () => {
-    render(<Inventory />);
 
+  it("should close AddProductModal when Add button is clicked ", async () => {
+
+    render(<Inventory />);
     const user = userEvent.setup();
     const addProductBtn = screen.getByText('Add new');
     await user.click(addProductBtn);
-    const closeButton = await screen.findAllByRole('button');
-    await user.click(closeButton[0]);
-    const addModal  = await screen.findByRole("presentation")
-    expect(addModal).not.toBeInTheDocument();
-    
-
+    const addFormButton =  screen.getByText('Add');
+    await user.click(addFormButton);
+    const addModal  = screen.findByRole("dialog")
+    waitFor(() => expect(addModal).not.toBeInTheDocument());
+   
   });
 });

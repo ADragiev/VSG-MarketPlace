@@ -12,8 +12,6 @@ const DeleteIcon = ({ str, onYes }: DeleteProps) => {
   const handlePopup = (e :React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setAnchorEl(e.currentTarget);
-    
-    
   };
 
   return (

@@ -149,11 +149,6 @@ const LendForHomeForm = ({
                             {o}
                           </MenuItem>
                         ))}
-                      {/* {categories?.map((c: ICategory) => (
-                      <MenuItem value={c.id} key={c.id}>
-                        {c.name}
-                      </MenuItem>
-                    ))} */}
                     </Select>
                     <FormHelperText>
                       {errors.qty && errors.qty.message}
