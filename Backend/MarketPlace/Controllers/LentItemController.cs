@@ -29,7 +29,7 @@ namespace MarketPlace.Controllers
         }
 
         [HttpPost]
-        public async Task CreateOrder(LentItemCreateDto dto)
+        public async Task CreateLentItem(LentItemCreateDto dto)
         {
             await createValidator.ValidateAndThrowAsync(dto);
             await lentItemService.CreateAsync(dto);
