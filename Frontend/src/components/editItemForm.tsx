@@ -39,11 +39,8 @@ const EditItemForm = ({
   setIsEditItemFormOpen
 }: EditItemProps): JSX.Element => {
 
-  // const [open, setOpen] = useState(true);
   const [categoryOption, setCategoryOption] = useState(0);
   const [locationOption, setLocationOption] = useState(0);
-  // const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  // const string = `Are you sure you want to remove this image?`;
 
   const { data: categories } = useGetCategoriesQuery("");
   const { data: locations } = useGetLocationsQuery("");
@@ -369,12 +366,6 @@ const EditItemForm = ({
           </form>
         </div>
       </ModalWrapper>
-      {/* <PopperComponent
-        str={string}
-        onYes={handleRemoveImage}
-        anchor={anchorEl}
-        setAnchor={setAnchorEl}
-      /> */}
     </>
   );
 };

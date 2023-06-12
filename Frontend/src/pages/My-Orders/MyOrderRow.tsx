@@ -26,7 +26,14 @@ function MyOrder({ myOrder }: MyOrderProps) {
     setAnchorEl(null);
   };
 
-  const str = `Are you sure you want to reject this order?`;
+  const PopperString= () => {
+    return (
+      <p>
+      Are you sure you want to reject this order?
+      </p>
+    );
+  };
+
   return (
     <div className="item-row extend">
       <span className="ProductNameColumn">{myOrder.productName}</span>
@@ -52,7 +59,7 @@ function MyOrder({ myOrder }: MyOrderProps) {
       </a>
 
       <PopperComponent
-        str={str}
+        PopperString={PopperString}
         onYes={onReject}
         anchor={anchorEl}
         setAnchor={setAnchorEl}

@@ -31,7 +31,7 @@ const AccordionComponent = ({i}: AccordionProps) => {
           <span className="LentProductName">{i.productName}</span>
           <span className="LentProductQty">{i.qty}</span>
           <span className="LentProductStartDate">{i.startDate}</span>
-          <span className="LentProductEndDate">{currentEndDate? currentEndDate :  <button className="btnColumn completeBtn" onClick= {()=> handleCompleteOrder( i.id)}>Complete</button>}</span>
+          <span className="LentProductEndDate">{currentEndDate? currentEndDate :  <button className="btnColumn completeBtn" onClick= {()=> handleCompleteOrder( i.id)}>Return</button>}</span>
         </div>
       
      </>

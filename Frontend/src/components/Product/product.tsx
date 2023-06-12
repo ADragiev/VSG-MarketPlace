@@ -14,7 +14,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
   const [createOrder] = useCreateOrderMutation();
   const navigate = useNavigate();
 
-  const handlePopup = (e :React.MouseEvent<HTMLAnchorElement>) => {
+  const handlePopup = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setAnchorEl(e.currentTarget);
   };
 
@@ -41,10 +41,15 @@ const Card = ({ product }: ProductProps): JSX.Element => {
     selectValue.current = Number(event.target.value);
   };
 
-  const string = `Are you sure you want to buy 
-  ${selectValue.current} item for   
-    ${Number(selectValue.current) * product.price}
-  ?`;
+  const PopperString = () => {
+    return (
+      <p>
+        Are you sure you want to buy
+        {<b> {selectValue.current}</b>} item for
+        {<b> {Number(selectValue.current) * product.price} BGN</b>}?
+      </p>
+    );
+  };
 
   return (
     <>
@@ -103,7 +108,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
         </div>
       </div>
       <PopperComponent
-        str={string}
+        PopperString={PopperString}
         onYes={onBuy}
         anchor={anchorEl}
         setAnchor={setAnchorEl}

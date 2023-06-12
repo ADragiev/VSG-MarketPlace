@@ -6,6 +6,8 @@ import {
   CircularProgress,
   FormHelperText,
   MenuItem,
+  Autocomplete,
+  TextField,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -26,9 +28,13 @@ const LendForHomeForm = ({
   setIsLendForHomeForm,
 }: LendForHomeFormProps) => {
   const [lendItem] = usePostLentItemMutation();
+  const options = [
+    { label: 'SStoyanov@vsgbg.com', value: 'SStoyanov@vsgbg.com' },
+    { label: 'goshso@vsgbg.com', value: 'goshso@vsgbg.com' },
+  ];
 
   const onSubmit = async (data: ILendItemsFormInputs): Promise<void> => {
-    const newData = { ...data, productId: product.id };
+    const newData = { qty: data.qty, lentBy: data.lentBy.value , productId: product.id };
 
     const response = await lendItem(newData);
 
@@ -55,7 +61,7 @@ const LendForHomeForm = ({
     control,
   } = useForm<ILendItemsFormInputs>({
     defaultValues: {
-      lentBy: "",
+      lentBy: {},
       qty: null,
     },
   });
@@ -99,29 +105,40 @@ const LendForHomeForm = ({
                   },
                 }}
                 render={({ field: { onChange, value } }) => (
-                  <FormControl
-                    variant="standard"
-                    className="lendItemField"
-                    error={Boolean(errors.lentBy)}
-                  >
-                    <InputLabel focused={false}>Lent By</InputLabel>
-                    <Select value={value} onChange={onChange}>
-                      <MenuItem value={"SStoyanov@vsgbg.com"} key={1}>
-                        SStoyanov@vsgbg.com
-                      </MenuItem>
-                      {/* <MenuItem value={'SStoyanov@vsgbg.com'} key={1}>
-                         Gosho@vsgbg.com
-                     </MenuItem> */}
-                      {/* {categories?.map((c: ICategory) => (
-                      <MenuItem value={c.id} key={c.id}>
-                        {c.name}
-                      </MenuItem>
-                    ))} */}
-                    </Select>
-                    <FormHelperText>
-                      {errors.lentBy && errors.lentBy.message}
-                    </FormHelperText>
-                  </FormControl>
+              
+                  <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={options}
+                  onChange={(e, item)=>{
+                    onChange(item)
+                  }} 
+                  renderInput={(params) => <TextField variant="standard" value={value}  {...params} label="Email" />}
+                />
+
+                  // <FormControl
+                  //   variant="standard"
+                  //   className="lendItemField"
+                  //   error={Boolean(errors.lentBy)}
+                  // >
+                  //   <InputLabel focused={false}>Lent By</InputLabel>
+                  //   <Select value={value} onChange={onChange}>
+                  //     <MenuItem value={"SStoyanov@vsgbg.com"} key={1}>
+                  //       SStoyanov@vsgbg.com
+                  //     </MenuItem>
+                  //     {/* <MenuItem value={'SStoyanov@vsgbg.com'} key={1}>
+                  //        Gosho@vsgbg.com
+                  //    </MenuItem> */}
+                  //     {/* {categories?.map((c: ICategory) => (
+                  //     <MenuItem value={c.id} key={c.id}>
+                  //       {c.name}
+                  //     </MenuItem>
+                  //   ))} */}
+                  //   </Select>
+                  //   <FormHelperText>
+                  //     {errors.lentBy && errors.lentBy.message}
+                  //   </FormHelperText>
+                  // </FormControl>
                 )}
               />
               <Controller
