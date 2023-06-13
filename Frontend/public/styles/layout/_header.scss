@@ -12,6 +12,7 @@
     font-size: 30px;
     line-height: 37px;
     color: $black-color;
+    margin-right: 10px;
   }
   img {
     padding: 10px;
@@ -22,12 +23,14 @@
 }
 .user {
   @include flex-center;
+  margin-right: 4px;
 
   span {
     @include roboto-font;
     font-weight: 500;
     font-size: 16px;
     line-height: 16px;
+    margin-left: 8px
   }
 }
 .onHamburger {
@@ -47,9 +50,7 @@
     align-items: center;
     margin: 1em 1em 0 1.5em;
     border-radius: 10px;
-    img{
-      padding-right: 12px;
-    }
+   
   }
   .sidebar {
     display: block;

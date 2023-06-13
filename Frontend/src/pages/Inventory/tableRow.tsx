@@ -12,6 +12,14 @@ type InventoryItemsProps = {
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
 };
 
+const PopperString= () => {
+  return (
+    <p>
+     Are you sure you want to delete this item?
+    </p>
+  );
+};
+
 const TableRowComponent = ({
   product,
   setProducts,
@@ -21,13 +29,7 @@ const TableRowComponent = ({
 
   const [deleteProduct] = useDeleteProductMutation();
 
-  const PopperString= () => {
-    return (
-      <p>
-       Are you sure you want to delete this item?
-      </p>
-    );
-  };
+  
 
   const handleEditItemBtn = () => {
     setIsEditItemFormOpen(true);

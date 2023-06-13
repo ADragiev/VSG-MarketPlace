@@ -2,7 +2,7 @@ import { useState } from "react";
 import PopperComponent from "../../components/Popper";
 
 type DeleteProps = {
-  PopperString: ()=> JSX.Element
+  PopperString: ()=>  JSX.Element
   onYes: () => void;
 };
 
@@ -31,7 +31,7 @@ const DeleteIcon = ({ PopperString, onYes }: DeleteProps) => {
         </svg>
       </a>
         <PopperComponent
-        PopperString={PopperString}
+          PopperString={<PopperString/>}
           onYes={onYes}
           anchor={anchorEl}
           setAnchor={setAnchorEl}

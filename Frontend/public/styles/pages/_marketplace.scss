@@ -15,6 +15,17 @@
     color: $main-color;
    align-self: center;
   }
+  .no-products-message {
+    display: flex;
+justify-content: center;
+flex-direction: column;
+  font-family: 'Roboto';
+  align-items: center;
+  font-size: 22px;
+  .no-products-icon{
+    font-size: 64px;
+  }
+  }
 }
 .display-main-container{
  display: flex;
@@ -260,6 +271,7 @@
   }
   #greetingContainer{
     flex-direction: row-reverse;
+    
   }
  .header .hamburger-icon-container{
    @include flex-center;
