@@ -7,6 +7,13 @@ import { toast } from "react-toastify";
 type MyOrderProps = {
   myOrder: IMyOrder;
 };
+const PopperString= () => {
+  return (
+    <p>
+    Are you sure you want to reject this order?
+    </p>
+  );
+};
 
 function MyOrder({ myOrder }: MyOrderProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -26,7 +33,8 @@ function MyOrder({ myOrder }: MyOrderProps) {
     setAnchorEl(null);
   };
 
-  const str = `Are you sure you want to reject this order?`;
+ 
+
   return (
     <div className="item-row extend">
       <span className="ProductNameColumn">{myOrder.productName}</span>
@@ -34,8 +42,8 @@ function MyOrder({ myOrder }: MyOrderProps) {
       <span className="ProductPriceColumn">{myOrder.price} BGN</span>
       <span className="ProductDateColumn">{myOrder.date}</span>
       <span className="status">{currentStatus}</span>
+      <a className="deleteIcon" onClick={handlePopup}>
       {currentStatus == "Pending" && (
-        <a className="deleteIcon" onClick={handlePopup}>
           <svg
             width={12}
             height={12}
@@ -48,11 +56,11 @@ function MyOrder({ myOrder }: MyOrderProps) {
               fill="#ED1C25"
             />
           </svg>
-        </a>
       )}
+      </a>
 
       <PopperComponent
-        str={str}
+        PopperString={<PopperString/>}
         onYes={onReject}
         anchor={anchorEl}
         setAnchor={setAnchorEl}

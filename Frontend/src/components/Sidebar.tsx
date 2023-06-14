@@ -1,16 +1,22 @@
 import { NavLink } from "react-router-dom";
 import { handleLogout } from "../auth/logout";
+import { Avatar } from "@mui/material";
+import { ISidebarUser } from "types";
 
-const Sidebar = (): JSX.Element => {
-  const user = JSON.parse(sessionStorage.getItem("user") as string);
-  const name = user.name.split(" ")[0];
-  const isAdmin = user.memberType === "Admin";
+
+interface SidebarProps {
+  currentUser: ISidebarUser | undefined
+}
+
+const Sidebar = ({currentUser}: SidebarProps): JSX.Element => {
+  
+  const isAdmin = currentUser?.memberType === "Admin";
 
   return (
     <aside className="sidebar">
       <div id="greetingContainer" className="user">
-        <span> Hi, {name}! </span>
-        <img src="../../images/Profile Img.jpg" alt="Profile-pic" />
+        <span> Hi, {currentUser?.name.split(' ')[0]}! </span>
+        <Avatar className="profilePicHeader"  alt="../../images/Profile Img.jpg" src={currentUser?.avatar} />
       </div>
       <nav>
         <ul>

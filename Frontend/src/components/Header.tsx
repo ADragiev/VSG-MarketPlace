@@ -1,8 +1,13 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Avatar } from "@mui/material";
+import { IEmployee } from "types";
 
-const Header = (): JSX.Element => {
-  const user = JSON.parse(sessionStorage.getItem("user") as string).name.split( " ")[0];
+interface HeaderProps {
+  currentUser: IEmployee | undefined;
+}
+
+const Header = ({ currentUser }: HeaderProps): JSX.Element => {
   const root = document.querySelector("#root") as HTMLElement;
 
   const location = useLocation();
@@ -26,17 +31,15 @@ const Header = (): JSX.Element => {
   useEffect(() => {
     if (window.innerWidth >= 769) {
       root.className = "onClose";
-    } else{
-       const checkbox = document.querySelector('.checkbox') as HTMLInputElement
-       checkbox.checked = false
+    } else {
+      const checkbox = document.querySelector(".checkbox") as HTMLInputElement;
+      checkbox.checked = false;
       root.className = "";
     }
   }, [location.pathname]);
 
-  //  const name = result.user.account.name
-
   return (
-    <header className="header" role='header'>
+    <header className="header" role="header">
       <Link to="/">
         <img
           src="../../images/vsg_marketplace-mini-logo 1.jpg"
@@ -45,8 +48,12 @@ const Header = (): JSX.Element => {
       </Link>
       <span>{title.join(" ")}</span>
       <div id="greetingContainer" className="user">
-        <span> Hi, {user}! </span>
-        <img src="../../images/Profile Img.jpg" alt="Profile-pic" />
+        <span> Hi, {currentUser?.name.split(" ")[0]}! </span>
+        <Avatar
+          className="profilePicHeader"
+          alt="../../images/Profile Img.jpg"
+          src={currentUser?.avatar}
+        />
       </div>
       <div className="hamburger-icon-container">
         <div className="hamburger-lines">

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import Card from "../components/Product/Product";
 import { IProduct } from "types";
 import { BrowserRouter } from "react-router-dom";
-import mockServer from "mocks/mock-server";
+import mockServer from "../mocks/mock-server";
 
 const product: IProduct = {
   id: 45,

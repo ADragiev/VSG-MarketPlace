@@ -8,7 +8,7 @@ const Transition = forwardRef(function Transition(
   },
   ref: React.Ref<unknown>
 ) {
-  return <Slide  direction="down" ref={ref} {...props}/>; // reshenie na angel 
+  return <Slide  direction="down" ref={ref} {...props}/>;  
 });
 
 type ModalWrapperProps = {
@@ -26,7 +26,6 @@ const ModalWrapper = ({ children, open, setOpen }: ModalWrapperProps) => {
     <Dialog
       open={open}
       TransitionComponent={Transition}
-      keepMounted
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
       PaperProps={{

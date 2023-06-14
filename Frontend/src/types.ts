@@ -29,6 +29,29 @@ export interface IUserLendItem{
   email: string
   lentItems: ILentItem[]
 }
+export interface IEmployee{
+    email: string
+    name: string
+    avatar: string
+  }
+ 
+  export interface IEmployeesResponse{
+    employees: IEmployee[]
+  }
+  export interface IModifiedUser{
+    email: string
+    name: string
+    avatar: string
+   lentItems: ILentItem[]
+
+  }
+  export interface ISidebarUser{
+    email: string
+    name: string
+    avatar: string
+   memberType: string
+
+  }
 export interface ILentItem{
     id: number
     qty: number
@@ -61,7 +84,7 @@ export interface IFormInputs{
 }
 export interface ILendItemsFormInputs{
    qty: number | null, 
-   lentBy: string
+   lentBy:  { value: string; label: string; }
 }
 export interface IOrder {
     id: number
@@ -70,6 +93,11 @@ export interface IOrder {
     price: number
     orderedBy: string
     date: string
+}
+export interface IEmployee {
+   name: string
+   email: string
+   avatar: string
 }
 export interface ICategory{
     name: string

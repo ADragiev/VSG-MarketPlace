@@ -6,11 +6,15 @@ import {
   CircularProgress,
   FormHelperText,
   MenuItem,
+  Autocomplete,
+  TextField,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { IInventoryItem, ILendItemsFormInputs } from "types";
 import { usePostLentItemMutation } from "../services/lentItemsService";
+import { useGetEmployeesQuery } from "../utils/baseEmployeesApi";
+import { useState, useEffect } from "react";
 
 interface LendForHomeFormProps {
   product: IInventoryItem;
@@ -26,9 +30,22 @@ const LendForHomeForm = ({
   setIsLendForHomeForm,
 }: LendForHomeFormProps) => {
   const [lendItem] = usePostLentItemMutation();
+  const [users, setUsers] =  useState<{label: string, value: string}[]>([])
+  const { data: employees } =  useGetEmployeesQuery();
+  
+  useEffect(() => {
+    if (employees) {
+      setUsers(
+        employees.map((e) => ({
+          label: e.name,
+          value: e.email,
+        }))
+      );
+    }
+  }, [employees]);
 
   const onSubmit = async (data: ILendItemsFormInputs): Promise<void> => {
-    const newData = { ...data, productId: product.id };
+    const newData = { qty: data.qty, lentBy: data.lentBy.value , productId: product.id };
 
     const response = await lendItem(newData);
 
@@ -55,7 +72,7 @@ const LendForHomeForm = ({
     control,
   } = useForm<ILendItemsFormInputs>({
     defaultValues: {
-      lentBy: "",
+      lentBy: {},
       qty: null,
     },
   });
@@ -99,29 +116,17 @@ const LendForHomeForm = ({
                   },
                 }}
                 render={({ field: { onChange, value } }) => (
-                  <FormControl
-                    variant="standard"
-                    className="lendItemField"
-                    error={Boolean(errors.lentBy)}
-                  >
-                    <InputLabel focused={false}>Lent By</InputLabel>
-                    <Select value={value} onChange={onChange}>
-                      <MenuItem value={"SStoyanov@vsgbg.com"} key={1}>
-                        SStoyanov@vsgbg.com
-                      </MenuItem>
-                      {/* <MenuItem value={'SStoyanov@vsgbg.com'} key={1}>
-                         Gosho@vsgbg.com
-                     </MenuItem> */}
-                      {/* {categories?.map((c: ICategory) => (
-                      <MenuItem value={c.id} key={c.id}>
-                        {c.name}
-                      </MenuItem>
-                    ))} */}
-                    </Select>
-                    <FormHelperText>
-                      {errors.lentBy && errors.lentBy.message}
-                    </FormHelperText>
-                  </FormControl>
+              
+                  <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={users}
+                  onChange={(e, item)=>{
+                    console.log(e);
+                    onChange(item)
+                  }} 
+                  renderInput={(params) => <TextField variant="standard" value={value}  {...params} label="User" />}
+                />
                 )}
               />
               <Controller
@@ -149,11 +154,6 @@ const LendForHomeForm = ({
                             {o}
                           </MenuItem>
                         ))}
-                      {/* {categories?.map((c: ICategory) => (
-                      <MenuItem value={c.id} key={c.id}>
-                        {c.name}
-                      </MenuItem>
-                    ))} */}
                     </Select>
                     <FormHelperText>
                       {errors.qty && errors.qty.message}

@@ -7,7 +7,7 @@ const ReturnLentItem = "returnLentItem";
 
 const lentItemsService = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    [GetLentItems]: builder.query({
+    [GetLentItems]: builder.query<any,void>({
         query: () => "/LentItem",
       }),
       [GetMyLentItems]: builder.query({

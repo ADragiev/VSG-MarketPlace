@@ -2,13 +2,28 @@ import { useGetLentItemsQuery } from "../../services/lentItemsService";
 import AccordionComponent from "../../components/Accordion";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Accordion, CircularProgress } from "@mui/material";
+import { Accordion, Avatar, CircularProgress } from "@mui/material";
 import AccordionSummary from "@mui/material/AccordionSummary";
 
-import { IUserLendItem } from "types";
+import { IEmployee, IModifiedUser, IUserLendItem } from "types";
+import { useGetEmployeesQuery } from "../../utils/baseEmployeesApi";
 
 const LentItems = (): JSX.Element => {
-  const { data: users, isLoading } = useGetLentItemsQuery("fds");
+  const { data: users, isLoading } = useGetLentItemsQuery();
+  const { data: employees } =  useGetEmployeesQuery();
+
+  const modifiedUsers = users?.map((user: IUserLendItem) => {
+    const avatar = employees?.find((e : IEmployee) => e.email.toLowerCase() === user.email.toLowerCase())?.avatar
+    const name = employees?.find((e : IEmployee)=> e.email.toLowerCase() === user.email.toLowerCase())?.name
+
+    return ({
+      ...user,
+      avatar,
+      name
+    }
+    )
+  })
+  
 
   return (
     <main className="main">
@@ -16,19 +31,16 @@ const LentItems = (): JSX.Element => {
         {isLoading ? (
           <CircularProgress className="marketplace-loader" />
         ) : (
-          users?.map((user: IUserLendItem) => (
-            <Accordion sx={{ width: "94%" }}>
+          modifiedUsers?.map((user: IModifiedUser) => (
+            <Accordion className="accordion">
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <img
-                  className="profilePicAccordion"
-                  src="../../images/Profile Img.jpg"
-                  alt="Profile-pic"
-                />
-                <Typography>{user.email}</Typography>
+                <Avatar className="profilePicAccordion" alt="Avatar" src={user.avatar} />
+              
+                <Typography>{user.name}</Typography>
               </AccordionSummary>
               <div className="lent-items-header">
                 <span className="LentProductCode">Product Code</span>

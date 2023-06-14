@@ -28,22 +28,18 @@ import { toast } from "react-toastify";
 interface EditItemProps {
   product: IInventoryItem;
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
-  isEditItemFormOpen: boolean,
-  setIsEditItemFormOpen: React.Dispatch<React.SetStateAction<boolean>>
+  isEditItemFormOpen: boolean;
+  setIsEditItemFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditItemForm = ({
   product,
   setProducts,
   isEditItemFormOpen,
-  setIsEditItemFormOpen
+  setIsEditItemFormOpen,
 }: EditItemProps): JSX.Element => {
-
-  // const [open, setOpen] = useState(true);
   const [categoryOption, setCategoryOption] = useState(0);
   const [locationOption, setLocationOption] = useState(0);
-  // const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  // const string = `Are you sure you want to remove this image?`;
 
   const { data: categories } = useGetCategoriesQuery("");
   const { data: locations } = useGetLocationsQuery("");
@@ -52,10 +48,8 @@ const EditItemForm = ({
   const [postImage] = usePostImageMutation();
   const [deleteImage] = useDeleteImageMutation();
 
-  const [imageValue, setImageValue] = useState(
-    product.image ? product.image : "../../images/no_image-placeholder.png"
-  );
-
+  const initialImageState = product.image ? product.image: "../../images/no_image-placeholder.png";
+  const [imageValue, setImageValue] = useState(initialImageState);
 
   const {
     register,
@@ -99,7 +93,6 @@ const EditItemForm = ({
     data.price = data.price || null;
     data.saleQty = data.saleQty || null;
     data.lendQty = data.lendQty || null;
-
 
     const id = product.id;
     const response = await updateProduct({ id, data });
@@ -147,7 +140,6 @@ const EditItemForm = ({
         )
       );
       toast.success("Successfully updated item!");
-      
     } else if (!("error" in response)) {
       setProducts((oldProducts) =>
         oldProducts.map((p: IInventoryItem) =>
@@ -156,7 +148,7 @@ const EditItemForm = ({
       );
       toast.success("Successfully updated item!");
     }
-    setIsEditItemFormOpen(false)
+    setIsEditItemFormOpen(false);
   };
 
   return (
@@ -169,7 +161,10 @@ const EditItemForm = ({
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="row">
-              <a  className="close-modal-button" onClick={()=>setIsEditItemFormOpen(false)}>
+              <a
+                className="close-modal-button"
+                onClick={() => setIsEditItemFormOpen(false)}
+              >
                 <svg
                   width={18}
                   height={18}
@@ -286,22 +281,22 @@ const EditItemForm = ({
                   defaultValue={product.saleQty}
                   {...register("saleQty")}
                 />
-                 <TextField
-                className="inputField"
-                type="number"
-                variant="standard"
-                label="Qty For Lend"
-                InputLabelProps={{ style: { color: "#9A9A9A" } }}
-                defaultValue={product.lendQty}
-                error={Boolean(errors.lendQty)}
-                helperText={errors.lendQty?.message}
-                {...register("lendQty" , {
-                  min: {
-                    value: 0,
-                    message: "Qty for lend must be a positive number",
-                  }
+                <TextField
+                  className="inputField"
+                  type="number"
+                  variant="standard"
+                  label="Qty For Lend"
+                  InputLabelProps={{ style: { color: "#9A9A9A" } }}
+                  defaultValue={product.lendQty}
+                  error={Boolean(errors.lendQty)}
+                  helperText={errors.lendQty?.message}
+                  {...register("lendQty", {
+                    min: {
+                      value: 0,
+                      message: "Qty for lend must be a positive number",
+                    },
                   })}
-              />
+                />
                 <TextField
                   className="inputField"
                   type="number"
@@ -369,12 +364,6 @@ const EditItemForm = ({
           </form>
         </div>
       </ModalWrapper>
-      {/* <PopperComponent
-        str={string}
-        onYes={handleRemoveImage}
-        anchor={anchorEl}
-        setAnchor={setAnchorEl}
-      /> */}
     </>
   );
 };

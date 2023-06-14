@@ -12,6 +12,14 @@ type InventoryItemsProps = {
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
 };
 
+const PopperString= () => {
+  return (
+    <p>
+     Are you sure you want to delete this item?
+    </p>
+  );
+};
+
 const TableRowComponent = ({
   product,
   setProducts,
@@ -20,7 +28,8 @@ const TableRowComponent = ({
   const [isLendForHomeForm, setIsLendForHomeForm] = useState(false);
 
   const [deleteProduct] = useDeleteProductMutation();
-  const str = `Are you sure you want to delete this item?`;
+
+  
 
   const handleEditItemBtn = () => {
     setIsEditItemFormOpen(true);
@@ -68,7 +77,7 @@ const TableRowComponent = ({
           />
         </svg>
       </a>
-      <DeleteIcon str={str} onYes={onDelete} />
+      <DeleteIcon PopperString={PopperString} onYes={onDelete} />
       {product.lendQty > 0 && (
         <a onClick={handleLendForHomeIcon} className="lendHomeIcon">
           <AddHomeWorkOutlinedIcon

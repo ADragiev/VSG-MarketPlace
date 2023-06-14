@@ -4,6 +4,7 @@ import Login from "../../auth/Login";
 function Home() {
 
   sessionStorage.clear()
+  
   return (
     <main className="mainContainer">
       <div className="rows">

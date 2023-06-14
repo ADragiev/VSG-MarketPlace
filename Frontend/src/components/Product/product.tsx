@@ -9,12 +9,27 @@ import { useNavigate } from "react-router-dom";
 type ProductProps = {
   product: IProduct;
 };
+type PopperStringProps = {
+  selectValue: React.MutableRefObject<number>;
+  product: IProduct;
+};
+
+const PopperString = ({ selectValue, product }: PopperStringProps) => {
+  return (
+    <p>
+      Are you sure you want to buy
+      {<b> {selectValue.current}</b>} item for
+      {<b> {Number(selectValue.current) * product.price} BGN</b>}?
+    </p>
+  );
+};
+
 const Card = ({ product }: ProductProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [createOrder] = useCreateOrderMutation();
   const navigate = useNavigate();
 
-  const handlePopup = (e :React.MouseEvent<HTMLAnchorElement>) => {
+  const handlePopup = (e: React.MouseEvent<HTMLAnchorElement>) => {
     setAnchorEl(e.currentTarget);
   };
 
@@ -40,11 +55,6 @@ const Card = ({ product }: ProductProps): JSX.Element => {
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     selectValue.current = Number(event.target.value);
   };
-
-  const string = `Are you sure you want to buy 
-  ${selectValue.current} item for   
-    ${Number(selectValue.current) * product.price}
-  ?`;
 
   return (
     <>
@@ -102,12 +112,14 @@ const Card = ({ product }: ProductProps): JSX.Element => {
           </div>
         </div>
       </div>
-      <PopperComponent
-        str={string}
-        onYes={onBuy}
-        anchor={anchorEl}
-        setAnchor={setAnchorEl}
-      />
+        <PopperComponent
+          PopperString={
+            <PopperString selectValue={selectValue} product={product} />
+          }
+          onYes={onBuy}
+          anchor={anchorEl}
+          setAnchor={setAnchorEl}
+        />
     </>
   );
 };
