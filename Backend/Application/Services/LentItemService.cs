@@ -96,11 +96,11 @@ namespace Application.Services
 
             var product = await productRepo.GetByIdAsync(lendedItem.ProductId);
 
-            var newLendQty = product.LendQty + lendedItem.Qty;
-            await productRepo.SetFieldAsync(product.Id, "LendQty", newLendQty);
-
             var newCombinedQty = product.CombinedQty + lendedItem.Qty;
             await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
+
+            var newLendQty = product.LendQty + lendedItem.Qty;
+            await productRepo.SetFieldAsync(product.Id, "LendQty", newLendQty);
 
             var endDate = DateTime.Now;
             await lentItemRepo.SetFieldAsync(id, "EndDate", endDate);

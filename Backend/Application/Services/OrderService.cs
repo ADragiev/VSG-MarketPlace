@@ -118,11 +118,11 @@ namespace Application.Services
 
             var product = await productRepo.GetByIdAsync((int)order.ProductId);
 
-            var newSaleQty = product.SaleQty + order.Qty;
-            await productRepo.SetFieldAsync(product.Id, "SaleQty", newSaleQty);
-
             var newCombinedQty = product.CombinedQty + order.Qty;
             await productRepo.SetFieldAsync(product.Id, "CombinedQty", newCombinedQty);
+
+            var newSaleQty = product.SaleQty + order.Qty;
+            await productRepo.SetFieldAsync(product.Id, "SaleQty", newSaleQty);
 
             await orderRepo.SetFieldAsync(id, "Status", OrderStatus.Declined);
 
