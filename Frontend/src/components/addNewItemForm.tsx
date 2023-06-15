@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useCreateProductMutation } from "../services/productService";
 import { usePostImageMutation } from "../services/imageServices";
 import {
@@ -10,11 +12,9 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
-import { toast } from "react-toastify";
 import {
   ICategory,
   IFormInputs,

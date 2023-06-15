@@ -1,6 +1,6 @@
+import { useEffect } from "react";
 import { useGetInventoryProductsQuery } from "../../services/productService";
 import { IInventoryItem } from "../../types";
-import { useEffect } from "react";
 import TableRowComponent from "./TableRow";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { CircularProgress } from "@mui/material";

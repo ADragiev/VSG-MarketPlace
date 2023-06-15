@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import {
   FormControl,
@@ -9,12 +11,10 @@ import {
   Autocomplete,
   TextField,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { IInventoryItem, ILendItemsFormInputs } from "types";
 import { usePostLentItemMutation } from "../services/lentItemsService";
 import { useGetEmployeesQuery } from "../utils/baseEmployeesApi";
-import { useState, useEffect } from "react";
 
 interface LendForHomeFormProps {
   product: IInventoryItem;

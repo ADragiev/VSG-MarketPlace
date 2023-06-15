@@ -1,9 +1,9 @@
+import { useState } from "react";
+import { toast } from "react-toastify";
 import { useDeleteProductMutation } from "../../services/productService";
 import EditItemForm from "../../components/EditItemForm";
-import { useState } from "react";
 import { IInventoryItem } from "../../types";
 import DeleteIcon from "./DeleteIcon";
-import { toast } from "react-toastify";
 import AddHomeWorkOutlinedIcon from "@mui/icons-material/AddHomeWorkOutlined";
 import LendForHomeForm from "../../components/LendForHomeForm";
 

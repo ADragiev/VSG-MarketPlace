@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { Suspense, lazy } from "react";
-import ProtectedRoute from "./protectedRoute";
-import AdminRoute from "./adminRoute";
+import ProtectedRoute from "./ProtectedRoute";
+import AdminRoute from "./AdminRoute";
 import { CircularProgress } from "@mui/material";
 import LentItems from "./pages/Lent-Items/LentItems";
 import MyItems from "./pages/My-Items/MyItems";

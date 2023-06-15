@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
-import { Box, ClickAwayListener, Fade, Popper } from "@mui/material";
 import { SetStateAction, Dispatch } from "react";
+import { Box, ClickAwayListener, Fade, Popper } from "@mui/material";
+import styled from "@emotion/styled";
 
 type PopperComponentProps = {
   PopperBody: JSX.Element;
