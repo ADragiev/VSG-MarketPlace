@@ -9,7 +9,7 @@ import { IEmployee, IModifiedUser, IUserLendItem } from "types";
 import { useGetEmployeesQuery } from "../../utils/baseEmployeesApi";
 
 const LentItems = (): JSX.Element => {
-  const { data: users, isLoading } = useGetLentItemsQuery();
+  const { data: users, isLoading } = useGetLentItemsQuery('');
   const { data: employees } =  useGetEmployeesQuery();
 
   const modifiedUsers = users?.map((user: IUserLendItem) => {
@@ -50,7 +50,7 @@ const LentItems = (): JSX.Element => {
                 <span className="LentProductEndDate">End date </span>
               </div>
               {user.lentItems.map((i) => (
-                <AccordionComponent i={i} />
+                <AccordionComponent lentItem={i} />
               ))}
             </Accordion>
           ))

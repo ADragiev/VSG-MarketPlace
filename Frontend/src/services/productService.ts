@@ -1,3 +1,4 @@
+import { IInventoryItem, IProduct } from "types";
 import { baseApi } from "../utils/baseApi";
 
 const GetProducts = "getProducts";
@@ -8,10 +9,10 @@ const DeleteProduct = "deleteProduct";
 
 const productsServices = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    [GetProducts]: builder.query({
+    [GetProducts]: builder.query<IProduct[],void>({
       query: () => "/Product",
     }),
-    [GetInventoryProducts]: builder.query({
+    [GetInventoryProducts]: builder.query<IInventoryItem[],void>({
       query: () => "/Product/Inventory",
     }),
     [CreateProduct]: builder.mutation({

@@ -45,11 +45,10 @@ const LendForHomeForm = ({
   }, [employees]);
 
   const onSubmit = async (data: ILendItemsFormInputs): Promise<void> => {
-    console.log(data);
     
     const newData = {
       qty: data.qty,
-      lentBy: (data.lentBy as unknown as {label: string, value: string}).value,
+      lentBy: data.lentBy?.value,
       productId: product.id,
     };
 
@@ -78,7 +77,7 @@ const LendForHomeForm = ({
     control,
   } = useForm<ILendItemsFormInputs>({
     defaultValues: {
-      lentBy: "",
+      lentBy: null,
       qty: null,
     },
   });

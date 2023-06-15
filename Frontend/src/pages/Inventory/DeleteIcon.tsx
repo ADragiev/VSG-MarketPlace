@@ -2,15 +2,14 @@ import { useState } from "react";
 import PopperComponent from "../../components/Popper";
 
 type DeleteProps = {
-  PopperString: ()=>  JSX.Element
+  PopperBody: ()=>  JSX.Element
   onYes: () => void;
 };
 
-const DeleteIcon = ({ PopperString, onYes }: DeleteProps) => {
+const DeleteIcon = ({ PopperBody, onYes }: DeleteProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handlePopup = (e :React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
     setAnchorEl(e.currentTarget);
   };
 
@@ -31,7 +30,7 @@ const DeleteIcon = ({ PopperString, onYes }: DeleteProps) => {
         </svg>
       </a>
         <PopperComponent
-          PopperString={<PopperString/>}
+          PopperBody={<PopperBody/>}
           onYes={onYes}
           anchor={anchorEl}
           setAnchor={setAnchorEl}

@@ -3,7 +3,7 @@ import { Box, ClickAwayListener, Fade, Popper } from "@mui/material";
 import { SetStateAction, Dispatch } from "react";
 
 type PopperComponentProps = {
-  PopperString: JSX.Element;
+  PopperBody: JSX.Element;
   onYes: () => void;
   anchor: HTMLElement | null;
   setAnchor: Dispatch<SetStateAction<HTMLElement | null>>;
@@ -33,7 +33,7 @@ const arrow = {
 };
 
 const PopperComponent = ({
-  PopperString,
+  PopperBody,
   onYes,
   anchor,
   setAnchor,
@@ -70,7 +70,7 @@ const PopperComponent = ({
             <div>
               <Box component="span" className="arrow" sx={arrow}></Box>
               <div className="popuptext">
-                {PopperString}
+                {PopperBody}
                 <div className="buttons-container">
                   <button onClick={onYes} className="btnYesNo">
                     YES

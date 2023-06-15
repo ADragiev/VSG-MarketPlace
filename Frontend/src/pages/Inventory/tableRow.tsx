@@ -12,7 +12,7 @@ type InventoryItemsProps = {
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
 };
 
-const PopperString= () => {
+const PopperBody= () => {
   return (
     <p>
      Are you sure you want to delete this item?
@@ -77,7 +77,7 @@ const TableRowComponent = ({
           />
         </svg>
       </a>
-      <DeleteIcon PopperString={PopperString} onYes={onDelete} />
+      <DeleteIcon PopperBody={PopperBody} onYes={onDelete} />
       {product.lendQty > 0 && (
         <a onClick={handleLendForHomeIcon} className="lendHomeIcon">
           <AddHomeWorkOutlinedIcon

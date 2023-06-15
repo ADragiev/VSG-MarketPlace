@@ -5,7 +5,7 @@ import { CircularProgress } from "@mui/material";
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 
 const MarketPlace = (): JSX.Element => {
-  const { data: products, isLoading } = useGetProductsQuery("");
+  const { data: products, isLoading } = useGetProductsQuery();
 
   return (
     <>

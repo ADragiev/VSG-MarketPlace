@@ -3,27 +3,34 @@
     margin: 0 10px;
   }
 }
-.extend{
+
+.extend {
   padding: 12px;
 }
+
 .ProductNameColumn {
   width: 26%;
 }
+
 .ProductQtyColumn {
   width: 20%;
 }
+
 .ProductPriceColumn {
   width: 20%;
 }
+
 .ProductDateColumn {
   width: 26%;
 }
-.main .myOrders-loader{
+
+.main .myOrders-loader {
   color: $main-color;
 }
 
 ///////RESPONSIVE///////
 @media screen and (max-width: 768px) {
+
   .ProductNameColumn,
   .ProductQtyColumn,
   .ProductPriceColumn,
@@ -33,21 +40,25 @@
     text-align: center;
     width: 100%;
   }
-  .popup{
+
+  .popup {
     display: flex;
     justify-content: center;
   }
+
   .ProductNameColumn,
   .ProductQtyColumn,
   .ProductPriceColumn,
   .ProductDateColumn {
     border-bottom: 1px solid $table-border-color;
   }
+
   .infoDetails {
     justify-content: center;
     flex-direction: row;
     align-items: flex-start;
   }
+
   .item-row {
     width: 60vw;
   }
@@ -65,15 +76,19 @@
   .ProductNameColumn::before {
     content: "Name: ";
   }
+
   .ProductQtyColumn::before {
     content: "Qty: ";
   }
+
   .ProductPriceColumn::before {
     content: "Price: ";
   }
+
   .ProductDateColumn::before {
     content: "Order date: ";
   }
+
   .ProductStatus::before {
     content: "Status: ";
   }
@@ -85,6 +100,6 @@
     display: flex;
     align-items: center;
   }
- 
-  
+
+
 }

@@ -8,7 +8,7 @@ const Transition = forwardRef(function Transition(
   },
   ref: React.Ref<unknown>
 ) {
-  return <Slide  direction="down" ref={ref} {...props}/>;  
+  return <Slide direction="down" ref={ref} {...props} />;
 });
 
 type ModalWrapperProps = {
@@ -30,7 +30,7 @@ const ModalWrapper = ({ children, open, setOpen }: ModalWrapperProps) => {
       aria-describedby="alert-dialog-slide-description"
       PaperProps={{
         style: {
-        borderRadius: '20px'
+          borderRadius: "20px",
         },
       }}
     >

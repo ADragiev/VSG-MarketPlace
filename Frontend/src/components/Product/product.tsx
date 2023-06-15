@@ -112,14 +112,14 @@ const Card = ({ product }: ProductProps): JSX.Element => {
           </div>
         </div>
       </div>
-        <PopperComponent
-          PopperString={
-            <PopperString selectValue={selectValue} product={product} />
-          }
-          onYes={onBuy}
-          anchor={anchorEl}
-          setAnchor={setAnchorEl}
-        />
+      <PopperComponent
+        PopperBody={
+          <PopperString selectValue={selectValue} product={product} />
+        }
+        onYes={onBuy}
+        anchor={anchorEl}
+        setAnchor={setAnchorEl}
+      />
     </>
   );
 };

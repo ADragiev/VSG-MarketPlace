@@ -84,7 +84,7 @@ export interface IFormInputs{
 }
 export interface ILendItemsFormInputs{
    qty: number | null, 
-   lentBy: string
+   lentBy: {value: string, label: string} | null
 }
 export interface IOrder {
     id: number

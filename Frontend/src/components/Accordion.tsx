@@ -6,13 +6,13 @@ import { useState } from "react";
 
 
 interface AccordionProps {
-  i: ILentItem;
+  lentItem: ILentItem;
 }
 
-const AccordionComponent = ({i}: AccordionProps) => {
+const AccordionComponent = ({lentItem}: AccordionProps) => {
 
     const [completeOrder] = useReturnLentItemMutation();
-    const [currentEndDate, setCurrentEndDate] = useState(i.endDate)
+    const [currentEndDate, setCurrentEndDate] = useState(lentItem.endDate)
   
     const handleCompleteOrder = async ( id: number) => {
         const response = await completeOrder(id)
@@ -27,11 +27,11 @@ const AccordionComponent = ({i}: AccordionProps) => {
      <AccordionDetails>
      <>
           <div className="item-row extend">
-          <span className="LentProductCode">{i.productCode}</span>
-          <span className="LentProductName">{i.productName}</span>
-          <span className="LentProductQty">{i.qty}</span>
-          <span className="LentProductStartDate">{i.startDate}</span>
-          <span className="LentProductEndDate">{currentEndDate? currentEndDate :  <button className="btnColumn completeBtn" onClick= {()=> handleCompleteOrder( i.id)}>Return</button>}</span>
+          <span className="LentProductCode">{lentItem.productCode}</span>
+          <span className="LentProductName">{lentItem.productName}</span>
+          <span className="LentProductQty">{lentItem.qty}</span>
+          <span className="LentProductStartDate">{lentItem.startDate}</span>
+          <span className="LentProductEndDate">{currentEndDate? currentEndDate :  <button className="btnColumn returnBtn" onClick= {()=> handleCompleteOrder( lentItem.id)}>Return</button>}</span>
         </div>
       
      </>

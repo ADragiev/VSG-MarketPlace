@@ -20,11 +20,18 @@ function Inventory(): JSX.Element {
 
   return (
     <main className="main">
-      
-        <AddNewItemForm isAddNewItemFormOpen={isAddNewItemFormOpen} setIsAddNewItemFormOpen={setIsAddNewItemFormOpen} setProducts={setProducts} onClose={() => setIsAddNewItemFormOpen(false)} />
-      
+      <AddNewItemForm
+        isAddNewItemFormOpen={isAddNewItemFormOpen}
+        setIsAddNewItemFormOpen={setIsAddNewItemFormOpen}
+        setProducts={setProducts}
+        onClose={() => setIsAddNewItemFormOpen(false)}
+      />
+
       <div className="table-wrapper">
-        <SearchBar onSearchInputChange={handleSearchInputChange} searchQuery={searchQuery} >
+        <SearchBar
+          onSearchInputChange={handleSearchInputChange}
+          searchQuery={searchQuery}
+        >
           <button
             id="addNewItemBtn"
             type="button"
@@ -44,9 +51,9 @@ function Inventory(): JSX.Element {
           </button>
         </SearchBar>
         <CustomizedTables
-         searchQuery={searchQuery}
-          products= {products}
-          setProducts = {setProducts}
+          searchQuery={searchQuery}
+          products={products}
+          setProducts={setProducts}
         />
       </div>
     </main>

@@ -3,20 +3,23 @@ import { handleLogout } from "../auth/logout";
 import { Avatar } from "@mui/material";
 import { ISidebarUser } from "types";
 
-
 interface SidebarProps {
-  currentUser: ISidebarUser | undefined
+  currentUser: ISidebarUser | undefined;
 }
 
-const Sidebar = ({currentUser}: SidebarProps): JSX.Element => {
+const Sidebar = ({ currentUser }: SidebarProps): JSX.Element => {
   
   const isAdmin = currentUser?.memberType === "Admin";
 
   return (
     <aside className="sidebar">
       <div id="greetingContainer" className="user">
-        <span> Hi, {currentUser?.name.split(' ')[0]}! </span>
-        <Avatar className="profilePicHeader"  alt="../../images/Profile Img.jpg" src={currentUser?.avatar} />
+        <span> Hi, {currentUser?.name.split(" ")[0]}! </span>
+        <Avatar
+          className="profilePicHeader"
+          alt="../../images/Profile Img.jpg"
+          src={currentUser?.avatar}
+        />
       </div>
       <nav>
         <ul>
@@ -106,25 +109,47 @@ const Sidebar = ({currentUser}: SidebarProps): JSX.Element => {
             </NavLink>
           </li>
           {isAdmin && (
-          <li className="menu-item">
-             <NavLink
-              to="/lent-items"
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              <svg   width={12}
-                height={14}  focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="StorageRoundedIcon"><path d="M4 20h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2zM2 6c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2zm4 1H4V5h2v2zm-2 7h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2z"  fill="#ED1C25"></path></svg>
-              <span> Lent Items </span>
-            </NavLink>
-          </li>
+            <li className="menu-item">
+              <NavLink
+                to="/lent-items"
+                className={({ isActive }) => (isActive ? "active" : "")}
+              >
+                <svg
+                  width={12}
+                  height={14}
+                  focusable="false"
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  data-testid="StorageRoundedIcon"
+                >
+                  <path
+                    d="M4 20h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2zM2 6c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2zm4 1H4V5h2v2zm-2 7h16c1.1 0 2-.9 2-2s-.9-2-2-2H4c-1.1 0-2 .9-2 2s.9 2 2 2zm0-3h2v2H4v-2z"
+                    fill="#ED1C25"
+                  ></path>
+                </svg>
+                <span> Lent Items </span>
+              </NavLink>
+            </li>
           )}
-           
+
           <li className="menu-item">
             <NavLink
               to="/my-items"
               className={({ isActive }) => (isActive ? "active" : "")}
             >
-            <svg width={12}
-                height={14} focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ReceiptOutlinedIcon"><path d="M19.5 3.5 18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5zM19 19.09H5V4.91h14v14.18zM6 15h12v2H6zm0-4h12v2H6zm0-4h12v2H6z" fill="#ED1C25"></path></svg>
+              <svg
+                width={12}
+                height={14}
+                focusable="false"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                data-testid="ReceiptOutlinedIcon"
+              >
+                <path
+                  d="M19.5 3.5 18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5zM19 19.09H5V4.91h14v14.18zM6 15h12v2H6zm0-4h12v2H6zm0-4h12v2H6z"
+                  fill="#ED1C25"
+                ></path>
+              </svg>
               <span> My Items </span>
             </NavLink>
           </li>

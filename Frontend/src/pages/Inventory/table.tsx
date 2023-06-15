@@ -16,7 +16,7 @@ export default function CustomizedTables({
   products,
   setProducts,
 }: TableProps) {
-  const { data, isLoading } = useGetInventoryProductsQuery("");
+  const { data, isLoading } = useGetInventoryProductsQuery();
   let filteredPRoducts = []
 
   filteredPRoducts = products.filter((p) =>

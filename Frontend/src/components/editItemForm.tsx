@@ -41,8 +41,8 @@ const EditItemForm = ({
   const [categoryOption, setCategoryOption] = useState(0);
   const [locationOption, setLocationOption] = useState(0);
 
-  const { data: categories } = useGetCategoriesQuery("");
-  const { data: locations } = useGetLocationsQuery("");
+  const { data: categories } = useGetCategoriesQuery();
+  const { data: locations } = useGetLocationsQuery();
   const [updateProduct] = useUpdateProductMutation();
 
   const [postImage] = usePostImageMutation();
@@ -76,11 +76,11 @@ const EditItemForm = ({
   };
   useEffect(() => {
     setCategoryOption(product.categoryId);
-  }, []);
+  }, [product.categoryId]);
 
   useEffect(() => {
     setLocationOption(product.locationId);
-  }, []);
+  }, [product.locationId]);
 
   const inputChange = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const target = e.target as HTMLInputElement;
@@ -97,10 +97,10 @@ const EditItemForm = ({
     const id = product.id;
     const response = await updateProduct({ id, data });
 
-    const selectedCategory = categories.filter(
+    const selectedCategory = categories?.filter(
       (c: ICategory) => c.id === Number(data.categoryId)
     )[0] as ICategory;
-    const selectedLocation = locations.filter(
+    const selectedLocation = locations?.filter(
       (l: ILocation) => l.id === Number(data.locationId)
     )[0] as ILocation;
 
@@ -112,7 +112,7 @@ const EditItemForm = ({
     } as IInventoryItem;
 
     if (
-      imageValue == "../../images/no_image-placeholder.png" &&
+      imageValue === "../../images/no_image-placeholder.png" &&
       !("error" in response)
     ) {
       await deleteImage(id);
@@ -140,6 +140,7 @@ const EditItemForm = ({
         )
       );
       toast.success("Successfully updated item!");
+      setIsEditItemFormOpen(false);
     } else if (!("error" in response)) {
       setProducts((oldProducts) =>
         oldProducts.map((p: IInventoryItem) =>
@@ -147,8 +148,8 @@ const EditItemForm = ({
         )
       );
       toast.success("Successfully updated item!");
+      setIsEditItemFormOpen(false);
     }
-    setIsEditItemFormOpen(false);
   };
 
   return (
