@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useCreateProductMutation } from "../services/productService";
 import { usePostImageMutation } from "../services/imageServices";
 import {
@@ -10,27 +12,34 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import { useGetCategoriesQuery } from "../services/categoryService";
 import { useGetLocationsQuery } from "../services/locationService";
-import { toast } from "react-toastify";
-import { ICategory, IFormInputs, IInventoryItem, ILocation, IReturnedValue } from "../types";
+import {
+  ICategory,
+  IFormInputs,
+  IInventoryItem,
+  ILocation,
+  IReturnedValue,
+} from "../types";
 
 interface AddNewItemProps {
   onClose: () => void;
-  setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>
-  isAddNewItemFormOpen: boolean
-  setIsAddNewItemFormOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
+  isAddNewItemFormOpen: boolean;
+  setIsAddNewItemFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNewItemFormOpen }: AddNewItemProps): JSX.Element => {
+const AddNewItemForm = ({
+  onClose,
+  setProducts,
+  isAddNewItemFormOpen,
+  setIsAddNewItemFormOpen,
+}: AddNewItemProps): JSX.Element => {
+  const { data: categories } = useGetCategoriesQuery();
+  const { data: locations } = useGetLocationsQuery();
+  const [createProduct, { isError }] = useCreateProductMutation();
 
-
-  const { data: categories } = useGetCategoriesQuery("");
-  const { data: locations } = useGetLocationsQuery("");
-  const [createProduct, {isError}] = useCreateProductMutation();
-  
   const [postImage] = usePostImageMutation();
 
   const {
@@ -38,15 +47,14 @@ const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNe
     handleSubmit,
     getValues,
     formState: { errors, isSubmitting },
-    control
-    
+    control,
   } = useForm<IFormInputs>({
     defaultValues: {
       code: "",
       name: "",
       description: "",
-      categoryId: '',
-      locationId: '',
+      categoryId: "",
+      locationId: "",
       saleQty: null,
       lendQty: null,
       price: null,
@@ -59,35 +67,49 @@ const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNe
     "../../images/no_image-placeholder.png"
   );
   const onSubmit = async (data: IFormInputs): Promise<void> => {
-    const response = await createProduct(data) as {data: IReturnedValue};
-    const selectedCategory = categories?.filter((c: ICategory)=> c.id == Number(data.categoryId))[0] as ICategory
-    const selectedLocation = locations?.filter((l: ILocation)=> l.id == Number(data.locationId))[0] as ILocation
+    const response = (await createProduct(data)) as { data: IReturnedValue };
+    const selectedCategory = categories?.filter(
+      (c: ICategory) => c.id == Number(data.categoryId)
+    )[0] as ICategory;
+    const selectedLocation = locations?.filter(
+      (l: ILocation) => l.id == Number(data.locationId)
+    )[0] as ILocation;
 
-    const responseData = response.data
+    const responseData = response.data;
     const id = responseData.returnedValue as number;
-    
+
     const image = getValues("image")[0] as unknown as File;
     if (imageValue != "../../images/no_image-placeholder.png") {
       const imageFormData = new FormData();
       imageFormData.append("image", image);
-      const imageUrl = await postImage({ id, imageFormData }) as {data: IReturnedValue}; 
-      const newProduct = {...data,id, image: imageUrl.data.returnedValue , category: selectedCategory.name, location: selectedLocation.name } as IInventoryItem
-      
-      setProducts((oldProducts) => [...oldProducts, newProduct])
+      const imageUrl = (await postImage({ id, imageFormData })) as {
+        data: IReturnedValue;
+      };
+      const newProduct = {
+        ...data,
+        id,
+        image: imageUrl.data.returnedValue,
+        category: selectedCategory.name,
+        location: selectedLocation.name,
+      } as IInventoryItem;
+
+      setProducts((oldProducts) => [...oldProducts, newProduct]);
+    } else {
+      const newProduct = {
+        ...data,
+        id,
+        category: selectedCategory.name,
+        location: selectedLocation.name,
+      } as IInventoryItem;
+      setProducts((oldProducts) => [...oldProducts, newProduct]);
     }
-    else{
-      const newProduct = {...data,id, category: selectedCategory.name, location: selectedLocation.name } as IInventoryItem
-      setProducts((oldProducts) => [...oldProducts, newProduct])
-    }
-    if (!('error' in response)) {
+    if (!("error" in response)) {
       toast.success("Successfully added item!");
-    } 
+    }
     setIsAddNewItemFormOpen(false);
   };
 
- 
-
-  const inputChange = (e :React.MouseEvent<HTMLAnchorElement>) => {
+  const inputChange = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const target = e.target as HTMLInputElement;
     const files = target.files as FileList;
     const image = URL.createObjectURL(files[0]);
@@ -97,7 +119,6 @@ const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNe
   const handleRemoveImage = () => {
     setImageValue("../../images/no_image-placeholder.png");
   };
-
 
   return (
     <ModalWrapper open={isAddNewItemFormOpen} setOpen={setIsAddNewItemFormOpen}>
@@ -176,65 +197,62 @@ const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNe
                 {...register("description")}
               />
               <Controller
-              control = {control}
-              name = 'categoryId'
-              rules={{required: {
-                value: true, 
-                message: "Category field is required"
-              }
-            }}
-            render={({
-             field: {onChange, value}
-            })=> (
-              <FormControl
-              variant="standard"
-              className="inputField"
-              error={Boolean(errors.categoryId)}
-            >
-              <InputLabel focused={false}>Category</InputLabel>
-              <Select
-                value={value}
-                label="Category*"
-                onChange={onChange}
-
-              >
-                {categories?.map((c: ICategory) => (
-                  <MenuItem value={c.id} key={c.id}>
-                    {c.name}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText>{errors.categoryId && errors.categoryId.message}</FormHelperText>
-            </FormControl>
-              )}  
+                control={control}
+                name="categoryId"
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Category field is required",
+                  },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <FormControl
+                    variant="standard"
+                    className="inputField"
+                    error={Boolean(errors.categoryId)}
+                  >
+                    <InputLabel focused={false}>Category</InputLabel>
+                    <Select value={value} label="Category*" onChange={onChange}>
+                      {categories?.map((c: ICategory) => (
+                        <MenuItem value={c.id} key={c.id}>
+                          {c.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>
+                      {errors.categoryId && errors.categoryId.message}
+                    </FormHelperText>
+                  </FormControl>
+                )}
               />
-<Controller
-              control = {control}
-              name = 'locationId'
-              rules={{required: {
-                value: true, 
-                message: "Location field is required"
-              }
-            }}
-            render={({
-             field: {onChange, value}
-            })=> (
-              <FormControl className="inputField"  variant="standard" error={Boolean(errors.locationId)}>
-              <InputLabel focused={false}>Location</InputLabel>
-              <Select
-                label="Location"
-                value={value}        
-                onChange={onChange}
-              >
-                {locations?.map((l: ILocation) => (
-                  <MenuItem value={l.id} key={l.id}>
-                    {l.name}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText>{errors.locationId && errors.locationId.message}</FormHelperText>
-            </FormControl>
-              )}  
+              <Controller
+                control={control}
+                name="locationId"
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Location field is required",
+                  },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <FormControl
+                    className="inputField"
+                    variant="standard"
+                    error={Boolean(errors.locationId)}
+                  >
+                    <InputLabel focused={false}>Location</InputLabel>
+                    <Select label="Location" value={value} onChange={onChange}>
+                      {locations?.map((l: ILocation) => (
+                        <MenuItem value={l.id} key={l.id}>
+                          {l.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>
+                      {errors.locationId && errors.locationId.message}
+                    </FormHelperText>
+                  </FormControl>
+                )}
               />
               <TextField
                 className="inputField"
@@ -244,14 +262,14 @@ const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNe
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.saleQty)}
                 helperText={errors.saleQty?.message}
-                {...register("saleQty" , {
+                {...register("saleQty", {
                   min: {
                     value: 0,
                     message: "Qty for sale must be a positive number",
-                  }
-                  })}
+                  },
+                })}
               />
-               <TextField
+              <TextField
                 className="inputField"
                 type="number"
                 variant="standard"
@@ -259,12 +277,12 @@ const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNe
                 InputLabelProps={{ style: { color: "#9A9A9A" } }}
                 error={Boolean(errors.lendQty)}
                 helperText={errors.lendQty?.message}
-                {...register("lendQty" , {
+                {...register("lendQty", {
                   min: {
                     value: 0,
                     message: "Qty for lend must be a positive number",
-                  }
-                  })}
+                  },
+                })}
               />
               <TextField
                 className="inputField"
@@ -325,10 +343,13 @@ const AddNewItemForm = ({ onClose, setProducts, isAddNewItemFormOpen, setIsAddNe
               </div>
             </div>
           </div>
-          {isSubmitting && !isError ? <CircularProgress className="spinning-loader" /> : <button role="button" id="submitFormBtn" type="submit">
-            Add
-          </button> }
-         
+          {isSubmitting && !isError ? (
+            <CircularProgress className="spinning-loader" />
+          ) : (
+            <button role="button" id="submitFormBtn" type="submit">
+              Add
+            </button>
+          )}
         </form>
       </div>
     </ModalWrapper>

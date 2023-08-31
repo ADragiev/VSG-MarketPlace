@@ -1,3 +1,4 @@
+import { IMyOrder, IPendingOrder } from "types";
 import { baseApi } from "../utils/baseApi";
 
 const GetPendingOrders = "getPendingOrders";
@@ -8,10 +9,10 @@ const CreateOrder = "createOrder";
 
 const ordersServices = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    [GetPendingOrders]: builder.query({
+    [GetPendingOrders]: builder.query<IPendingOrder[],void>({
       query: () => "/Order",
     }),
-    [GetMyOrders]: builder.query({
+    [GetMyOrders]: builder.query<IMyOrder[],void>({
       query: () => "Order/My-Orders",
     }),
     [ConfirmOrder]: builder.mutation({

@@ -32,6 +32,18 @@
 .accordion{
   width: 94%;
 }
+  .returnBtn{
+    background: $main-color;
+    cursor: pointer;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
+    color: $white-color;
+    border: 0;
+    border-radius: 4px;
+    padding: 8px;
+    margin-left: 36px;
+  }
 @media screen and (max-width: 768px) {
     .LentProductCode,
     .LentProductName,
@@ -45,6 +57,9 @@
         font-weight: 600;
       }
     }
+    .returnBtn{
+      margin-left: 4px;
+    }
     .lent-items-header{
         display: none;
     }
@@ -55,18 +70,6 @@
     .LentProductStartDate {
       border-bottom: 1px solid $table-border-color;
     }
-    
-   
-  
-    // .ProductNameColumn,
-    // .ProductQtyColumn,
-    // .ProductPriceColumn,
-    // .ProductDateColumn,
-    // .ProductStatus {
-    //   &::before {
-    //     font-weight: 600;
-    //   }
-    // }
   
     .LentProductEndDate::before {
       content: "End date: ";

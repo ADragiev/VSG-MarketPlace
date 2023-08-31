@@ -36,6 +36,7 @@ const Card = ({ product }: ProductProps): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const selectValue = useRef(1);
+  
   const onBuy = async () => {
     const productId = product.id;
     const qty = selectValue.current;
@@ -112,14 +113,14 @@ const Card = ({ product }: ProductProps): JSX.Element => {
           </div>
         </div>
       </div>
-        <PopperComponent
-          PopperString={
-            <PopperString selectValue={selectValue} product={product} />
-          }
-          onYes={onBuy}
-          anchor={anchorEl}
-          setAnchor={setAnchorEl}
-        />
+      <PopperComponent
+        PopperBody={
+          <PopperString selectValue={selectValue} product={product} />
+        }
+        onYes={onBuy}
+        anchor={anchorEl}
+        setAnchor={setAnchorEl}
+      />
     </>
   );
 };

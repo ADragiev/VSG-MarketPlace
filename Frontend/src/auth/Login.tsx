@@ -8,7 +8,6 @@ const Login = () => {
   const admitGroup = "f2123818-3d51-4fe4-990b-b072a80da143";
   let memberType = "User";
 
-  
   const handleLogin = async () => {
     const result: AuthenticationResult = await msalInstance.loginPopup(
       loginRequest

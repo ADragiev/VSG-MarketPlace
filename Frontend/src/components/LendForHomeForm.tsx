@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 import ModalWrapper from "./ModalWrapper";
 import {
   FormControl,
@@ -9,12 +11,10 @@ import {
   Autocomplete,
   TextField,
 } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { IInventoryItem, ILendItemsFormInputs } from "types";
 import { usePostLentItemMutation } from "../services/lentItemsService";
 import { useGetEmployeesQuery } from "../utils/baseEmployeesApi";
-import { useState, useEffect } from "react";
 
 interface LendForHomeFormProps {
   product: IInventoryItem;
@@ -30,9 +30,9 @@ const LendForHomeForm = ({
   setIsLendForHomeForm,
 }: LendForHomeFormProps) => {
   const [lendItem] = usePostLentItemMutation();
-  const [users, setUsers] =  useState<{label: string, value: string}[]>([])
-  const { data: employees } =  useGetEmployeesQuery();
-  
+  const [users, setUsers] = useState<{ label: string; value: string }[]>([]);
+  const { data: employees } = useGetEmployeesQuery();
+
   useEffect(() => {
     if (employees) {
       setUsers(
@@ -45,7 +45,12 @@ const LendForHomeForm = ({
   }, [employees]);
 
   const onSubmit = async (data: ILendItemsFormInputs): Promise<void> => {
-    const newData = { qty: data.qty, lentBy: data.lentBy.value , productId: product.id };
+    
+    const newData = {
+      qty: data.qty,
+      lentBy: data.lentBy?.value,
+      productId: product.id,
+    };
 
     const response = await lendItem(newData);
 
@@ -62,8 +67,8 @@ const LendForHomeForm = ({
         )
       );
       toast.success("Successfully lent item!");
+      setIsLendForHomeForm(false);
     }
-    setIsLendForHomeForm(false);
   };
 
   const {
@@ -72,7 +77,7 @@ const LendForHomeForm = ({
     control,
   } = useForm<ILendItemsFormInputs>({
     defaultValues: {
-      lentBy: {},
+      lentBy: null,
       qty: null,
     },
   });
@@ -116,17 +121,25 @@ const LendForHomeForm = ({
                   },
                 }}
                 render={({ field: { onChange, value } }) => (
-              
                   <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={users}
-                  onChange={(e, item)=>{
-                    console.log(e);
-                    onChange(item)
-                  }} 
-                  renderInput={(params) => <TextField variant="standard" value={value}  {...params} label="User" />}
-                />
+                    disablePortal
+                    id="combo-box-demo"
+                    options={users}
+                    onChange={(e, item) => {
+                      console.log(e);
+                      onChange(item);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        error={Boolean(errors.lentBy)}
+                        helperText={errors.lentBy?.message}
+                        variant="standard"
+                        value={value}
+                        {...params}
+                        label="User"
+                      />
+                    )}
+                  />
                 )}
               />
               <Controller

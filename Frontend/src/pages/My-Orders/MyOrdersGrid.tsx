@@ -5,7 +5,7 @@ import MyOrder from "./MyOrderRow";
 import MyOrdersHeader from "./MyOrdersHeader";
 
 const MyOrders = (): JSX.Element => {
-  const { data: myOrders, isLoading } = useGetMyOrdersQuery("");
+  const { data: myOrders, isLoading } = useGetMyOrdersQuery();
 
   return (
     <main className="main">

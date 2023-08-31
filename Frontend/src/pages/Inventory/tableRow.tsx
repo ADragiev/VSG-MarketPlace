@@ -1,9 +1,9 @@
+import { useState } from "react";
+import { toast } from "react-toastify";
 import { useDeleteProductMutation } from "../../services/productService";
 import EditItemForm from "../../components/EditItemForm";
-import { useState } from "react";
 import { IInventoryItem } from "../../types";
 import DeleteIcon from "./DeleteIcon";
-import { toast } from "react-toastify";
 import AddHomeWorkOutlinedIcon from "@mui/icons-material/AddHomeWorkOutlined";
 import LendForHomeForm from "../../components/LendForHomeForm";
 
@@ -12,7 +12,7 @@ type InventoryItemsProps = {
   setProducts: React.Dispatch<React.SetStateAction<IInventoryItem[]>>;
 };
 
-const PopperString= () => {
+const PopperBody= () => {
   return (
     <p>
      Are you sure you want to delete this item?
@@ -77,7 +77,7 @@ const TableRowComponent = ({
           />
         </svg>
       </a>
-      <DeleteIcon PopperString={PopperString} onYes={onDelete} />
+      <DeleteIcon PopperBody={PopperBody} onYes={onDelete} />
       {product.lendQty > 0 && (
         <a onClick={handleLendForHomeIcon} className="lendHomeIcon">
           <AddHomeWorkOutlinedIcon
