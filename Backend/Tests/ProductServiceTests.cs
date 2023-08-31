@@ -1,6 +1,7 @@
 ﻿using Application.Helpers.Constants;
 using Application.Models.ExceptionModels;
 using Application.Models.ImageModels.Interfaces;
+using Application.Models.LentItemModels.Interfaces;
 using Application.Models.OrderModels.Interfaces;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
@@ -24,6 +25,7 @@ namespace Tests
         private Mock<IImageService> imageServiceMock;
         private Mock<IOrderRepository> orderRepoMock;
         private IProductService productService;
+        private Mock<ILentItemRepository> lentItemRepo;
 
         [SetUp]
         public void SetUp()
@@ -32,8 +34,9 @@ namespace Tests
             mapperMock = new Mock<IMapper>();
             imageServiceMock = new Mock<IImageService>();
             orderRepoMock = new Mock<IOrderRepository>();
+            lentItemRepo = new Mock<ILentItemRepository>();
 
-            productService = new ProductService(productRepoMock.Object, mapperMock.Object, imageServiceMock.Object, orderRepoMock.Object);
+            productService = new ProductService(productRepoMock.Object, mapperMock.Object, imageServiceMock.Object, orderRepoMock.Object, lentItemRepo.Object);
         }
 
         [Test]

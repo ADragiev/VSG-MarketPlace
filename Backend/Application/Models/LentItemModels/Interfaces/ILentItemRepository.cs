@@ -13,7 +13,7 @@ namespace Application.Models.LentItemModels.Interfaces
     {
         Task<List<LentItemGetDto>> GetAllLentItemsAsync();
 
-        Task<List<LentItemGetDto>> GetMyLentItemsAsync(string user);
+        Task<List<LentItemGetDto>> GetLentItemsByUsernameAsync(string user);
 
         Task<List<LentItem>> GetProductLentItemsInUse(int productId);
     }

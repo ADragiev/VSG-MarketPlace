@@ -3,6 +3,7 @@ using Application.Helpers.Validators;
 using Application.Models.CategoryModels.Contacts;
 using Application.Models.Cloud;
 using Application.Models.EmailModels.Interfaces;
+using Application.Models.ExportModels.Interfaces;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ImageModels.Interfaces;
 using Application.Models.LentItemModels.Dtos;
@@ -32,6 +33,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ILentItemService, LentItemService>();
+            services.AddScoped<IExportService, ExportService>();
 
             if (config["Redis:Enabled"] == "true")
             {

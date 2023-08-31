@@ -30,9 +30,9 @@ namespace Infrastructure.Repositories
             return lendedItems.ToList();
         }
 
-        public async Task<List<LentItemGetDto>> GetMyLentItemsAsync(string user)
+        public async Task<List<LentItemGetDto>> GetLentItemsByUsernameAsync(string user)
         {
-            var sql = @"SELECT li.Id, li.Qty, li.LentBy, li.StartDate, li.EndDate, p.Name AS ProductName, p.Code AS ProductCode
+            var sql = @"SELECT li.Id, li.Qty, li.LentBy, li.StartDate, li.EndDate, p.Name AS ProductName, p.Code AS ProductCode, p.[Description] AS ProductDescription
                         FROM
                         LentItem AS li
                         JOIN Product AS p ON li.ProductId = p.Id

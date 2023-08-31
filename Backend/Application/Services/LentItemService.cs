@@ -75,7 +75,7 @@ namespace Application.Services
         public async Task<List<LentItemGetMineDto>> GetMyLentItemsAsync()
         {
             var user = userService.GetUserEmail();
-            var myLentItems = await lentItemRepo.GetMyLentItemsAsync(user);
+            var myLentItems = await lentItemRepo.GetLentItemsByUsernameAsync(user);
             return mapper.Map<List<LentItemGetMineDto>>(myLentItems);
         }
 

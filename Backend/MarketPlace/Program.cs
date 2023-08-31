@@ -6,6 +6,7 @@ using MarketPlace.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using NLog.Web;
+using OfficeOpenXml;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,7 @@ IConfigurationRoot config = new ConfigurationBuilder()
     .AddJsonFile(path: "appsettings.json").Build();
 
 NLog.Extensions.Logging.ConfigSettingLayoutRenderer.DefaultConfiguration = config;
-
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 builder.Services.AddConfigurationApiLayer(config);
 builder.Services.AddConfigurationApplicationLayer(config);
 builder.Services.AddConfigurationInfrastructureLayer();

@@ -10,6 +10,8 @@ namespace Application.Helpers.Constants
     {
         public const string DefaultDateFormat = "yyyy-MM-dd HH:mm";
 
+        public const string DefaultDateFormatWithoutTime = "yyyy-MM-dd";
+
         public const string EasternEuropeTimeZone = "E. Europe Standard Time";
     }
 }
