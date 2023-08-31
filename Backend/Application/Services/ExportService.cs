@@ -3,9 +3,11 @@ using Application.Models.CategoryModels.Contacts;
 using Application.Models.ExportModels;
 using Application.Models.ExportModels.Interfaces;
 using Application.Models.LentItemModels.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+using Application.Models.ProductModels.Intefaces;
 using OfficeOpenXml;
-using System.Security.Cryptography;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 using Xceed.Document.NET;
 using Xceed.Words.NET;
 
@@ -15,19 +17,30 @@ namespace Application.Services
     {
         private readonly ICategoryService categoryService;
         private readonly ILentItemRepository lentItemRepository;
+        private readonly IProductRepository productRepository;
 
         public ExportService(ICategoryService categoryService,
-            ILentItemRepository lentItemRepository)
+            ILentItemRepository lentItemRepository,
+            IProductRepository productRepository)
         {
             this.categoryService = categoryService;
             this.lentItemRepository = lentItemRepository;
+            this.productRepository = productRepository;
         }
 
-        public async Task<byte[]> ExportCategories()
+        public async Task<byte[]> GenerateReport(ReportType reportType)
         {
-            var categories = await categoryService.AllAsync();
+            byte[] bytes = { };
 
-            return await ExportToExcelAsync(categories);
+            switch (reportType)
+            {
+                case ReportType.Product:
+                    var products = await productRepository.GetProductsForExport();
+                    bytes = await ExportToExcelAsync(products);
+                    break;
+            }
+
+            return bytes;
         }
 
         public async Task<byte[]> ExportLentProtocol(string email, string recepient, string provider)
@@ -58,7 +71,7 @@ namespace Application.Services
                     row.Cells[2].VerticalAlignment = VerticalAlignment.Center;
 
                     row.Cells[0].Paragraphs[0].Append(lentItem.StartDate.ToString(DateFormatConstants.DefaultDateFormatWithoutTime));
-                    row.Cells[1].Paragraphs[0].Append(lentItem.ProductName);
+                    row.Cells[1].Paragraphs[0].Append($"{lentItem.ProductName} ({lentItem.Qty})");
                     row.Cells[2].Paragraphs[0].Append(lentItem.ProductDescription);
                 }
 
@@ -76,14 +89,14 @@ namespace Application.Services
             {
                 var worksheet = package.Workbook.Worksheets.Add("Sheet1");
 
-                // Set header row
                 var properties = typeof(T).GetProperties();
+                properties = properties.Where(p => p.GetCustomAttributes(typeof(NotMappedAttribute), false).Any() == false).ToArray();
                 for (int col = 1; col <= properties.Length; col++)
                 {
-                    worksheet.Cells[1, col].Value = properties[col - 1].Name;
+                    var name = properties[col - 1].GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? properties[col-1].Name;
+                    worksheet.Cells[1, col].Value = name;
                 }
 
-                // Fill data rows
                 for (int row = 2; row <= data.Count + 1; row++)
                 {
                     for (int col = 1; col <= properties.Length; col++)
@@ -91,7 +104,7 @@ namespace Application.Services
                         worksheet.Cells[row, col].Value = properties[col - 1].GetValue(data[row - 2]);
                     }
                 }
-
+                worksheet.Cells.AutoFitColumns();
                 return await package.GetAsByteArrayAsync();
             }
         }

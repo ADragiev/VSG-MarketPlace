@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Models.ExportModels
 {
-    public class ExportDto
+    public enum ReportType
     {
-        [DisplayName("Category Name")]
-        public string Name { get; set; }
+        Product = 0,
+        LentItem = 1
     }
 }

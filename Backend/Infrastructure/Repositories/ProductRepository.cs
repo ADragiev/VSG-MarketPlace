@@ -1,4 +1,5 @@
-﻿using Application.Models.GenericRepo;
+﻿using Application.Models.ExportModels;
+using Application.Models.GenericRepo;
 using Application.Models.ImageModels.Dtos;
 using Application.Models.ProductModels.Dtos;
 using Application.Models.ProductModels.Intefaces;
@@ -18,6 +19,27 @@ namespace Infrastructure.Repositories
         public ProductRepository(IMarketPlaceContext marketPlaceContext)
             : base(marketPlaceContext)
         {
+        }
+
+        public async Task<List<ProductExportDto>> GetProductsForExport()
+        {
+            var sql = @"SELECT
+                        [Code]
+                        ,p.[Name]
+                        ,([CombinedQty] + ISNULL((SELECT SUM(Qty) FROM [LentItem] WHERE ProductId=p.[Id] AND EndDate IS NULL GROUP BY ProductId),0)) AS [CombinedQty]
+                        ,([LendQty] + ISNULL((SELECT SUM(Qty) FROM [LentItem] WHERE ProductId=p.[Id] AND EndDate IS NULL GROUP BY ProductId),0)) AS [LendQty]
+                        ,ISNULL((SELECT SUM([Qty]) FROM [LentItem] WHERE [ProductId]=p.[Id] AND [EndDate] IS NULL GROUP BY [ProductId]),0) AS [LentQty]
+                        ,[SaleQty]
+                        ,loc.[Name] AS [Location]
+                        ,c.[Name] AS [Category]
+                        FROM 
+                        [Product] AS p
+                        JOIN [Location] AS loc ON loc.[Id]=p.[LocationId]
+                        JOIN [Category] AS c ON c.[Id]=p.[CategoryId]
+                        WHERE [IsDeleted] = 0";
+
+            var products = await connection.QueryAsync<ProductExportDto>(sql, null, transaction);
+            return products.ToList();
         }
 
         public async Task<List<ProductMarketPlaceGetDto>> GetAllIndexProductsAsync()

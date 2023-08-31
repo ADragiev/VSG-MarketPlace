@@ -9,7 +9,7 @@ namespace Application.Models.ExportModels.Interfaces
 {
     public interface IExportService
     {
-        Task<byte[]> ExportCategories();
+        Task<byte[]> GenerateReport(ReportType reportType);
         Task<byte[]> ExportLentProtocol(string email, string recepient, string provider);
     }
 }
