@@ -47,7 +47,6 @@ namespace Application.Services
 
             var product = mapper.Map<Product>(dto);
             var productId = await productRepo.CreateAsync(product);
-            product.Id = productId;
 
             return new GenericSimpleValueGetDto<int>(productId);
         }

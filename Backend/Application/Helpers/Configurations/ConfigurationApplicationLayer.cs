@@ -1,6 +1,7 @@
 ﻿using Application.Helpers.Profiles;
 using Application.Helpers.Validators;
 using Application.Models.CategoryModels.Contacts;
+using Application.Models.CategoryModels.Dtos;
 using Application.Models.Cloud;
 using Application.Models.EmailModels.Interfaces;
 using Application.Models.ExportModels.Interfaces;
@@ -58,6 +59,7 @@ namespace Application.Helpers.Configurations
             services.AddScoped<IValidator<ProductUpdateDto>, ProductUpdateValidator>();
             services.AddScoped<IValidator<ImageCreateDto>, ImageCreateValidator>();
             services.AddScoped<IValidator<LentItemCreateDto>, LentItemCreateValidator>();
+            services.AddScoped<IValidator<CategoryCreateUpdateDto>, CategoryCreateUpdateValidator>();
             return services;
         }
     }

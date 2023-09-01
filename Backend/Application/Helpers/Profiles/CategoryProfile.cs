@@ -14,6 +14,7 @@ namespace Application.Helpers.Profiles
         public CategoryProfile()
         {
             CreateMap<Category, CategoryGetDto>();
+            CreateMap<CategoryCreateUpdateDto, Category>();
         }
     }
 }
