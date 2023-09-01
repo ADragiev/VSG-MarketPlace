@@ -18,17 +18,17 @@ namespace MarketPlace.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult>ExportCategories(ReportType reportType)
+        public async Task<IActionResult>GenerateReport(ReportType reportType)
         {
             
             var bytes =  await exportService.GenerateReport(reportType);
             return File(bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "data.xlsx");
         }
 
-        [HttpGet("LentItemsProtocol")]
-        public async Task<IActionResult> ExportLentItems(string email, string recepient, string provider)
+        [HttpPost("LentItemsProtocol")]
+        public async Task<IActionResult> ExportLentItems(ExportLentItemsProtocolDto protocolDto)
         {
-            var bytes = await exportService.ExportLentProtocol(email, recepient, provider);
+            var bytes = await exportService.ExportLentProtocol(protocolDto);
             return File(bytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "document.docx");
         }
     }

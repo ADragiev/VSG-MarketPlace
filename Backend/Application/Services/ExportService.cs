@@ -5,6 +5,7 @@ using Application.Models.ExportModels.Interfaces;
 using Application.Models.LentItemModels.Interfaces;
 using Application.Models.ProductModels.Intefaces;
 using OfficeOpenXml;
+using Org.BouncyCastle.Cms;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
@@ -43,17 +44,17 @@ namespace Application.Services
             return bytes;
         }
 
-        public async Task<byte[]> ExportLentProtocol(string email, string recepient, string provider)
+        public async Task<byte[]> ExportLentProtocol(ExportLentItemsProtocolDto protocolDto)
         {
-            var lentItems = (await lentItemRepository.GetLentItemsByUsernameAsync(email)).Where(l => l.EndDate == null);
+            var lentItems = (await lentItemRepository.GetLentItemsByUsernameAsync(protocolDto.Email)).Where(l => l.EndDate == null);
 
             var currentDirectory = Directory.GetCurrentDirectory();
             var path = Path.Combine(currentDirectory, "Reports", "Hand-over protocol.docx");
 
             using (DocX document = DocX.Load(path))
             {
-                document.ReplaceText("{Recipient}", recepient);
-                document.ReplaceText("{Provider}", provider);
+                document.ReplaceText("{Recipient}", protocolDto.Recepient);
+                document.ReplaceText("{Provider}", protocolDto.Provider);
 
                 Table table = document.Tables[0];
 
