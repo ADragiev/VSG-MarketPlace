@@ -29,7 +29,7 @@ namespace MarketPlace.Controllers
         public async Task<IActionResult> ExportLentItems(ExportLentItemsProtocolDto protocolDto)
         {
             var bytes = await exportService.ExportLentProtocol(protocolDto);
-            return File(bytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "document.docx");
+            return File(bytes, "application/pdf", "protocol.pdf");
         }
     }
 }

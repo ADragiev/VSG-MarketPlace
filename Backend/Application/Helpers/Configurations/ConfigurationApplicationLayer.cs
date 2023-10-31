@@ -19,6 +19,7 @@ using Application.Services;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QuestPDF.Infrastructure;
 using StackExchange.Redis;
 
 namespace Application.Helpers.Configurations
@@ -27,6 +28,7 @@ namespace Application.Helpers.Configurations
     {
         public static IServiceCollection AddConfigurationApplicationLayer(this IServiceCollection services, IConfiguration config)
         {
+            QuestPDF.Settings.License = LicenseType.Community;
             services.AddAutoMapper(typeof(CategoryProfile).Assembly);
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();

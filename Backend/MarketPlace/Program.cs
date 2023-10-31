@@ -1,13 +1,9 @@
-using Application.Helpers.Configurations;
-using Application.Helpers.Constants;
+﻿using Application.Helpers.Configurations;
 using Application.Helpers.Middlewares;
 using Infrastructure.Configurations;
 using MarketPlace.Configurations;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using NLog.Web;
 using OfficeOpenXml;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +20,6 @@ builder.Services.AddConfigurationApiLayer(config);
 builder.Services.AddConfigurationApplicationLayer(config);
 builder.Services.AddConfigurationInfrastructureLayer();
 builder.Services.AddConfigurationMigration();
-
 
 var app = builder.Build();
 
