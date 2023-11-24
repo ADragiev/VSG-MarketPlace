@@ -55,7 +55,7 @@ namespace Application.Services
                      page.DefaultTextStyle(x => x.FontSize(20));
 
                      page.Header().Width(7, Unit.Centimetre)
-                         .Image("C:\\Users\\ADragiev\\ADragiev-Repos\\VSG-MarketPlace\\Backend\\MarketPlace\\Reports\\vsg.png").WithRasterDpi(123);
+                         .Image("./Images/vsg.png").WithRasterDpi(123);
 
 
                      page.Content()
