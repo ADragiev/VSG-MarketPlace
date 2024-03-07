@@ -10,7 +10,7 @@ export const baseApiMiddleware = () => (next: Dispatch<AnyAction>) => (action: A
                 ...toastifyCustomStyles
             });
         } else {
-            toast.error(`Oops! ${action.payload.data[0]['Message']} 🙁`, toastifyCustomStyles);
+            toast.error(`Oops! ${action.payload.data[0].title} 🙁`, toastifyCustomStyles);
         }
     }
 

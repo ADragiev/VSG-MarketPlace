@@ -21,7 +21,7 @@ const Home = () => {
         const email = res.account?.username.toLowerCase();
         const token = res.accessToken;
         const groups = JSON.parse(atob(token.split('.')[1])).groups;
-        const userType = groups.includes(adminGroup) ? 'Admin' : 'User';
+        const userType = groups?.includes(adminGroup) ? 'Admin' : 'User';
 
         // Set user info in session storage
         sessionStorage.setItem('user', JSON.stringify({ username, email, token, userType }));

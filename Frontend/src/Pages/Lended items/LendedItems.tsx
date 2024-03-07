@@ -13,9 +13,6 @@ const LendedItems = (): JSX.Element => {
     // Rented items state
     const [rentedItemsState, setRentedItemsState] = useState<IUserLendedItems[]>([]);
 
-    console.log(rentedItems);
-    
-
     // Set rented items state
     useEffect(() => {
         rentedItems && setRentedItemsState(rentedItems);

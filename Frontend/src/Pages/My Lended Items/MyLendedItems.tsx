@@ -10,7 +10,6 @@ const MyLendedItems = () => {
     setTabTitle('My lended items');
     const user = sessionStorage.getItem('user');
     const userEmail = user !== null && JSON.parse(user).email;
-    console.log(user);
 
     // Fetched my lended items
     const { data: myLendedItems, isSuccess, isLoading } = useGetMyLentItemsQuery();
